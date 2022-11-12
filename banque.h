@@ -4,7 +4,7 @@
 #include "joueur.h"
 class Banque {
 private :
-    Banque(**Joueur);
+    Banque(Joueur** joueur);
     ~Banque();
     Compte* comptes;
     friend class Jeu;
