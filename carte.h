@@ -5,6 +5,7 @@
 #ifndef MACHI_KORO_CARTE_H
 #define MACHI_KORO_CARTE_H
 #include <string>
+#include "icon.h"
 
 using namespace std;
 class Carte {
@@ -15,6 +16,13 @@ private:
 	int number_of_numeros;
 	int prix;
 	Icon icon;
+
+	void setIcon(Icon icone) {
+		icon = icone;
+	}
+	const Icon& getIcon() const {
+		return icon;
+	}
 };
 
 #endif //MACHI_KORO_CARTE_H
