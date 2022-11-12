@@ -4,8 +4,9 @@
 
 #ifndef MACHI_KORO_PAQUET_H
 #define MACHI_KORO_PAQUET_H
-
-
-
-// Coucou je teste git. Est ce que ça marche ?
+#include "carte.h"
+class Paquet{
+    int carteRestante;
+    Carte** cartePaquet;
+};
 #endif //MACHI_KORO_PAQUET_H
