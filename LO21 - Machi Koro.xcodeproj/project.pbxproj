@@ -6,6 +6,10 @@
 	objectVersion = 56;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		E29AFDB029203443002C57EC /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E29AFDAF29203443002C57EC /* main.cpp */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXCopyFilesBuildPhase section */
 		E29AFD8D2920327D002C57EC /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -28,6 +32,7 @@
 		E29AFDAC292033C6002C57EC /* de.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = de.h; sourceTree = "<group>"; };
 		E29AFDAD292033CD002C57EC /* paquet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = paquet.h; sourceTree = "<group>"; };
 		E29AFDAE292033CD002C57EC /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		E29AFDAF29203443002C57EC /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,6 +50,7 @@
 			isa = PBXGroup;
 			children = (
 				E29AFDA9292033C5002C57EC /* banque.h */,
+				E29AFDAF29203443002C57EC /* main.cpp */,
 				E29AFDA8292033C5002C57EC /* carte.h */,
 				E29AFDAB292033C5002C57EC /* carteCouleur.h */,
 				E29AFDAA292033C5002C57EC /* compte.h */,
@@ -121,6 +127,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E29AFDB029203443002C57EC /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
