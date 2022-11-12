@@ -4,7 +4,9 @@
 
 #ifndef MACHI_KORO_CARTE_H
 #define MACHI_KORO_CARTE_H
+#include <string>
 
+using namespace std;
 class Carte {
 private:
 	string name;
