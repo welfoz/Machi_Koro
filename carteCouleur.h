@@ -5,7 +5,6 @@
 #include "De.h"
 
 class Bleu : private Carte {
-private:
 public:
 	Bleue() { type = "Primary Industrie"; };
 	IconBlue getIconBlue();
@@ -16,7 +15,6 @@ public:
 };
 
 class Vert : private Carte {
-private:
 public:
 	Vert() { type = "Secondary Industrie"; };
 	IconGreen getIconGreen();
@@ -26,7 +24,6 @@ public:
 };
 
 class Rouge : private Carte {
-private:
 public:
 	Rouge() { type = "Restaurant"; };
 	IconRed getIconRed();
@@ -35,7 +32,6 @@ public:
 };
 
 class Violet : private Carte {
-private:
 public:
 	Violet() { type = "Major Establishment"; };
 	IconPurple getIconPurple();
@@ -44,7 +40,6 @@ public:
 };
 
 class Monument : private Carte {
-private:
 public:
 	Monument() { type = "Landmark"; };
 	IconLandmark getIconLandmark();
