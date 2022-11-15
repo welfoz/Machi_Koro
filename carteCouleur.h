@@ -6,14 +6,14 @@
 
 class Bleu : private Carte {
 public:
-	Bleu() : { type = "Primary Industrie"; };
+	Bleu()  { type = "Primary Industrie"; };
 	//IconBlue getIconBlue();
 	const IconPrimaryIndustryExtension& getIcons() const {
 		return IconPrimaryIndustryExtension();
 	}
-	virtual void effet() = 0; 
+	void effet();
 	//méthode qui sera défini dans toutes autres cartes
-	void activation(class De de); 
+	virtual void activation(class De de);
 	//verifie si le dé tiré est égale à l'activation des nums de la carte
 };
 
@@ -23,8 +23,8 @@ public:
 	const IconSecondaryIndustryExtension& getIcons() const {
 		return IconSecondaryIndustryExtension();
 	}
-	virtual void effet() = 0;
-	void activation(class De de, class Joueur j);
+	void effet();
+	virtual void activation(class De de, class Joueur j);
 	//verifie si le dé tiré par le joueur est égale à l'activation des nums de la carte
 };
 
@@ -34,19 +34,19 @@ public:
 	const IconRestaurantExtension& getIcons() const {
 		return IconRestaurantExtension();
 	}
-	virtual void effet() = 0;
-	void activation(class De de);
+	void effet();
+	virtual void activation(class De de);
 };
 
 class Violet : private Carte {
 public:
 	Violet() { type = "Major Establishment"; };
 	IconPurple getIconPurple();
-	const IconMajorAndLandMarkExtension& getIcons() const {
-		return IconMajorAndLandMarkExtension();
+	const IconPurpleExtension& getIcons() const {
+		return IconPurpleExtension();
 	}
-	virtual void effet() = 0;
-	void activation(class De de, class Joueur j);
+	void effect();
+	virtual void activation(class De de, class Joueur j);
 };
 
 class Monument : private Carte {
@@ -55,7 +55,7 @@ public:
 	const IconMajorAndLandMarkExtension& getIcons() const {
 		return IconMajorAndLandMarkExtension();
 	}
-	virtual void effet() = 0;
+	void effet();
 };
 
 

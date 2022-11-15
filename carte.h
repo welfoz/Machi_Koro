@@ -9,9 +9,10 @@
 
 using namespace std;
 class Carte {
+protected:
+    string type;
 private:
 	string name;
-	string type; 
 	int* activation_numeros;
 	int number_of_numeros;
 	int prix;
