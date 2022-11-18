@@ -9,7 +9,7 @@ private :
     Compte* comptes;
     friend class Jeu;
     void echange(class Joueur& j1, class Joueur& j2, int montant);
-    void credit (class Joueur& j1, class Joueur& j2, int montant);
+    void credit (Joueur& j1, Joueur& j2, int montant);
     void prelevement(class Joueur& j, int montant);
 
 };
