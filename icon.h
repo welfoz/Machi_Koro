@@ -3,10 +3,10 @@
 #include<string>
 using namespace std;
 
-struct Icon {
+typedef struct Icon {
 	string name;
 	string image;
-};
+}Icon;
 
 // Icones de Base
 class IconPrimaryIndustry {

@@ -1,8 +1,8 @@
 #ifndef MACHI_KORO_CARTECOULEUR_H
 #define MACHI_KORO_CARTECOULEUR_H
-#include "Carte.h"
-#include "Joueur.h"
-#include "De.h"
+#include "carte.h"
+#include "joueur.h"
+#include "de.h"
 
 class Bleu : private Carte {
 public:
@@ -23,12 +23,15 @@ public:
 	const IconSecondaryIndustryExtension& getIcons() const {
 		return IconSecondaryIndustryExtension();
 	}
-	void effet();
-	virtual void activation(class De de, class Joueur j);
+	void effet(class Joueur j){
+        activation(j);
+    }
+	virtual void activation(class Joueur j);
 	//verifie si le dé tiré par le joueur est égale à l'activation des nums de la carte
 };
 
 class Rouge : private Carte {
+    friend class Joueur;
 public:
 	Rouge() { type = "Restaurant"; };
 	const IconRestaurantExtension& getIcons() const {

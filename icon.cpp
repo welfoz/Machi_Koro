@@ -1,4 +1,4 @@
-#include "icone.h"
+#include "icon.h"
 
 const Icon IconPrimaryIndustry::cow = { "cow", "cow.png" };
 const Icon IconPrimaryIndustry::wheat = { "wheat", "wheat.png" };
