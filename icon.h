@@ -3,33 +3,25 @@
 #include<string>
 using namespace std;
 
-typedef struct Icon {
+enum class Type { primaryIndustry, secondaryIndustry, restaurants, majorEstablishment, landmark};
+
+class Icon {
 	string name;
 	string image;
-}Icon;
+	Type type;
+public: 
+	Icon(string n, string i, Type t) : name(n), image(i), type(t) {};
 
-// Icones de Base
-class IconPrimaryIndustry {
-public:
-	const Icon wheat  = { "wheat", "wheat.png" };
-	const Icon gear = { "gear", "gear.png" };
-	const Icon cow = { "cow", "cow.png" };
-};
+	const string& getName() const {
+		return name;
+	}
 
-class IconSecondaryIndustry {
-public:
-	const Icon bread = { "bread", "bread.png" };
-	const Icon factory = { "factory", "factory.png" };
-	const Icon fruit = { "fruit", "fruit.png" };
-};
+	const string& getImage() const {
+		return image;
+	}
 
-class IconRestaurants {
-public:
-	const Icon cup = { "cup", "cup.png" };
-};
-
-class IconMajorAndLandMark {
-public:
-	const Icon major = { "major", "major.png" };
+	const Type getType() const {
+		return type;
+	}
 };
 #endif 
