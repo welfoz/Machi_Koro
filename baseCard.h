@@ -7,14 +7,18 @@
 class BaseCard {
 protected:
     Type type;
+	BaseCard(string name, Type type, size_t price, const Icon* icon): name(name), type(type), price(price), icon(icon) {};
 private:
 	string name;
 	size_t price;
 	const Icon* icon;
 
-	BaseCard(string name, Type type, size_t price, const Icon* icon): name(name), type(type), price(price), icon(icon) {};
 
 public:
+	void setIcon(const Icon* icon) {
+		this->icon = icon;
+	}
+
 	const Icon* getIcon() const {
 		return icon;
 	}
