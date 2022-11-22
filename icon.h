@@ -11,56 +11,25 @@ typedef struct Icon {
 // Icones de Base
 class IconPrimaryIndustry {
 public:
-	static const Icon wheat;
-	static const Icon gear;
-	static const Icon cow;
+	const Icon wheat  = { "wheat", "wheat.png" };
+	const Icon gear = { "gear", "gear.png" };
+	const Icon cow = { "cow", "cow.png" };
 };
 
 class IconSecondaryIndustry {
 public:
-	static const Icon bread;
-	static const Icon factory;
-	static const Icon fruit;
+	const Icon bread = { "bread", "bread.png" };
+	const Icon factory = { "factory", "factory.png" };
+	const Icon fruit = { "fruit", "fruit.png" };
 };
 
 class IconRestaurants {
 public:
-	static const Icon cup;
-};
-
-class IconPurple{
-public:
-    static const Icon tower;
+	const Icon cup = { "cup", "cup.png" };
 };
 
 class IconMajorAndLandMark {
 public:
-	static const Icon major;
+	const Icon major = { "major", "major.png" };
 };
-
-
-// pour les extensions, c'est ici qu'on rajoute de nouvelles icones
-class IconPrimaryIndustryExtension : public IconPrimaryIndustry {
-};
-
-class IconSecondaryIndustryExtension : public IconSecondaryIndustry {
-};
-
-class IconRestaurantExtension : public IconRestaurants {
-};
-
-class IconPurpleExtension : public IconPurple{
-
-};
-
-class IconMajorAndLandMarkExtension : public IconMajorAndLandMark {
-};
-
-//};
-//class Ble : public BlueCarte {
-//public: 
-//	Ble(): BlueCarte() {
-//		BlueCarte::Carte::setIcon(getType().b);
-//	}
-//};
 #endif 
