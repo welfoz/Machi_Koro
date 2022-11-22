@@ -9,7 +9,7 @@ private:
     Carte** Paquet;
 public:
     Carte& retirer_carte(Carte& carteARetirer);
-    afficherPaquet();
+    void afficherPaquet();
 };
 
 #endif //MACHI_KORO_PAQUET_H

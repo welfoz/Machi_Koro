@@ -3,10 +3,10 @@
 #include<string>
 using namespace std;
 
-struct Icon {
+typedef struct Icon {
 	string name;
 	string image;
-};
+}Icon;
 
 // Icones de Base
 class IconPrimaryIndustry {
@@ -28,10 +28,16 @@ public:
 	static const Icon cup;
 };
 
+class IconPurple{
+public:
+    static const Icon tower;
+};
+
 class IconMajorAndLandMark {
 public:
 	static const Icon major;
 };
+
 
 // pour les extensions, c'est ici qu'on rajoute de nouvelles icones
 class IconPrimaryIndustryExtension : public IconPrimaryIndustry {
@@ -41,6 +47,10 @@ class IconSecondaryIndustryExtension : public IconSecondaryIndustry {
 };
 
 class IconRestaurantExtension : public IconRestaurants {
+};
+
+class IconPurpleExtension : public IconPurple{
+
 };
 
 class IconMajorAndLandMarkExtension : public IconMajorAndLandMark {
