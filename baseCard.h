@@ -6,20 +6,20 @@
 
 class BaseCard {
 protected:
-    string type;
+    Type type;
 private:
 	string name;
 	size_t price;
-	Icon icon;
+	const Icon* icon;
 
-	BaseCard(string name, string type, size_t price, Icon icon): name(name), type(type), price(price), icon(icon) {};
+	BaseCard(string name, Type type, size_t price, const Icon* icon): name(name), type(type), price(price), icon(icon) {};
 
 public:
-	const Icon& getIcon() const {
+	const Icon* getIcon() const {
 		return icon;
 	}
 
-    const string& getType() const{
+    const Type getType() const{
         return type;
     }
 
