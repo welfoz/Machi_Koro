@@ -6,7 +6,7 @@ using namespace std;
 class Monument: public BaseCard {
 	bool active;
 public:
-	Monument(string name, size_t price): BaseCard(name, Type::landmark, price, nullptr) {
+	Monument(string name, size_t price, string desc): BaseCard(name, Type::landmark, price, nullptr, desc) {
 		setIcon(getIcon("landmark"));
 	};
 

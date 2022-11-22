@@ -5,17 +5,14 @@
 //#ifndef MACHI_KORO_CARTE_H
 //#define MACHI_KORO_CARTE_H
 #include "baseCard.h"
-#include <string>
-#include "icon.h"
-#include "joueur.h"
 
-using namespace std;
 class EstablishmentCard : public BaseCard {
 	const size_t* const activationNumbers;
 	size_t numberActivation;
-public: 
-	EstablishmentCard(size_t* act, size_t number, string name, Type type, size_t price) : BaseCard(name, type, price, nullptr), activationNumbers(act), numberActivation(number) {
+protected:
+	EstablishmentCard(size_t* act, size_t number, string name, Type type, size_t price, string desc) : BaseCard(name, type, price, nullptr, desc), activationNumbers(act), numberActivation(number) {
 	};
+public: 
 
     bool inActivationNumeros(size_t diceNumber) const;
 	
