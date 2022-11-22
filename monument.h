@@ -7,7 +7,7 @@ class Monument: public BaseCard {
 	bool active;
 public:
 	Monument(string name, size_t price, string desc): BaseCard(name, Type::landmark, price, nullptr, desc) {
-		setIcon(getIcon("landmark"));
+		setIcon(getIconByName("landmark"));
 	};
 
 	const bool isActivated() {
@@ -16,5 +16,5 @@ public:
 
 	//check if the type of the icon is the same than the card type 
 	// raise error if not
-	const Icon* getIcon(string name);
+	const Icon* getIconByName(string name);
 };
