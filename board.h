@@ -1,17 +1,19 @@
+#pragma once
+
 #ifndef MACHI_KORO_PAQUET_H
 #define MACHI_KORO_PAQUET_H
 #include <map>
 class BaseCard;
 using namespace std;
 
-#pragma once
+
 //using std::map;
 #include "establishmentCard.h"
 class Board
 {
 private:
     friend class Game;
-    map<BaseCard&, size_t> cardsCounter;
+    map<BaseCard*, size_t> cardsDecks;
 public:
     Board();
     ~Board();

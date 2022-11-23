@@ -15,6 +15,8 @@ class Dice {
     const size_t throwDice() const{
         return 0;
     };
+    public:
+    Dice();
 };
 
 //#endif //MACHI_KORO_DE_H

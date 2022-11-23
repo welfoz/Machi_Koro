@@ -17,6 +17,7 @@ private:
 	const string effectDescription;
 
 public:
+	BaseCard();
 	void setIcon(const Icon* icon) {
 		this->icon = icon;
 	}
