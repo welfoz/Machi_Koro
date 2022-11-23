@@ -1,7 +1,8 @@
 #ifndef MACHI_KORO_PAQUET_H
 #define MACHI_KORO_PAQUET_H
-#include "baseCard.h"
 #include <map>
+class BaseCard;
+using namespace std;
 
 using std::map;
 

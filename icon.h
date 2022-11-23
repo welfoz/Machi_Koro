@@ -1,5 +1,5 @@
-//#ifndef MACHI_KORO_JOUEUR_H
-//#define MACHI_KORO_JOUEUR_H
+//#ifndef MACHI_KORO_PLAYER_H
+//#define MACHI_KORO_PLAYER_H
 #include<string>
 using namespace std;
 

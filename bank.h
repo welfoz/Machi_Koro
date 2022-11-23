@@ -1,9 +1,10 @@
 #ifndef MACHI_KORO_BANQUE_H
 #define MACHI_KORO_BANQUE_H
 #include "account.h"
+class Player;
 class Bank {
 private :
-    Account* accounts[];
+    Account** accounts;
     friend class Game;
     Bank(Player** player);
     ~Bank();

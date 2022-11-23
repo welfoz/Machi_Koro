@@ -1,7 +1,7 @@
 
 #ifndef MACHI_KORO_CARTECOULEUR_H
 #define MACHI_KORO_CARTECOULEUR_H
-#include "establismentCard.h"
+#include "establishmentCard.h"
 
 class Blue : public EstablishmentCard {
 protected:

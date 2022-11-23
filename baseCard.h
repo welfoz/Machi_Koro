@@ -2,6 +2,7 @@
 //#define MACHI_KORO_CARTE_H
 #include <string>
 #include "icon.h"
+using namespace std;
 
 
 class BaseCard {
@@ -23,8 +24,8 @@ public:
 		return icon;
 	}
 
-    const Type getType() const{
-        return type;
+    const string getType() const{
+        return typeToString(type);
     }
 
 	const size_t& getPrice() const {
