@@ -6,5 +6,6 @@ class Account {
     size_t balance;
     void add(size_t amount);
 public:
+    Account();
     const size_t& getSolde() const;
 };

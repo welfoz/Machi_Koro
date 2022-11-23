@@ -5,15 +5,9 @@
 //  Created by Pol Corty on 12/11/2022.
 //
 
-#pragma once
-#include <stdio.h>
-#include <iostream>
-#include "allCards.h"
+//#pragma once
+#include "game.h"
 
-// include board.h => compilation error relative to map
-//#include "board.h"
-
-using namespace std;
 int main(int argc, const char* argv[]) {
     // insert code here...
     std::cout << "Hello, World!\n";
@@ -38,6 +32,5 @@ int main(int argc, const char* argv[]) {
     cout << typeToString(wheatfield.getIcon()->getType()) << '\n';
 
 
-    system("pause");
     return 0;
 }

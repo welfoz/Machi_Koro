@@ -3,11 +3,14 @@
 #include "baseCard.h"
 using namespace std;
 
+
+//using std::map;
+#include "establishmentCard.h"
 class Board
 {
 private:
     friend class Game;
-    map<BaseCard&, size_t> cardsCounter;
+    map<BaseCard*, size_t> cardsDecks;
 public:
     Board();
     ~Board();

@@ -20,6 +20,7 @@ class Player{
     void activateGreenCards(size_t diceNumber);
     void activatePurpleCards(size_t diceNumber);
 public:
+    Player();
     const int& nbDiceChosen() const;
 
 };
