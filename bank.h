@@ -1,5 +1,6 @@
-#ifndef MACHI_KORO_BANQUE_H
-#define MACHI_KORO_BANQUE_H
+#pragma once
+//#ifndef MACHI_KORO_BANQUE_H
+//#define MACHI_KORO_BANQUE_H
 #include "account.h"
 class Player;
 class Bank {
@@ -14,4 +15,4 @@ private :
 
 };
 
-#endif //MACHI_KORO_BANQUE_H
+//#endif //MACHI_KORO_BANQUE_H

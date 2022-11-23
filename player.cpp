@@ -1,3 +1,4 @@
+#pragma once
 #include "player.h"
 #include "account.h"
 #include "monument.h"

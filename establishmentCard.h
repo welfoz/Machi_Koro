@@ -4,6 +4,7 @@
 
 //#ifndef MACHI_KORO_CARTE_H
 //#define MACHI_KORO_CARTE_H
+#pragma once
 #include "baseCard.h"
 class Player;
 

@@ -1,5 +1,6 @@
 //#ifndef MACHI_KORO_CARTECOULEUR_H
 //#define MACHI_KORO_CARTECOULEUR_H
+#pragma once
 #include "cardColor.h"
 
 class WheatField : public Blue {

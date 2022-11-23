@@ -1,3 +1,4 @@
+#pragma once
 #include "establishmentCard.h"
 #include "player.h"
 bool EstablishmentCard::inActivationNumbers(size_t diceNumber) const {

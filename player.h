@@ -1,5 +1,6 @@
-#ifndef MACHI_KORO_PLAYER_H
-#define MACHI_KORO_PLAYER_H
+#pragma once
+//#ifndef MACHI_KORO_PLAYER_H
+//#define MACHI_KORO_PLAYER_H
 class Account;
 class Monument;
 class EstablishmentCard;
@@ -28,4 +29,4 @@ public:
 
 
 
-#endif //MACHI_KORO_PLAYER_H
+//#endif //MACHI_KORO_PLAYER_H

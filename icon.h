@@ -1,3 +1,4 @@
+#pragma once
 //#ifndef MACHI_KORO_PLAYER_H
 //#define MACHI_KORO_PLAYER_H
 #include<string>

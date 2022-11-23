@@ -4,8 +4,9 @@
 class BaseCard;
 using namespace std;
 
-using std::map;
-
+#pragma once
+//using std::map;
+#include "establishmentCard.h"
 class Board
 {
 private:

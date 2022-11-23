@@ -1,6 +1,6 @@
-
-#ifndef MACHI_KORO_CARTECOULEUR_H
-#define MACHI_KORO_CARTECOULEUR_H
+#pragma once
+//#ifndef MACHI_KORO_CARTECOULEUR_H
+//#define MACHI_KORO_CARTECOULEUR_H
 #include "establishmentCard.h"
 
 class Blue : public EstablishmentCard {
@@ -53,4 +53,4 @@ public:
 
 
 
-#endif // MACHI_KORO_CARTECOULEUR_H
+//#endif // MACHI_KORO_CARTECOULEUR_H
