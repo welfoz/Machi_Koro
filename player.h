@@ -17,10 +17,10 @@ class Player{
     Monument* monuments;
     int nbMonument;
     void acheterCarte(BaseCard& carte);
-    void activateRedCards(size_t nombreTire);
-    void activateBlueCards(size_t nombreTire);
-    void activateGreenCards(size_t nombreTire);
-    void activatePurpleCards(size_t nombreTire);
+    void activateRedCards(size_t diceNumber);
+    void activateBlueCards(size_t diceNumber);
+    void activateGreenCards(size_t diceNumber);
+    void activatePurpleCards(size_t diceNumber);
 public:
     const int& nbDiceChosen() const;
 
