@@ -14,7 +14,7 @@
 using namespace std;
 
 class Game{
-private:
+protected:
     Game* instance;
     vector<BaseCard*> cards;
     Board* board;
@@ -29,15 +29,15 @@ private:
     Game(const Game&) = delete;
     Game& operator=(const Game& g) = delete;
 
-    // initialisation : toutes ces méthodes sont appellés dans le constructeur Jeu()
-    vector<BaseCard*> createCards();
-    vector<BaseCard*> createBoard();
-    Player* createPlayer(string name, size_t id);
-    Bank* createBank();
-    vector<Icon*> createIcons();
+    // initialisation : toutes ces méthodes sont appellés dans le constructeur Game()
+    void createBank();
+    void createPlayer(string name, size_t id);
+    virtual void createCards();
+    virtual void createBoard();
+    virtual void createIcons();
 
     //match methods
-    void turn(Player* player);
+    virtual void turn(Player* player);
     int throwDice(size_t numberOfDices);
     void activation(size_t number);
     void activationRedCards(size_t n);
@@ -47,6 +47,7 @@ private:
     void action();
     void buildEstablishment(BaseCard& card);
     void buildMonument(Monument& monument);
+
 
 public:
     Game();
