@@ -8,5 +8,5 @@ public:
 	void createCards() override;
 	void createBoard() override;
 	void createIcons() override;
-	void turn(Player* player) override;
+	void turn(Player* player) overrde;
 };
