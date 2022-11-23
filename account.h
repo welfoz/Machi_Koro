@@ -1,6 +1,4 @@
 #pragma once
-//#ifndef MACHI_KORO_COMPTE_H
-//#define MACHI_KORO_COMPTE_H
 #include "iostream"
 
 class Account {
@@ -10,5 +8,3 @@ class Account {
 public:
     const size_t& getSolde() const;
 };
-
-//#endif //MACHI_KORO_COMPTE_H

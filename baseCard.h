@@ -1,5 +1,3 @@
-//#ifndef MACHI_KORO_CARTE_H
-//#define MACHI_KORO_CARTE_H
 #pragma once
 #include <string>
 #include "icon.h"
@@ -25,6 +23,7 @@ public:
 		return icon;
 	}
 
+
     const string getType() const{
         return typeToString(type);
     }
@@ -41,5 +40,3 @@ public:
 		return this->effectDescription;
 	}
 };
-
-//#endif //MACHI_KORO_CARTE_H

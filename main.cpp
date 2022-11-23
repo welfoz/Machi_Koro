@@ -5,13 +5,13 @@
 //  Created by Pol Corty on 12/11/2022.
 //
 
-//#pragma once
+#pragma once
 #include <stdio.h>
 #include <iostream>
 #include "allCards.h"
-//#include "icon.h"
-//#include "baseCard.h"
-//#include "establishmentCard.h"
+
+// include board.h => compilation error relative to map
+//#include "board.h"
 
 using namespace std;
 int main(int argc, const char* argv[]) {
