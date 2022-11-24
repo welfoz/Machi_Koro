@@ -5,9 +5,9 @@
 //class Player;
 class Bank {
 private :
-    Account** accounts;
+    Account* accounts[];
     friend class Game;
-    Bank(Player** player);
+    Bank(size_t nbPlayers);
     ~Bank();
     void trade(Player& idReceiver, Player& idGiver, int amount);
     void credit(Player& idReceiver, int amount);
