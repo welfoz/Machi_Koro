@@ -2,7 +2,7 @@
 
 
 
-bool Deluxe::isClosed(EstablishmentCard&){};
+// bool Deluxe::isClosed(EstablishmentCard&){};
 void Deluxe::closeCard(EstablishmentCard& c, size_t nbTurns){};
 
 void Deluxe::createCards(){};
