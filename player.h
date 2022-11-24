@@ -1,9 +1,10 @@
 #pragma once
 #include <string>
 #include <map>
-#include "establishmentCard.h"
 #include "monument.h"
+#include "establishmentCard.h"
 #include <iostream>
+class EstablishmentCard;
 
 using namespace std;
 
@@ -11,7 +12,7 @@ class Player{
     friend class Jeu;
     string username;
     int id;
-    map<EstablishmentCard*,size_t> cardsCounter;
+    map<EstablishmentCard*, size_t> cardsCounter;
     int nbMonument;
     Monument* monuments[];
     Player();
@@ -25,5 +26,4 @@ public:
     const Monument& getMonument(string name) const;
     const string& getUsername() const;
     const size_t& getId() const;
-;
 };

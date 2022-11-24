@@ -8,7 +8,7 @@ protected:
 public:
 	const Icon* getIconByName(string name);
 
-	//méthode qui sera défini dans toutes autres cartes
+	//méthode qui sera définie dans toutes autres cartes
 	virtual void activation(Player& p) {};
 };
 
@@ -20,7 +20,7 @@ public:
 
 	const Icon* getIconByName(string name);
 
-	//méthode qui sera défini dans toutes autres cartes
+	//méthode qui sera définie dans toutes autres cartes
 	virtual void activation(Player& p) {};
 };
 
@@ -32,7 +32,7 @@ public:
 
 	const Icon* getIconByName(string name);
 
-	//méthode qui sera défini dans toutes autres cartes
+	//méthode qui sera définie dans toutes autres cartes
 	virtual void activation(Player& p) {};
 };
 
@@ -44,6 +44,6 @@ public:
 
 	const Icon* getIconByName(string name);
 
-	//méthode qui sera défini dans toutes autres cartes
+	//méthode qui sera définie dans toutes autres cartes
 	virtual void activation(Player& p) {};
 };

@@ -15,7 +15,7 @@ using namespace std;
 
 class Game{
 protected:
-    Game* instance;
+    static Game* instance;
     vector<BaseCard*> cards;
     Board* board;
     Player* players[10];
