@@ -12,5 +12,4 @@ private :
     void trade(Player& idReceiver, Player& idGiver, int amount);
     void credit(Player& idReceiver, int amount);
     void debit(Player& idGiver, int amount);
-
 };
