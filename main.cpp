@@ -11,7 +11,9 @@ int main(int argc, const char* argv[]) {
     // insert code here...
     std::cout << "Hello, World!\n";
 
-    // example creation Icone
+    Game game;
+
+   // example creation Icone
     Icon icon1("wheat", "wheat.png", Type::primaryIndustry);
 
     // example create carte 

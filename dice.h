@@ -14,5 +14,5 @@ class Dice {
         return 0;
     };
     public:
-    Dice();
+        Dice() {};
 };

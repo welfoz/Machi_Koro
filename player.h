@@ -20,7 +20,9 @@ class Player{
     void activateGreenCards(size_t diceNumber);
     void activatePurpleCards(size_t diceNumber);
 public:
-    Player();
+    Player(): username("a"), id(0), monuments(nullptr), nbMonument(0) {}
+    
+    ;
     const int& nbDiceChosen() const;
 
 };
