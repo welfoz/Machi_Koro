@@ -15,7 +15,7 @@ using namespace std;
 
 class Game{
 protected:
-    Game* instance;
+    static Game* instance;
     vector<BaseCard*> cards;
     Board* board;
     Player* players[10];
@@ -24,8 +24,8 @@ protected:
     Player* winner;
     vector<const Icon*> icons;
 
-    Game* getInstance();
-    void freeInstance();
+    static Game& getInstance();
+    static void freeInstance();
     Game(const Game&) = delete;
     Game& operator=(const Game& g) = delete;
 
