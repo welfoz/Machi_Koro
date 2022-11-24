@@ -3,7 +3,7 @@
 
 class WheatField : public Blue {
 public: 
-	WheatField() : Blue(nullptr, 1, "WheatField", 9, "effet description wheatfield") {
+	WheatField() : Blue(nullptr, 1, "WheatField", 9, "effet description wheatfield", 5) {
 		BaseCard::setIcon(new Icon("aaaa", "aaaai", Type::primaryIndustry));
 		//BaseCard::setIcon(getIcon("wheat"));
 		size_t* actNumber = new size_t[3];
