@@ -9,4 +9,5 @@ public:
 	void createBoard() override;
 	void createIcons() override;
 	void turn(Player* player) override;
+	virtual void createMonuments() override;
 };
