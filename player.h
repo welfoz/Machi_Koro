@@ -12,17 +12,18 @@ class Player{
     string username;
     int id;
     map<EstablishmentCard*,size_t> cardsCounter;
-    Monument* monuments;
     int nbMonument;
-    void acheterCarte(BaseCard& carte);
+    Monument* monuments[];
+    void purchaseCard(BaseCard& carte);
+    const int& nbDiceChosen() const;
     void activateRedCards(size_t diceNumber);
     void activateBlueCards(size_t diceNumber);
     void activateGreenCards(size_t diceNumber);
     void activatePurpleCards(size_t diceNumber);
 public:
-    Player(): username("a"), id(0), monuments(nullptr), nbMonument(0) {}
-    
-    ;
-    const int& nbDiceChosen() const;
-
+    const Monument& getMonument(string name) const;
+    const string& getUsername() const;
+    const size_t& getId() const;
+;
+    Player(): username("a"), id(0), monuments(), nbMonument(0) {};
 };
