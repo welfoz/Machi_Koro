@@ -1,9 +1,6 @@
 #pragma once
-
-#ifndef MACHI_KORO_PAQUET_H
-#define MACHI_KORO_PAQUET_H
 #include <map>
-class BaseCard;
+#include "baseCard.h"
 using namespace std;
 
 
@@ -21,5 +18,3 @@ public:
     BaseCard& addCard(BaseCard& card);
     void printBoard();
 };
-
-#endif //MACHI_KORO_PAQUET_H

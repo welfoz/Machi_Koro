@@ -1,5 +1,3 @@
-//#ifndef MACHI_KORO_CARTECOULEUR_H
-//#define MACHI_KORO_CARTECOULEUR_H
 #pragma once
 #include "cardColor.h"
 
@@ -14,6 +12,5 @@ public:
 		actNumber[2] = 9;
 		EstablishmentCard::setActivationNumbers(actNumber);
 	};
-	void activation() override {};
+	void activation(Player& p) override {};
 };
-//#endif // MACHI_KORO_CARTECOULEUR_H

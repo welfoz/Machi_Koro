@@ -28,6 +28,5 @@ public:
 	size_t* const getActivationNumbers() const {
 		return activationNumbers;
 	}
-    virtual void activation(Player& p);
+	virtual void activation(Player& p) {};
 };
-//#endif //MACHI_KORO_CARTE_H

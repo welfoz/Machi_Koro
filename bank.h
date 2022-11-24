@@ -1,8 +1,8 @@
 #pragma once
-//#ifndef MACHI_KORO_BANQUE_H
-//#define MACHI_KORO_BANQUE_H
 #include "account.h"
-class Player;
+#include "player.h"
+
+//class Player;
 class Bank {
 private :
     Account** accounts;
@@ -14,5 +14,3 @@ private :
     void debit(Player& idGiver, int amount);
 
 };
-
-//#endif //MACHI_KORO_BANQUE_H

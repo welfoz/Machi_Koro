@@ -1,12 +1,9 @@
 #pragma once
-//#ifndef MACHI_KORO_PLAYER_H
-//#define MACHI_KORO_PLAYER_H
-class Account;
-class Monument;
-class EstablishmentCard;
-class BaseCard;
 #include <string>
 #include <map>
+#include "establishmentCard.h"
+#include "monument.h"
+#include <iostream>
 
 using namespace std;
 
@@ -27,7 +24,3 @@ public:
     const int& nbDiceChosen() const;
 
 };
-
-
-
-//#endif //MACHI_KORO_PLAYER_H

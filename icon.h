@@ -1,27 +1,11 @@
 #pragma once
-//#ifndef MACHI_KORO_PLAYER_H
-//#define MACHI_KORO_PLAYER_H
 #include<string>
 using namespace std;
 
 enum class Type { primaryIndustry, secondaryIndustry, restaurants, majorEstablishment, landmark};
 
-string typeToString(Type type) {
-	switch (type) {
-	case Type::primaryIndustry:
-		return "Primary Industry";
-	case Type::secondaryIndustry:
-		return "Secondary Industry";
-	case Type::restaurants:
-		return "Restaurants";
-	case Type::majorEstablishment:
-		return "Major Establishment";
-	case Type::landmark:
-		return "LandMark";
-	default:
-		return "Error unrecognized type\n";
-	};
-}
+
+string typeToString(Type type);
 
 
 class Icon {
@@ -43,4 +27,3 @@ public:
 		return type;
 	}
 };
-//#endif 

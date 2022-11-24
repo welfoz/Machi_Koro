@@ -1,3 +1,3 @@
 #pragma once
-#include"allCards.h"
+#include "allCards.h"
 

@@ -1,9 +1,5 @@
 #pragma once
 #include "player.h"
-#include "account.h"
-#include "monument.h"
-#include "establishmentCard.h"
-#include"baseCard.h"
 
 void Player::activateRedCards(size_t diceNumber) {
     for(auto it=cardsCounter.begin();it!=cardsCounter.end();it++){

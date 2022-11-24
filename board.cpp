@@ -1,3 +1,4 @@
 #pragma once
-#include "board.h"
+// when include board.h => compilation errors
+//#include "board.h"
 #include "baseCard.h"

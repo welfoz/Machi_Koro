@@ -1,6 +1,4 @@
 #pragma once
-//#ifndef MACHI_KORO_CARTECOULEUR_H
-//#define MACHI_KORO_CARTECOULEUR_H
 #include "establishmentCard.h"
 
 class Blue : public EstablishmentCard {
@@ -11,7 +9,7 @@ public:
 	const Icon* getIconByName(string name);
 
 	//méthode qui sera défini dans toutes autres cartes
-	virtual void activation() {};
+	virtual void activation(Player& p) {};
 };
 
 class Green : private EstablishmentCard {
@@ -23,7 +21,7 @@ public:
 	const Icon* getIconByName(string name);
 
 	//méthode qui sera défini dans toutes autres cartes
-	virtual void activation() {};
+	virtual void activation(Player& p) {};
 };
 
 class Red : private EstablishmentCard {
@@ -35,7 +33,7 @@ public:
 	const Icon* getIconByName(string name);
 
 	//méthode qui sera défini dans toutes autres cartes
-	virtual void activation() {};
+	virtual void activation(Player& p) {};
 };
 
 class Purple : private EstablishmentCard {
@@ -47,10 +45,5 @@ public:
 	const Icon* getIconByName(string name);
 
 	//méthode qui sera défini dans toutes autres cartes
-	virtual void activation() {};
+	virtual void activation(Player& p) {};
 };
-
-
-
-
-//#endif // MACHI_KORO_CARTECOULEUR_H

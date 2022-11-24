@@ -3,8 +3,6 @@
 //
 
 #pragma once
-//#ifndef MACHI_KORO_DE_H
-//#define MACHI_KORO_DE_H
 #include "stdio.h"
 using namespace std;
 
@@ -18,5 +16,3 @@ class Dice {
     public:
     Dice();
 };
-
-//#endif //MACHI_KORO_DE_H
