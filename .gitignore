@@ -3,3 +3,4 @@ CppProperties.json
 Machi Koro.*
 x64/
 .vscode/tasks.json
+.DS_Store
