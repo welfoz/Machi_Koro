@@ -5,6 +5,7 @@ int main(int argc, const char* argv[]) {
     std::cout << "Hello, World!\n";
 
     Game game;
+    game.createAll();
 
     // example creation Icone
     Icon icon1("wheat", "wheat.png", Type::primaryIndustry);
@@ -24,6 +25,8 @@ int main(int argc, const char* argv[]) {
     cout << wheatfield.getIcon()->getImage() << '\n';
     cout << wheatfield.getIcon()->getName() << '\n';
     cout << typeToString(wheatfield.getIcon()->getType()) << '\n';
+
+    system("pause");
 
 
     return 0;

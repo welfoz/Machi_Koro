@@ -16,7 +16,8 @@ using namespace std;
 class Game{
 protected:
     static Game* instance;
-    vector<BaseCard*> cards;
+    vector<EstablishmentCard*> cards;
+    vector<Monument*> monuments;
     Board* board;
     Player* players[10];
     Bank* bank;
@@ -30,12 +31,14 @@ protected:
     Game& operator=(const Game& g) = delete;
 
     // initialisation : toutes ces méthodes sont appellés dans le constructeur Game()
-    void createBank();
+    void createBank(size_t nbOfPlayers);
     void createPlayer(string name, size_t id);
-    virtual void createCards();
+    virtual void createEstablishmentCards();
+    virtual void createMonumentCards();
     virtual void createBoard();
     virtual void createIcons();
 
+    vector<EstablishmentCard*> getPlayerStarterCards();
     //match methods
     virtual void turn(Player* player);
     int throwDice(size_t numberOfDices);
@@ -49,9 +52,21 @@ protected:
     void buildMonument(Monument& monument);
 
 
+
 public:
     Game();
     ~Game();
+
+    // we can't call virtual functions in the constructor
+    void createAll();
+    
     const vector<Icon*> getIcons();
     void match();
+
+    // getter
+    Player& getPlayer(size_t id) const {
+        return *players[id - 1];
+    };
+    EstablishmentCard* getCardByName(string name) const;
+
 };
