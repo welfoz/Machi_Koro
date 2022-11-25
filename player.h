@@ -20,7 +20,6 @@ class Player{
     map<Monument*,bool>monuments;
     void purchaseMonument(Monument* card);
     void purchaseEstablishment(EstablishmentCard* card);
-    const size_t nbDiceChosen() const;
     void activateRedCards(size_t diceNumber);
     void activateBlueCards(size_t diceNumber);
     void activateGreenCards(size_t diceNumber);
