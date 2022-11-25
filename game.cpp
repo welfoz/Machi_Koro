@@ -144,3 +144,8 @@ Game::~Game() {
     for (std::vector<const Icon*>::iterator it = icons.begin() ; it != icons.end(); ++it) delete *it;
     Game::getInstance()->freeInstance();
 };
+
+void Game::match() {
+    createAll();
+}
+
