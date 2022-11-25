@@ -1,6 +1,7 @@
 #pragma once
 #include <map>
 #include "baseCard.h"
+#include <vector>
 using namespace std;
 
 
@@ -10,11 +11,12 @@ class Board
 {
 private:
     friend class Game;
-    map<BaseCard*, size_t> cardsDecks;
+    map<EstablishmentCard*, const size_t> cardsDecks;
 public:
-    Board();
+    Board(vector<EstablishmentCard*> cards);
+
     ~Board();
-    BaseCard& removeCard(BaseCard& card);
-    BaseCard& addCard(BaseCard& card);
+    void removeCard(EstablishmentCard& card);
+    void addCard(EstablishmentCard& card);
     void printBoard();
 };
