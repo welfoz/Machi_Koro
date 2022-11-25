@@ -4,26 +4,33 @@
 #include "monument.h"
 #include "establishmentCard.h"
 #include <iostream>
-class EstablishmentCard;
+#include <vector>
+
+// need to comment it if we want to use EstablishmentCard methods
+//class EstablishmentCard;
 
 using namespace std;
 
 class Player{
-    friend class Jeu;
+    friend class Game;
     string username;
-    int id;
+    size_t id;
     map<EstablishmentCard*, size_t> cardsCounter;
-    int nbMonument;
-    Monument* monuments[];
-    Player();
-    void purchaseCard(BaseCard& carte);
+    map<Monument*, bool> monuments;
+    void purchaseCard(EstablishmentCard* card);
     const int& nbDiceChosen() const;
     void activateRedCards(size_t diceNumber);
     void activateBlueCards(size_t diceNumber);
     void activateGreenCards(size_t diceNumber);
     void activatePurpleCards(size_t diceNumber);
 public:
+    Player(string name, size_t id, vector<Monument*> monuments, vector<EstablishmentCard*> cards);
+
     const Monument& getMonument(string name) const;
-    const string& getUsername() const;
+    const string& getUsername() const {
+        return username;
+    };
     const size_t& getId() const;
+
+    void printCards() const;
 };

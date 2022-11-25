@@ -1,6 +1,6 @@
 #include "bank.h"
 
-Bank::Bank(size_t nbPlayers){};
+Bank::Bank(size_t nbPlayers): accounts() {};
 Bank::~Bank(){};
 void Bank::trade(Player& idReceiver, Player& idGiver, int amount){};
 void Bank::credit(Player& idReceiver, int amount){};

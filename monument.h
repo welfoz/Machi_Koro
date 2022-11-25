@@ -8,7 +8,7 @@ class Monument: public BaseCard {
 	bool active;
 public:
 	Monument(string name, size_t price, string desc): BaseCard(name, Type::landmark, price, nullptr, desc) {
-		setIcon(getIconByName("landmark"));
+		//setIcon(getIconByName("landmark"));
 	};
 
 	const bool isActivated() {
