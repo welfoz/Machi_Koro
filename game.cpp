@@ -108,3 +108,7 @@ EstablishmentCard* Game::getCardByName(string name) const {
 void Game::turn(Player* player) {}
 
 Game::~Game() {};
+
+void Game::match() {
+    createAll();
+}
