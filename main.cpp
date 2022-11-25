@@ -15,7 +15,7 @@ int main(int argc, const char* argv[]) {
     cout << wheatfield.getEffetDescription() << '\n';
     cout << wheatfield.getNumberActivation() << '\n';
     cout << wheatfield.getPrice() << '\n';
-    cout << wheatfield.getType() << '\n';
+    cout << typeToString(wheatfield.getType()) << '\n';
     size_t* a = wheatfield.getActivationNumbers();
     for (size_t i = 0; i < 3; i++) {
         cout << *a << '\n';

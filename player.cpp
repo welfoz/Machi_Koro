@@ -1,27 +1,56 @@
+
 #include "player.h"
+
+
+void Player::purchaseMonument(Monument* card) {
+    if (!monuments[card]) monuments[card]=true;
+}
+
+const size_t Player::nbDiceChosen() const{ // est appelé par le jeu seulement si le joueur posède station
+    if (!getMonument("Station")) return 1;
+    size_t n=0;
+    while (n>2 || n<1){
+        cout<<"How many dice do you chose to roll ?\n"<<endl;
+        cin>>n;
+        if (n>2 || n<1) cout<<"Veuillez choisir un nombre entre 1 et 2\n"<<endl;
+    }
+    return n;
+}
 
 void Player::activateRedCards(size_t diceNumber) {
     for(auto it=cardsCounter.begin();it!=cardsCounter.end();it++){
-        if(it->first->getType()=="Restaurants"&& it->first->inActivationNumbers(diceNumber)) it->first->activation(*this);
+        if(it->first->getType()==Type::restaurants&& it->first->inActivationNumbers(diceNumber)) it->first->activation(*this);
     }
 }
 void Player::activateBlueCards(size_t diceNumber){
     for(auto it=cardsCounter.begin();it!=cardsCounter.end();it++){
-        if(it->first->getType()=="Primary Iindustry"&& it->first->inActivationNumbers(diceNumber)) it->first->activation(*this);
+        if(it->first->getType()==Type::primaryIndustry&& it->first->inActivationNumbers(diceNumber)) it->first->activation(*this);
     }
 }
 void Player::activateGreenCards(size_t diceNumber){
     for(auto it=cardsCounter.begin();it!=cardsCounter.end();it++){
-        if(it->first->getType()=="Secondary Iindustry"&& it->first->inActivationNumbers(diceNumber)) it->first->activation(*this);
+        if(it->first->getType()==Type::secondaryIndustry&& it->first->inActivationNumbers(diceNumber)) it->first->activation(*this);
     }
 }
 void Player::activatePurpleCards(size_t diceNumber){
     for(auto it=cardsCounter.begin();it!=cardsCounter.end();it++){
-        if(it->first->getType()=="Major Establishment"&& it->first->inActivationNumbers(diceNumber)) it->first->activation(*this);
+        if(it->first->getType()==Type::majorEstablishment&& it->first->inActivationNumbers(diceNumber)) it->first->activation(*this);
     }
 }
 
-void Player::purchaseCard(EstablishmentCard* card) {
+bool Player::getMonument(std::string name) const {
+    for (auto it=monuments.begin();it!=monuments.end();it++){
+        if (it->first->getName()==name) return it->second;
+    }
+    return false;
+}
+
+const size_t& Player::getId() const {
+    return id;
+}
+
+
+void Player::purchaseEstablishment(EstablishmentCard* card) {
 	// Increment the counter of this card
 	// if the cards isn't yet counted, set the counter to 1
 	auto itCardsCounter = cardsCounter.find(card);
@@ -40,7 +69,7 @@ Player::Player(string name, size_t id, vector<Monument*> monuments, vector<Estab
 	}
 
 	for (auto it = cards.begin(); it != cards.end(); it++) {
-		purchaseCard(*it);
+		purchaseEstablishment(*it);
 	}
 	printCards();
 };

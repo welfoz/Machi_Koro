@@ -1,7 +1,15 @@
+#pragma once
 #include "bank.h"
+#include "player.h"
 
-Bank::Bank(size_t nbPlayers): accounts() {};
-Bank::~Bank(){};
-void Bank::trade(Player& idReceiver, Player& idGiver, int amount){};
-void Bank::credit(Player& idReceiver, int amount){};
-void Bank::debit(Player& idGiver, int amount){};
+void Bank::trade(size_t idReceiver, size_t idGiver, int amount){
+    accounts[idGiver]-=amount;
+    accounts[idReceiver]+=amount;
+}
+
+void Bank::credit(size_t idReceiver, int amount){
+    accounts[idReceiver]+=amount;
+}
+void Bank::debit(size_t idGiver, int amount){
+    accounts[idGiver]-=amount;
+}
