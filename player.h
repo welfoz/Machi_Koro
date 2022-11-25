@@ -4,7 +4,7 @@
 #include "establishmentCard.h"
 #include "monument.h"
 #include <iostream>
-
+#include "ostream"
 using namespace std;
 
 class Player{
@@ -12,18 +12,18 @@ class Player{
     string username;
     int id;
     map<EstablishmentCard*,size_t> cardsCounter;
+    map<Monument*,bool>monuments;
     int nbMonument;
-    Monument* monuments[];
-    Player();
-    void purchaseCard(BaseCard& carte);
-    const int& nbDiceChosen() const;
+    Player(int id,string username, int nbmonument);
+    void purchaseMonument(Monument& card);
+    void purchaseEstablishment(EstablishmentCard& card);
+    const size_t nbDiceChosen() const;
     void activateRedCards(size_t diceNumber);
     void activateBlueCards(size_t diceNumber);
     void activateGreenCards(size_t diceNumber);
     void activatePurpleCards(size_t diceNumber);
 public:
-    const Monument& getMonument(string name) const;
+    bool getMonument(string name) const;
     const string& getUsername() const;
     const size_t& getId() const;
-;
 };

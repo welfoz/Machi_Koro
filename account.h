@@ -4,8 +4,8 @@
 class Account {
     friend class Bank;
     size_t balance;
-    void add(size_t amount);
+    void add(size_t amount) {balance+=amount;}
 public:
-    Account();
-    const size_t& getSolde() const;
+    Account() : balance(3){};
+    const size_t& getSolde() const {return balance;}
 };
