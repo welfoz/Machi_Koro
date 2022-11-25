@@ -1,4 +1,3 @@
-
 #include "game.h"
 
 Game* Game::getInstance()
@@ -60,34 +59,53 @@ void Game::createBank(size_t nbOfPlayers) {
     bank = new Bank(nbOfPlayers);
 };
 
-// need to add all cards
 void Game::createEstablishmentCards() {
 	cards.push_back(new WheatField());
+    
+    for (size_t i; i<6; i++) cards.push_back(new WheatField());
+    // for (size_t i; i<6; i++) cards.push_back(new Ranch());
+    // for (size_t i; i<6; i++) cards.push_back(new Forest());
+    // for (size_t i; i<6; i++) cards.push_back(new Mine());
+    // for (size_t i; i<6; i++) cards.push_back(new AppleOrchard());
+    // for (size_t i; i<6; i++) cards.push_back(new Bakery());
+    // for (size_t i; i<6; i++) cards.push_back(new ConvenienceStore());
+    // for (size_t i; i<6; i++) cards.push_back(new CheeseFactory());
+    // for (size_t i; i<6; i++) cards.push_back(new FurnitureFactory());
+    // for (size_t i; i<6; i++) cards.push_back(new Fruit&VegetableMarket());
+    // for (size_t i; i<6; i++) cards.push_back(new Café());
+    // for (size_t i; i<6; i++) cards.push_back(new FamilyRestaurant());
+    // for (size_t i; i<6; i++) cards.push_back(new Stadium());
+    // for (size_t i; i<6; i++) cards.push_back(new TVStation());
+    // for (size_t i; i<6; i++) cards.push_back(new BusinessCenter());
 };
 
-// need to add all monuments
 void Game::createMonumentCards() {
-    monuments.push_back(new Monument("monumentName", 9, "desc"));
+    monuments.push_back(new Monument("Train Station", 4, "You may roll 1 or 2 dice."));
+    monuments.push_back(new Monument("Shopping Mall", 10, "Each of your ☕ and 🍞 establishments earns +1 coin."));
+    monuments.push_back(new Monument("Amusement Park", 16, "If you roll doubles, take another turn after this one."));
+    monuments.push_back(new Monument("Radio Tower", 22, "Once every turn, you can choose to re-roll your dice."));
 }
 
 void Game::createBoard() {
     board = new Board(cards);
 };
 
-// need to add all icons
 void Game::createIcons() {
     icons.push_back(new Icon("wheat", "wheat.png", Type::primaryIndustry));
+    icons.push_back(new Icon("cow", "cow.png", Type::primaryIndustry));
+    icons.push_back(new Icon("gear", "gear.png", Type::primaryIndustry));
+    icons.push_back(new Icon("bread", "bread.png", Type::secondaryIndustry));
+    icons.push_back(new Icon("factory", "factory.png", Type::secondaryIndustry));
+    icons.push_back(new Icon("fruit", "fruit.png", Type::secondaryIndustry));
+    icons.push_back(new Icon("cup", "cup.png", Type::restaurants));
+    icons.push_back(new Icon("major", "major.png", Type::majorEstablishment));
 };
 
-// need to add the real cards
 vector<EstablishmentCard*> Game::getPlayerStarterCards() {
     vector<EstablishmentCard*> starterCards;
     try {
-		starterCards.push_back(getCardByName("WheatField"));
-		starterCards.push_back(getCardByName("WheatField"));
-		starterCards.push_back(getCardByName("WheatField"));
-		starterCards.push_back(getCardByName("WheatField"));
-		starterCards.push_back(getCardByName("WheatField"));
+		starterCards.push_back(getCardByName("Wheat Field"));
+        // starterCards.push_back(getCardByName("Bakery"));
     } 
     catch (string error) {
         cout << error;
@@ -96,7 +114,7 @@ vector<EstablishmentCard*> Game::getPlayerStarterCards() {
 }
 
 EstablishmentCard* Game::getCardByName(string name) const {
-    auto it = find_if(cards.begin(), cards.end(), [&name](const EstablishmentCard* obj) {return obj->getName() == name; });
+    auto it = find_if(cards.begin(), cards.end(), [&name](const EstablishmentCard* obj) {return obj->getName() == name;});
 	if (it != cards.end()) {
         //found the name!
         return *it;
@@ -107,4 +125,12 @@ EstablishmentCard* Game::getCardByName(string name) const {
 
 void Game::turn(Player* player) {}
 
-Game::~Game() {};
+Game::~Game() {
+    for (std::vector<EstablishmentCard*>::iterator it = cards.begin() ; it != cards.end(); ++it) delete *it;
+    for (std::vector<Monument*>::iterator it = monuments.begin() ; it != monuments.end(); ++it) delete *it;
+    delete board;
+    for (size_t i = 0; i<10; i++) delete players[i];
+    delete bank;
+    for (std::vector<const Icon*>::iterator it = icons.begin() ; it != icons.end(); ++it) delete *it;
+    Game::getInstance()->freeInstance();
+};
