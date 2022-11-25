@@ -12,7 +12,7 @@ public:
 	virtual void activation(Player& p) {};
 };
 
-class Green : private EstablishmentCard {
+class Green : public EstablishmentCard {
 protected:
 	Green(size_t* act, size_t number, string name, size_t price, string desc) 
 		: EstablishmentCard(act, number, name, Type::secondaryIndustry, price, desc) {};
@@ -24,7 +24,7 @@ public:
 	virtual void activation(Player& p) {};
 };
 
-class Red : private EstablishmentCard {
+class Red : public EstablishmentCard {
 protected:
 	Red(size_t* act, size_t number, string name, size_t price, string desc)
 		: EstablishmentCard(act, number, name, Type::restaurants, price, desc) {};
@@ -36,7 +36,7 @@ public:
 	virtual void activation(Player& p) {};
 };
 
-class Purple : private EstablishmentCard {
+class Purple : public EstablishmentCard {
 protected:
 	Purple(size_t* act, size_t number, string name, size_t price, string desc) 
 		: EstablishmentCard(act, number, name, Type::majorEstablishment, price, desc) {};
