@@ -15,7 +15,6 @@ private:
 	const string effectDescription;
 
 public:
-	BaseCard();
 	void setIcon(const Icon* icon) {
 		this->icon = icon;
 	}
@@ -25,8 +24,8 @@ public:
 	}
 
 
-    const string getType() const{
-        return typeToString(type);
+    Type getType() const{
+        return type;
     }
 
 	const size_t& getPrice() const {
