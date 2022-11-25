@@ -51,7 +51,7 @@ protected:
     void action();
     void buildEstablishment(BaseCard& card);
     void buildMonument(Monument& monument);
-
+    const size_t getNbDiceChosen(Player& p);
 
 
 public:
