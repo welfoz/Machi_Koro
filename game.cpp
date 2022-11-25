@@ -122,6 +122,16 @@ EstablishmentCard* Game::getCardByName(string name) const {
     string error = "error getCardByName, didn't find : " + name + "\n";
     throw error;
 }
+const size_t Game::getNbDiceChosen(Player& p) { // est appelé par le jeu seulement si le joueur posède station
+    if (!p.getMonument("Train Station")) return 1;
+    size_t n=0;
+    while (n>2 || n<1){
+        cout<<"How many dice do you chose to roll ?\n"<<endl;
+        cin>>n;
+        if (n>2 || n<1) cout<<"Please select a number between 1 and 2\n"<<endl;
+    }
+    return n;
+}
 
 void Game::turn(Player* player) {}
 
