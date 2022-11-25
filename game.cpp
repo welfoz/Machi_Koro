@@ -1,5 +1,6 @@
-#pragma once 
+
 #include "game.h"
+
 Game* Game::getInstance()
 {
     if (instance == nullptr)

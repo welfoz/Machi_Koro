@@ -24,8 +24,8 @@ public:
 	}
 
 
-    const string getType() const{
-        return typeToString(type);
+    Type getType() const{
+        return type;
     }
 
 	const size_t& getPrice() const {

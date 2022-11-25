@@ -11,6 +11,7 @@
 #include "monument.h"
 #include "player.h"
 #include <vector>
+#include <algorithm>
 using namespace std;
 
 class Game{
