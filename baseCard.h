@@ -7,7 +7,7 @@ using namespace std;
 class BaseCard {
 protected:
     Type type;
-	BaseCard(string name, Type type, size_t price, const Icon* icon, string desc): name(name), type(type), price(price), icon(icon), effectDescription(desc) {};
+	BaseCard(string name, Type type, size_t price, const Icon* icon, string desc, size_t quantity): name(name), type(type), price(price), icon(icon), effectDescription(desc) {};
 private:
 	const string name;
 	const size_t price;
