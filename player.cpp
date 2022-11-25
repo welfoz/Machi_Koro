@@ -1,4 +1,4 @@
-#pragma once
+
 #include "player.h"
 
 Player::Player(int id, std::string username, int nbmonument) : id(id), username(username), nbMonument(nbmonument){// comment initialiser l' attribut monument;
@@ -6,7 +6,7 @@ Player::Player(int id, std::string username, int nbmonument) : id(id), username(
 }
 
 void Player::purchaseEstablishment(EstablishmentCard &card){ // Le jeu se charge de la transaction ?
-    if (cardsCounter.count(&card)==0) cardsCounter.insert(pair<EstablishmentCard*,::size_t>(&card,1));
+    if (cardsCounter.count(&card)==0) cardsCounter.insert(pair<EstablishmentCard*,size_t>(&card,1));
     else cardsCounter[&card]+=1;
 }
 
