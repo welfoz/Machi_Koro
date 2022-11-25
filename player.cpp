@@ -8,12 +8,12 @@ void Player::activateRedCards(size_t diceNumber) {
 }
 void Player::activateBlueCards(size_t diceNumber){
     for(auto it=cardsCounter.begin();it!=cardsCounter.end();it++){
-        if(it->first->getType()=="Primary Iindustry"&& it->first->inActivationNumbers(diceNumber)) it->first->activation(*this);
+        if(it->first->getType()=="Primary Industry"&& it->first->inActivationNumbers(diceNumber)) it->first->activation(*this);
     }
 }
 void Player::activateGreenCards(size_t diceNumber){
     for(auto it=cardsCounter.begin();it!=cardsCounter.end();it++){
-        if(it->first->getType()=="Secondary Iindustry"&& it->first->inActivationNumbers(diceNumber)) it->first->activation(*this);
+        if(it->first->getType()=="Secondary Industry"&& it->first->inActivationNumbers(diceNumber)) it->first->activation(*this);
     }
 }
 void Player::activatePurpleCards(size_t diceNumber){
