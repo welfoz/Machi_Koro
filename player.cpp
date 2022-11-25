@@ -6,17 +6,6 @@ void Player::purchaseMonument(Monument* card) {
     if (!monuments[card]) monuments[card]=true;
 }
 
-const size_t Player::nbDiceChosen() const{ // est appelé par le jeu seulement si le joueur posède station
-    if (!getMonument("Station")) return 1;
-    size_t n=0;
-    while (n>2 || n<1){
-        cout<<"How many dice do you chose to roll ?\n"<<endl;
-        cin>>n;
-        if (n>2 || n<1) cout<<"Veuillez choisir un nombre entre 1 et 2\n"<<endl;
-    }
-    return n;
-}
-
 void Player::activateRedCards(size_t diceNumber) {
     for(auto it=cardsCounter.begin();it!=cardsCounter.end();it++){
         if(it->first->getType()==Type::restaurants&& it->first->inActivationNumbers(diceNumber)) it->first->activation(*this);
