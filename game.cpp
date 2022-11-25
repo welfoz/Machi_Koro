@@ -133,8 +133,6 @@ const size_t Game::getNbDiceChosen(Player& p) { // est appelé par le jeu seulem
     return n;
 }
 
-void Game::turn(Player* player) {}
-
 Game::~Game() {
     for (std::vector<EstablishmentCard*>::iterator it = cards.begin() ; it != cards.end(); ++it) delete *it;
     for (std::vector<Monument*>::iterator it = monuments.begin() ; it != monuments.end(); ++it) delete *it;
@@ -143,4 +141,18 @@ Game::~Game() {
     delete bank;
     for (std::vector<const Icon*>::iterator it = icons.begin() ; it != icons.end(); ++it) delete *it;
     Game::getInstance()->freeInstance();
+};
+
+void Game::match(){
+    size_t id = 0;
+    while (!winner) turn(players[id]);
+    cout << "The game is over!!\nThe winner is "<< winner->getUsername();
+};
+
+void Game::turn(Player* player){
+    cout << "\n\n------ Player : " << player->getUsername() << " - Money = " << bank->accounts[player->getId()]->getSolde() << "------\n\n";
+    cout << "Monuments:\n";
+    player->printMonuments();
+    cout << "Establishments:\n";
+    player->printCards();
 };

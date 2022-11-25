@@ -38,8 +38,8 @@ protected:
     virtual void createMonumentCards();
     virtual void createBoard();
     virtual void createIcons();
-
     vector<EstablishmentCard*> getPlayerStarterCards();
+    
     //match methods
     virtual void turn(Player* player);
     int throwDice(size_t numberOfDices);

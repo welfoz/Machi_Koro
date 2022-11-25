@@ -64,9 +64,14 @@ Player::Player(string name, size_t id, vector<Monument*> monuments, vector<Estab
 };
 
 void Player::printCards() const {
+	for (auto it = cardsCounter.begin(); it != cardsCounter.end(); it++) {
+		cout << it->first->getName() << " : " << it->second << "\n";
+	}
+}
+
+void Player::printMonuments() const {
 	cout << username << " cards : \n";
 	for (auto it = cardsCounter.begin(); it != cardsCounter.end(); it++) {
 		cout << it->first->getName() << " : " << it->second << "\n";
 	}
-
 }
