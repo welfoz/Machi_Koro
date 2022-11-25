@@ -5,18 +5,21 @@
 #include "monument.h"
 #include <iostream>
 #include "ostream"
+#include <vector>
+
+// need to comment it if we want to use EstablishmentCard methods
+//class EstablishmentCard;
+
 using namespace std;
 
 class Player{
-    friend class Jeu;
+    friend class Game;
     string username;
-    int id;
+    size_t id;
     map<EstablishmentCard*,size_t> cardsCounter;
     map<Monument*,bool>monuments;
-    int nbMonument;
-    Player(int id,string username, int nbmonument);
-    void purchaseMonument(Monument& card);
-    void purchaseEstablishment(EstablishmentCard& card);
+    void purchaseMonument(Monument* card);
+    void purchaseEstablishment(EstablishmentCard* card);
     const size_t nbDiceChosen() const;
     void activateRedCards(size_t diceNumber);
     void activateBlueCards(size_t diceNumber);
@@ -24,6 +27,8 @@ class Player{
     void activatePurpleCards(size_t diceNumber);
 public:
     bool getMonument(string name) const;
-    const string& getUsername() const;
+    Player(string name, size_t id, vector<Monument*> monuments, vector<EstablishmentCard*> cards);
+    const string& getUsername() const { return username;};
     const size_t& getId() const;
+    void printCards() const;
 };

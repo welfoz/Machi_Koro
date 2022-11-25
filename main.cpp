@@ -1,16 +1,10 @@
-//
-//  main.cpp
-//  LO21 - Machi Koro
-//
-//  Created by Pol Corty on 12/11/2022.
-//
-
-//#pragma once
 #include "game.h"
-
 int main(int argc, const char* argv[]) {
     // insert code here...
     std::cout << "Hello, World!\n";
+
+    Game game;
+    game.createAll();
 
     // example creation Icone
     Icon icon1("wheat", "wheat.png", Type::primaryIndustry);
@@ -30,6 +24,8 @@ int main(int argc, const char* argv[]) {
     cout << wheatfield.getIcon()->getImage() << '\n';
     cout << wheatfield.getIcon()->getName() << '\n';
     cout << typeToString(wheatfield.getIcon()->getType()) << '\n';
+
+    system("pause");
 
 
     return 0;

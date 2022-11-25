@@ -1,18 +1,13 @@
-//
-// Created by jules on 12/11/2022.
-//
-
-//#ifndef MACHI_KORO_CARTE_H
-//#define MACHI_KORO_CARTE_H
 #pragma once
 #include "baseCard.h"
 class Player;
 
 class EstablishmentCard : public BaseCard {
 	size_t* activationNumbers;
-	size_t numberActivation;
+	const size_t numberActivation;
+	const size_t quantity;
 protected:
-	EstablishmentCard(size_t* act, size_t number, string name, Type type, size_t price, string desc) : BaseCard(name, type, price, nullptr, desc), activationNumbers(act), numberActivation(number) {
+	EstablishmentCard(size_t* act, size_t number, string name, Type type, size_t price, string desc, size_t quantity) : BaseCard(name, type, price, nullptr, desc), activationNumbers(act), numberActivation(number), quantity(quantity) {
 	};
 public:
 	void setActivationNumbers(size_t* const act) {
@@ -29,4 +24,8 @@ public:
 		return activationNumbers;
 	}
 	virtual void activation(Player& p) {};
+	
+	const size_t getQuantity() const {
+		return quantity;
+	}
 };
