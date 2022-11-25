@@ -10,9 +10,7 @@ class Dice {
     friend class Game;
     static const int min = 1;
     static const int max = 6;
-    const size_t throwDice() const{
-        return 0;
-    };
-    public:
-    Dice();
+    const size_t throwDice() const;
+public:
+    Dice(){};
 };

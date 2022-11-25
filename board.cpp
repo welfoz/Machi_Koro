@@ -1,4 +1,6 @@
-#pragma once
-// when include board.h => compilation errors
-//#include "board.h"
-#include "baseCard.h"
+#include "board.h"
+
+Board::~Board(){};
+// BaseCard& Board::removeCard(BaseCard& card){};
+// BaseCard& Board::addCard(BaseCard& card){};
+void Board::printBoard(){};

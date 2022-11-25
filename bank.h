@@ -2,7 +2,6 @@
 #include "account.h"
 #include "player.h"
 
-//class Player;
 class Bank {
 private :
     Account* accounts[];

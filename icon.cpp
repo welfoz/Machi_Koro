@@ -1,4 +1,3 @@
-#pragma once
 #include "icon.h"
 
 string typeToString(Type type) {

@@ -1,16 +1,10 @@
-//
-//  main.cpp
-//  LO21 - Machi Koro
-//
-//  Created by Pol Corty on 12/11/2022.
-//
-
-//#pragma once
 #include "game.h"
 
 int main(int argc, const char* argv[]) {
     // insert code here...
     std::cout << "Hello, World!\n";
+
+    Game game;
 
     // example creation Icone
     Icon icon1("wheat", "wheat.png", Type::primaryIndustry);

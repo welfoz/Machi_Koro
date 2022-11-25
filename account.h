@@ -7,5 +7,7 @@ class Account {
     void add(size_t amount);
 public:
     Account();
-    const size_t& getSolde() const;
+    const size_t& getSolde() const {
+        return balance;
+    };
 };

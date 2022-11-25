@@ -1,4 +1,3 @@
-#pragma once
 #include "player.h"
 
 void Player::activateRedCards(size_t diceNumber) {
