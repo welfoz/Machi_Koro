@@ -3,7 +3,7 @@
 
 class Blue : public EstablishmentCard {
 protected:
-	Blue(size_t* act, size_t number, string name, size_t price, string desc, size_t quantity) 
+	Blue(size_t* act, size_t number, string name, size_t price, string desc, size_t quantity)
 		: EstablishmentCard(act, number, name, Type::primaryIndustry, price, desc, quantity) {};
 public:
 	const Icon* getIconByName(string name);
