@@ -1,5 +1,5 @@
 #include "bank.h"
-#include "../player.h"
+#include "../players/player.h"
 
 void Bank::trade(size_t idReceiver, size_t idGiver, int amount){
     size_t actual_amount;

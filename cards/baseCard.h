@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include "../icon.h"
+#include "../cards/icon.h"
 using namespace std;
 
 
