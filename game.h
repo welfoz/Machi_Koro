@@ -25,6 +25,7 @@ protected:
     Dice dice;
     Player* winner;
     vector<const Icon*> icons;
+    size_t nbPlayers;
 
     static Game* getInstance();
     static void freeInstance();
@@ -43,11 +44,10 @@ protected:
     //match methods
     virtual void turn(Player* player);
     int throwDice(size_t numberOfDices);
-    void activation(size_t number);
-    void activationRedCards(size_t n);
-    void activationGreenCards(size_t n);
-    void activationPurpleCards(size_t n);
-    void activationBlueCards(size_t n);
+    void activation(Player* p, size_t number);
+    void activationRedCards(Player* p, size_t n);
+    void activationGreenAndBlueCards(Player* p, size_t n);
+    void activationPurpleCards(Player* p, size_t n);
     void action();
     void buildEstablishment(BaseCard& card);
     void buildMonument(Monument& monument);

@@ -4,7 +4,7 @@ int main(int argc, const char* argv[]) {
     std::cout << "Hello, World!\n";
 
     Game game;
-    game.createAll();
+    game.match();
 
     // example creation Icone
     Icon icon1("wheat", "wheat.png", Type::primaryIndustry);
