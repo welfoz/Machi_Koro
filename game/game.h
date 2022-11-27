@@ -1,15 +1,15 @@
 #pragma once
-#include "bank/account.h"
-#include "cards/allCards.h"
-#include "bank/bank.h"
-#include "cards/baseCard.h"
+#include "../bank/account.h"
+#include "../cards/allCards.h"
+#include "../bank/bank.h"
+#include "../cards/baseCard.h"
 #include "board.h"
-#include "cards/cardColor.h"
+#include "../cards/cardColor.h"
 #include "dice.h"
-#include "cards/establishmentCard.h"
-#include "icon.h"
-#include "cards/monument.h"
-#include "player.h"
+#include "../cards/establishmentCard.h"
+#include "../cards/icon.h"
+#include "../cards/monument.h"
+#include "../players/player.h"
 #include <vector>
 #include <algorithm>
 using namespace std;
