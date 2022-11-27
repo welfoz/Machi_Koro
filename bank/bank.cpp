@@ -1,6 +1,6 @@
 #pragma once
 #include "bank.h"
-#include "player.h"
+#include "../player.h"
 
 void Bank::trade(size_t idReceiver, size_t idGiver, int amount){
     size_t actual_amount;
