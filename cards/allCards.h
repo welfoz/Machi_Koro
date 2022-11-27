@@ -3,9 +3,9 @@
 
 class WheatField : public Blue {
 public:
-    WheatField() : Blue(nullptr, 1, "WheatField", 1, "You get 1 coin from the bank, on anyone's turn.",10) {
-        //BaseCard::setIcon(new Icon("wheatFieldIcon", "WHEAT_FIELD.png", Type::primaryIndustry));
-        BaseCard::setIcon(getIconByName("wheat"));
+    WheatField() : Blue(nullptr, 1, "Wheat Field", 1, "You get 1 coin from the bank, on anyone's turn.",10) {
+        BaseCard::setIcon(new Icon("wheatFieldIcon", "WHEAT_FIELD.png", Type::primaryIndustry));
+        //BaseCard::setIcon(getIconByName("wheat"));
         size_t* actNumber = new size_t[1];
         actNumber[0] = 1;
 
