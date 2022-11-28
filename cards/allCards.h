@@ -71,6 +71,7 @@ public:
 
 
 
+
 class Bakery : public Green {
 public:
     Bakery() : Green(nullptr, 2, "Bakery", 1, "The player with the card gets one coin from the bank.", 10) {
