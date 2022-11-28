@@ -1,15 +1,15 @@
 #pragma once
-#include "account.h"
-#include "allCards.h"
-#include "bank.h"
-#include "baseCard.h"
+#include "../bank/account.h"
+#include "../cards/allCards.h"
+#include "../bank/bank.h"
+#include "../cards/baseCard.h"
 #include "board.h"
-#include "cardColor.h"
+#include "../cards/cardColor.h"
 #include "dice.h"
-#include "establishmentCard.h"
-#include "icon.h"
-#include "monument.h"
-#include "player.h"
+#include "../cards/establishmentCard.h"
+#include "../cards/icon.h"
+#include "../cards/monument.h"
+#include "../players/player.h"
 #include <vector>
 #include <algorithm>
 using namespace std;
@@ -25,6 +25,7 @@ protected:
     Dice dice;
     Player* winner;
     vector<const Icon*> icons;
+    size_t nbPlayers;
 
     static Game* getInstance();
     static void freeInstance();
@@ -43,11 +44,10 @@ protected:
     //match methods
     virtual void turn(Player* player);
     int throwDice(size_t numberOfDices);
-    void activation(size_t number);
-    void activationRedCards(size_t n);
-    void activationGreenCards(size_t n);
-    void activationPurpleCards(size_t n);
-    void activationBlueCards(size_t n);
+    void activation(Player* p, size_t number);
+    void activationRedCards(Player* p, size_t n);
+    void activationGreenAndBlueCards(Player* p, size_t n);
+    void activationPurpleCards(Player* p, size_t n);
     void action();
     void buildEstablishment(BaseCard& card);
     void buildMonument(Monument& monument);
