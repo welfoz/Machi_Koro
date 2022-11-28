@@ -45,8 +45,7 @@ void Game::createAll() {
         }
 		cpt++;
     }
-    nbPlayers = cpt;
-
+    this->nbPlayers = cpt;
     createBank(cpt);
 
     createBoard();
@@ -124,6 +123,17 @@ EstablishmentCard* Game::getCardByName(string name) const {
     string error = "error getCardByName, didn't find : " + name + "\n";
     throw error;
 }
+
+Monument* Game::getMonumentByName(string name) const {
+    auto it = find_if(monuments.begin(), monuments.end(), [&name](const Monument* obj) {return obj->getName() == name;});
+	if (it != monuments.end()) {
+        //found the name!
+        return *it;
+    }
+    string error = "error getMonumentByName, didn't find : " + name + "\n";
+    throw error;
+}
+
 const size_t Game::getNbDiceChosen(Player& p) { // est appelé par le jeu seulement si le joueur posède station
     if (!p.getMonument("Train Station")) return 1;
     size_t n=0;
@@ -134,9 +144,6 @@ const size_t Game::getNbDiceChosen(Player& p) { // est appelé par le jeu seulem
     }
     return n;
 }
-
-void Game::turn(Player* player) {}
-
 
 Game::~Game() {
     for (size_t i = 0; i<this->nbPlayers; i++) delete players[i];
@@ -149,9 +156,52 @@ Game::~Game() {
     std::cout << "game deleted :)";
 };
 
-void Game::match() {
+void Game::match(){
     createAll();
-}
+    size_t id = 0;
+    while (!winner) {
+        turn(players[id]);
+        if (id == nbPlayers-1) id = 0;
+        else id++;
+        };
+    cout << "The game is over!!\nThe winner is "<< winner->getUsername();
+};
+
+void Game::turn(Player* player){
+    cout << "\n\n------ Player : " << player->getUsername() << " - Money = " << bank->accounts[player->getId()]->getSolde() << "------\n\n";
+    player->printMonuments();
+    player->printCards();
+    action(player);
+
+};
+
+void Game::action(Player* player){
+    cout << "Action? (1=buy an establishment, 2=build a monument, 3=nothing)\n";
+    int choix;
+    cin >> choix;
+    switch (choix){
+    case 1:
+    {
+        //show available and buyable establishments
+        //select one
+        EstablishmentCard* card = getCardByName("Wheat Field");
+        player->purchaseEstablishment(card);
+        bank->debit(player->getId(), card->getPrice());
+        break;
+    }
+    case 2:
+    {
+        //show available and buyable monuments
+        //select one
+        Monument* monument = getMonumentByName("Radio Tower");
+        player->purchaseMonument(monument);
+        bank->debit(player->getId(), monument->getPrice());
+        break;
+    }
+    default:
+        break;
+    } 
+};
 
 // blue cards can be activated at everyone turn 
 // green cards can only be activated by the player playing

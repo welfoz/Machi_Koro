@@ -24,10 +24,11 @@ class Player{
     void activateBlueCards(size_t diceNumber);
     void activateGreenCards(size_t diceNumber);
     void activatePurpleCards(size_t diceNumber);
+    void printCards() const;
+    void printMonuments() const;
 public:
     bool getMonument(string name) const;
     Player(string name, size_t id, vector<Monument*> monuments, vector<EstablishmentCard*> cards);
-    const string& getUsername() const { return username;};
+    const string& getUsername() const {return username;};
     const size_t& getId() const;
-    void printCards() const;
 };
