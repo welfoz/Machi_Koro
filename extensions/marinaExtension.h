@@ -1,6 +1,6 @@
 #pragma once
-#include "game.h"
-#include "cardColor.h"
+#include "../game/game.h"
+#include "../cards/cardColor.h"
 
 class Marina: public Game {
 public:
