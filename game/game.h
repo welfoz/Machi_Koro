@@ -27,7 +27,6 @@ protected:
     vector<const Icon*> icons;
     size_t nbPlayers;
 
-    static Game* getInstance();
     static void freeInstance();
     Game(const Game&) = delete;
     Game& operator=(const Game& g) = delete;
@@ -57,11 +56,14 @@ protected:
 public:
     Game();
     ~Game();
+    static Game& getInstance();
 
     // we can't call virtual functions in the constructor
     void createAll();
     
-    const vector<Icon*> getIcons();
+    vector<const Icon*> getIcons() const {
+        return this->icons;
+    };
     void match();
 
     // getter
