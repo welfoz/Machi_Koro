@@ -63,8 +63,6 @@ void Game::createBank(size_t nbOfPlayers) {
 
 void Game::createEstablishmentCards() {
 	cards.push_back(new WheatField());
-    //cards.push_back(new Forest());
-    //cards.push_back(new TVStation());
     
     // cards.push_back(new Forest());
     // cards.push_back(new Mine());
@@ -102,6 +100,7 @@ void Game::createIcons() {
     icons.push_back(new Icon("fruit", "fruit.png", Type::secondaryIndustry));
     icons.push_back(new Icon("cup", "cup.png", Type::restaurants));
     icons.push_back(new Icon("major", "major.png", Type::majorEstablishment));
+    icons.push_back(new Icon("major", "major.png", Type::landmark));
 };
 
 vector<EstablishmentCard*> Game::getPlayerStarterCards() {

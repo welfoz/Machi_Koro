@@ -54,8 +54,8 @@ public:
 
 class AppleOrchard : public Blue {
 public:
-    AppleOrchard() : Blue(nullptr, 1, "wheat", 3, "Get 3 coins from the bank on anyone's turn.", 6) {
-        BaseCard::setIcon(getIconByName("appleOrchard"));
+    AppleOrchard() : Blue(nullptr, 1, "Apple Orchard", 3, "Get 3 coins from the bank on anyone's turn.", 6) {
+        BaseCard::setIcon(getIconByName("wheat"));
         size_t* actNumber = new size_t[1];
         actNumber[0] = 10;
 
