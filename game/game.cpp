@@ -18,12 +18,12 @@ Game* Game::instance = nullptr;
 Game::Game() : dice(Dice()), board(nullptr), bank(nullptr), winner(nullptr) {
 };
 
-void Game::createAll() {
+void Game::createAll(map<string,size_t> quantity) {
     cout << "You're going to start a Machi Koro part\n";
 
     // create cards before players because players needs them to be created
     createMonumentCards();
-    createEstablishmentCards();
+    createEstablishmentCards(quantity);
 
     // create all players
     // ask number of players and their names
@@ -61,8 +61,9 @@ void Game::createBank(size_t nbOfPlayers) {
     bank = new Bank(nbOfPlayers);
 };
 
-void Game::createEstablishmentCards() {
-	cards.push_back(new WheatField());
+void Game::createEstablishmentCards(map<string,size_t> quantity) {
+
+	cards.push_back(new WheatField(quantity["WheatField"]));
     
     // cards.push_back(new Forest());
     // cards.push_back(new Mine());
@@ -147,8 +148,8 @@ Game::~Game() {
     Game::getInstance()->freeInstance();
 };
 
-void Game::match() {
-    createAll();
+void Game::match(map<string,size_t> quantity) {
+    createAll(quantity);
 }
 
 // blue cards can be activated at everyone turn 

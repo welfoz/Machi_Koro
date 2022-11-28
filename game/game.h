@@ -34,7 +34,7 @@ protected:
     // initialisation : toutes ces méthodes sont appellés dans le constructeur Game()
     void createBank(size_t nbOfPlayers);
     void createPlayer(string name, size_t id);
-    virtual void createEstablishmentCards();
+    virtual void createEstablishmentCards(map<string,size_t> quantity);
     virtual void createMonumentCards();
     virtual void createBoard();
     virtual void createIcons();
@@ -63,10 +63,10 @@ public:
     void testActivation();
 
     // we can't call virtual functions in the constructor
-    void createAll();
+    void createAll(map<string,size_t> quantity);
     
     const vector<Icon*> getIcons();
-    void match();
+    void match(map<string,size_t> quantity);
 
     // getter
     Player& getPlayer(size_t id) const {

@@ -31,4 +31,5 @@ public:
     const size_t& getId() const;
     void printCards() const;
     map<EstablishmentCard*,size_t> getCards() const {return cardsCounter;};
+    void printMonuments() const;
 };
