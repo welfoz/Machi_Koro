@@ -64,20 +64,20 @@ void Game::createBank(size_t nbOfPlayers) {
 void Game::createEstablishmentCards() {
 	cards.push_back(new WheatField());
     
-    // cards.push_back(new Forest());
-    // cards.push_back(new Mine());
-    // cards.push_back(new AppleOrchard());
-    // cards.push_back(new Ranch());
-    // cards.push_back(new Bakery());
-    // cards.push_back(new ConvenienceStore());
-    // cards.push_back(new CheeseFactory());
-    // cards.push_back(new FurnitureFactory());
-    // cards.push_back(new Fruit&VegetableMarket());
-    // cards.push_back(new Café());
-    // cards.push_back(new FamilyRestaurant());
-    // cards.push_back(new Stadium());
-    // cards.push_back(new TVStation());
-    // cards.push_back(new BusinessCenter());
+	cards.push_back(new Forest());
+	cards.push_back(new Mine());
+	cards.push_back(new AppleOrchard());
+	cards.push_back(new Ranch());
+	cards.push_back(new Bakery());
+	cards.push_back(new ConvenienceStore());
+	cards.push_back(new CheeseFactory());
+	cards.push_back(new FurnitureFactory());
+	cards.push_back(new FruitVegetableMarket());
+	cards.push_back(new Cafe());
+	cards.push_back(new FamilyRestaurant());
+	cards.push_back(new Stadium());
+	cards.push_back(new TVStation());
+	cards.push_back(new BusinessCenter());
 };
 
 void Game::createMonumentCards() {
