@@ -43,6 +43,7 @@ void Game::createAll() {
         }
 		cpt++;
     }
+    nbPlayers = cpt;
 
     createBank(cpt);
 
@@ -62,21 +63,20 @@ void Game::createBank(size_t nbOfPlayers) {
 void Game::createEstablishmentCards() {
 	cards.push_back(new WheatField());
     
-    for (size_t i; i<6; i++) cards.push_back(new WheatField());
-    // for (size_t i; i<6; i++) cards.push_back(new Ranch());
-    // for (size_t i; i<6; i++) cards.push_back(new Forest());
-    // for (size_t i; i<6; i++) cards.push_back(new Mine());
-    // for (size_t i; i<6; i++) cards.push_back(new AppleOrchard());
-    // for (size_t i; i<6; i++) cards.push_back(new Bakery());
-    // for (size_t i; i<6; i++) cards.push_back(new ConvenienceStore());
-    // for (size_t i; i<6; i++) cards.push_back(new CheeseFactory());
-    // for (size_t i; i<6; i++) cards.push_back(new FurnitureFactory());
-    // for (size_t i; i<6; i++) cards.push_back(new Fruit&VegetableMarket());
-    // for (size_t i; i<6; i++) cards.push_back(new Café());
-    // for (size_t i; i<6; i++) cards.push_back(new FamilyRestaurant());
-    // for (size_t i; i<6; i++) cards.push_back(new Stadium());
-    // for (size_t i; i<6; i++) cards.push_back(new TVStation());
-    // for (size_t i; i<6; i++) cards.push_back(new BusinessCenter());
+    // cards.push_back(new Forest());
+    // cards.push_back(new Mine());
+    // cards.push_back(new AppleOrchard());
+    // cards.push_back(new Ranch());
+    // cards.push_back(new Bakery());
+    // cards.push_back(new ConvenienceStore());
+    // cards.push_back(new CheeseFactory());
+    // cards.push_back(new FurnitureFactory());
+    // cards.push_back(new Fruit&VegetableMarket());
+    // cards.push_back(new Café());
+    // cards.push_back(new FamilyRestaurant());
+    // cards.push_back(new Stadium());
+    // cards.push_back(new TVStation());
+    // cards.push_back(new BusinessCenter());
 };
 
 void Game::createMonumentCards() {
@@ -144,6 +144,7 @@ Game::~Game() {
 };
 
 void Game::match(){
+    createAll();
     size_t id = 0;
     while (!winner) turn(players[id]);
     cout << "The game is over!!\nThe winner is "<< winner->getUsername();
@@ -156,3 +157,40 @@ void Game::turn(Player* player){
     cout << "Establishments:\n";
     player->printCards();
 };
+
+// blue cards can be activated at everyone turn 
+// green cards can only be activated by the player playing
+// sens contraire aiguilles montre ?
+// need to change the loop
+void Game::activationGreenAndBlueCards(Player* p,size_t n) {
+    for (size_t i = 0; i < nbPlayers - 1; i++) {
+        if (players[i] == p) {
+			players[i]->activateGreenCards(n);
+        }
+        players[i]->activateBlueCards(n);
+    }
+}
+
+// red cards can only be activated another that the one is playing
+void Game::activationRedCards(Player* p, size_t n) {
+    for (size_t i = 0; i < nbPlayers - 1; i++) {
+        if (players[i] != p) {
+			players[i]->activateRedCards(n);
+        }
+    }
+}
+
+// purple cards can only be activated by the player playing
+void Game::activationPurpleCards(Player* p, size_t n) {
+    p->activatePurpleCards(n);
+}
+
+void Game::activation(Player* p, size_t diceNumber) {
+    // order of activation:
+    // red 
+    // green & blue  
+    // purple
+    activationRedCards(p, diceNumber);
+    activationGreenAndBlueCards(p, diceNumber);
+    activationPurpleCards(p, diceNumber);
+}
