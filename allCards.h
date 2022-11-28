@@ -67,7 +67,7 @@ public:
         EstablishmentCard::setActivationNumbers(actNumber);
     };
     void activation(Player& p) override {};
-
+};
 
 
 

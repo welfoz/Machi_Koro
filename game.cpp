@@ -43,8 +43,8 @@ void Game::createAll() {
         }
 		cpt++;
     }
-    nbPlayers = cpt;
-
+    this->nbPlayers = cpt;
+    cout << nbPlayers << "\n";
     createBank(cpt);
 
     createBoard();
