@@ -27,7 +27,6 @@ protected:
     vector<const Icon*> icons;
     size_t nbPlayers;
 
-    static Game* getInstance();
     static void freeInstance();
     Game(const Game&) = delete;
     Game& operator=(const Game& g) = delete;
@@ -39,8 +38,8 @@ protected:
     virtual void createMonumentCards();
     virtual void createBoard();
     virtual void createIcons();
-
     vector<EstablishmentCard*> getPlayerStarterCards();
+    
     //match methods
     virtual void turn(Player* player);
     int throwDice(size_t numberOfDices);
@@ -48,20 +47,21 @@ protected:
     void activationRedCards(Player* p, size_t n);
     void activationGreenAndBlueCards(Player* p, size_t n);
     void activationPurpleCards(Player* p, size_t n);
-    void action();
-    void buildEstablishment(BaseCard& card);
-    void buildMonument(Monument& monument);
+    void action(Player* player);
     const size_t getNbDiceChosen(Player& p);
 
 
 public:
     Game();
     ~Game();
+    static Game& getInstance();
 
     // we can't call virtual functions in the constructor
     void createAll();
     
-    const vector<Icon*> getIcons();
+    vector<const Icon*> getIcons() const {
+        return this->icons;
+    };
     void match();
 
     // getter
@@ -69,5 +69,6 @@ public:
         return *players[id - 1];
     };
     EstablishmentCard* getCardByName(string name) const;
+    Monument* getMonumentByName(string name) const;
 
 };

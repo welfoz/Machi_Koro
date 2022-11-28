@@ -1,4 +1,4 @@
-#include "game.h"
+#include "./game/game.h"
 int main(int argc, const char* argv[]) {
     // insert code here...
     std::cout << "Hello, World!\n";
@@ -10,7 +10,7 @@ int main(int argc, const char* argv[]) {
     Icon icon1("wheat", "wheat.png", Type::primaryIndustry);
 
     // example create carte 
-    WheatField wheatfield;
+    WheatField wheatfield(6);
     cout << wheatfield.getName() << '\n';
     cout << wheatfield.getEffetDescription() << '\n';
     cout << wheatfield.getNumberActivation() << '\n';
