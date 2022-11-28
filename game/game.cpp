@@ -1,10 +1,10 @@
 #include "game.h"
 
-Game* Game::getInstance()
+Game& Game::getInstance()
 {
     if (instance == nullptr)
         instance = new Game;
-    return instance;
+    return *instance;
 }
 
 void Game::freeInstance()
@@ -16,12 +16,14 @@ void Game::freeInstance()
 Game* Game::instance = nullptr;
 
 Game::Game() : dice(Dice()), board(nullptr), bank(nullptr), winner(nullptr) {
+    instance = this;
 };
 
 void Game::createAll() {
     cout << "You're going to start a Machi Koro part\n";
 
     // create cards before players because players needs them to be created
+    createIcons();
     createMonumentCards();
     createEstablishmentCards();
 
@@ -49,7 +51,6 @@ void Game::createAll() {
 
     createBoard();
 
-    createIcons();
 };
 
 void Game::createPlayer(string name, size_t id) {
@@ -62,6 +63,8 @@ void Game::createBank(size_t nbOfPlayers) {
 
 void Game::createEstablishmentCards() {
 	cards.push_back(new WheatField());
+    //cards.push_back(new Forest());
+    //cards.push_back(new TVStation());
     
     // cards.push_back(new Forest());
     // cards.push_back(new Mine());
@@ -137,13 +140,14 @@ void Game::turn(Player* player) {}
 
 
 Game::~Game() {
+    for (size_t i = 0; i<10; i++) delete players[i];
     for (std::vector<EstablishmentCard*>::iterator it = cards.begin() ; it != cards.end(); ++it) delete *it;
     for (std::vector<Monument*>::iterator it = monuments.begin() ; it != monuments.end(); ++it) delete *it;
     delete board;
-    for (size_t i = 0; i<10; i++) delete players[i];
     delete bank;
     for (std::vector<const Icon*>::iterator it = icons.begin() ; it != icons.end(); ++it) delete *it;
-    Game::getInstance()->freeInstance();
+    Game::getInstance().freeInstance();
+    std::cout << "game deleted :)";
 };
 
 void Game::match() {
@@ -186,3 +190,4 @@ void Game::activation(Player* p, size_t diceNumber) {
     activationGreenAndBlueCards(p, diceNumber);
     activationPurpleCards(p, diceNumber);
 }
+

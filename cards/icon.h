@@ -15,7 +15,7 @@ class Icon {
 public: 
 	Icon(string n, string i, Type t) : name(n), image(i), type(t) {};
 
-	const string& getName() const {
+	const string getName() const {
 		return name;
 	}
 
