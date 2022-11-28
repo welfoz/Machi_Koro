@@ -15,7 +15,7 @@ void Game::freeInstance()
 
 Game* Game::instance = nullptr;
 
-Game::Game() : dice(Dice()), board(nullptr), bank(nullptr), winner(nullptr) {
+Game::Game() : board(nullptr), bank(nullptr), dice(Dice()), winner(nullptr), players(), nbPlayers(0){
     instance = this;
 };
 
@@ -61,22 +61,21 @@ void Game::createBank(size_t nbOfPlayers) {
 };
 
 void Game::createEstablishmentCards() {
-	cards.push_back(new WheatField());
-    
-	cards.push_back(new Forest());
-	cards.push_back(new Mine());
-	cards.push_back(new AppleOrchard());
-	cards.push_back(new Ranch());
-	cards.push_back(new Bakery());
-	cards.push_back(new ConvenienceStore());
-	cards.push_back(new CheeseFactory());
-	cards.push_back(new FurnitureFactory());
-	cards.push_back(new FruitVegetableMarket());
-	cards.push_back(new Cafe());
-	cards.push_back(new FamilyRestaurant());
-	cards.push_back(new Stadium());
-	cards.push_back(new TVStation());
-	cards.push_back(new BusinessCenter());
+	cards.push_back(new WheatField(6));
+	cards.push_back(new Ranch(6));
+	cards.push_back(new Forest(6));
+	cards.push_back(new Mine(6));
+	cards.push_back(new AppleOrchard(6));
+	cards.push_back(new Bakery(6));
+	cards.push_back(new ConvenienceStore(6));
+	cards.push_back(new CheeseFactory(6));
+	cards.push_back(new FurnitureFactory(6));
+	cards.push_back(new FruitVegetableMarket(6));
+	cards.push_back(new Cafe(6));
+	cards.push_back(new FamilyRestaurant(6));
+	cards.push_back(new Stadium(4));
+	cards.push_back(new TVStation(4));
+	cards.push_back(new BusinessCenter(4));
 };
 
 void Game::createMonumentCards() {
