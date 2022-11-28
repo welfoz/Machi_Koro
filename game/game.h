@@ -48,9 +48,7 @@ protected:
     void activationRedCards(Player* p, size_t n);
     void activationGreenAndBlueCards(Player* p, size_t n);
     void activationPurpleCards(Player* p, size_t n);
-    void action();
-    void buildEstablishment(BaseCard& card);
-    void buildMonument(Monument& monument);
+    void action(Player* player);
     const size_t getNbDiceChosen(Player& p);
 
 
@@ -69,5 +67,6 @@ public:
         return *players[id - 1];
     };
     EstablishmentCard* getCardByName(string name) const;
+    Monument* getMonumentByName(string name) const;
 
 };

@@ -1,7 +1,7 @@
 #include "account.h"
 
-void Account::add(int amount){
-    
+void Account::add(size_t amount){
+    balance += amount;
 };
 
 
