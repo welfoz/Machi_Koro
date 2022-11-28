@@ -1,8 +1,8 @@
 #pragma once
 #include <string>
 #include <map>
-#include "establishmentCard.h"
-#include "monument.h"
+#include "../cards/establishmentCard.h"
+#include "../cards/monument.h"
 #include <iostream>
 #include "ostream"
 #include <vector>
