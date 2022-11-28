@@ -1,6 +1,6 @@
 
 #include "account.h"
-#include "player.h"
+#include "../players/player.h"
 
 class Bank {
 private :

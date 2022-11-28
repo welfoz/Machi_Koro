@@ -1,10 +1,10 @@
-#include "game.h"
+#include "game/game.h"
 int main(int argc, const char* argv[]) {
     // insert code here...
-    std::cout << "Hello, World!\n";
+    /*std::cout << "Hello, World!\n";
 
     Game game;
-    game.createAll();
+    game.match();
 
     // example creation Icone
     Icon icon1("wheat", "wheat.png", Type::primaryIndustry);
@@ -17,16 +17,15 @@ int main(int argc, const char* argv[]) {
     cout << wheatfield.getPrice() << '\n';
     cout << typeToString(wheatfield.getType()) << '\n';
     size_t* a = wheatfield.getActivationNumbers();
-    for (size_t i = 0; i < 3; i++) {
+    for (size_t i = 0; i < wheatfield.getNumberActivation(); i++) {
         cout << *a << '\n';
         a++;
     }
     cout << wheatfield.getIcon()->getImage() << '\n';
     cout << wheatfield.getIcon()->getName() << '\n';
     cout << typeToString(wheatfield.getIcon()->getType()) << '\n';
-
+*/
+    Game game; game.testActivation();
     system("pause");
-
-
     return 0;
 }

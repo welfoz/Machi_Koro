@@ -1,12 +1,12 @@
 #pragma once
 #include <map>
-#include "baseCard.h"
+#include "../cards/baseCard.h"
 #include <vector>
 using namespace std;
 
 
 //using std::map;
-#include "establishmentCard.h"
+#include "../cards/establishmentCard.h"
 class Board
 {
 private:

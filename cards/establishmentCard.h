@@ -10,6 +10,7 @@ protected:
 	EstablishmentCard(size_t* act, size_t number, string name, Type type, size_t price, string desc, size_t quantity) : BaseCard(name, type, price, nullptr, desc), activationNumbers(act), numberActivation(number), quantity(quantity) {
 	};
 public:
+    virtual const Icon* getIconByName(string name);
 	void setActivationNumbers(size_t* const act) {
 		activationNumbers = act;
 	}

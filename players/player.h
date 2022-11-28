@@ -1,8 +1,8 @@
 #pragma once
 #include <string>
 #include <map>
-#include "establishmentCard.h"
-#include "monument.h"
+#include "../cards/establishmentCard.h"
+#include "../cards/monument.h"
 #include <iostream>
 #include "ostream"
 #include <vector>
@@ -30,4 +30,5 @@ public:
     const string& getUsername() const { return username;};
     const size_t& getId() const;
     void printCards() const;
+    map<EstablishmentCard*,size_t> getCards() const {return cardsCounter;};
 };
