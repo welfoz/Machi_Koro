@@ -73,6 +73,6 @@ void Player::printCards() const {
 void Player::printMonuments() const {
 	cout << username << "'s monuments: \n";
 	for (auto it = monuments.begin(); it != monuments.end(); it++) {
-		if (it->first->isActivated()) cout << it->first->getName() << "\n";
+		if (it->second == true) cout << it->first->getName() << "\n";
 	}
 }
