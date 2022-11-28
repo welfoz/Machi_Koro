@@ -140,7 +140,7 @@ void Game::turn(Player* player) {}
 
 
 Game::~Game() {
-    for (size_t i = 0; i<10; i++) delete players[i];
+    for (size_t i = 0; i<this->nbPlayers; i++) delete players[i];
     for (std::vector<EstablishmentCard*>::iterator it = cards.begin() ; it != cards.end(); ++it) delete *it;
     for (std::vector<Monument*>::iterator it = monuments.begin() ; it != monuments.end(); ++it) delete *it;
     delete board;
