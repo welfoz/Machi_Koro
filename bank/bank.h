@@ -9,6 +9,7 @@ private :
     size_t nbPlayers;
     Bank(size_t nbPlayers) : nbPlayers(nbPlayers) , accounts(new Account*[nbPlayers]){};
     ~Bank(){ for (size_t i=0;i<nbPlayers;i++) delete accounts[i];}
+public :
     void trade(size_t idReceiver, size_t idGiver, int amount);
     void credit(size_t idReceiver, int amount);
     void debit(size_t idGiver, int amount);

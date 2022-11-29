@@ -1,9 +1,6 @@
 #include "bank.h"
 #include "../players/player.h"
 
-Bank::Bank(size_t nb) : nbPlayers(nb){
-    for (size_t i=0; i<nb; i++) accounts.push_back(new Account);
-};
 
 void Bank::trade(size_t idReceiver, size_t idGiver, int amount){
     size_t actual_amount;
