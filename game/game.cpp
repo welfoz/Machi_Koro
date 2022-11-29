@@ -18,13 +18,11 @@ Game* Game::instance = nullptr;
 Game::Game() : dice(Dice()), board(nullptr), bank(nullptr), winner(nullptr) {
 };
 
-void Game::createAll(map<string,size_t> quantity) {
+void Game::createAll() {
     cout << "You're going to start a Machi Koro part\n";
-
     // create cards before players because players needs them to be created
     createMonumentCards();
-    createEstablishmentCards(quantity);
-
+    createEstablishmentCards();
     // create all players
     // ask number of players and their names
     unsigned int cpt = 0;
@@ -61,11 +59,10 @@ void Game::createBank(size_t nbOfPlayers) {
     bank = new Bank(nbOfPlayers);
 };
 
-void Game::createEstablishmentCards(map<string,size_t> quantity) {
+void Game::createEstablishmentCards() {
 
-	cards.push_back(new WheatField(quantity["WheatField"]));
-    
-    // cards.push_back(new Forest());
+	cards.push_back(new WheatField(6));
+    cards.push_back(new Forest(6));
     // cards.push_back(new Mine());
     // cards.push_back(new AppleOrchard());
     // cards.push_back(new Ranch());
@@ -107,7 +104,7 @@ vector<EstablishmentCard*> Game::getPlayerStarterCards() {
     vector<EstablishmentCard*> starterCards;
     try {
 		starterCards.push_back(getCardByName("Wheat Field"));
-        // starterCards.push_back(getCardByName("Bakery"));
+        starterCards.push_back(getCardByName("Bakery"));
     } 
     catch (string error) {
         cout << error;
@@ -148,8 +145,8 @@ Game::~Game() {
     Game::getInstance()->freeInstance();
 };
 
-void Game::match(map<string,size_t> quantity) {
-    createAll(quantity);
+void Game::match() {
+    createAll();
 }
 
 // blue cards can be activated at everyone turn 

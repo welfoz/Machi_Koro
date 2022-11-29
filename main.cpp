@@ -1,7 +1,8 @@
+
 #include "game/game.h"
 int main(int argc, const char* argv[]) {
     // insert code here...
-    /*std::cout << "Hello, World!\n";
+    std::cout << "Hello, World!\n";
 
     Game game;
     game.match();
@@ -10,7 +11,7 @@ int main(int argc, const char* argv[]) {
     Icon icon1("wheat", "wheat.png", Type::primaryIndustry);
 
     // example create carte 
-    WheatField wheatfield;
+    WheatField wheatfield(1);
     cout << wheatfield.getName() << '\n';
     cout << wheatfield.getEffetDescription() << '\n';
     cout << wheatfield.getNumberActivation() << '\n';
@@ -24,8 +25,8 @@ int main(int argc, const char* argv[]) {
     cout << wheatfield.getIcon()->getImage() << '\n';
     cout << wheatfield.getIcon()->getName() << '\n';
     cout << typeToString(wheatfield.getIcon()->getType()) << '\n';
-*/
-    Game game; game.testActivation();
+/*
+    Game game; game.testActivation();*/
     system("pause");
     return 0;
 }

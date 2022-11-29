@@ -21,7 +21,6 @@ public:
         BaseCard::setIcon(getIconByName("cow"));
         size_t* actNumber = new size_t[1];
         actNumber[0] = 2;
-
         EstablishmentCard::setActivationNumbers(actNumber);
     };
     void activation(Player& p) override ;
