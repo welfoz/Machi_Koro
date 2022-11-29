@@ -53,7 +53,7 @@ protected:
 
 public:
     Game();
-    ~Game();
+    virtual ~Game();
     static Game& getInstance();
 
     // we can't call virtual functions in the constructor

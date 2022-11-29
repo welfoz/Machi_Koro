@@ -151,7 +151,6 @@ Game::~Game() {
     delete board;
     delete bank;
     for (std::vector<const Icon*>::iterator it = icons.begin() ; it != icons.end(); ++it) delete *it;
-    Game::getInstance().freeInstance();
     std::cout << "game deleted :)";
 };
 
@@ -197,6 +196,8 @@ void Game::action(Player* player){
         bank->debit(player->getId(), monument->getPrice());
         break;
     }
+    case 99:
+        winner = player;
     default:
         break;
     } 
