@@ -169,6 +169,8 @@ void Game::turn(Player* player){
     player->printCards();
     action(player);
 
+
+
 };
 
 void Game::action(Player* player){
@@ -203,8 +205,9 @@ void Game::action(Player* player){
 // green cards can only be activated by the player playing
 // sens contraire aiguilles montre ?
 // need to change the loop
+
 void Game::activationGreenAndBlueCards(Player* p,size_t n) {
-    for (size_t i = 0; i < nbPlayers - 1; i++) {
+    for (size_t i = 0; i < nbPlayers - 1; i++){
         if (players[i] == p) {
 			players[i]->activateGreenCards(n);
         }

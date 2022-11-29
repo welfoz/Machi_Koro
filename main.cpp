@@ -3,9 +3,9 @@ int main(int argc, const char* argv[]) {
     // insert code here...
     std::cout << "Hello, World!\n";
 
-    Game game;
-    game.match();
+    Game::getInstance().match();
 
+/*
     // example creation Icone
     Icon icon1("wheat", "wheat.png", Type::primaryIndustry);
 
@@ -26,7 +26,7 @@ int main(int argc, const char* argv[]) {
     cout << typeToString(wheatfield.getIcon()->getType()) << '\n';
 
     system("pause");
-
+*/
 
     return 0;
 }
