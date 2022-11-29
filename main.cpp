@@ -1,16 +1,16 @@
-#include "game/game.h"
+#include "./game/game.h"
 int main(int argc, const char* argv[]) {
     // insert code here...
     std::cout << "Hello, World!\n";
 
     Game game;
     game.match();
-/*
+
     // example creation Icone
     Icon icon1("wheat", "wheat.png", Type::primaryIndustry);
 
     // example create carte 
-    WheatField wheatfield(6);
+    WheatField wheatfield(1);
     cout << wheatfield.getName() << '\n';
     cout << wheatfield.getEffetDescription() << '\n';
     cout << wheatfield.getNumberActivation() << '\n';
@@ -24,7 +24,7 @@ int main(int argc, const char* argv[]) {
     cout << wheatfield.getIcon()->getImage() << '\n';
     cout << wheatfield.getIcon()->getName() << '\n';
     cout << typeToString(wheatfield.getIcon()->getType()) << '\n';
-*/
+
     system("pause");
 
 

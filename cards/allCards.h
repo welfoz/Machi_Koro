@@ -1,5 +1,7 @@
 #pragma once
 #include "cardColor.h"
+#include "../game/game.h"
+using namespace std;
 
 class WheatField : public Blue {
 public:
@@ -10,7 +12,7 @@ public:
 
         EstablishmentCard::setActivationNumbers(actNumber);
     };
-    void activation(Player& p) override {};
+    void activation(Player& p) override ;
 };
 
 class Ranch : public Blue {
@@ -21,7 +23,7 @@ public:
         actNumber[0] = 2;
         EstablishmentCard::setActivationNumbers(actNumber);
     };
-    void activation(Player& p) override {};
+    void activation(Player& p) override ;
 };
 
 
@@ -34,7 +36,7 @@ public:
 
         EstablishmentCard::setActivationNumbers(actNumber);
     };
-    void activation(Player& p) override {};
+    void activation(Player& p) override ;
 };
 
 
@@ -47,7 +49,7 @@ public:
 
         EstablishmentCard::setActivationNumbers(actNumber);
     };
-    void activation(Player& p) override {};
+    void activation(Player& p) override ;
 };
 
 
@@ -60,7 +62,7 @@ public:
 
         EstablishmentCard::setActivationNumbers(actNumber);
     };
-    void activation(Player& p) override {};
+    void activation(Player& p) override ;
 };
 
 
@@ -73,11 +75,9 @@ public:
         size_t* actNumber = new size_t[2];
         actNumber[0] = 2;
         actNumber[1] = 3;
-
-
         EstablishmentCard::setActivationNumbers(actNumber);
     };
-    void activation(Player& p) override {};
+    void activation(Player& p) override;
 };
 
 
@@ -90,7 +90,7 @@ public:
 
         EstablishmentCard::setActivationNumbers(actNumber);
     };
-    void activation(Player& p) override {};
+    void activation(Player& p) override ;
 };
 
 
@@ -103,7 +103,7 @@ public:
 
         EstablishmentCard::setActivationNumbers(actNumber);
     };
-    void activation(Player& p) override {};
+    void activation(Player& p) override;
 };
 
 

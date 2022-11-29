@@ -39,6 +39,7 @@ protected:
     virtual void createBoard();
     virtual void createIcons();
     vector<EstablishmentCard*> getPlayerStarterCards();
+    
     //match methods
     virtual void turn(Player* player);
     int throwDice(size_t numberOfDices);
@@ -47,21 +48,18 @@ protected:
     void activationGreenAndBlueCards(Player* p, size_t n);
     void activationPurpleCards(Player* p, size_t n);
     void action(Player* player);
-    void buildEstablishment(BaseCard& card);
-    void buildMonument(Monument& monument);
     const size_t getNbDiceChosen(Player& p);
 
 
 public:
     Game();
     ~Game();
-    // methode pour tester l'activation des cartes
-
     // we can't call virtual functions in the constructor
     void createAll();
     
 
     void match();
+
     // getter
     static Game& getInstance();
     Bank* getBank() const {return bank;}
@@ -69,5 +67,4 @@ public:
     EstablishmentCard* getCardByName(string name) const;
     Monument* getMonumentByName(string name) const;
     vector<const Icon*> getIcons() const {return this->icons;};
-    void testActivation();
 };

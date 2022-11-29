@@ -21,12 +21,10 @@ Game::Game() : board(nullptr), bank(nullptr), dice(Dice()), winner(nullptr), pla
 
 void Game::createAll() {
     cout << "You're going to start a Machi Koro part\n";
-
     // create cards before players because players needs them to be created
     createIcons();
     createMonumentCards();
     createEstablishmentCards();
-
     // create all players
     // ask number of players and their names
     unsigned int cpt = 0;
@@ -44,15 +42,11 @@ void Game::createAll() {
             stop = true;
         }
 		cpt++;
-
     }
-    nbPlayers = cpt;
-
+    this->nbPlayers = cpt;
     createBank(cpt);
-
     createBoard();
 
-    createIcons();
 };
 
 void Game::createPlayer(string name, size_t id) {
@@ -101,6 +95,7 @@ void Game::createIcons() {
     icons.push_back(new Icon("fruit", "fruit.png", Type::secondaryIndustry));
     icons.push_back(new Icon("cup", "cup.png", Type::restaurants));
     icons.push_back(new Icon("major", "major.png", Type::majorEstablishment));
+    icons.push_back(new Icon("major", "major.png", Type::landmark));
 };
 
 vector<EstablishmentCard*> Game::getPlayerStarterCards() {
@@ -201,7 +196,7 @@ void Game::action(Player* player){
     }
     default:
         break;
-    }
+    } 
 };
 
 // blue cards can be activated at everyone turn 
@@ -241,10 +236,3 @@ void Game::activation(Player* p, size_t diceNumber) {
     activationPurpleCards(p, diceNumber);
 }
 
-void Game::testActivation() {
-    createBank(1);
-    createPlayer("jules",0);
-    cout<<"Joueur "<<players[0]->username<<", solde : "<<bank->accounts[0]->getSolde();
-    activationGreenAndBlueCards(players[0],1);
-    cout<<"Joueur "<<players[0]->username<<", solde : "<<bank->accounts[0]->getSolde();
-}
