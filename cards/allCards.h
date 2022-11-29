@@ -116,7 +116,7 @@ public:
 
         EstablishmentCard::setActivationNumbers(actNumber);
     };
-    void activation(Player& p) override {};
+    void activation(Player& p) override ;
 };
 
 

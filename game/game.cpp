@@ -169,8 +169,6 @@ void Game::turn(Player* player){
     player->printCards();
     action(player);
 
-
-
 };
 
 void Game::action(Player* player){
