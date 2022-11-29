@@ -1,4 +1,4 @@
-#include "./game/game.h"
+#include "game/game.h"
 int main(int argc, const char* argv[]) {
     // insert code here...
     std::cout << "Hello, World!\n";
@@ -25,7 +25,6 @@ int main(int argc, const char* argv[]) {
     cout << wheatfield.getIcon()->getName() << '\n';
     cout << typeToString(wheatfield.getIcon()->getType()) << '\n';
 */
-
     system("pause");
 
 
