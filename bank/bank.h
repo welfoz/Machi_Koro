@@ -5,8 +5,8 @@
 
 class Bank {
 private :
-    vector<Account*> accounts;
     friend class Game;
+    vector<Account*> accounts;
     size_t nbPlayers;
     Bank(size_t nbPlayers);
     ~Bank(){ for (auto it=accounts.begin();it!=accounts.end();it++) delete *it;}
