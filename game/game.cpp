@@ -107,7 +107,7 @@ vector<EstablishmentCard*> Game::getPlayerStarterCards() {
     vector<EstablishmentCard*> starterCards;
     try {
 		starterCards.push_back(getCardByName("Wheat Field"));
-        // starterCards.push_back(getCardByName("Bakery"));
+        starterCards.push_back(getCardByName("Bakery"));
     } 
     catch (string error) {
         cout << error;
