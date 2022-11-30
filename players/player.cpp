@@ -5,7 +5,6 @@
 void Player::purchaseMonument(Monument* card) {
     if (!monuments[card]) monuments[card]=true;
 }
-
 void Player::activateRedCards(size_t diceNumber) {
     for(auto it=cardsCounter.begin();it!=cardsCounter.end();it++){
         if(it->first->getType()==Type::restaurants&& it->first->inActivationNumbers(diceNumber)) it->first->activation(*this);

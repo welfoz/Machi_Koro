@@ -54,21 +54,18 @@ protected:
 public:
     Game();
     virtual ~Game();
-    static Game& getInstance();
 
     // we can't call virtual functions in the constructor
     void createAll();
     
-    vector<const Icon*> getIcons() const {
-        return this->icons;
-    };
+
     void match();
 
     // getter
-    Player& getPlayer(size_t id) const {
-        return *players[id - 1];
-    };
+    static Game& getInstance();
+    Bank* getBank() const {return bank;}
+    Player& getPlayer(size_t id) const {return *players[id - 1];};
     EstablishmentCard* getCardByName(string name) const;
     Monument* getMonumentByName(string name) const;
-
+    vector<const Icon*> getIcons() const {return this->icons;};
 };

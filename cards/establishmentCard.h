@@ -3,13 +3,16 @@
 class Player;
 
 class EstablishmentCard : public BaseCard {
+    friend class Game;
 	size_t* activationNumbers;
 	const size_t numberActivation;
 	const size_t quantity;
 protected:
 	EstablishmentCard(size_t* act, size_t number, string name, Type type, size_t price, string desc, size_t quantity) : BaseCard(name, type, price, nullptr, desc), activationNumbers(act), numberActivation(number), quantity(quantity) {
 	};
+    ~EstablishmentCard() {};
 public:
+	virtual const Icon* getIconByName(string name) = 0;
 	void setActivationNumbers(size_t* const act) {
 		activationNumbers = act;
 	}

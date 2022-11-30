@@ -31,4 +31,5 @@ public:
     Player(string name, size_t id, vector<Monument*> monuments, vector<EstablishmentCard*> cards);
     const string& getUsername() const {return username;};
     const size_t& getId() const;
+    map<EstablishmentCard*,size_t> getCards() const {return cardsCounter;};
 };

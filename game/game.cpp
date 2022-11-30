@@ -21,12 +21,10 @@ Game::Game() : board(nullptr), bank(nullptr), dice(Dice()), winner(nullptr), pla
 
 void Game::createAll() {
     cout << "You're going to start a Machi Koro part\n";
-
     // create cards before players because players needs them to be created
     createIcons();
     createMonumentCards();
     createEstablishmentCards();
-
     // create all players
     // ask number of players and their names
     unsigned int cpt = 0;
@@ -47,7 +45,6 @@ void Game::createAll() {
     }
     this->nbPlayers = cpt;
     createBank(cpt);
-
     createBoard();
 
 };
@@ -105,7 +102,7 @@ vector<EstablishmentCard*> Game::getPlayerStarterCards() {
     vector<EstablishmentCard*> starterCards;
     try {
 		starterCards.push_back(getCardByName("Wheat Field"));
-        // starterCards.push_back(getCardByName("Bakery"));
+        starterCards.push_back(getCardByName("Bakery"));
     } 
     catch (string error) {
         cout << error;
@@ -171,6 +168,8 @@ void Game::turn(Player* player){
     player->printCards();
     action(player);
 
+
+
 };
 
 void Game::action(Player* player){
@@ -207,8 +206,9 @@ void Game::action(Player* player){
 // green cards can only be activated by the player playing
 // sens contraire aiguilles montre ?
 // need to change the loop
+
 void Game::activationGreenAndBlueCards(Player* p,size_t n) {
-    for (size_t i = 0; i < nbPlayers - 1; i++) {
+    for (size_t i = 0; i < nbPlayers - 1; i++){
         if (players[i] == p) {
 			players[i]->activateGreenCards(n);
         }
