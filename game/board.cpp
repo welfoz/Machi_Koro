@@ -9,7 +9,14 @@ Board::Board(vector<EstablishmentCard*> cards) {
 };
 
 Board::~Board(){};
-void Board::printBoard(){};
+
+void Board::printBoard()
+{
+	cout <<"Board's cards: \n";
+    for (auto it = cardsDecks.begin(); it != cardsDecks.end(); it++) {
+        cout << it->first->getName() << " : " << it->second << "\n";
+    }
+};
 
 
 // Regarde l'emplacement de la carte dans le Board et ajoute +1
