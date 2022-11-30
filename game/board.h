@@ -11,7 +11,7 @@ class Board
 {
 private:
     friend class Game;
-    map<EstablishmentCard*, const size_t> cardsDecks;
+    map<EstablishmentCard*, size_t> cardsDecks;
 public:
     Board(vector<EstablishmentCard*> cards);
 
