@@ -13,13 +13,13 @@ void Board::printBoard(){};
 
 
 // Regarde l'emplacement de la carte dans le Board et ajoute +1
-void Board::addCard(EstablishmentCard& card) {
-    cardsDecks.at(&card)++;
+void Board::addCard(EstablishmentCard* card) {
+    cardsDecks.at(card)++;
 }
 
-void Board::removeCard(EstablishmentCard& card) {
-    if (cardsDecks.at(&card) != 0) {
-        cardsDecks.at(&card)--;
+void Board::removeCard(EstablishmentCard* card) {
+    if (cardsDecks.at(card) != 0) {
+        cardsDecks.at(card)--;
     }
     else
     {

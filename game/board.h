@@ -16,7 +16,7 @@ public:
     Board(vector<EstablishmentCard*> cards);
 
     ~Board();
-    void removeCard(EstablishmentCard& card);
-    void addCard(EstablishmentCard& card);
+    void removeCard(EstablishmentCard* card);
+    void addCard(EstablishmentCard* card);
     void printBoard();
 };
