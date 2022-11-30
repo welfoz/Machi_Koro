@@ -61,13 +61,13 @@ public:
     AppleOrchard() : Blue(nullptr, 1, "Apple Orchard", 3, "Get 3 coins from the bank on anyone's turn.", 6) {
         //BaseCard::setIcon(new Icon("appleOrchardIcon", "APPLE_ORCHARD.png", Type::primaryIndustry));
         BaseCard::setIcon(getIconByName("appleOrchard"));
-        size_t *actNumber = new size_t[1];
+        size_t* actNumber = new size_t[1];
         actNumber[0] = 10;
 
         EstablishmentCard::setActivationNumbers(actNumber);
     };
 
-    void activation(Player &p) override {};
+    void activation(Player& p) override {};
 };
 
 
