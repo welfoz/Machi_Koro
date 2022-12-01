@@ -117,7 +117,7 @@ EstablishmentCard* Game::getCardByName(string name) const {
         return *it;
     }
     string error = "error getCardByName, didn't find : " + name + "\n";
-    throw error;
+    throw invalid_argument(error);
 }
 
 Monument* Game::getMonumentByName(string name) const {
@@ -179,11 +179,32 @@ void Game::action(Player* player){
     switch (choix){
     case 1:
     {
-        //show available and buyable establishments
-        //select one
-        EstablishmentCard* card = getCardByName("Wheat Field");
-        player->purchaseEstablishment(card);
-        bank->debit(player->getId(), card->getPrice());
+        board->printBoard();
+        string choice;
+        EstablishmentCard* card = nullptr;
+        while (card == nullptr){
+            cout << "Enter the name of the card you want to buy : ";
+            getline(cin, choice);
+            try
+            {
+                card = getCardByName(choice);
+                if (card->getPrice() > bank->accounts[player->getId()]->getSolde()){
+                    throw invalid_argument("You don't have enough money to buy this card.\n");
+                }
+                if (board->cardsDecks.at(card) == 0){
+                    throw invalid_argument("There is no avaible card for this stack.\n");
+                }
+                player->purchaseEstablishment(card);
+                board->removeCard(card);
+                bank->debit(player->getId(), card->getPrice());
+            }
+            catch(const std::exception& e)
+            {
+                std::cerr << e.what() << '\n';
+                cout << "Select an available card.\n";
+                card = nullptr;
+            }
+        }
         break;
     }
     case 2:

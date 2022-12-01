@@ -12,6 +12,7 @@
 #include "../players/player.h"
 #include <vector>
 #include <algorithm>
+#include <stdexcept>
 using namespace std;
 
 class Game{
