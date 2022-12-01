@@ -155,15 +155,15 @@ void Game::match(){
     createAll();
     idCurrentPlayer = 0;
     while (!winner) {
-        turn(players[idCurrentPlayer]);
-        if (idCurrentPlayer == nbPlayers-1) idCurrentPlayer = 0;
-        else idCurrentPlayer++;
+        cout << "Turn number : " << idCurrentPlayer + 1 << "\n";
+        turn(players[idCurrentPlayer % this->nbPlayers]);
+        idCurrentPlayer++;
         };
     cout << "The game is over!!\nThe winner is "<< winner->getUsername();
 };
 
 void Game::turn(Player* player){
-    cout << "\n\n------ Player : " << player->getUsername() <<" | Money = " << bank->accounts[player->getId()]->getSolde() << "------\n\n";
+    cout << "\n\n------ Player : " << player->getUsername() << " - Money = " << bank->accounts[player->getId()]->getSolde() << "------\n\n";
     player->printMonuments();
     player->printCards();
     action(player);
@@ -201,23 +201,23 @@ void Game::action(Player* player){
 
 // blue cards can be activated at everyone turn 
 // green cards can only be activated by the player playing
-// sens contraire aiguilles montre ?
-// need to change the loop
-
+// anti clockwise
 void Game::activationGreenAndBlueCards(Player* p,size_t n) {
-    for (size_t i = 0; i < nbPlayers; i++){
-        if (players[i] == p) {
-			players[i]->activateGreenCards(n);
+    for (size_t i = p->getId() + this->nbPlayers; i > p->getId(); i--){
+        unsigned int index = i % this->nbPlayers;
+        if (players[index] == p) {
+			players[index]->activateGreenCards(n);
         }
-        players[i]->activateBlueCards(n);
+        players[index]->activateBlueCards(n);
     }
 }
 
 // red cards can only be activated another that the one is playing
 void Game::activationRedCards(Player* p, size_t n) {
-    for (size_t i = 0; i < nbPlayers; i++) {
-        if (players[i] != p) {
-			players[i]->activateRedCards(n);
+    for (size_t i = p->getId() + this->nbPlayers; i > p->getId(); i--){
+        unsigned int index = i % this->nbPlayers;
+        if (players[index] != p) {
+			players[index]->activateRedCards(n);
         }
     }
 }
