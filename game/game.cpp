@@ -153,11 +153,11 @@ Game::~Game() {
 
 void Game::match(){
     createAll();
-    size_t id = 0;
+    size_t turnCpt = 0;
     while (!winner) {
-        turn(players[id]);
-        if (id == nbPlayers-1) id = 0;
-        else id++;
+        cout << "Turn number : " << turnCpt + 1 << "\n";
+        turn(players[turnCpt % this->nbPlayers]);
+        turnCpt++;
         };
     cout << "The game is over!!\nThe winner is "<< winner->getUsername();
 };
@@ -204,23 +204,23 @@ void Game::action(Player* player){
 
 // blue cards can be activated at everyone turn 
 // green cards can only be activated by the player playing
-// sens contraire aiguilles montre ?
-// need to change the loop
-
+// anti clockwise 
 void Game::activationGreenAndBlueCards(Player* p,size_t n) {
-    for (size_t i = 0; i < nbPlayers - 1; i++){
-        if (players[i] == p) {
-			players[i]->activateGreenCards(n);
+    for (size_t i = p->getId() + this->nbPlayers; i > p->getId(); i--){
+        unsigned int index = i % this->nbPlayers;
+        if (players[index] == p) {
+			players[index]->activateGreenCards(n);
         }
-        players[i]->activateBlueCards(n);
+        players[index]->activateBlueCards(n);
     }
 }
 
 // red cards can only be activated another that the one is playing
 void Game::activationRedCards(Player* p, size_t n) {
-    for (size_t i = 0; i < nbPlayers - 1; i++) {
-        if (players[i] != p) {
-			players[i]->activateRedCards(n);
+    for (size_t i = p->getId() + this->nbPlayers; i > p->getId(); i--){
+        unsigned int index = i % this->nbPlayers;
+        if (players[index] != p) {
+			players[index]->activateRedCards(n);
         }
     }
 }
