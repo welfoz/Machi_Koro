@@ -62,14 +62,24 @@ void Stadium::activation(Player &p) {
     }
 }
 void TVStation::activation(Player &p) {
-    size_t id;
-    cout<<"Type the id of the player you want to take 5 coins from :"<<endl;
-    cin>>id;
-    while (id>Game::getInstance().getNbPlayers()-1 || id<0 || id==p.getId()){
-        cout<<"Error/nType the id of the player you want to take 5 coins from :\n"<<endl;
-        cin>>id;
+    for (size_t j=0;j<Game::getInstance().getNbPlayers();j++){
+        cout << "\n------ Player : " << Game::getInstance().getPlayer(j).getUsername()<< " - Money = " << Game::getInstance().getBank()->getAccount(j)->getSolde() << "------\n";
     }
-    Game::getInstance().getBank()->trade(p.getId(),id,5);
+    string name;
+    Player* p2;
+    bool loop=true;
+    while(loop){
+        try {
+            cout << "\nType the name of the player you want to take 5 coins from :" << endl;
+            cin >> name;
+            p2 = Game::getInstance().getPlayerByName(name);
+            if (p2 != &p) loop = false;
+            else cout << "Impossible" << endl;
+        } catch (string error) {
+            cout << error << endl;
+        }
+    }
+    Game::getInstance().getBank()->trade(p.getId(),p2->getId(),5);
 }
 void BusinessCenter::activation(Player &p) {
     string name;
@@ -77,7 +87,7 @@ void BusinessCenter::activation(Player &p) {
     Player *p2;
     while (loop) {
         try {
-            cout << "Type the name of the player you want to trade a card with :" << endl;
+            cout << "\nType the name of the player you want to trade a card with :" << endl;
             cin >> name;
             p2 = Game::getInstance().getPlayerByName(name);
             if (p2 != &p) loop = false;
@@ -117,5 +127,5 @@ void BusinessCenter::activation(Player &p) {
             cout << error << endl;
         }
     }
-    Game::getInstance().tradCards(&p, p2, givenCardPtr, takenCardPtr);
+    Game::getInstance().tradeCards(&p, p2, givenCardPtr, takenCardPtr);
 }

@@ -31,9 +31,16 @@ void Game::createAll() {
     string name;
     bool stop = false;
     string stopAnswer;
+    vector<string> names;
     while (cpt <= 10 && !stop) {
 		cout << "Enter the name of the player number " << cpt + 1 << '\n';
         cin >> name;
+        while (find_if(names.begin(),names.end(),[&name](string s){return s==name;})!=names.end()){
+            cout<<"Error : name already used"<<endl;
+            cout << "Enter the name of the player number " << cpt + 1 << '\n';
+            cin >> name;
+        }
+        names.push_back(name);
 		createPlayer(name, cpt);
         cout << "\n";
         cout << "Do you want to add another player ? (Y/N)";
@@ -47,7 +54,7 @@ void Game::createAll() {
     createBank(cpt);
     createBoard();
 
-};
+    };
 
 void Game::createPlayer(string name, size_t id) {
     players[id] = new Player(name, id, monuments, getPlayerStarterCards());
@@ -103,6 +110,8 @@ vector<EstablishmentCard*> Game::getPlayerStarterCards() {
     try {
 		starterCards.push_back(getCardByName("Wheat Field"));
         starterCards.push_back(getCardByName("Bakery"));
+        //test
+        starterCards.push_back(getCardByName("TV Station"));
     } 
     catch (string error) {
         cout << error;
@@ -166,6 +175,8 @@ void Game::turn(Player* player){
     cout << "\n\n------ Player : " << player->getUsername() << " - Money = " << bank->accounts[player->getId()]->getSolde() << "------\n\n";
     player->printMonuments();
     player->printCards();
+    //test
+    activationPurpleCards(player,6);
     action(player);
 };
 
@@ -236,7 +247,7 @@ void Game::activation(Player* p, size_t diceNumber) {
     activationGreenAndBlueCards(p, diceNumber);
     activationPurpleCards(p, diceNumber);
 }
-void Game::tradCards(Player* p1, Player* p2, EstablishmentCard *cardP1, EstablishmentCard *cardP2) {
+void Game::tradeCards(Player* p1, Player* p2, EstablishmentCard *cardP1, EstablishmentCard *cardP2) {
     p2->purchaseEstablishment(cardP1);
     p1->cardsCounter[cardP1]--;
     p1->purchaseEstablishment(cardP2);

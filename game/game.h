@@ -50,16 +50,12 @@ protected:
     void activationPurpleCards(Player* p, size_t n);
     void action(Player* player);
     const size_t getNbDiceChosen(Player& p);
-
-
 public:
     Game();
     virtual ~Game();
 
     // we can't call virtual functions in the constructor
     void createAll();
-    
-
     void match();
 
     // getter
@@ -73,5 +69,5 @@ public:
     Player* getPlayerByName(string name) const;
     vector<const Icon*> getIcons() const {return this->icons;};
     //trade
-    void tradCards(Player* p1, Player* p2,EstablishmentCard* cardP1, EstablishmentCard* cardP2);
+    void tradeCards(Player* p1, Player* p2,EstablishmentCard* cardP1, EstablishmentCard* cardP2);
 };
