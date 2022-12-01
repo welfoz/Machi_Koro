@@ -204,7 +204,7 @@ void Game::action(Player* player){
 
 // blue cards can be activated at everyone turn 
 // green cards can only be activated by the player playing
-// anti clockwise 
+// no clockwise 
 void Game::activationGreenAndBlueCards(Player* p,size_t n) {
     for (size_t i = p->getId() + this->nbPlayers; i > p->getId(); i--){
         unsigned int index = i % this->nbPlayers;
