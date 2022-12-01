@@ -1,5 +1,3 @@
-#include <iostream>
-#include <stdexcept>
 #include "board.h"
 
 Board::Board(vector<EstablishmentCard*> cards) {
