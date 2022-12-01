@@ -31,9 +31,16 @@ void Game::createAll() {
     string name;
     bool stop = false;
     string stopAnswer;
+    vector<string> names;
     while (cpt <= 10 && !stop) {
 		cout << "Enter the name of the player number " << cpt + 1 << '\n';
         cin >> name;
+        while (find_if(names.begin(),names.end(),[&name](string s){return s==name;})!=names.end()){
+            cout<<"Error : name already used"<<endl;
+            cout << "Enter the name of the player number " << cpt + 1 << '\n';
+            cin >> name;
+        }
+        names.push_back(name);
 		createPlayer(name, cpt);
         cout << "\n";
         cout << "Do you want to add another player ? (Y/N)";
@@ -47,7 +54,7 @@ void Game::createAll() {
     createBank(cpt);
     createBoard();
 
-};
+    };
 
 void Game::createPlayer(string name, size_t id) {
     players[id] = new Player(name, id, monuments, getPlayerStarterCards());
@@ -103,6 +110,8 @@ vector<EstablishmentCard*> Game::getPlayerStarterCards() {
     try {
 		starterCards.push_back(getCardByName("Wheat Field"));
         starterCards.push_back(getCardByName("Bakery"));
+        //test
+        starterCards.push_back(getCardByName("TV Station"));
     } 
     catch (string error) {
         cout << error;
@@ -153,11 +162,11 @@ Game::~Game() {
 
 void Game::match(){
     createAll();
-    size_t turnCpt = 0;
+    idCurrentPlayer = 0;
     while (!winner) {
-        cout << "Turn number : " << turnCpt + 1 << "\n";
-        turn(players[turnCpt % this->nbPlayers]);
-        turnCpt++;
+        cout << "Turn number : " << idCurrentPlayer + 1 << "\n";
+        turn(players[idCurrentPlayer % this->nbPlayers]);
+        idCurrentPlayer++;
         };
     cout << "The game is over!!\nThe winner is "<< winner->getUsername();
 };
@@ -167,9 +176,6 @@ void Game::turn(Player* player){
     player->printMonuments();
     player->printCards();
     action(player);
-
-
-
 };
 
 void Game::action(Player* player){
@@ -204,7 +210,7 @@ void Game::action(Player* player){
 
 // blue cards can be activated at everyone turn 
 // green cards can only be activated by the player playing
-// anti clockwise 
+// anti clockwise
 void Game::activationGreenAndBlueCards(Player* p,size_t n) {
     for (size_t i = p->getId() + this->nbPlayers; i > p->getId(); i--){
         unsigned int index = i % this->nbPlayers;
@@ -238,5 +244,19 @@ void Game::activation(Player* p, size_t diceNumber) {
     activationRedCards(p, diceNumber);
     activationGreenAndBlueCards(p, diceNumber);
     activationPurpleCards(p, diceNumber);
+}
+void Game::tradeCards(Player* p1, Player* p2, EstablishmentCard *cardP1, EstablishmentCard *cardP2) {
+    p2->purchaseEstablishment(cardP1);
+    p1->cardsCounter[cardP1]--;
+    p1->purchaseEstablishment(cardP2);
+    p2->cardsCounter[cardP2]--;
+    cout<<p1->getUsername()<<" has taken "<<cardP2->getName()<<" from "<<p2->getUsername()<<" and gave "<<cardP1->getName()<<" in exchange."<<endl;
+}
+Player* Game::getPlayerByName(std::string name) const {
+    for (size_t i=0; i<nbPlayers;i++){
+        if (players[i]->getUsername()==name) return players[i];
+    }
+    string error = "error getPlayerByName, didn't find : " + name + "\n";
+    throw error;
 }
 

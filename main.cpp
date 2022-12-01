@@ -24,9 +24,9 @@ int main(int argc, const char* argv[]) {
     cout << wheatfield.getIcon()->getImage() << '\n';
     cout << wheatfield.getIcon()->getName() << '\n';
     cout << typeToString(wheatfield.getIcon()->getType()) << '\n';
-
-    system("pause");
 */
+    system("pause");
+
 
     return 0;
 }
