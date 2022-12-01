@@ -175,8 +175,6 @@ void Game::turn(Player* player){
     cout << "\n\n------ Player : " << player->getUsername() << " - Money = " << bank->accounts[player->getId()]->getSolde() << "------\n\n";
     player->printMonuments();
     player->printCards();
-    //test
-    activationPurpleCards(player,6);
     action(player);
 };
 
