@@ -73,50 +73,49 @@ void TVStation::activation(Player &p) {
 }
 void BusinessCenter::activation(Player &p) {
     string name;
-    bool loop=true;
-    Player* p2;
-    while (loop){
+    bool loop = true;
+    Player *p2;
+    while (loop) {
         try {
-            cout<<"Type the name of the player you want to trade a card with :"<<endl;
-            cin>>name;
-            p2=Game::getInstance().getPlayerByName(name);
-            if (p2!=&p) loop= false;
-            else cout<<"Impossible"<<endl;
-        }catch (string error){
-            cout<<error<<endl;
+            cout << "Type the name of the player you want to trade a card with :" << endl;
+            cin >> name;
+            p2 = Game::getInstance().getPlayerByName(name);
+            if (p2 != &p) loop = false;
+            else cout << "Impossible" << endl;
+        } catch (string error) {
+            cout << error << endl;
         }
     }
     p2->printCards();
     string takenCard;
-    EstablishmentCard* takenCardPtr;
-    loop=true;
+    EstablishmentCard *takenCardPtr;
+    loop = true;
     while (loop) {// we ask the user which card he want to take from that player
         try {
-            cout<<"Which card do want to take ? (by name)"<<endl;
+            cout << "Which card do want to take ? (by name)" << endl;
             fflush(stdin);
-            getline(cin,takenCard);
-            takenCardPtr=Game::getInstance().getCardByName(takenCard);
-            if (takenCardPtr->getType()!=Type::majorEstablishment) loop= false;
-            else cout<<"Untradable card"<<endl;
-        } catch (string& error){
-            cout<<error<<endl;
+            getline(cin, takenCard);
+            takenCardPtr = Game::getInstance().getCardByName(takenCard);
+            if (takenCardPtr->getType() != Type::majorEstablishment) loop = false;
+            else cout << "Untradable card" << endl;
+        } catch (string &error) {
+            cout << error << endl;
         }
     }
     Game::getInstance().getPlayer(p.getId()).printCards();
     string givenCard;
-    EstablishmentCard* givenCardPtr;
-    loop=true;
+    EstablishmentCard *givenCardPtr;
+    loop = true;
     while (loop) { // then we ask the card the user want to give
         try {
-            cout<<"Which card do you want to give ? (by name)"<<endl;
-            getline(cin,givenCard);
-            givenCardPtr=Game::getInstance().getCardByName(givenCard);
-            if (givenCardPtr->getType()!=Type::majorEstablishment) loop= false;
-            else cout<<"Untradable card"<<endl;
-        } catch (string& error){
-            cout<<error<<endl;
+            cout << "Which card do you want to give ? (by name)" << endl;
+            getline(cin, givenCard);
+            givenCardPtr = Game::getInstance().getCardByName(givenCard);
+            if (givenCardPtr->getType() != Type::majorEstablishment) loop = false;
+            else cout << "Untradable card" << endl;
+        } catch (string &error) {
+            cout << error << endl;
         }
     }
-    Game::getInstance().tradCards(&p,p2,givenCardPtr,takenCardPtr);
-
+    Game::getInstance().tradCards(&p, p2, givenCardPtr, takenCardPtr);
 }

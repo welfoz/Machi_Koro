@@ -103,7 +103,6 @@ vector<EstablishmentCard*> Game::getPlayerStarterCards() {
     try {
 		starterCards.push_back(getCardByName("Wheat Field"));
         starterCards.push_back(getCardByName("Bakery"));
-        starterCards.push_back(getCardByName("Business Center"));
     } 
     catch (string error) {
         cout << error;
@@ -169,7 +168,6 @@ void Game::turn(Player* player){
     player->printMonuments();
     player->printCards();
     action(player);
-    activationPurpleCards(player,6);
 };
 
 void Game::action(Player* player){
@@ -216,7 +214,7 @@ void Game::activationGreenAndBlueCards(Player* p,size_t n) {
 
 // red cards can only be activated another that the one is playing
 void Game::activationRedCards(Player* p, size_t n) {
-    for (size_t i = 0; i < nbPlayers; i++) { //pourquoi c'etait jusqu'à nbPlayers-1 ?
+    for (size_t i = 0; i < nbPlayers; i++) {
         if (players[i] != p) {
 			players[i]->activateRedCards(n);
         }
