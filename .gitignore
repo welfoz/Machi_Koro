@@ -2,5 +2,6 @@
 CppProperties.json
 Machi Koro.*
 x64/
-.vscode/tasks.json
-.vscode/settings.json
+.vscode/
+.DS_Store
+output/
