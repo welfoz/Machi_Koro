@@ -53,7 +53,8 @@ protected:
 
 public:
     Game();
-    ~Game();
+    virtual ~Game();
+
     // we can't call virtual functions in the constructor
     void createAll();
     
