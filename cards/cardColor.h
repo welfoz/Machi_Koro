@@ -9,7 +9,6 @@ public:
 	const Icon* getIconByName(string name) override;
 
 	//méthode qui sera définie dans toutes autres cartes
-	virtual void activation(Player& p) {};
 };
 
 class Green : public EstablishmentCard {
@@ -21,7 +20,7 @@ public:
 	const Icon* getIconByName(string name) override;
 
 	//méthode qui sera définie dans toutes autres cartes
-	virtual void activation(Player& p) {};
+	virtual void activation(Player& p) = 0;
 };
 
 class Red : public EstablishmentCard {
@@ -33,7 +32,7 @@ public:
 	const Icon* getIconByName(string name) override;
 
 	//méthode qui sera définie dans toutes autres cartes
-	virtual void activation(Player& p) {};
+	virtual void activation(Player& p) =0;
 };
 
 class Purple : public EstablishmentCard {
@@ -45,5 +44,5 @@ public:
 	const Icon* getIconByName(string name) override;
 
 	//méthode qui sera définie dans toutes autres cartes
-	virtual void activation(Player& p) {};
+	virtual void activation(Player& p) = 0;
 };

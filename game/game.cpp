@@ -103,6 +103,7 @@ vector<EstablishmentCard*> Game::getPlayerStarterCards() {
     try {
 		starterCards.push_back(getCardByName("Wheat Field"));
         starterCards.push_back(getCardByName("Bakery"));
+        starterCards.push_back(getCardByName("Business Center"));
     } 
     catch (string error) {
         cout << error;
@@ -154,21 +155,21 @@ Game::~Game() {
 
 void Game::match(){
     createAll();
-    size_t id = 0;
+    idCurrentPlayer = 0;
     while (!winner) {
-        turn(players[id]);
-        if (id == nbPlayers-1) id = 0;
-        else id++;
+        turn(players[idCurrentPlayer]);
+        if (idCurrentPlayer == nbPlayers-1) idCurrentPlayer = 0;
+        else idCurrentPlayer++;
         };
     cout << "The game is over!!\nThe winner is "<< winner->getUsername();
 };
 
 void Game::turn(Player* player){
-    cout << "\n\n------ Player : " << player->getUsername() << " - Money = " << bank->accounts[player->getId()]->getSolde() << "------\n\n";
+    cout << "\n\n------ Player : " << player->getUsername() <<" | Money = " << bank->accounts[player->getId()]->getSolde() << "------\n\n";
     player->printMonuments();
     player->printCards();
     action(player);
-
+    activationPurpleCards(player,6);
 };
 
 void Game::action(Player* player){
@@ -205,7 +206,7 @@ void Game::action(Player* player){
 // need to change the loop
 
 void Game::activationGreenAndBlueCards(Player* p,size_t n) {
-    for (size_t i = 0; i < nbPlayers - 1; i++){
+    for (size_t i = 0; i < nbPlayers; i++){
         if (players[i] == p) {
 			players[i]->activateGreenCards(n);
         }
@@ -215,7 +216,7 @@ void Game::activationGreenAndBlueCards(Player* p,size_t n) {
 
 // red cards can only be activated another that the one is playing
 void Game::activationRedCards(Player* p, size_t n) {
-    for (size_t i = 0; i < nbPlayers - 1; i++) {
+    for (size_t i = 0; i < nbPlayers; i++) { //pourquoi c'etait jusqu'à nbPlayers-1 ?
         if (players[i] != p) {
 			players[i]->activateRedCards(n);
         }
@@ -235,5 +236,19 @@ void Game::activation(Player* p, size_t diceNumber) {
     activationRedCards(p, diceNumber);
     activationGreenAndBlueCards(p, diceNumber);
     activationPurpleCards(p, diceNumber);
+}
+void Game::tradCards(Player* p1, Player* p2, EstablishmentCard *cardP1, EstablishmentCard *cardP2) {
+    p2->purchaseEstablishment(cardP1);
+    p1->cardsCounter[cardP1]--;
+    p1->purchaseEstablishment(cardP2);
+    p2->cardsCounter[cardP2]--;
+    cout<<p1->getUsername()<<" has taken "<<cardP2->getName()<<" from "<<p2->getUsername()<<" and gave "<<cardP1->getName()<<" in exchange."<<endl;
+}
+Player* Game::getPlayerByName(std::string name) const {
+    for (size_t i=0; i<nbPlayers;i++){
+        if (players[i]->getUsername()==name) return players[i];
+    }
+    string error = "error getPlayerByName, didn't find : " + name + "\n";
+    throw error;
 }
 

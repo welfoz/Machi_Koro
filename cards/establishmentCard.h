@@ -12,7 +12,7 @@ protected:
 	};
     ~EstablishmentCard() {};
 public:
-    virtual const Icon* getIconByName(string name) {}
+    virtual const Icon* getIconByName(string name) =0;
 	void setActivationNumbers(size_t* const act) {
 		activationNumbers = act;
 	}
@@ -26,7 +26,7 @@ public:
 	size_t* const getActivationNumbers() const {
 		return activationNumbers;
 	}
-	virtual void activation(Player& p) {};
+	virtual void activation(Player& p) = 0;
 	
 	const size_t getQuantity() const {
 		return quantity;
