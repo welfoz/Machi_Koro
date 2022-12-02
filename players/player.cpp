@@ -1,5 +1,6 @@
 
 #include "player.h"
+#include "../global.h"
 
 
 void Player::purchaseMonument(Monument* card) {
@@ -67,15 +68,50 @@ Player::Player(string name, size_t id, vector<Monument*> monuments, vector<Estab
 };
 
 void Player::printCards() const {
-	cout << username << "'s cards: \n";
+	cout << "\n" << username << "'s cards: \n";
+	vector<pair<string, unsigned int>> headerNames;
+	headerNames = {
+		{" Name", 31},
+		{"Price", 5},
+		{"Activation Nb", 13},
+		{"Quantity", 8},
+		{"Type" , 20},
+		{"Icon", 8},
+		{"Effect", 0}
+	};
+    cout << formatHeader(headerNames);
 	for (auto it = cardsCounter.begin(); it != cardsCounter.end(); it++) {
-		if (it->second!=0) cout << it->first->getName() << " : " << it->second << "\n";
+
+        // get all activation numbers
+        string activationNumbers;
+        size_t* actNumbers = it->first->getActivationNumbers();
+        for (unsigned int i = 0; i < it->first->getNumberActivation(); i++) {
+            activationNumbers += std::to_string(*actNumbers) + ' ';
+            actNumbers++;
+        }
+
+        cout << " " << format(it->first->getName(), headerNames[0].second - 1) << format(std::to_string(it->first->getPrice()), headerNames[1].second) << format(activationNumbers, headerNames[2].second);
+        cout << format(std::to_string(it->second), headerNames[3].second) << format(typeToString(it->first->getType()), headerNames[4].second) << format(it->first->getIcon()->getName(), headerNames[5].second) << it->first->getEffetDescription() << "\n";
 	}
 }
 
 void Player::printMonuments() const {
-	cout << username << "'s monuments: \n";
+	cout << "\n" << username << "'s monuments: \n";
+	vector<pair<string, unsigned int>> headerNames;
+	headerNames = {
+		{" Name", 31},
+		{"Activated", 9},
+		{"Price", 5},
+		{"Type" , 20},
+		{"Icon", 8},
+		{"Effect", 0}
+	};
+	cout << formatHeader(headerNames);
 	for (auto it = monuments.begin(); it != monuments.end(); it++) {
-		if (it->second == true) cout << it->first->getName() << "\n";
+
+		cout << " " << format(it->first->getName(), headerNames[0].second - 1) << format(std::to_string(it->second), headerNames[1].second) << format(std::to_string(it->first->getPrice()), headerNames[2].second);
+		cout << format(typeToString(it->first->getType()), headerNames[3].second);
+		cout << format(it->first->getIcon()->getName(), headerNames[4].second);
+		cout << it->first->getEffetDescription() << "\n";
 	}
 }
