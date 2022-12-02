@@ -27,6 +27,7 @@ protected:
     Player* winner;
     vector<const Icon*> icons;
     size_t nbPlayers;
+    size_t idCurrentPlayer;
 
     static void freeInstance();
     Game(const Game&) = delete;
@@ -50,23 +51,24 @@ protected:
     void activationPurpleCards(Player* p, size_t n);
     void action(Player* player);
     const size_t getNbDiceChosen(Player& p);
-
-
 public:
     Game();
     virtual ~Game();
 
     // we can't call virtual functions in the constructor
     void createAll();
-    
-
     void match();
 
     // getter
     static Game& getInstance();
+    const size_t& getNbPlayers() const {return nbPlayers;}
     Bank* getBank() const {return bank;}
-    Player& getPlayer(size_t id) const {return *players[id - 1];};
+    Player& getPlayer(size_t id) const {return *players[id];}; //pourquoi il y avait *players[id-1] ?
+    const size_t& getIdCurrentPlayer() const {return idCurrentPlayer;}
     EstablishmentCard* getCardByName(string name) const;
     Monument* getMonumentByName(string name) const;
+    Player* getPlayerByName(string name) const;
     vector<const Icon*> getIcons() const {return this->icons;};
+    //trade
+    void tradeCards(Player* p1, Player* p2,EstablishmentCard* cardP1, EstablishmentCard* cardP2);
 };
