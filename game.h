@@ -1,14 +1,15 @@
 #pragma once
+#include "icon.h"
+#include "global.h"
 #include "account.h"
 #include "allCards.h"
 #include "bank.h"
 #include "baseCard.h"
-#include "board.h"
 #include "cardColor.h"
 #include "dice.h"
 #include "establishmentCard.h"
-#include "icon.h"
 #include "monument.h"
+#include "board.h"
 #include "player.h"
 #include <vector>
 using namespace std;

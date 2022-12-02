@@ -136,7 +136,7 @@ public:
 
 class Cafe : public Red {
 public:
-    Cafe(size_t quantity) : Red(nullptr, 1, "Café", 2, "Get 1 coin from the player who rolled the dice.", quantity) {
+    Cafe(size_t quantity) : Red(nullptr, 1, "Cafe", 2, "Get 1 coin from the player who rolled the dice.", quantity) {
         BaseCard::setIcon(getIconByName("cup"));
         size_t* actNumber = new size_t[1];
         actNumber[0] = 3;
