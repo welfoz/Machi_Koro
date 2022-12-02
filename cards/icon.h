@@ -5,9 +5,6 @@ using namespace std;
 enum class Type { primaryIndustry, secondaryIndustry, restaurants, majorEstablishment, landmark};
 
 
-string typeToString(Type type);
-
-
 class Icon {
 	string name;
 	string image;
