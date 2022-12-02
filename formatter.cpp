@@ -1,12 +1,12 @@
-#include "global.h"
+#include "formatter.h"
 
-string format(string text, unsigned int maxLenght) {
+string Formatter::format(string text, unsigned int maxLenght) {
     string spaces(maxLenght - text.length(), ' ');
     string separator = " | ";
 	return text + spaces + separator;
 };
 
-string formatHeader(vector<pair<string, unsigned int>> texts) {
+string Formatter::formatHeader(vector<pair<string, unsigned int>> texts) {
     string header;
     string separator = " | ";
     string lineSeparator;
@@ -22,21 +22,3 @@ string formatHeader(vector<pair<string, unsigned int>> texts) {
     }
     return header + "\n" + lineSeparator + "\n";
 }
-
-string typeToString(Type type) {
-	switch (type) {
-	case Type::primaryIndustry:
-		return "Primary Industry";
-	case Type::secondaryIndustry:
-		return "Secondary Industry";
-	case Type::restaurants:
-		return "Restaurants";
-	case Type::majorEstablishment:
-		return "Major Establishment";
-	case Type::landmark:
-		return "LandMark";
-	default:
-		return "Error unrecognized type\n";
-	};
-}
-
