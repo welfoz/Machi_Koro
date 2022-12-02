@@ -1,6 +1,6 @@
 #include <string>
 #include <vector>
-#include "cards/icon.h"
+#include "../cards/icon.h"
 
 using namespace std;
 
