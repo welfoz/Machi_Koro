@@ -39,4 +39,6 @@ public:
 	const string& getEffetDescription() const {
 		return this->effectDescription;
 	}
+	
+	static string typeToString(Type type);
 };

@@ -1,5 +1,5 @@
 #include "board.h"
-#include "../global.h"
+#include "../formatter/formatter.h"
 
 Board::Board(vector<EstablishmentCard*> cards) {
     for (auto it = cards.begin(); it != cards.end(); it++) {
@@ -22,7 +22,7 @@ void Board::printBoard()
         {"Icon", 8},
         {"Effect", 0}
 	};
-    cout << formatHeader(headerNames);
+    cout << Formatter::formatHeader(headerNames);
     for (auto it = cardsDecks.begin(); it != cardsDecks.end(); it++) {
 
         // get all activation numbers
@@ -33,8 +33,8 @@ void Board::printBoard()
             actNumbers++;
         }
 
-        cout << " " << format(it->first->getName(), headerNames[0].second - 1) << format(std::to_string(it->first->getPrice()), headerNames[1].second) << format(activationNumbers, headerNames[2].second);
-        cout << format(std::to_string(it->second), headerNames[3].second) << format(typeToString(it->first->getType()), headerNames[4].second) << format(it->first->getIcon()->getName(), headerNames[5].second) << it->first->getEffetDescription() << "\n";
+        cout << " " << Formatter::format(it->first->getName(), headerNames[0].second - 1) << Formatter::format(std::to_string(it->first->getPrice()), headerNames[1].second) << Formatter::format(activationNumbers, headerNames[2].second);
+        cout << Formatter::format(std::to_string(it->second), headerNames[3].second) << Formatter::format(BaseCard::typeToString(it->first->getType()), headerNames[4].second) << Formatter::format(it->first->getIcon()->getName(), headerNames[5].second) << it->first->getEffetDescription() << "\n";
 
     }
 };

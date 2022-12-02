@@ -1,6 +1,6 @@
 
 #include "player.h"
-#include "../global.h"
+#include "../formatter/formatter.h"
 
 
 void Player::purchaseMonument(Monument* card) {
@@ -79,7 +79,7 @@ void Player::printCards() const {
 		{"Icon", 8},
 		{"Effect", 0}
 	};
-    cout << formatHeader(headerNames);
+    cout << Formatter::formatHeader(headerNames);
 	for (auto it = cardsCounter.begin(); it != cardsCounter.end(); it++) {
 
         // get all activation numbers
@@ -90,8 +90,8 @@ void Player::printCards() const {
             actNumbers++;
         }
 
-        cout << " " << format(it->first->getName(), headerNames[0].second - 1) << format(std::to_string(it->first->getPrice()), headerNames[1].second) << format(activationNumbers, headerNames[2].second);
-        cout << format(std::to_string(it->second), headerNames[3].second) << format(typeToString(it->first->getType()), headerNames[4].second) << format(it->first->getIcon()->getName(), headerNames[5].second) << it->first->getEffetDescription() << "\n";
+        cout << " " << Formatter::format(it->first->getName(), headerNames[0].second - 1) << Formatter::format(std::to_string(it->first->getPrice()), headerNames[1].second) << Formatter::format(activationNumbers, headerNames[2].second);
+        cout << Formatter::format(std::to_string(it->second), headerNames[3].second) << Formatter::format(BaseCard::typeToString(it->first->getType()), headerNames[4].second) << Formatter::format(it->first->getIcon()->getName(), headerNames[5].second) << it->first->getEffetDescription() << "\n";
 	}
 }
 
@@ -106,12 +106,12 @@ void Player::printMonuments() const {
 		{"Icon", 8},
 		{"Effect", 0}
 	};
-	cout << formatHeader(headerNames);
+	cout << Formatter::formatHeader(headerNames);
 	for (auto it = monuments.begin(); it != monuments.end(); it++) {
 
-		cout << " " << format(it->first->getName(), headerNames[0].second - 1) << format(std::to_string(it->second), headerNames[1].second) << format(std::to_string(it->first->getPrice()), headerNames[2].second);
-		cout << format(typeToString(it->first->getType()), headerNames[3].second);
-		cout << format(it->first->getIcon()->getName(), headerNames[4].second);
+		cout << " " << Formatter::format(it->first->getName(), headerNames[0].second - 1) << Formatter::format(std::to_string(it->second), headerNames[1].second) << Formatter::format(std::to_string(it->first->getPrice()), headerNames[2].second);
+		cout << Formatter::format(BaseCard::typeToString(it->first->getType()), headerNames[3].second);
+		cout << Formatter::format(it->first->getIcon()->getName(), headerNames[4].second);
 		cout << it->first->getEffetDescription() << "\n";
 	}
 }
