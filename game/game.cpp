@@ -57,7 +57,7 @@ void Game::createAll() {
     };
 
 void Game::createPlayer(string name, size_t id) {
-    players[id] = new Player(name, id, monuments, getPlayerStarterCards());
+    players[id] = new Player(name, id, monuments, getPlayerStarterCards(), false);
 };
 
 void Game::createBank(size_t nbOfPlayers) {
@@ -173,6 +173,36 @@ void Game::turn(Player* player){
     cout << "\n\n------ Player : " << player->getUsername() << " - Money = " << bank->accounts[player->getId()]->getSolde() << "------\n\n";
     player->printMonuments();
     player->printCards();
+    size_t nb=getNbDiceChosen(*player);
+    size_t throws[nb];
+    for (size_t i=0;i<nb;i++) {
+        throws[i]=dice.throwDice();
+        cout<<"\nValue of dice number "<<i+1<<" : "<<throws[i]<<endl;
+    }
+    if (player->getMonument("Radio Tower")){
+        string choice;
+        cout<<"\n Do you want to re-roll the Dice(s) ? (Y/N)\n"<<endl;
+        cin>>choice;
+        if (choice=="Y" || choice=="y"){
+            for (size_t i=0;i<nb;i++) throws[i]=dice.throwDice();
+        }
+    }
+    if (nb==2 && throws[0]==throws[1] && player->getMonument("Amusement Park") && !player->isPlaying) {
+        player->isPlaying=true;
+        turn(player);
+        player->isPlaying=false;
+    }
+    size_t diceValue=0;
+    for (size_t i=0;i<nb;i++) diceValue+=throws[i];
+
+    activationRedCards(player,diceValue);
+    activationGreenAndBlueCards(player,diceValue);
+    activationPurpleCards(player,diceValue);
+
+    cout<<"\nPlayer's balance after activation:"<<endl;
+    for (size_t j=0; j<nbPlayers;j++){
+        cout<<"\n------ Player : " << player->getUsername() << " - Money = " << bank->accounts[player->getId()]->getSolde() << "------\n";
+    }
     action(player);
 };
 
