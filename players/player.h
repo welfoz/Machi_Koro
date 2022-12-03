@@ -25,7 +25,7 @@ class Player{
     void activatePurpleCards(size_t diceNumber);
 public:
     bool getMonument(string name) const;
-    Player(string name, size_t id, vector<Monument*> monuments, vector<EstablishmentCard*> cards, bool iP);
+    Player(string name, size_t id, vector<Monument*> monuments, vector<EstablishmentCard*> cards, bool iP=false);
     const string& getUsername() const {return username;};
     const size_t& getId() const;
     map<EstablishmentCard*,size_t> getCards() const {return cardsCounter;};
