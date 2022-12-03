@@ -57,7 +57,7 @@ void Game::createAll() {
     };
 
 void Game::createPlayer(string name, size_t id) {
-    players[id] = new Player(name, id, monuments, getPlayerStarterCards(), false);
+    players[id] = new Player(name, id, monuments, getPlayerStarterCards());
 };
 
 void Game::createBank(size_t nbOfPlayers) {
