@@ -40,7 +40,6 @@ protected:
     virtual void createMonumentCards();
     virtual void createBoard();
     virtual void createIcons();
-    void createDice();
     vector<EstablishmentCard*> getPlayerStarterCards();
     
     //match methods
