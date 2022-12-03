@@ -57,8 +57,8 @@ void Player::purchaseEstablishment(EstablishmentCard* card) {
 
 Player::Player(string name, size_t id, vector<Monument*> monuments, vector<EstablishmentCard*> cards, bool iP) : username(name), id(id), isPlaying(iP) {
 	for (auto it = monuments.begin(); it != monuments.end(); it++) {
-		// init all monuments to false // A ENLEVER
-		this->monuments.insert({ *it, 0});
+		// init all monuments to false
+		this->monuments.insert({ *it, 1});
 	}
 
 	for (auto it = cards.begin(); it != cards.end(); it++) {

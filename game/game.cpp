@@ -15,7 +15,7 @@ void Game::freeInstance()
 
 Game* Game::instance = nullptr;
 
-Game::Game() : board(nullptr), bank(nullptr), dice(Dice()), winner(nullptr), players(), nbPlayers(0){
+Game::Game() : board(nullptr), bank(nullptr), dice(Dice()), winner(nullptr), players(), nbPlayers(0), idCurrentPlayer(0){
     instance = this;
 };
 
@@ -200,7 +200,7 @@ void Game::turn(Player* player){
 
     cout<<"\nPlayer's balance after activation:";
     for (size_t j=0; j<nbPlayers;j++){
-        cout<<"\n------ Player : " << player->getUsername() << " - Money = " << bank->accounts[player->getId()]->getSolde() << "------"<<endl;
+        cout<<"\n------ Player : " << players[j]->getUsername() << " - Money = " << bank->accounts[players[j]->getId()]->getSolde() << " ------"<<endl;
     }
     action(player);
     if (nb==2 && throws[0]==throws[1] && player->getMonument("Amusement Park") && !player->isPlaying) {
