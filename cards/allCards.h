@@ -1,5 +1,7 @@
 #pragma once
 #include "cardColor.h"
+#include "../game/game.h"
+using namespace std;
 
 class WheatField : public Blue {
 public:
@@ -10,7 +12,7 @@ public:
 
         EstablishmentCard::setActivationNumbers(actNumber);
     };
-    void activation(Player& p) override {};
+    void activation(Player& p) override ;
 };
 
 class Ranch : public Blue {
@@ -19,10 +21,9 @@ public:
         BaseCard::setIcon(getIconByName("cow"));
         size_t* actNumber = new size_t[1];
         actNumber[0] = 2;
-
         EstablishmentCard::setActivationNumbers(actNumber);
     };
-    void activation(Player& p) override {};
+    void activation(Player& p) override ;
 };
 
 
@@ -35,7 +36,7 @@ public:
 
         EstablishmentCard::setActivationNumbers(actNumber);
     };
-    void activation(Player& p) override {};
+    void activation(Player& p) override ;
 };
 
 
@@ -48,7 +49,7 @@ public:
 
         EstablishmentCard::setActivationNumbers(actNumber);
     };
-    void activation(Player& p) override {};
+    void activation(Player& p) override ;
 };
 
 
@@ -61,7 +62,7 @@ public:
 
         EstablishmentCard::setActivationNumbers(actNumber);
     };
-    void activation(Player& p) override {};
+    void activation(Player& p) override ;
 };
 
 
@@ -74,11 +75,9 @@ public:
         size_t* actNumber = new size_t[2];
         actNumber[0] = 2;
         actNumber[1] = 3;
-
-
         EstablishmentCard::setActivationNumbers(actNumber);
     };
-    void activation(Player& p) override {};
+    void activation(Player& p) override;
 };
 
 
@@ -91,20 +90,20 @@ public:
 
         EstablishmentCard::setActivationNumbers(actNumber);
     };
-    void activation(Player& p) override {};
+    void activation(Player& p) override ;
 };
 
 
 class CheeseFactory : public Green {
 public:
-    CheeseFactory(size_t quantity) : Green(nullptr, 1, "Bakery", 5, "Get 3 coins from the bank for each \"CowIcon\" establishment that you own, on your turn only.", quantity) {
+    CheeseFactory(size_t quantity) : Green(nullptr, 1, "Cheese Factory", 5, "Get 3 coins from the bank for each \"CowIcon\" establishment that you own, on your turn only.", quantity) {
         BaseCard::setIcon(getIconByName("factory"));
         size_t* actNumber = new size_t[1];
         actNumber[0] = 7;
 
         EstablishmentCard::setActivationNumbers(actNumber);
     };
-    void activation(Player& p) override {};
+    void activation(Player& p) override;
 };
 
 
@@ -117,7 +116,7 @@ public:
 
         EstablishmentCard::setActivationNumbers(actNumber);
     };
-    void activation(Player& p) override {};
+    void activation(Player& p) override;
 };
 
 
@@ -131,13 +130,13 @@ public:
 
         EstablishmentCard::setActivationNumbers(actNumber);
     };
-    void activation(Player& p) override {};
+    void activation(Player& p) override;
 };
 
 
 class Cafe : public Red {
 public:
-    Cafe(size_t quantity) : Red(nullptr, 1, "Café", 2, "Get 1 coin from the player who rolled the dice.", quantity) {
+    Cafe(size_t quantity) : Red(nullptr, 1, "Cafe", 2, "Get 1 coin from the player who rolled the dice.", quantity) {
         BaseCard::setIcon(getIconByName("cup"));
         size_t* actNumber = new size_t[1];
         actNumber[0] = 3;
@@ -145,7 +144,7 @@ public:
 
         EstablishmentCard::setActivationNumbers(actNumber);
     };
-    void activation(Player& p) override {};
+    void activation(Player& p) override;
 };
 
 
@@ -160,7 +159,7 @@ public:
 
         EstablishmentCard::setActivationNumbers(actNumber);
     };
-    void activation(Player& p) override {};
+    void activation(Player& p) override;
 };
 
 class Stadium : public Purple {
@@ -173,13 +172,13 @@ public:
 
         EstablishmentCard::setActivationNumbers(actNumber);
     };
-    void activation(Player& p) override {};
+    void activation(Player& p) override ;
 };
 
 
 class TVStation : public Purple {
 public:
-    TVStation(size_t quantity) : Purple(nullptr, 1, "TV Stadium", 7, "Take 5 coins from any one player, on your turn only.", quantity) {
+    TVStation(size_t quantity) : Purple(nullptr, 1, "TV Station", 7, "Take 5 coins from any one player, on your turn only.", quantity) {
         BaseCard::setIcon(getIconByName("major"));
         size_t* actNumber = new size_t[1];
         actNumber[0] = 6;
@@ -187,7 +186,7 @@ public:
 
         EstablishmentCard::setActivationNumbers(actNumber);
     };
-    void activation(Player& p) override {};
+    void activation(Player& p) override;
 };
 
 
@@ -202,5 +201,5 @@ public:
         EstablishmentCard::setActivationNumbers(actNumber);
     };
 
-    void activation(Player &p) override {};
+    void activation(Player &p) override;
 };

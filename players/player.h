@@ -6,10 +6,8 @@
 #include <iostream>
 #include "ostream"
 #include <vector>
-
 // need to comment it if we want to use EstablishmentCard methods
 //class EstablishmentCard;
-
 using namespace std;
 
 class Player{
@@ -24,11 +22,12 @@ class Player{
     void activateBlueCards(size_t diceNumber);
     void activateGreenCards(size_t diceNumber);
     void activatePurpleCards(size_t diceNumber);
-    void printCards() const;
-    void printMonuments() const;
 public:
     bool getMonument(string name) const;
     Player(string name, size_t id, vector<Monument*> monuments, vector<EstablishmentCard*> cards);
     const string& getUsername() const {return username;};
     const size_t& getId() const;
+    map<EstablishmentCard*,size_t> getCards() const {return cardsCounter;};
+    void printCards() const;
+    void printMonuments() const;
 };

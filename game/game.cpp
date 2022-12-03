@@ -21,21 +21,26 @@ Game::Game() : board(nullptr), bank(nullptr), dice(Dice()), winner(nullptr), pla
 
 void Game::createAll() {
     cout << "You're going to start a Machi Koro part\n";
-
     // create cards before players because players needs them to be created
     createIcons();
     createMonumentCards();
     createEstablishmentCards();
-
     // create all players
     // ask number of players and their names
     unsigned int cpt = 0;
     string name;
     bool stop = false;
     string stopAnswer;
+    vector<string> names;
     while (cpt <= 10 && !stop) {
 		cout << "Enter the name of the player number " << cpt + 1 << '\n';
         cin >> name;
+        while (find_if(names.begin(),names.end(),[&name](string s){return s==name;})!=names.end()){
+            cout<<"Error : name already used"<<endl;
+            cout << "Enter the name of the player number " << cpt + 1 << '\n';
+            cin >> name;
+        }
+        names.push_back(name);
 		createPlayer(name, cpt);
         cout << "\n";
         cout << "Do you want to add another player ? (Y/N)";
@@ -47,10 +52,9 @@ void Game::createAll() {
     }
     this->nbPlayers = cpt;
     createBank(cpt);
-
     createBoard();
 
-};
+    };
 
 void Game::createPlayer(string name, size_t id) {
     players[id] = new Player(name, id, monuments, getPlayerStarterCards());
@@ -105,7 +109,7 @@ vector<EstablishmentCard*> Game::getPlayerStarterCards() {
     vector<EstablishmentCard*> starterCards;
     try {
 		starterCards.push_back(getCardByName("Wheat Field"));
-        // starterCards.push_back(getCardByName("Bakery"));
+        starterCards.push_back(getCardByName("Bakery"));
     } 
     catch (string error) {
         cout << error;
@@ -120,7 +124,7 @@ EstablishmentCard* Game::getCardByName(string name) const {
         return *it;
     }
     string error = "error getCardByName, didn't find : " + name + "\n";
-    throw error;
+    throw invalid_argument(error);
 }
 
 Monument* Game::getMonumentByName(string name) const {
@@ -151,17 +155,16 @@ Game::~Game() {
     delete board;
     delete bank;
     for (std::vector<const Icon*>::iterator it = icons.begin() ; it != icons.end(); ++it) delete *it;
-    Game::getInstance().freeInstance();
     std::cout << "game deleted :)";
 };
 
 void Game::match(){
     createAll();
-    size_t id = 0;
+    idCurrentPlayer = 0;
     while (!winner) {
-        turn(players[id]);
-        if (id == nbPlayers-1) id = 0;
-        else id++;
+        cout << "Turn number : " << idCurrentPlayer + 1 << "\n";
+        turn(players[idCurrentPlayer % this->nbPlayers]);
+        idCurrentPlayer++;
         };
     cout << "The game is over!!\nThe winner is "<< winner->getUsername();
 };
@@ -171,7 +174,6 @@ void Game::turn(Player* player){
     player->printMonuments();
     player->printCards();
     action(player);
-
 };
 
 void Game::action(Player* player){
@@ -181,11 +183,33 @@ void Game::action(Player* player){
     switch (choix){
     case 1:
     {
-        //show available and buyable establishments
-        //select one
-        EstablishmentCard* card = getCardByName("Wheat Field");
-        player->purchaseEstablishment(card);
-        bank->debit(player->getId(), card->getPrice());
+        board->printBoard();
+        string choice;
+        EstablishmentCard* card = nullptr;
+        while (card == nullptr){
+            cout << "Enter the name of the card you want to buy : ";
+            cin.ignore();
+            getline(cin, choice);
+            try
+            {
+                card = getCardByName(choice);
+                if (card->getPrice() > bank->accounts[player->getId()]->getSolde()){
+                    throw invalid_argument("You don't have enough money to buy this card.\n");
+                }
+                if (board->cardsDecks.at(card) == 0){
+                    throw invalid_argument("There is no avaible card for this stack.\n");
+                }
+                player->purchaseEstablishment(card);
+                board->removeCard(card);
+                bank->debit(player->getId(), card->getPrice());
+            }
+            catch(const std::exception& e)
+            {
+                std::cerr << e.what() << '\n';
+                cout << "Select an available card.\n";
+                card = nullptr;
+            }
+        }
         break;
     }
     case 2:
@@ -197,6 +221,8 @@ void Game::action(Player* player){
         bank->debit(player->getId(), monument->getPrice());
         break;
     }
+    case 99:
+        winner = player;
     default:
         break;
     } 
@@ -204,22 +230,23 @@ void Game::action(Player* player){
 
 // blue cards can be activated at everyone turn 
 // green cards can only be activated by the player playing
-// sens contraire aiguilles montre ?
-// need to change the loop
+// anti clockwise
 void Game::activationGreenAndBlueCards(Player* p,size_t n) {
-    for (size_t i = 0; i < nbPlayers - 1; i++) {
-        if (players[i] == p) {
-			players[i]->activateGreenCards(n);
+    for (size_t i = p->getId() + this->nbPlayers; i > p->getId(); i--){
+        unsigned int index = i % this->nbPlayers;
+        if (players[index] == p) {
+			players[index]->activateGreenCards(n);
         }
-        players[i]->activateBlueCards(n);
+        players[index]->activateBlueCards(n);
     }
 }
 
 // red cards can only be activated another that the one is playing
 void Game::activationRedCards(Player* p, size_t n) {
-    for (size_t i = 0; i < nbPlayers - 1; i++) {
-        if (players[i] != p) {
-			players[i]->activateRedCards(n);
+    for (size_t i = p->getId() + this->nbPlayers; i > p->getId(); i--){
+        unsigned int index = i % this->nbPlayers;
+        if (players[index] != p) {
+			players[index]->activateRedCards(n);
         }
     }
 }
@@ -237,5 +264,19 @@ void Game::activation(Player* p, size_t diceNumber) {
     activationRedCards(p, diceNumber);
     activationGreenAndBlueCards(p, diceNumber);
     activationPurpleCards(p, diceNumber);
+}
+void Game::tradeCards(Player* p1, Player* p2, EstablishmentCard *cardP1, EstablishmentCard *cardP2) {
+    p2->purchaseEstablishment(cardP1);
+    p1->cardsCounter[cardP1]--;
+    p1->purchaseEstablishment(cardP2);
+    p2->cardsCounter[cardP2]--;
+    cout<<p1->getUsername()<<" has taken "<<cardP2->getName()<<" from "<<p2->getUsername()<<" and gave "<<cardP1->getName()<<" in exchange."<<endl;
+}
+Player* Game::getPlayerByName(std::string name) const {
+    for (size_t i=0; i<nbPlayers;i++){
+        if (players[i]->getUsername()==name) return players[i];
+    }
+    string error = "error getPlayerByName, didn't find : " + name + "\n";
+    throw error;
 }
 
