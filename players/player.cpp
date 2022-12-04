@@ -64,7 +64,7 @@ Player::Player(string name, size_t id, vector<Monument*> monuments, vector<Estab
 	for (auto it = cards.begin(); it != cards.end(); it++) {
 		purchaseEstablishment(*it);
 	}
-	printCards();
+	cout << name << " added!\n";
 };
 
 void Player::printCards() const {
@@ -77,7 +77,7 @@ void Player::printCards() const {
 		{"Quantity", 8},
 		{"Type" , 20},
 		{"Icon", 8},
-		{"Effect", 0}
+		{"Effect", 60}
 	};
     cout << Formatter::formatHeader(headerNames);
 	for (auto it = cardsCounter.begin(); it != cardsCounter.end(); it++) {
@@ -104,7 +104,7 @@ void Player::printMonuments() const {
 		{"Price", 5},
 		{"Type" , 20},
 		{"Icon", 8},
-		{"Effect", 0}
+		{"Effect", 50}
 	};
 	cout << Formatter::formatHeader(headerNames);
 	for (auto it = monuments.begin(); it != monuments.end(); it++) {
