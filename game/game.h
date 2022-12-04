@@ -51,6 +51,7 @@ protected:
     void activationPurpleCards(Player* p, size_t n);
     void action(Player* player);
     const size_t getNbDiceChosen(Player& p);
+    bool isWinner(Player* player) const;
 public:
     Game();
     virtual ~Game();
