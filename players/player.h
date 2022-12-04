@@ -7,10 +7,13 @@
 #include "ostream"
 #include <vector>
 // need to comment it if we want to use EstablishmentCard methods
-//class EstablishmentCard;
+class FurnitureFactory;
+class FruitVegetableMarket;
 using namespace std;
 
 class Player{
+    friend class FurnitureFactory;
+    friend class FruitVegetableMarket;
     friend class Game;
     string username;
     size_t id;
@@ -28,7 +31,6 @@ public:
     Player(string name, size_t id, vector<Monument*> monuments, vector<EstablishmentCard*> cards, bool iP=false);
     const string& getUsername() const {return username;};
     const size_t& getId() const;
-    map<EstablishmentCard*,size_t> getCards() const {return cardsCounter;};
     void printCards() const;
     void printMonuments() const;
 };

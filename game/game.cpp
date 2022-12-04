@@ -110,9 +110,6 @@ vector<EstablishmentCard*> Game::getPlayerStarterCards() {
     try {
 		starterCards.push_back(getCardByName("Wheat Field"));
         starterCards.push_back(getCardByName("Bakery"));
-        // test
-        starterCards.push_back(getCardByName("Furniture Factory"));
-        starterCards.push_back(getCardByName("Mine"));
     } 
     catch (string error) {
         cout << error;
@@ -198,7 +195,7 @@ void Game::turn(Player* player){
     for (size_t i=0;i<nb;i++) diceValue+=throws[i];
 
     activationRedCards(player,diceValue);
-    activationGreenAndBlueCards(player,8);// testttttt
+    activationGreenAndBlueCards(player,diceValue);
     activationPurpleCards(player,diceValue);
 
     cout<<"\nPlayer's balance after activation:";

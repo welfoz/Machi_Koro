@@ -32,16 +32,15 @@ void CheeseFactory::activation(Player &p) {
 }
 
 void FurnitureFactory::activation(Player &p) {
-    for (auto it=p.getCards().begin();it!=p.getCards().end(); it++){
+    for (auto it=p.cardsCounter.begin();it!=p.cardsCounter.end(); it++){
         if (it->first->getIcon()->getName()=="gear"){
-            cout<<"la quantité de cette carte est : "<<it->second<<endl;
             for (size_t i=0;i<it->second;i++) Game::getInstance().getBank()->credit(p.getId(),3);
-        }//test
+        }
     }
 }
 
 void FruitVegetableMarket::activation(Player &p) {
-    for (auto it=p.getCards().begin();it!=p.getCards().end(); it++){
+    for (auto it=p.cardsCounter.begin();it!=p.cardsCounter.end(); it++){
         if (it->first->getIcon()->getName()=="wheat"){
             for (size_t i=0;i<it->second;i++) Game::getInstance().getBank()->credit(p.getId(),2);
         }
