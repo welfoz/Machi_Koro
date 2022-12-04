@@ -115,3 +115,14 @@ void Player::printMonuments() const {
 		cout << it->first->getEffetDescription() << "\n";
 	}
 }
+size_t Player::cheapestMonumentAvailablePrice() const {
+    auto it= find_if(monuments.begin(),monuments.end(),[](pair<Monument*,bool> it){return it.second==false;});
+    size_t min=0;
+    if(it!=monuments.end()){
+        min=it->first->getPrice();
+        for (;it!=monuments.end();it++){
+            if (it->first->getPrice()<min) min=it->first->getPrice();
+        }
+    }
+    return min;
+}

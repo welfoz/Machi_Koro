@@ -35,4 +35,5 @@ public:
     const size_t& getId() const;
     void printCards() const;
     void printMonuments() const;
+    size_t cheapestMonumentAvailablePrice() const;
 };
