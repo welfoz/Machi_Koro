@@ -141,7 +141,7 @@ const size_t Game::getNbDiceChosen(Player& p) { // est appelé par le jeu seulem
     if (!p.getMonument("Train Station")) return 1;
     size_t n=0;
     while (n>2 || n<1){
-        cout<<"How many dice do you chose to roll ?\n"<<endl;
+        cout<<"How many dice do you chose to roll ?"<<endl;
         cin>>n;
         if (n>2 || n<1) cout<<"Please select a number between 1 and 2\n"<<endl;
     }
@@ -173,7 +173,41 @@ void Game::turn(Player* player){
     cout << "\n\n------ Player : " << player->getUsername() << " - Money = " << bank->accounts[player->getId()]->getSolde() << "------\n\n";
     player->printMonuments();
     player->printCards();
+    size_t nb=getNbDiceChosen(*player);
+    size_t throws[nb];
+    for (size_t i=0;i<nb;i++) {
+        throws[i]=dice.throwDice();
+        cout<<"\nValue of dice number "<<i+1<<" : "<<throws[i]<<endl;
+    }
+    if (player->getMonument("Radio Tower")){
+        string choice;
+        cout<<"Do you want to re-roll the dice(s) ? (Y/N)"<<endl;
+        cin>>choice;
+        if (choice=="Y" || choice=="y"){
+            for (size_t i=0;i<nb;i++) throws[i]=dice.throwDice();
+            for (size_t i=0;i<nb;i++) {
+                throws[i]=dice.throwDice();
+                cout<<"\nValue of dice number "<<i+1<<" : "<<throws[i]<<endl;
+            }
+        }
+    }
+    size_t diceValue=0;
+    for (size_t i=0;i<nb;i++) diceValue+=throws[i];
+
+    activationRedCards(player,diceValue);
+    activationGreenAndBlueCards(player,diceValue);
+    activationPurpleCards(player,diceValue);
+
+    cout<<"\nPlayer's balance after activation:";
+    for (size_t j=0; j<nbPlayers;j++){
+        cout<<"\n------ Player : " << player->getUsername() << " - Money = " << bank->accounts[player->getId()]->getSolde() << "------"<<endl;
+    }
     action(player);
+    if (nb==2 && throws[0]==throws[1] && player->getMonument("Amusement Park") && !player->isPlaying) {
+        player->isPlaying=true;
+        turn(player);
+        player->isPlaying=false;
+    }
 };
 
 void Game::action(Player* player){
