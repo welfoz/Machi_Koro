@@ -9,11 +9,13 @@
 // need to comment it if we want to use EstablishmentCard methods
 class FurnitureFactory;
 class FruitVegetableMarket;
+class CheeseFactory;
 using namespace std;
 
 class Player{
     friend class FurnitureFactory;
     friend class FruitVegetableMarket;
+    friend class CheeseFactory;
     friend class Game;
     string username;
     size_t id;

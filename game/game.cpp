@@ -236,6 +236,17 @@ void Game::action(Player* player){
                 player->purchaseEstablishment(card);
                 board->removeCard(card);
                 bank->debit(player->getId(), card->getPrice());
+                player->printCards();
+                string reDo;
+                cout<<"Do you want to change your action ? (Y/N)"<<endl;
+                cin>>reDo;
+                if (reDo=="y" || reDo=="Y"){
+                    cout << "\n\n------ Player : " << player->getUsername() << " - Money = " << bank->accounts[player->getId()]->getSolde() << "------\n\n";
+                    player->cardsCounter[card]--;
+                    board->cardsDecks.at(card)++;
+                    bank->credit(player->getId(),card->getPrice());
+                    action(player);
+                }
             }
             catch(const std::exception& e)
             {
@@ -253,6 +264,16 @@ void Game::action(Player* player){
         Monument* monument = getMonumentByName("Radio Tower");
         player->purchaseMonument(monument);
         bank->debit(player->getId(), monument->getPrice());
+        player->printMonuments();
+        string reDo;
+        cout<<"Do you want to change your action ? (Y/N)"<<endl;
+        cin>>reDo;
+        if (reDo=="y" || reDo=="Y"){
+            cout << "\n\n------ Player : " << player->getUsername() << " - Money = " << bank->accounts[player->getId()]->getSolde() << "------\n\n";
+            player->monuments[monument]=false;
+            bank->credit(player->getId(),monument->getPrice());
+            action(player);
+        }
         break;
     }
     case 99:

@@ -24,7 +24,7 @@ void ConvenienceStore::activation(Player &p) {
     Game::getInstance().getBank()->credit(p.getId(),3);
 }
 void CheeseFactory::activation(Player &p) {
-    for (auto it=p.getCards().begin();it!=p.getCards().end();it++){
+    for (auto it=p.cardsCounter.begin();it!=p.cardsCounter.end();it++){
         if (it->first->getIcon()->getName()=="cow"){
             for (size_t i=0;i<it->second;i++) Game::getInstance().getBank()->credit(p.getId(),3);
         }
