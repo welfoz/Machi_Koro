@@ -20,7 +20,7 @@ void Board::printBoard()
         {"Quantity", 8},
         {"Type" , 20},
         {"Icon", 8},
-        {"Effect", 0}
+        {"Effect", 60}
 	};
     cout << Formatter::formatHeader(headerNames);
     for (auto it = cardsDecks.begin(); it != cardsDecks.end(); it++) {

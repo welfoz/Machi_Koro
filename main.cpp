@@ -25,7 +25,6 @@ int main(int argc, const char* argv[]) {
     cout << wheatfield.getIcon()->getName() << '\n';
     cout << typeToString(wheatfield.getIcon()->getType()) << '\n';
 */
-    system("pause");
 
 
     return 0;

@@ -20,7 +20,19 @@ Game::Game() : board(nullptr), bank(nullptr), dice(Dice()), winner(nullptr), pla
 };
 
 void Game::createAll() {
-    cout << "You're going to start a Machi Koro part\n";
+    cout << "\n\n";
+    cout << "███    ███  █████   ██████ ██   ██ ██     ██   ██  ██████  ██████   ██████  \n";
+    cout << "████  ████ ██   ██ ██      ██   ██ ██     ██  ██  ██    ██ ██   ██ ██    ██ \n";
+    cout << "██ ████ ██ ███████ ██      ███████ ██     █████   ██    ██ ██████  ██    ██ \n";
+    cout << "██  ██  ██ ██   ██ ██      ██   ██ ██     ██  ██  ██    ██ ██   ██ ██    ██ \n";
+    cout << "██      ██ ██   ██  ██████ ██   ██ ██     ██   ██  ██████  ██   ██  ██████  \n";
+                                                                                   
+    cout << ".   .__. _,  ,           .__. _,  _, \n";
+    cout << "|   |  |'_) /|     ___   [__]'_) '_) \n";
+    cout << "|___|__|/_. .|.          |  |/_. /_. \n\n";
+                                                                                                                                                                                                                                                         
+    cout << "Made with ❤️  by MICHEL Fabien - BROSSARD Felix - TAVERNE Jules - CORTY Pol - LEMERLE Xavier\n\n";
+
     // create cards before players because players needs them to be created
     createIcons();
     createMonumentCards();
@@ -33,7 +45,7 @@ void Game::createAll() {
     string stopAnswer;
     vector<string> names;
     while (cpt <= 10 && !stop) {
-		cout << "Enter the name of the player number " << cpt + 1 << '\n';
+		cout << "NEW PLAYER!!\nEnter the name of the player number " << cpt + 1 << " : ";
         cin >> name;
         while (find_if(names.begin(),names.end(),[&name](string s){return s==name;})!=names.end()){
             cout<<"Error : name already used"<<endl;
@@ -42,12 +54,14 @@ void Game::createAll() {
         }
         names.push_back(name);
 		createPlayer(name, cpt);
-        cout << "\n";
-        cout << "Do you want to add another player ? (Y/N)";
-        cin >> stopAnswer;
+        while ((stopAnswer != "Y") and (stopAnswer != "y") and (stopAnswer != "N") and (stopAnswer != "n")){
+            cout << "Do you want to add another player? (Y/N)";
+            cin >> stopAnswer;
+        }
         if (stopAnswer == "n" || stopAnswer == "N") {
             stop = true;
         }
+        stopAnswer = "";
 		cpt++;
     }
     this->nbPlayers = cpt;
@@ -162,22 +176,24 @@ void Game::match(){
     createAll();
     idCurrentPlayer = 0;
     while (!winner) {
-        cout << "Turn number : " << idCurrentPlayer + 1 << "\n";
+        cout << "\n\n-------------------------------------------------------------------------------";
+        cout << "\n------------------------------- Turn number : " << idCurrentPlayer/nbPlayers + 1 << " -------------------------------\n";
         turn(players[idCurrentPlayer % this->nbPlayers]);
         idCurrentPlayer++;
         };
-    cout << "The game is over!!\nThe winner is "<< winner->getUsername();
+    cout << "\n\n\n\n\n\nIT'S OVER!!!\n\nThe winner is...\n"<< winner->getUsername() << " 🎉🎉🎉\n";
+    cout << "\n\nThank you for playing Machi Koro!\n\n";
 };
 
 void Game::turn(Player* player){
-    cout << "\n\n------ Player : " << player->getUsername() << " - Money = " << bank->accounts[player->getId()]->getSolde() << "------\n\n";
+    cout << "\n\n-------------------------- Player : " << player->getUsername() << " - Money = " << bank->accounts[player->getId()]->getSolde() << " --------------------------\n\n";
     player->printMonuments();
     player->printCards();
     size_t nb=getNbDiceChosen(*player);
     size_t throws[nb];
     for (size_t i=0;i<nb;i++) {
         throws[i]=dice.throwDice();
-        cout<<"\nValue of dice number "<<i+1<<" : "<<throws[i]<<endl;
+        cout<<"\nDice n°"<<i+1<<": "<<throws[i]<<endl;
     }
     if (player->getMonument("Radio Tower")){
         string choice;
@@ -198,10 +214,7 @@ void Game::turn(Player* player){
     activationGreenAndBlueCards(player,diceValue);
     activationPurpleCards(player,diceValue);
 
-    cout<<"\nPlayer's balance after activation:";
-    for (size_t j=0; j<nbPlayers;j++){
-        cout<<"\n------ Player : " << player->getUsername() << " - Money = " << bank->accounts[player->getId()]->getSolde() << "------"<<endl;
-    }
+    cout<<"\nPlayer's balance after activation: " << bank->accounts[player->getId()]->getSolde() << "\n\n";
     action(player);
     if (nb==2 && throws[0]==throws[1] && player->getMonument("Amusement Park") && !player->isPlaying) {
         player->isPlaying=true;
@@ -211,7 +224,7 @@ void Game::turn(Player* player){
 };
 
 void Game::action(Player* player){
-    cout << "Action? (1=buy an establishment, 2=build a monument, 3=nothing)\n";
+    cout << "What do you want to do? (1 = Buy an establishment, 2 = Build a monument, 3 = Nothing!)\n";
     int choix;
     cin >> choix;
     switch (choix){
