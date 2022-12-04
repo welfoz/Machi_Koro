@@ -12,6 +12,7 @@
 #include "../players/player.h"
 #include <vector>
 #include <algorithm>
+#include <stdexcept>
 using namespace std;
 
 class Game{
@@ -26,8 +27,8 @@ protected:
     Player* winner;
     vector<const Icon*> icons;
     size_t nbPlayers;
+    size_t idCurrentPlayer;
 
-    static Game* getInstance();
     static void freeInstance();
     Game(const Game&) = delete;
     Game& operator=(const Game& g) = delete;
@@ -39,8 +40,8 @@ protected:
     virtual void createMonumentCards();
     virtual void createBoard();
     virtual void createIcons();
-
     vector<EstablishmentCard*> getPlayerStarterCards();
+    
     //match methods
     virtual void turn(Player* player);
     int throwDice(size_t numberOfDices);
@@ -48,26 +49,26 @@ protected:
     void activationRedCards(Player* p, size_t n);
     void activationGreenAndBlueCards(Player* p, size_t n);
     void activationPurpleCards(Player* p, size_t n);
-    void action();
-    void buildEstablishment(BaseCard& card);
-    void buildMonument(Monument& monument);
+    void action(Player* player);
     const size_t getNbDiceChosen(Player& p);
-
-
 public:
     Game();
-    ~Game();
+    virtual ~Game();
 
     // we can't call virtual functions in the constructor
     void createAll();
-    
-    const vector<Icon*> getIcons();
     void match();
 
     // getter
-    Player& getPlayer(size_t id) const {
-        return *players[id - 1];
-    };
+    static Game& getInstance();
+    const size_t& getNbPlayers() const {return nbPlayers;}
+    Bank* getBank() const {return bank;}
+    Player& getPlayer(size_t id) const {return *players[id];}; //pourquoi il y avait *players[id-1] ?
+    const size_t& getIdCurrentPlayer() const {return idCurrentPlayer;}
     EstablishmentCard* getCardByName(string name) const;
-
+    Monument* getMonumentByName(string name) const;
+    Player* getPlayerByName(string name) const;
+    vector<const Icon*> getIcons() const {return this->icons;};
+    //trade
+    void tradeCards(Player* p1, Player* p2,EstablishmentCard* cardP1, EstablishmentCard* cardP2);
 };
