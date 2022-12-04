@@ -34,8 +34,9 @@ void CheeseFactory::activation(Player &p) {
 void FurnitureFactory::activation(Player &p) {
     for (auto it=p.getCards().begin();it!=p.getCards().end(); it++){
         if (it->first->getIcon()->getName()=="gear"){
+            cout<<"la quantité de cette carte est : "<<it->second<<endl;
             for (size_t i=0;i<it->second;i++) Game::getInstance().getBank()->credit(p.getId(),3);
-        }
+        }//test
     }
 }
 

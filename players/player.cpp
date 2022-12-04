@@ -51,7 +51,7 @@ void Player::purchaseEstablishment(EstablishmentCard* card) {
 		cardsCounter[card]++;
 	}
 	else {
-		this->cardsCounter.insert({ card, 0 });
+		this->cardsCounter.insert({ card, 1 });
 	}
 }
 
