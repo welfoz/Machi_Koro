@@ -9,6 +9,9 @@ protected:
 	void createBoard() override;
 	void createIcons() override;
 	void turn(Player* player) override;
+public:
+	static Marina& getInstance();
+	Marina() : Game() {};
 };
 
 

@@ -52,8 +52,8 @@ protected:
     void action(Player* player);
     const size_t getNbDiceChosen(Player& p);
     bool isWinner(Player* player) const;
-public:
     Game();
+public:
     virtual ~Game();
 
     // we can't call virtual functions in the constructor
