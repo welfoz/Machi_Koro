@@ -7,7 +7,7 @@
 
 
 #pragma once
-#include "cardColor.h"
+#include "../../cards/cardColor.h"
 #include <list>
 
 class CornField : public Blue {

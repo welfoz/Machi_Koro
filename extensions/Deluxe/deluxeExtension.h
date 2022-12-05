@@ -1,6 +1,6 @@
 #pragma once
-#include "Marina/marinaExtension.h"
-#include "Marina/marinaExtensionCards.h"
+#include "../Marina/marinaExtension.h"
+#include "../Marina/marinaExtensionCards.h"
 #include "greenValleyExtensionCards.h"
 #include <list>
 

@@ -1,5 +1,5 @@
 #pragma once
-#include "cardColor.h"
+#include "../../cards/cardColor.h"
 #include "marinaExtension.h"
 
 // CARDS
