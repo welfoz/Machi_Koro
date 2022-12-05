@@ -8,9 +8,8 @@
 using namespace std;
 
 class Dice {
-    friend class Game;
-    const size_t throwDice() const;
 public:
+    const size_t throwDice() const;
     Dice()= default;
     ~Dice()= default;
 };

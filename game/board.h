@@ -4,15 +4,13 @@
 #include <vector>
 #include <iostream>
 #include <stdexcept>
-using namespace std;
-
-
-//using std::map;
 #include "../cards/establishmentCard.h"
+#include <algorithm>
+
+using namespace std;
 class Board
 {
 private:
-    friend class Game;
     map<EstablishmentCard*, size_t> cardsDecks;
 public:
     Board(vector<EstablishmentCard*> cards);
@@ -21,4 +19,8 @@ public:
     void removeCard(EstablishmentCard* card);
     void addCard(EstablishmentCard* card);
     void printBoard();
+    size_t cheapestAvailableCardPrice() const;
+    const size_t& getCard(EstablishmentCard* card) const {
+        return cardsDecks.at(card);
+    }
 };

@@ -2,7 +2,6 @@
 #include "player.h"
 #include "../formatter/formatter.h"
 
-
 void Player::purchaseMonument(Monument* card) {
     if (!monuments[card]) monuments[card]=true;
 }
@@ -57,14 +56,14 @@ void Player::purchaseEstablishment(EstablishmentCard* card) {
 
 Player::Player(string name, size_t id, vector<Monument*> monuments, vector<EstablishmentCard*> cards, bool iP) : username(name), id(id), isPlaying(iP) {
 	for (auto it = monuments.begin(); it != monuments.end(); it++) {
-		// init all monuments to false // A ENLEVER
+		// init all monuments to false
 		this->monuments.insert({ *it, 0});
 	}
 
 	for (auto it = cards.begin(); it != cards.end(); it++) {
 		purchaseEstablishment(*it);
 	}
-	printCards();
+	cout << name << " added!\n";
 };
 
 void Player::printCards() const {
@@ -77,7 +76,7 @@ void Player::printCards() const {
 		{"Quantity", 8},
 		{"Type" , 20},
 		{"Icon", 8},
-		{"Effect", 0}
+		{"Effect", 60}
 	};
     cout << Formatter::formatHeader(headerNames);
 	for (auto it = cardsCounter.begin(); it != cardsCounter.end(); it++) {
@@ -104,7 +103,7 @@ void Player::printMonuments() const {
 		{"Price", 5},
 		{"Type" , 20},
 		{"Icon", 8},
-		{"Effect", 0}
+		{"Effect", 50}
 	};
 	cout << Formatter::formatHeader(headerNames);
 	for (auto it = monuments.begin(); it != monuments.end(); it++) {
@@ -114,4 +113,27 @@ void Player::printMonuments() const {
 		cout << Formatter::format(it->first->getIcon()->getName(), headerNames[4].second);
 		cout << it->first->getEffetDescription() << "\n";
 	}
+}
+size_t Player::cheapestMonumentAvailablePrice() const {
+    auto it= find_if(monuments.begin(),monuments.end(),[](pair<Monument*,bool> it){return it.second==false;});
+    size_t min=0;
+    if(it!=monuments.end()){
+        min=it->first->getPrice();
+        for (;it!=monuments.end();it++){
+            if (it->first->getPrice()<min) min=it->first->getPrice();
+        }
+    }
+    return min;
+}
+
+void Player::removeMonument(Monument* card) {
+	monuments[card] = false;
+}
+
+void Player::removeEstablishment(EstablishmentCard* card) {
+	auto it = cardsCounter.find(card);
+	if (it != cardsCounter.end() && it->second == 0) {
+		throw "No card available";
+	}
+	cardsCounter[card]--;
 }
