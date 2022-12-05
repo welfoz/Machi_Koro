@@ -11,6 +11,7 @@ protected:
     void turn(Player* player) override;
 public:
     static Marina& getInstance();
+    Marina() : Game() {};
 };
 
 
