@@ -175,11 +175,13 @@ Game::~Game() {
 void Game::match(){
     createAll();
     idCurrentPlayer = 0;
+
     while (winner==nullptr) {
         cout << "\n\n-------------------------------------------------------------------------------";
-        cout << "\n------------------------------- Turn number : " << idCurrentPlayer/nbPlayers + 1 << " -------------------------------\n";
-        turn(players[idCurrentPlayer % this->nbPlayers]);
-        idCurrentPlayer++;
+        //cout << "\n------------------------------- Turn number : " << ???? << " -------------------------------\n";
+        //pas compatible avec le principe de idCurrentPlayer, à voir plus tard si on a la temps
+        turn(players[idCurrentPlayer]);
+        idCurrentPlayer=(idCurrentPlayer+1)%nbPlayers;
         };
     cout << "\n\n\n\n\n\nIT'S OVER!!!\n\nThe winner is...\n"<< winner->getUsername() << " 🎉🎉🎉\n";
     cout << "\n\nThank you for playing Machi Koro!\n\n";
