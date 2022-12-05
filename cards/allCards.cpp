@@ -24,7 +24,8 @@ void ConvenienceStore::activation(Player &p) {
     Game::getInstance().getBank()->credit(p.getId(),3);
 }
 void CheeseFactory::activation(Player &p) {
-    for (auto it=p.cardsCounter.begin();it!=p.cardsCounter.end();it++){
+    auto cards=p.getCards();
+    for (auto it=cards.begin();it!=cards.end();it++){
         if (it->first->getIcon()->getName()=="cow"){
             for (size_t i=0;i<it->second;i++) Game::getInstance().getBank()->credit(p.getId(),3);
         }
@@ -32,7 +33,8 @@ void CheeseFactory::activation(Player &p) {
 }
 
 void FurnitureFactory::activation(Player &p) {
-    for (auto it=p.cardsCounter.begin();it!=p.cardsCounter.end(); it++){
+    auto cards=p.getCards();
+    for (auto it=cards.begin();it!=cards.end(); it++){
         if (it->first->getIcon()->getName()=="gear"){
             for (size_t i=0;i<it->second;i++) Game::getInstance().getBank()->credit(p.getId(),3);
         }
@@ -40,7 +42,8 @@ void FurnitureFactory::activation(Player &p) {
 }
 
 void FruitVegetableMarket::activation(Player &p) {
-    for (auto it=p.cardsCounter.begin();it!=p.cardsCounter.end(); it++){
+    auto cards=p.getCards();
+    for (auto it=cards.begin();it!=cards.end(); it++){
         if (it->first->getIcon()->getName()=="wheat"){
             for (size_t i=0;i<it->second;i++) Game::getInstance().getBank()->credit(p.getId(),2);
         }
