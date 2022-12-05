@@ -10,7 +10,8 @@ public:
 	bool isClosed(EstablishmentCard&);
 	void closeCard(EstablishmentCard& c, size_t nbTurns);
 
-	void createCards() override;
+	void createEstablishmentCards() override;
+    void createMonumentCards() override;
 	void createBoard() override;
 	void turn(Player* player) override;
 };
