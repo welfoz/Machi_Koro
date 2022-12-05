@@ -1,6 +1,5 @@
 #include "./game/game.h"
 #include "./extensions/Marina/marinaExtension.h"
-#include "./extensions/Deluxe/greenValleyExtension.h"
 int main(int argc, const char* argv[]) {
     // insert code here...
     cout << "Hello, World!\n";
@@ -16,12 +15,13 @@ int main(int argc, const char* argv[]) {
     case 'B':
         Game::getInstance().match();
         break;
-    //case 'M':
-      //  Marina::getInstance().match();
-        //break;
-        case 'G':
-		     GreenValley::getInstance().match();
-		     break;
+    case 'M':
+        Marina::getInstance().match();
+        break;
+		// case 'G':
+		//     #include "./extensions/Deluxe/greenValleyExtension.h"
+		//     GreenValley::getInstance().match();
+		//     break;
 		// case 'D':
 		//     #include "./extensions/deluxeExtension.h"
 		//     Deluxe::getInstance().match();
