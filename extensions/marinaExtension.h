@@ -1,18 +1,19 @@
 #pragma once
 #include "../game/game.h"
-#include "../cards/cardColor.h"
 
 class Marina: public Game {
-public:
-	Marina() : Game() {};
-
+protected:
 	void createEstablishmentCards() override;
 	void createMonumentCards() override;
+	void createPlayer(string name, size_t id) override;
 	void createBoard() override;
 	void createIcons() override;
 	void turn(Player* player) override;
 };
 
+
+
+// CARDS
 class FlowerGarden : public Blue {
 public:
 	FlowerGarden(size_t quantity) : Blue(nullptr, 1, "Flower Garden", 2, "You get 1 coin from the bank, on anyone's turn.", quantity) {
