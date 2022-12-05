@@ -26,7 +26,7 @@ public:
 
 class MackerelBoat : public Blue {
 public:
-	MackerelBoat(size_t quantity) : Blue(nullptr, 1, "Mackerel Boat", 2, "If you have a Harbor, get 3 coins from the bank on anyone's turn.", quantity) {
+	MackerelBoat(size_t quantity) : Blue(nullptr, 1, "Mackerel Boat", 2, "If you have a Harbor, get 3 coins from the bank, on anyone's turn.", quantity) {
 		BaseCard::setIcon(getIconByName("boat"));
 		size_t* actNumber = new size_t[1];
 		actNumber[0] = 8;
@@ -49,7 +49,7 @@ public:
 
 class FlowerShop : public Green {
 public:
-	FlowerShop(size_t quantity) : Green(nullptr, 1, "Flower Shop", 1, "Get 1 coin from the bank for each Flower Garden you own. (your turn only)", quantity) {
+	FlowerShop(size_t quantity) : Green(nullptr, 1, "Flower Shop", 1, "Get 1 coin from the bank for each Flower Garden you own, on your turn only", quantity) {
 		BaseCard::setIcon(getIconByName("bread"));
 		size_t* actNumber = new size_t[1];
 		actNumber[0] = 6;
@@ -60,7 +60,7 @@ public:
 
 class FoodWarehouse : public Green {
 public:
-	FoodWarehouse(size_t quantity) : Green(nullptr, 2, "Food Warehouse", 2, "Get 2 coins from the bank for each Cup establishment you own. (your turn only)", quantity) {
+	FoodWarehouse(size_t quantity) : Green(nullptr, 2, "Food Warehouse", 2, "Get 2 coins from the bank for each Cup establishment, on your turn only", quantity) {
 		BaseCard::setIcon(getIconByName("factory"));
 		size_t* actNumber = new size_t[2];
 		actNumber[0] = 12;
