@@ -8,6 +8,7 @@ class BaseCard {
 protected:
     Type type;
 	BaseCard(string name, Type type, size_t price, const Icon* icon, string desc): name(name), type(type), price(price), icon(icon), effectDescription(desc) {};
+    virtual ~BaseCard() = 0;
 private:
 	const string name;
 	const size_t price;

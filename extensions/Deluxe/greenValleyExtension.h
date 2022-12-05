@@ -1,14 +1,15 @@
-//
-// Created by jules on 05/12/2022.
-//
+#pragma once
+#include "../marina/marinaExtension.h"
+#include "../marina/marinaExtensionCards.h"
 
-#ifndef MACHI_KORO_GREENVALLEYEXTENSION_H
-#define MACHI_KORO_GREENVALLEYEXTENSION_H
-
-
-class greenValleyExtension {
-
+class GreenValley : public Game {
+    void createEstablishmentCards() override;
+    void createMonumentCards() override;
+    void createPlayer(string name, size_t id) override;
+    void createBoard() override;
+    void createIcons() override;
+    void turn(Player* player) override;
+public :
+    static GreenValley& getInstance();
+    GreenValley() : Game() {};
 };
-
-
-#endif //MACHI_KORO_GREENVALLEYEXTENSION_H
