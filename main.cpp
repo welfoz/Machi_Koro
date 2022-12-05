@@ -15,8 +15,8 @@ int main(int argc, const char* argv[]) {
         Game::getInstance().match();
         break;
     case 'M':
-        #include "./extensions/marinaExtension.h"
-        Marina::getInstance().match();
+        #include "Marina/marinaExtensionCards.h"
+            Marina::getInstance().match();
         break;
     // case 'G':
     //     #include "./extensions/greenValleyExtension.h"
