@@ -1,7 +1,6 @@
 
 #include "player.h"
 #include "../formatter/formatter.h"
-#include "../cards/allCards.h"
 
 void Player::purchaseMonument(Monument* card) {
     if (!monuments[card]) monuments[card]=true;
