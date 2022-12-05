@@ -35,7 +35,7 @@ protected:
 
     // initialisation : toutes ces méthodes sont appellés dans le constructeur Game()
     void createBank(size_t nbOfPlayers);
-    void createPlayer(string name, size_t id);
+    virtual void createPlayer(string name, size_t id);
     virtual void createEstablishmentCards();
     virtual void createMonumentCards();
     virtual void createBoard();
@@ -51,8 +51,9 @@ protected:
     void activationPurpleCards(Player* p, size_t n);
     void action(Player* player);
     const size_t getNbDiceChosen(Player& p);
-public:
+    bool isWinner(Player* player) const;
     Game();
+public:
     virtual ~Game();
 
     // we can't call virtual functions in the constructor

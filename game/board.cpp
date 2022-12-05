@@ -20,7 +20,7 @@ void Board::printBoard()
         {"Quantity", 8},
         {"Type" , 20},
         {"Icon", 8},
-        {"Effect", 0}
+        {"Effect", 60}
 	};
     cout << Formatter::formatHeader(headerNames);
     for (auto it = cardsDecks.begin(); it != cardsDecks.end(); it++) {
@@ -55,3 +55,16 @@ void Board::removeCard(EstablishmentCard* card) {
         throw("ERROR : There's no card to remove here.");
     }
 }
+
+size_t Board::cheapestAvailableCardPrice() const {
+    auto it=std::find_if(cardsDecks.begin(),cardsDecks.end(),[](pair<EstablishmentCard*,size_t> it) {return it.second!=0;});
+    size_t min=0;
+    if (it!=cardsDecks.end()){
+        min=it->first->getPrice();
+        for (;it!=cardsDecks.end();it++){
+            if (it->first->getPrice()<min) min=it->first->getPrice();
+        }
+    }
+    return min;
+}
+
