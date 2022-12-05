@@ -54,7 +54,7 @@ void Game::createAll() {
         }
         names.push_back(name);
 		createPlayer(name, cpt);
-        while ((stopAnswer != "Y") and (stopAnswer != "y") and (stopAnswer != "N") and (stopAnswer != "n")){
+        while ((stopAnswer != "Y") && (stopAnswer != "y") && (stopAnswer != "N") && (stopAnswer != "n")) {
             cout << "Do you want to add another player? (Y/N)";
             cin >> stopAnswer;
         }
@@ -190,8 +190,8 @@ void Game::turn(Player* player){
     cout << "\n\n-------------------------- Player : " << player->getUsername() << " - Money = " << bank->accounts[player->getId()]->getSolde() << " --------------------------\n\n";
     player->printMonuments();
     player->printCards();
-    size_t nb=getNbDiceChosen(*player);
-    size_t throws[nb];
+    const size_t nb = getNbDiceChosen(*player);
+    size_t* throws = new size_t[nb];
     for (size_t i=0;i<nb;i++) {
         throws[i]=dice.throwDice();
         cout<<"\nDice n°"<<i+1<<": "<<throws[i]<<endl;
