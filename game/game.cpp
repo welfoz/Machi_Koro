@@ -54,7 +54,7 @@ void Game::createAll() {
         }
         names.push_back(name);
 		createPlayer(name, cpt);
-        while ((stopAnswer != "Y") and (stopAnswer != "y") and (stopAnswer != "N") and (stopAnswer != "n")){
+        while ((stopAnswer != "Y") && (stopAnswer != "y") && (stopAnswer != "N") && (stopAnswer != "n")) {
             cout << "Do you want to add another player? (Y/N)";
             cin >> stopAnswer;
         }
@@ -189,11 +189,11 @@ void Game::match(){
 
 void Game::turn(Player* player){
     if (winner!= nullptr) return;
-    cout << "\n\n-------------------------- Player : " << player->getUsername() << " - Money = " << bank->accounts[player->getId()]->getSolde() << " --------------------------\n\n";
+    cout << "\n\n-------------------------- Player : " << player->getUsername() << " - Money = " << bank->getAccount(player->getId())->getSolde() << " --------------------------\n\n";
     player->printMonuments();
     player->printCards();
-    size_t nb=getNbDiceChosen(*player);
-    size_t throws[nb];
+    const size_t nb = getNbDiceChosen(*player);
+    size_t* throws = new size_t[nb];
     for (size_t i=0;i<nb;i++) {
         throws[i]=dice.throwDice();
         cout<<"\nDice n°"<<i+1<<": "<<throws[i]<<endl;
@@ -217,7 +217,7 @@ void Game::turn(Player* player){
     activationGreenAndBlueCards(player,diceValue);
     activationPurpleCards(player,diceValue);
 
-    cout<<"\nPlayer's balance after activation: " << bank->accounts[player->getId()]->getSolde() << "\n\n";
+    cout<<"\nPlayer's balance after activation: " << bank->getAccount(player->getId())->getSolde() << "\n\n";
     action(player);
     if (nb==2 && throws[0]==throws[1] && player->getMonument("Amusement Park") && !player->isPlaying) {
         player->isPlaying=true;
@@ -233,7 +233,7 @@ void Game::action(Player* player){
     switch (choix){
     case 1:
     {
-        if (bank->accounts[player->getId()]->getSolde()<board->cheapestAvailableCardPrice()){
+        if (bank->getAccount(player->getId())->getSolde() < board->cheapestAvailableCardPrice()){
             cout<<"\nYou don't have enough money...\n";
             action(player);
             break;
@@ -253,10 +253,10 @@ void Game::action(Player* player){
             try
             {
                 card = getCardByName(choice);
-                if (card->getPrice() > bank->accounts[player->getId()]->getSolde()){
+                if (card->getPrice() > bank->getAccount(player->getId())->getSolde()){
                     throw invalid_argument("You don't have enough money to buy this card.\n");
                 }
-                if (board->cardsDecks.at(card) == 0){
+                if (board->getCard(card) == 0) {
                     throw invalid_argument("There is no avaible card for this stack.\n");
                 }
                 player->purchaseEstablishment(card);
@@ -274,10 +274,10 @@ void Game::action(Player* player){
             cout<<"Do you want to change your action ? (Y/N)"<<endl;
             cin>>reDo;
             if (reDo=="y" || reDo=="Y"){
-                player->cardsCounter[card]--;
-                board->cardsDecks.at(card)++;
+                player->removeEstablishment(card);
+                board->addCard(card);
                 bank->credit(player->getId(),card->getPrice());
-                cout <<"\n-------------------------- Player : " << player->getUsername() << " - Money = " << bank->accounts[player->getId()]->getSolde() << " --------------------------\n";
+                cout <<"\n-------------------------- Player : " << player->getUsername() << " - Money = " << bank->getAccount(player->getId())->getSolde() << " --------------------------\n";
                 action(player);
             }
         }
@@ -285,7 +285,7 @@ void Game::action(Player* player){
     }
     case 2:
     {
-        if (bank->accounts[player->getId()]->getSolde()<player->cheapestMonumentAvailablePrice()){
+        if (bank->getAccount(player->getId())->getSolde() < player->cheapestMonumentAvailablePrice()){
             cout<<"\nYou don't have enough money...\n";
             action(player);
             break;
@@ -304,7 +304,7 @@ void Game::action(Player* player){
             getline(cin, choice);
             try {
                 monument = getMonumentByName(choice);
-                if (monument->getPrice() > bank->accounts[player->getId()]->getSolde()) {
+                if (monument->getPrice() > bank->getAccount(player->getId())->getSolde()) {
                     throw invalid_argument("You don't have enough money to buy this card.\n");
                 }
                 if (player->getMonument(choice)) {
@@ -322,9 +322,9 @@ void Game::action(Player* player){
             cout << "Do you want to change your action ? (Y/N)" << endl;
             cin >> reDo;
             if (reDo == "y" || reDo == "Y") {
-                player->monuments[monument] = false;
+                player->removeMonument(monument);
                 bank->credit(player->getId(), monument->getPrice());
-                cout << "\n-------------------------- Player : " << player->getUsername() << " - Money = "<< bank->accounts[player->getId()]->getSolde() << " --------------------------\n";
+                cout << "\n-------------------------- Player : " << player->getUsername() << " - Money = "<< bank->getAccount(player->getId())->getSolde() << " --------------------------\n";
                 action(player);
             }
         }
@@ -375,9 +375,9 @@ void Game::activation(Player* p, size_t diceNumber) {
 }
 void Game::tradeCards(Player* p1, Player* p2, EstablishmentCard *cardP1, EstablishmentCard *cardP2) {
     p2->purchaseEstablishment(cardP1);
-    p1->cardsCounter[cardP1]--;
+    //p1->cardsCounter[cardP1]--;
     p1->purchaseEstablishment(cardP2);
-    p2->cardsCounter[cardP2]--;
+    //p2->cardsCounter[cardP2]--;
     cout<<p1->getUsername()<<" has taken "<<cardP2->getName()<<" from "<<p2->getUsername()<<" and gave "<<cardP1->getName()<<" in exchange."<<endl;
 }
 Player* Game::getPlayerByName(std::string name) const {
@@ -389,7 +389,7 @@ Player* Game::getPlayerByName(std::string name) const {
 }
 bool Game::isWinner(Player *player) const {
     bool isWinner=true;
-    for (auto it = player->monuments.begin();it!=player->monuments.end();it++){
+    for (auto it = player->getMonuments().begin(); it != player->getMonuments().end(); it++) {
         if (!it->second) isWinner=false;
     }
     return isWinner;
