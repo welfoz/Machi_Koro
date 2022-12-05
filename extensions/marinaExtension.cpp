@@ -10,11 +10,13 @@ void MackerelBoat::activation(Player &p) {
 		Game::getInstance().getBank()->credit(p.getId(), 3);
 	}
 }
+ 
 
-/*void FlowerShop::activation(Player& p) {
-	for (auto it = p.getCards().begin(); it != p.getCards().end(); it++) {
-		if (it->first->getQuantity()
-}*/
+void TunaBoat::activation(Player& p) {
+	size_t diceValue = Game::getInstance().getDiceValue();  //Rajouter getter qui renvoie la valeur des dés tirés ?? S
+	Game::getInstance().getBank()->credit(p.getId(), diceValue);
+
+}
 
 //Green card
 
