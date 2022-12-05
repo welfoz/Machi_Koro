@@ -125,3 +125,15 @@ size_t Player::cheapestMonumentAvailablePrice() const {
     }
     return min;
 }
+
+void Player::removeMonument(Monument* card) {
+	monuments[card] = false;
+}
+
+void Player::removeEstablishment(EstablishmentCard* card) {
+	auto it = cardsCounter.find(card);
+	if (it != cardsCounter.end() && it->second == 0) {
+		throw "No card available";
+	}
+	cardsCounter[card]--;
+}
