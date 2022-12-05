@@ -96,7 +96,7 @@ public:
 
 class CheeseFactory : public Green {
 public:
-    CheeseFactory(size_t quantity) : Green(nullptr, 1, "Cheese Factory", 5, "Get 3 coins from the bank for each \"CowIcon\" establishment that you own, on your turn only.", quantity) {
+    CheeseFactory(size_t quantity) : Green(nullptr, 1, "Cheese Factory", 5, "Get 3 coins from the bank for each \"Cow\" establishment that you own, on your turn only.", quantity) {
         BaseCard::setIcon(getIconByName("factory"));
         size_t* actNumber = new size_t[1];
         actNumber[0] = 7;
@@ -109,7 +109,7 @@ public:
 
 class FurnitureFactory : public Green {
 public:
-    FurnitureFactory(size_t quantity) : Green(nullptr, 1, "Furniture Factory", 3, "Get 3 coins from the bank for each \"GearIcon\" establishment that you own, on your turn only.", quantity) {
+    FurnitureFactory(size_t quantity) : Green(nullptr, 1, "Furniture Factory", 3, "Get 3 coins from the bank for each \"Gear\" establishment that you own, on your turn only.", quantity) {
         BaseCard::setIcon(getIconByName("factory"));
         size_t* actNumber = new size_t[1];
         actNumber[0] = 8;

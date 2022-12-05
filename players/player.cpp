@@ -2,7 +2,6 @@
 #include "player.h"
 #include "../formatter/formatter.h"
 
-
 void Player::purchaseMonument(Monument* card) {
     if (!monuments[card]) monuments[card]=true;
 }
@@ -57,7 +56,7 @@ void Player::purchaseEstablishment(EstablishmentCard* card) {
 
 Player::Player(string name, size_t id, vector<Monument*> monuments, vector<EstablishmentCard*> cards, bool iP) : username(name), id(id), isPlaying(iP) {
 	for (auto it = monuments.begin(); it != monuments.end(); it++) {
-		// init all monuments to false // A ENLEVER
+		// init all monuments to false
 		this->monuments.insert({ *it, 0});
 	}
 
@@ -114,4 +113,15 @@ void Player::printMonuments() const {
 		cout << Formatter::format(it->first->getIcon()->getName(), headerNames[4].second);
 		cout << it->first->getEffetDescription() << "\n";
 	}
+}
+size_t Player::cheapestMonumentAvailablePrice() const {
+    auto it= find_if(monuments.begin(),monuments.end(),[](pair<Monument*,bool> it){return it.second==false;});
+    size_t min=0;
+    if(it!=monuments.end()){
+        min=it->first->getPrice();
+        for (;it!=monuments.end();it++){
+            if (it->first->getPrice()<min) min=it->first->getPrice();
+        }
+    }
+    return min;
 }

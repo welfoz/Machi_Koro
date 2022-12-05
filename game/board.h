@@ -4,11 +4,10 @@
 #include <vector>
 #include <iostream>
 #include <stdexcept>
-using namespace std;
-
-
-//using std::map;
 #include "../cards/establishmentCard.h"
+#include <algorithm>
+
+using namespace std;
 class Board
 {
 private:
@@ -21,4 +20,5 @@ public:
     void removeCard(EstablishmentCard* card);
     void addCard(EstablishmentCard* card);
     void printBoard();
+    size_t cheapestAvailableCardPrice() const;
 };
