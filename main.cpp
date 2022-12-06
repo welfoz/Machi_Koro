@@ -30,7 +30,6 @@ int main(int argc, const char* argv[]) {
     default:
         break;
     }*/
-    GreenValley::getInstance().match();
     system("pause");
     return 0;
 }
