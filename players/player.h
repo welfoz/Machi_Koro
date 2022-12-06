@@ -16,6 +16,7 @@ private:
     size_t id;
     map<EstablishmentCard*,size_t> cardsCounter;
     map<Monument*,bool>monuments;
+    map<EstablishmentCard*, bool> closed;
 public:
     bool isPlaying;
     void purchaseMonument(Monument* card);
@@ -31,10 +32,13 @@ public:
         return monuments;
     };
     const map<EstablishmentCard*,size_t>& getCards() {return cardsCounter;}
-    Player(string name, size_t id, vector<Monument*> monuments, vector<EstablishmentCard*> cards, bool iP=false);
+    Player(string name, size_t id, vector<Monument*> monuments, vector<EstablishmentCard*> cards, map<EstablishmentCard*,bool>closed= {}, bool iP=false);
     const string& getUsername() const {return username;};
     const size_t& getId() const;
     void printCards() const;
     void printMonuments() const;
     size_t cheapestMonumentAvailablePrice() const;
+    bool isClosed(EstablishmentCard* card);
+    void close(EstablishmentCard* card);
+    void open(EstablishmentCard* card);
 };

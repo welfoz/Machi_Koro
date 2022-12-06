@@ -3,35 +3,49 @@
 
 GreenValley& GreenValley::getInstance() {
     if (instance == nullptr)
-        instance = new Marina;
+        instance = new GreenValley;
     return dynamic_cast<GreenValley&>(*instance);
 }
 
 void GreenValley::createEstablishmentCards(){
     Game::createEstablishmentCards();
-    //new marina cards to add here
+    /*
+    cards.push_back(new CornField());
+    cards.push_back(new Vineyard());
+    cards.push_back(new GeneralStore());
+    cards.push_back(new MovingCompany());
+    cards.push_back(new LoanOffice());
+    cards.push_back(new Winery());
+    cards.push_back(new DemolitionCompany());
+    cards.push_back(new SodaBottlingPlant());
+    cards.push_back(new FrenchRestaurant());
+    cards.push_back(new MembersOnlyClub());
+    cards.push_back(new Park());
+    cards.push_back(new RenovationCompany());
+    cards.push_back(new TechStartup());
+    cards.push_back(new InternationalExhibitHall());*/
 }
 
-void GreenValley::createMonumentCards(){
-    monuments.push_back(new Monument("City Hall", 16, "Immediatly before buying establishments, if you have 0 coins, get 1 from the bank."));
-    Game::createMonumentCards();
-}
-
-void GreenValley::createPlayer(string name, size_t id){
-    players[id] = new Player(name, id, monuments, getPlayerStarterCards());
-    players[id]->purchaseMonument(getMonumentByName("City Hall"));
-}
-
-void GreenValley::createBoard(){
-    //need to change the Board constructor and the createBoard of Game
-}
 
 void GreenValley::createIcons(){
     Game::createIcons();
-    //add the new icons here
+    icons.push_back(new Icon("suitcase","suitcase.png",Type::secondaryIndustry));
 }
 
 void GreenValley::turn(Player* player){
-    cout << "Marina turn \n\n";
+    cout << "Green Valley \n\n";
     Game::turn(player);
 }
+
+map<EstablishmentCard *, bool> GreenValley::createClosed() {
+    map<EstablishmentCard *, bool> closed;
+    for (auto it: cards) {
+        closed.insert({&(*it), false});
+    }
+    return closed;
+}
+
+void GreenValley::createPlayer(string name, size_t id) {
+    players[id] = new Player(name, id, monuments, getPlayerStarterCards(),createClosed());
+}
+

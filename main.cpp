@@ -1,7 +1,8 @@
-#include "./game/game.h"
-#include "./extensions/Marina/marinaExtension.h"
+//#include "./extensions/Marina/marinaExtension.h"
+#include "extensions/Deluxe/greenValleyExtension.h"
 int main(int argc, const char* argv[]) {
     // insert code here...
+    /*
     cout << "Hello, World!\n";
     cout << "Welcome to Machi Koro! Please choose the extension you want to play to:\n";
     char choice = '0';
@@ -28,8 +29,8 @@ int main(int argc, const char* argv[]) {
 		//     break;
     default:
         break;
-    } 
-    
+    }*/
+    GreenValley::getInstance().match();
     system("pause");
     return 0;
 }

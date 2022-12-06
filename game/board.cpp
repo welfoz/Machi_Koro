@@ -58,11 +58,11 @@ void Board::removeCard(EstablishmentCard* card) {
 
 size_t Board::cheapestAvailableCardPrice() const {
     auto it=std::find_if(cardsDecks.begin(),cardsDecks.end(),[](pair<EstablishmentCard*,size_t> it) {return it.second!=0;});
-    size_t min=0;
+    size_t min=-1;
     if (it!=cardsDecks.end()){
         min=it->first->getPrice();
         for (;it!=cardsDecks.end();it++){
-            if (it->first->getPrice()<min) min=it->first->getPrice();
+            if (it->first->getPrice()<min && it->second>0) min=it->first->getPrice();
         }
     }
     return min;

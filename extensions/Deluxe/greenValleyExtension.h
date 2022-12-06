@@ -1,15 +1,14 @@
 #pragma once
-#include "../marina/marinaExtension.h"
-#include "../marina/marinaExtensionCards.h"
-
+#include "../game/game.h"
+#include "greenValleyExtensionCards.h"
 class GreenValley : public Game {
     void createEstablishmentCards() override;
-    void createMonumentCards() override;
+    //monuments remain the same as standard edition
     void createPlayer(string name, size_t id) override;
-    void createBoard() override;
+    //board remain the same as standard edition
     void createIcons() override;
     void turn(Player* player) override;
+    map<EstablishmentCard *, bool> createClosed();
 public :
     static GreenValley& getInstance();
-    GreenValley() : Game() {};
 };

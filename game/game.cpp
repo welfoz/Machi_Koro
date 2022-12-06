@@ -67,7 +67,6 @@ void Game::createAll() {
     this->nbPlayers = cpt;
     createBank(cpt);
     createBoard();
-
     };
 
 void Game::createPlayer(string name, size_t id) {
@@ -175,7 +174,6 @@ Game::~Game() {
 void Game::match(){
     createAll();
     idCurrentPlayer = 0;
-
     while (winner==nullptr) {
         cout << "\n\n-------------------------------------------------------------------------------";
         //cout << "\n------------------------------- Turn number : " << ???? << " -------------------------------\n";
@@ -213,9 +211,7 @@ void Game::turn(Player* player){
     size_t diceValue=0;
     for (size_t i=0;i<nb;i++) diceValue+=throws[i];
 
-    activationRedCards(player,diceValue);
-    activationGreenAndBlueCards(player,diceValue);
-    activationPurpleCards(player,diceValue);
+    activation(player,diceValue);
 
     cout<<"\nPlayer's balance after activation: " << bank->getAccount(player->getId())->getSolde() << "\n\n";
     action(player);
@@ -238,7 +234,7 @@ void Game::action(Player* player){
             action(player);
             break;
         }
-        else if (board->cheapestAvailableCardPrice()==0){
+        else if (board->cheapestAvailableCardPrice()<0){
             cout<<"\nNo card left on the board\n";
             action(player);
             break;
@@ -365,10 +361,6 @@ void Game::activationPurpleCards(Player* p, size_t n) {
 }
 
 void Game::activation(Player* p, size_t diceNumber) {
-    // order of activation:
-    // red 
-    // green & blue  
-    // purple
     activationRedCards(p, diceNumber);
     activationGreenAndBlueCards(p, diceNumber);
     activationPurpleCards(p, diceNumber);

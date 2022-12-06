@@ -11,6 +11,7 @@
 #include <list>
 
 class CornField : public Blue {
+public:
     CornField() : Blue(nullptr, 2, "Corn Field", 2, "On anyone's turn : If you have less than 2 landmarks built, get 1 coin from the bank", 6) {
         BaseCard::setIcon(getIconByName("wheat"));
         size_t* actNumber = new size_t[2];
@@ -21,6 +22,7 @@ class CornField : public Blue {
 };
 
 class Vineyard : public Blue {
+public:
     Vineyard() : Blue(nullptr, 1, "Vineyard", 3, "On anyone's turn : Get 3 coins from the bank", 6) {
         BaseCard::setIcon(getIconByName("wheat"));
         size_t* actNumber = new size_t[1];
@@ -30,6 +32,7 @@ class Vineyard : public Blue {
 };
 
 class GeneralStore : public Green {
+public:
     GeneralStore() : Green(nullptr, 1, "General Store", 0, "If you have less than 2 constructed landmarks, get 2 coins from the bank (your turn only)", 6) {
         BaseCard::setIcon(getIconByName("bread"));
         size_t* actNumber = new size_t[1];
@@ -39,6 +42,7 @@ class GeneralStore : public Green {
 };
 
 class MovingCompany : public Green {
+public:
     MovingCompany() : Green(nullptr, 2, "Moving Company", 2, "You must give a non - Major Establishment building that you own to another player.When you do, get 4 coins from the bank (your turn only)", 6) {
         BaseCard::setIcon(getIconByName("suitcase"));
         size_t* actNumber = new size_t[2];
@@ -49,6 +53,7 @@ class MovingCompany : public Green {
 };
 
 class LoanOffice : public Green {
+public:
     LoanOffice() : Green(nullptr, 2, "Loan Office", 0, "When you construct this building, get 5 coins from the bank. When this building is activated, pay 2 coins to the bank (your turn only)", 6) {
         BaseCard::setIcon(getIconByName("suitcase"));
         size_t* actNumber = new size_t[2];
@@ -59,6 +64,7 @@ class LoanOffice : public Green {
 };
 
 class Winery : public Green {
+public:
     Winery() : Green(nullptr, 1, "Winery", 3, "Get 6 coins for each vineyard you own. Then, close this building for renovation (your turn only)", 6) {
         BaseCard::setIcon(getIconByName("factory"));
         size_t* actNumber = new size_t[1];
@@ -68,6 +74,7 @@ class Winery : public Green {
 };
 
 class DemolitionCompany : public Green {
+public:
     DemolitionCompany() : Green(nullptr, 1, "Demolition Company", 2, "If possible, you must demolish one of your constructed landmarks by turning it back over to its unconstructed side. When you do get 8 coins from the bank", 6) {
         BaseCard::setIcon(getIconByName("suitcase"));
         size_t* actNumber = new size_t[1];
@@ -77,6 +84,7 @@ class DemolitionCompany : public Green {
 };
 
 class SodaBottlingPlant : public Green {
+public:
     SodaBottlingPlant() : Green(nullptr, 1, "Soda Bottling Plant", 5, "Get 1 coin from the bank for every cup owned by all players (your turn only)", 6) {
         BaseCard::setIcon(getIconByName("factory"));
         size_t* actNumber = new size_t[1];
@@ -86,6 +94,7 @@ class SodaBottlingPlant : public Green {
 };
 
 class FrenchRestaurant : public Red {
+public:
     FrenchRestaurant() : Red(nullptr, 1, "French Restaurant", 3, "If the player who rolled this number has 2 or more constructed landmarks, get 5 coins from the player who rolled the dice", 6) {
         BaseCard::setIcon(getIconByName("cup"));
         size_t* actNumber = new size_t[1];
@@ -95,6 +104,7 @@ class FrenchRestaurant : public Red {
 };
 
 class MembersOnlyClub : public Red {
+public:
     MembersOnlyClub() : Red(nullptr, 3, "Member's Ony Club", 4, "If the player who rolled this number has 3 or more constructed landmarks, get all of their coins", 6) {
         BaseCard::setIcon(getIconByName("cup"));
         size_t* actNumber = new size_t[3];
@@ -107,6 +117,7 @@ class MembersOnlyClub : public Red {
 };
 
 class Park : public Purple {
+public:
     Park() : Purple(nullptr, 3, "Park", 3, "Redistribute all players' coins evenly among all players, on your turn only. If there is an uneven amount of coins, take coins from the bank to make up the difference", 5) {
         BaseCard::setIcon(getIconByName("major"));
         size_t* actNumber = new size_t[3];
@@ -119,6 +130,7 @@ class Park : public Purple {
 };
 
 class RenovationCompany : public Purple {
+public:
     RenovationCompany() : Purple(nullptr, 1, "Renovation Company", 4, "Choose a non-major building. All buildings owned by any player of that type are closed for renovations. Get 1 coin from each player for each of their buildings closed for renovation (your turn only)", 5) {
         BaseCard::setIcon(getIconByName("major"));
         size_t* actNumber = new size_t[1];
@@ -128,6 +140,7 @@ class RenovationCompany : public Purple {
 };
 
 class TechStartup : public Purple {
+public:
     TechStartup() : Purple(nullptr, 1, "Tech Startup", 1, "At the end of each of your turns, you may place 1 coin on this card. The total placed here is your investment. When activated, get an amount equal to your investment from all player (your turn only)", 5) {
         BaseCard::setIcon(getIconByName("major"));
         size_t* actNumber = new size_t[1];
@@ -137,6 +150,7 @@ class TechStartup : public Purple {
 };
 
 class InternationalExhibitHall : public Purple {
+public:
     InternationalExhibitHall() : Purple(nullptr, 1, "International Exhibit Hall", 7, "You may choose to activate another of your non-major establishments in place of this one. If you do, return this card to the market (your turn only)", 5) {
         BaseCard::setIcon(getIconByName("major"));
         size_t* actNumber = new size_t[1];
