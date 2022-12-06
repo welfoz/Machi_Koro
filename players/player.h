@@ -27,11 +27,11 @@ public:
     void activateBlueCards(size_t diceNumber);
     void activateGreenCards(size_t diceNumber);
     void activatePurpleCards(size_t diceNumber);
+    // getters
     bool getMonument(string name) const;
-    const map<Monument*, bool> getMonuments() const {
-        return monuments;
-    };
+    const map<Monument*, bool> getMonuments() const {return monuments;};
     const map<EstablishmentCard*,size_t>& getCards() {return cardsCounter;}
+    const size_t getNbMonumentsActivated() const;
     Player(string name, size_t id, vector<Monument*> monuments, vector<EstablishmentCard*> cards, map<EstablishmentCard*,bool>closed= {}, bool iP=false);
     const string& getUsername() const {return username;};
     const size_t& getId() const;

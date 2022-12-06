@@ -367,9 +367,9 @@ void Game::activation(Player* p, size_t diceNumber) {
 }
 void Game::tradeCards(Player* p1, Player* p2, EstablishmentCard *cardP1, EstablishmentCard *cardP2) {
     p2->purchaseEstablishment(cardP1);
-    //p1->cardsCounter[cardP1]--;
+    p1->removeEstablishment(cardP1);
     p1->purchaseEstablishment(cardP2);
-    //p2->cardsCounter[cardP2]--;
+    p2->removeEstablishment(cardP2);
     cout<<p1->getUsername()<<" has taken "<<cardP2->getName()<<" from "<<p2->getUsername()<<" and gave "<<cardP1->getName()<<" in exchange."<<endl;
 }
 Player* Game::getPlayerByName(std::string name) const {

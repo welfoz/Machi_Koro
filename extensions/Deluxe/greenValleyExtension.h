@@ -9,6 +9,7 @@ class GreenValley : public Game {
     void createIcons() override;
     void turn(Player* player) override;
     map<EstablishmentCard *, bool> createClosed();
+    void action(Player* player) override;
 public :
     static GreenValley& getInstance();
 };

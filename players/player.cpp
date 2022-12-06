@@ -174,3 +174,9 @@ void Player::close(EstablishmentCard *card) {
 void Player::open(EstablishmentCard* card){
     closed.at(card)=false;
 }
+
+const size_t Player::getNbMonumentsActivated() const{
+    size_t nb=0;
+    for (auto it : monuments) if (it.second) nb++;
+    return nb;
+}

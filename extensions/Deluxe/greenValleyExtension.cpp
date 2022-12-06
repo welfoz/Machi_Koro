@@ -48,4 +48,9 @@ map<EstablishmentCard *, bool> GreenValley::createClosed() {
 void GreenValley::createPlayer(string name, size_t id) {
     players[id] = new Player(name, id, monuments, getPlayerStarterCards(),createClosed());
 }
-
+void GreenValley::action(Player *player) {
+    size_t n = player->getCards().count(getCardByName("Loan Office"));
+    Game::action(player);
+    size_t n2=player->getCards().count(getCardByName("Loan Office"));
+    if (n<n2) bank->credit(player->getId(),5);
+}

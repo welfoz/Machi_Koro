@@ -48,7 +48,7 @@ protected:
     virtual void activationRedCards(Player* p, size_t n);
     virtual void activationGreenAndBlueCards(Player* p, size_t n);
     virtual void activationPurpleCards(Player* p, size_t n);
-    void action(Player* player);
+    virtual void action(Player* player);
     const size_t getNbDiceChosen(Player& p);
     bool isWinner(Player* player) const;
     Game();

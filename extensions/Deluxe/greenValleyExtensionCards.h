@@ -7,9 +7,11 @@
 
 
 #pragma once
+#include "greenValleyExtension.h"
 #include "../../cards/cardColor.h"
 #include <list>
-
+#include "../players/player.h"
+#include "cmath"
 class CornField : public Blue {
 public:
     CornField() : Blue(nullptr, 2, "Corn Field", 2, "On anyone's turn : If you have less than 2 landmarks built, get 1 coin from the bank", 6) {
@@ -18,7 +20,7 @@ public:
         actNumber[0] = 3;
         actNumber[0] = 4;
     }
-    void activation(Player& p) override {};
+    void activation(Player& p) override ;
 };
 
 class Vineyard : public Blue {
@@ -28,7 +30,7 @@ public:
         size_t* actNumber = new size_t[1];
         actNumber[0] = 7;
     }
-    void activation(Player& p) override {};
+    void activation(Player& p) override ;
 };
 
 class GeneralStore : public Green {
@@ -38,7 +40,7 @@ public:
         size_t* actNumber = new size_t[1];
         actNumber[0] = 2;
     }
-    void activation(Player& p) override {};
+    void activation(Player& p) override ;
 };
 
 class MovingCompany : public Green {
@@ -49,7 +51,7 @@ public:
         actNumber[0] = 9;
         actNumber[0] = 10;
     }
-    void activation(Player& p) override {};
+    void activation(Player& p) override ;
 };
 
 class LoanOffice : public Green {
@@ -60,7 +62,7 @@ public:
         actNumber[0] = 5;
         actNumber[0] = 6;
     }
-    void activation(Player& p) override {};
+    void activation(Player& p) override;
 };
 
 class Winery : public Green {
@@ -70,7 +72,7 @@ public:
         size_t* actNumber = new size_t[1];
         actNumber[0] = 9;
     }
-    void activation(Player& p) override {};
+    void activation(Player& p) override;
 };
 
 class DemolitionCompany : public Green {
@@ -80,7 +82,7 @@ public:
         size_t* actNumber = new size_t[1];
         actNumber[0] = 4;
     }
-    void activation(Player& p) override {};
+    void activation(Player& p) override ;
 };
 
 class SodaBottlingPlant : public Green {
@@ -90,7 +92,7 @@ public:
         size_t* actNumber = new size_t[1];
         actNumber[0] = 11;
     }
-    void activation(Player& p) override {};
+    void activation(Player& p) override;
 };
 
 class FrenchRestaurant : public Red {
@@ -100,7 +102,7 @@ public:
         size_t* actNumber = new size_t[1];
         actNumber[0] = 5;
     }
-    void activation(Player& p) override {};
+    void activation(Player& p) override;
 };
 
 class MembersOnlyClub : public Red {
@@ -113,7 +115,7 @@ public:
         actNumber[2] = 14;
         EstablishmentCard::setActivationNumbers(actNumber);
     }
-    void activation(Player& p) override {};
+    void activation(Player& p) override;
 };
 
 class Park : public Purple {
@@ -126,7 +128,7 @@ public:
         actNumber[2] = 13;
         EstablishmentCard::setActivationNumbers(actNumber);
     }
-    void activation(Player& p) override {};
+    void activation(Player& p) override ;
 };
 
 class RenovationCompany : public Purple {
