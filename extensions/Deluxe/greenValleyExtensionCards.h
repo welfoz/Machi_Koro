@@ -138,17 +138,20 @@ public:
         size_t* actNumber = new size_t[1];
         actNumber[0] = 8;
     }
-    void activation(Player& p) override {};
+    void activation(Player& p) override;
 };
 
 class TechStartup : public Purple {
+    map<Player*,size_t> investments;
 public:
-    TechStartup() : Purple(nullptr, 1, "Tech Startup", 1, "At the end of each of your turns, you may place 1 coin on this card. The total placed here is your investment. When activated, get an amount equal to your investment from all player (your turn only)", 5) {
+    TechStartup() : Purple(nullptr, 1, "Tech Startup", 1, "At the end of each of your turns, you may place 1 coin on this card. The total placed here is your investment. When activated, get an amount equal to your investment from all player (your turn only)", 5), investments({}) {
         BaseCard::setIcon(getIconByName("major"));
         size_t* actNumber = new size_t[1];
         actNumber[0] = 10;
     }
-    void activation(Player& p) override {};
+    const map<Player*, size_t> getInvestment() {return investments;}
+    void invest(Player* player,size_t amount) {investments[player]++;}
+    void activation(Player& p) override;
 };
 
 class InternationalExhibitHall : public Purple {
@@ -158,7 +161,7 @@ public:
         size_t* actNumber = new size_t[1];
         actNumber[0] = 10;
     }
-    void activation(Player& p) override {};
+    void activation(Player& p) override;
 };
 
 

@@ -109,7 +109,63 @@ void Park::activation(Player &p) {
     }
     size_t equalShare=ceil(totalMoney/nbPlayers);
     for (size_t i=0;i<nbPlayers;i++){
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          è
-        GreenValley::getInstance().getBank()->credit(i,)
+        size_t solde=GreenValley::getInstance().getBank()->getAccount(i)->getSolde();
+        GreenValley::getInstance().getBank()->credit(i,equalShare-solde);
+    }
+}
+void RenovationCompany::activation(Player &p) {
+    string closedCard;
+    EstablishmentCard *closedCardPtr;
+    bool loop = true;
+    while (loop) { // then we ask the card the user want to give
+        try {
+            cout << "Which card do you want to renovate ? (by name)" << endl;
+            getline(cin, closedCard);
+            closedCardPtr = Game::getInstance().getCardByName(closedCard);
+            if (closedCardPtr->getType() != Type::majorEstablishment) loop = false;
+            else cout << "Non-renovable establishment" << endl;
+        } catch (string &error) {
+            cout << error << endl;
+        }
+    }
+    for (size_t i=0; i<GreenValley::getInstance().getNbPlayers();i++){
+        Player* iPlayer=&GreenValley::getInstance().getPlayer(i);
+        if (i!=p.getId() && iPlayer->getCards().count(closedCardPtr)){
+            size_t nbCard=iPlayer->getCards().at(closedCardPtr);
+            GreenValley::getInstance().getBank()->credit(p.getId(),nbCard);
+            iPlayer->close(closedCardPtr);
+        }
+    }
+}
+
+void TechStartup::activation(Player &p) {
+    if (investments.count(&p)){
+        for (size_t i=0;i<GreenValley::getInstance().getNbPlayers();i++){
+            if (i!=p.getId()) GreenValley::getInstance().getBank()->trade(p.getId(),i,investments.at(&p));
+        }
+    }
+}
+
+void InternationalExhibitHall::activation(Player &p) {
+    string choice;
+    cout<<"Do you want to activate another of your non-major establishments ? (Y/N)"<<endl;
+    cin>>choice;
+    if (choice=="Y" || choice=="y"){
+        string card;
+        EstablishmentCard *cardPtr;
+        bool loop = true;
+        while (loop) { // then we ask the card the user want to give
+            try {
+                cout << "Which card do you want to activate ? (by name)" << endl;
+                getline(cin, card);
+                cardPtr = Game::getInstance().getCardByName(card);
+                if (cardPtr->getType() != Type::majorEstablishment && cardPtr->getType() != Type::restaurants ) loop = false;
+                else cout << "Select another establishment" << endl;
+            } catch (string &error) {
+                cout << error << endl;
+            }
+        }
+        p.removeEstablishment(cardPtr);
+        cout<<"\n"<<cardPtr->getName()<<" returned to the market.\n";
     }
 }

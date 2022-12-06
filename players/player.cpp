@@ -79,7 +79,7 @@ void Player::purchaseEstablishment(EstablishmentCard* card) {
 	}
 }
 
-Player::Player(string name, size_t id, vector<Monument*> monuments, vector<EstablishmentCard*> cards, map<EstablishmentCard*,bool>closed, bool iP) : username(name), id(id), isPlaying(iP) {
+Player::Player(string name, size_t id, vector<Monument*> monuments, vector<EstablishmentCard*> cards, map<EstablishmentCard*,bool>closed={}, bool iP) : username(name), id(id), isPlaying(iP), closed(closed){
 	for (auto it = monuments.begin(); it != monuments.end(); it++) {
 		// init all monuments to false
 		this->monuments.insert({ *it, 0});

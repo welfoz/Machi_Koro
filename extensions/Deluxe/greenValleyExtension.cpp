@@ -54,3 +54,15 @@ void GreenValley::action(Player *player) {
     size_t n2=player->getCards().count(getCardByName("Loan Office"));
     if (n<n2) bank->credit(player->getId(),5);
 }
+
+void GreenValley::activationPurpleCards(Player *p, size_t n) {
+    Game::activationPurpleCards(p,n);
+    EstablishmentCard* card=getCardByName("Tech Startup");
+    auto techStartup = dynamic_cast<TechStartup*> (card);
+    if (p->getCards().count(techStartup)){
+        string choice;
+        cout<<"Do you want to invest on Tech Startup ? (Y/N)"<<endl;
+        cin>>choice;
+        if (choice=="Y" || choice=="y") techStartup->invest(p,1);
+    }
+}

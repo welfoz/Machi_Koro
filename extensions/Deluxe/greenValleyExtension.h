@@ -10,6 +10,7 @@ class GreenValley : public Game {
     void turn(Player* player) override;
     map<EstablishmentCard *, bool> createClosed();
     void action(Player* player) override;
+    void activationPurpleCards(Player* p, size_t n)override;
 public :
     static GreenValley& getInstance();
 };
