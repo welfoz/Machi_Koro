@@ -1,5 +1,5 @@
 //#include "./extensions/Marina/marinaExtension.h"
-#include "extensions/Deluxe/greenValleyExtension.h"
+#include "../game/game.h"
 int main(int argc, const char* argv[]) {
     // insert code here...
     /*

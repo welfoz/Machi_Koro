@@ -318,6 +318,7 @@ void Game::action(Player* player){
             string reDo;
             cout << "Do you want to change your action ? (Y/N)" << endl;
             cin >> reDo;
+            cout<<"ICIIIIIII\n";
             if (reDo == "y" || reDo == "Y") {
                 player->removeMonument(monument);
                 bank->credit(player->getId(), monument->getPrice());

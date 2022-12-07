@@ -4,7 +4,6 @@
 Board::Board(vector<EstablishmentCard*> cards) {
     for (auto it = cards.begin(); it != cards.end(); it++) {
         cardsDecks.insert({ *it, cards[it - cards.begin()]->getQuantity() });
-        cout<<(*it)->getName()<<",nb  of act numbers "<<(*it)->getNumberActivation()<<endl;
     }
 };
 
