@@ -9,7 +9,6 @@ GreenValley& GreenValley::getInstance() {
 
 void GreenValley::createEstablishmentCards(){
     Game::createEstablishmentCards();
-    /*
     cards.push_back(new CornField());
     cards.push_back(new Vineyard());
     cards.push_back(new GeneralStore());
@@ -23,7 +22,7 @@ void GreenValley::createEstablishmentCards(){
     cards.push_back(new Park());
     cards.push_back(new RenovationCompany());
     cards.push_back(new TechStartup());
-    cards.push_back(new InternationalExhibitHall());*/
+    cards.push_back(new InternationalExhibitHall());
 }
 
 

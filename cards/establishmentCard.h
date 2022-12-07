@@ -22,7 +22,7 @@ public:
 		return numberActivation;
 	};
 
-	size_t* const getActivationNumbers() const {
+	size_t* getActivationNumbers() const {
 		return activationNumbers;
 	}
 	virtual void activation(Player& p) = 0;

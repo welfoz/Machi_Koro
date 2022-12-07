@@ -18,7 +18,7 @@ public:
         BaseCard::setIcon(getIconByName("wheat"));
         size_t* actNumber = new size_t[2];
         actNumber[0] = 3;
-        actNumber[0] = 4;
+        actNumber[1] = 4;
     }
     void activation(Player& p) override ;
 };
@@ -49,7 +49,7 @@ public:
         BaseCard::setIcon(getIconByName("suitcase"));
         size_t* actNumber = new size_t[2];
         actNumber[0] = 9;
-        actNumber[0] = 10;
+        actNumber[1] = 10;
     }
     void activation(Player& p) override ;
 };
@@ -60,7 +60,7 @@ public:
         BaseCard::setIcon(getIconByName("suitcase"));
         size_t* actNumber = new size_t[2];
         actNumber[0] = 5;
-        actNumber[0] = 6;
+        actNumber[1] = 6;
     }
     void activation(Player& p) override;
 };

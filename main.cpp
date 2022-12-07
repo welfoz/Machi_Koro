@@ -30,6 +30,7 @@ int main(int argc, const char* argv[]) {
     default:
         break;
     }*/
+    Game::getInstance().match();
     system("pause");
     return 0;
 }

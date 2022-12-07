@@ -4,6 +4,7 @@
 Board::Board(vector<EstablishmentCard*> cards) {
     for (auto it = cards.begin(); it != cards.end(); it++) {
         cardsDecks.insert({ *it, cards[it - cards.begin()]->getQuantity() });
+        cout<<(*it)->getName()<<",nb  of act numbers "<<(*it)->getNumberActivation()<<endl;
     }
 };
 
@@ -24,11 +25,10 @@ void Board::printBoard()
 	};
     cout << Formatter::formatHeader(headerNames);
     for (auto it = cardsDecks.begin(); it != cardsDecks.end(); it++) {
-
         // get all activation numbers
         string activationNumbers;
         size_t* actNumbers = it->first->getActivationNumbers();
-        for (unsigned int i = 0; i < it->first->getNumberActivation(); i++) {
+        for (size_t i = 0; i < it->first->getNumberActivation(); i++) {
             activationNumbers += std::to_string(*actNumbers) + ' ';
             actNumbers++;
         }

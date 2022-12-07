@@ -239,6 +239,7 @@ void Game::action(Player* player){
             action(player);
             break;
         }
+        //test
         board->printBoard();
         string choice;
         EstablishmentCard* card = nullptr;
