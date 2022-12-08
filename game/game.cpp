@@ -124,6 +124,8 @@ vector<EstablishmentCard*> Game::getPlayerStarterCards() {
     try {
 		starterCards.push_back(getCardByName("Wheat Field"));
         starterCards.push_back(getCardByName("Bakery"));
+        //
+        starterCards.push_back(getCardByName("Business Center"));
     } 
     catch (string error) {
         cout << error;
@@ -138,7 +140,8 @@ EstablishmentCard* Game::getCardByName(string name) const {
         return *it;
     }
     string error = "error getCardByName, didn't find : " + name + "\n";
-    throw invalid_argument(error);
+    //throw invalid_argument(error);
+    throw error;
 }
 
 Monument* Game::getMonumentByName(string name) const {
@@ -244,40 +247,38 @@ void Game::action(Player* player){
         board->printBoard();
         string choice;
         EstablishmentCard* card = nullptr;
-        while (card == nullptr){
-            cout << "Enter the name of the card you want to buy : ";
-            cin.ignore();
-            getline(cin, choice);
-            try
-            {
+        bool loop=true;
+        while (loop){
+            try {
+                cout << "Enter the name of the card you want to buy : ";
+                cin.ignore();
+                getline(cin, choice);
                 card = getCardByName(choice);
-                if (card->getPrice() > bank->getAccount(player->getId())->getSolde()){
-                    throw invalid_argument("You don't have enough money to buy this card.\n");
+                if (card->getPrice() > bank->getAccount(player->getId())->getSolde()) {
+                    throw "You don't have enough money to buy this card.\n";
                 }
-                if (board->getCard(card) == 0) {
-                    throw invalid_argument("There is no avaible card for this stack.\n");
+                else if (board->getCard(card) == 0) {
+                    throw "There is no avaible card for this stack.\n";
                 }
-                player->purchaseEstablishment(card);
-                board->removeCard(card);
-                bank->debit(player->getId(), card->getPrice());
-                player->printCards();
+                else loop=false;
             }
-            catch(const std::exception& e)
-            {
-                std::cerr << e.what() << '\n';
-                cout << "Select an available card.\n";
-                card = nullptr;
+            catch (string error) {
+                cout << error << '\n';
             }
-            string reDo;
-            cout<<"Do you want to change your action ? (Y/N)"<<endl;
-            cin>>reDo;
-            if (reDo=="y" || reDo=="Y"){
-                player->removeEstablishment(card);
-                board->addCard(card);
-                bank->credit(player->getId(),card->getPrice());
-                cout <<"\n-------------------------- Player : " << player->getUsername() << " - Money = " << bank->getAccount(player->getId())->getSolde() << " --------------------------\n";
-                action(player);
-            }
+        }
+        player->purchaseEstablishment(card);
+        board->removeCard(card);
+        bank->debit(player->getId(), card->getPrice());
+        player->printCards();
+        string reDo;
+        cout<<"Do you want to change your action ? (Y/N)"<<endl;
+        cin>>reDo;
+        if (reDo=="y" || reDo=="Y"){
+            player->removeEstablishment(card);
+            board->addCard(card);
+            bank->credit(player->getId(),card->getPrice());
+            cout <<"\n-------------------------- Player : " << player->getUsername() << " - Money = " << bank->getAccount(player->getId())->getSolde() << " --------------------------\n";
+            action(player);
         }
         break;
     }
@@ -296,26 +297,26 @@ void Game::action(Player* player){
         player->printMonuments();
         string choice;
         Monument* monument = nullptr;
-        while (monument == nullptr) {
-            cout << "Enter the name of the monument you want to buy : ";
-            cin.ignore();
-            getline(cin, choice);
-            try {
-                monument = getMonumentByName(choice);
-                if (monument->getPrice() > bank->getAccount(player->getId())->getSolde()) {
-                    throw invalid_argument("You don't have enough money to buy this card.\n");
-                }
-                if (player->getMonument(choice)) {
-                    throw invalid_argument("You already built this monument.\n");
-                }
-                player->purchaseMonument(monument);
-                bank->debit(player->getId(), monument->getPrice());
-                player->printMonuments();
-            } catch (const std::exception &e) {
-                std::cerr << e.what() << '\n';
-                cout << "Select an available card.\n";
-                monument = nullptr;
+        bool loop=true;
+        while (loop) {
+                try {
+                    cout << "Enter the name of the monument you want to buy : ";
+                    cin.ignore();
+                    getline(cin, choice);
+                    monument = getMonumentByName(choice);
+                    if (monument->getPrice() > bank->getAccount(player->getId())->getSolde()) {
+                        throw invalid_argument("You don't have enough money to buy this card.\n");
+                    }
+                    if (player->getMonument(choice)) {
+                        throw invalid_argument("You already built this monument.\n");
+                    }
+                    loop=false;
+                } catch (const std::exception &e) {
+                    std::cerr << e.what() << '\n';
             }
+            player->purchaseMonument(monument);
+            bank->debit(player->getId(), monument->getPrice());
+            player->printMonuments();
             string reDo;
             cout << "Do you want to change your action ? (Y/N)" << endl;
             cin >> reDo;

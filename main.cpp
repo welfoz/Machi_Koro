@@ -1,6 +1,7 @@
 #include "./game/game.h"
-#include "./extensions/marinaExtension.h"
+//#include "./extensions/marinaExtension.h"
 int main(int argc, const char* argv[]) {
+    /*
     // insert code here...
     cout << "Hello, World!\n";
     cout << "Welcome to Machi Koro! Please choose the extension you want to play to:\n";
@@ -28,8 +29,8 @@ int main(int argc, const char* argv[]) {
 		//     break;
     default:
         break;
-    } 
-    
+    } */
+    Game::getInstance().match();
     system("pause");
     return 0;
 }
