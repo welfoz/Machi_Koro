@@ -1,15 +1,22 @@
 
 #include "player.h"
 #include "../formatter/formatter.h"
+#include "../game/game.h"
 
 void Player::purchaseMonument(Monument* card) {
     if (!monuments[card]) monuments[card]=true;
 }
-void Player::activateRedCards(size_t diceNumber) {
+vector<EstablishmentCard*> Player::activateRedCards(size_t diceNumber) {
+	vector<EstablishmentCard*> activatedCards = {};
     for(auto it=cardsCounter.begin();it!=cardsCounter.end();it++){
         if(it->first->getType()==Type::restaurants&& it->first->inActivationNumbers(diceNumber))
-            for (size_t j=0;j<it->second;j++) it->first->activation(*this);
+			for (size_t j = 0; j < it->second; j++)
+			{
+				it->first->activation(*this);
+				activatedCards.push_back(it->first);
+			}
     }
+	return activatedCards;
 }
 void Player::activateBlueCards(size_t diceNumber){
     for(auto it=cardsCounter.begin();it!=cardsCounter.end();it++){
@@ -17,11 +24,16 @@ void Player::activateBlueCards(size_t diceNumber){
             for (size_t j=0;j<it->second;j++) it->first->activation(*this);
     }
 }
-void Player::activateGreenCards(size_t diceNumber){
+vector<EstablishmentCard*> Player::activateGreenCards(size_t diceNumber){
+	vector<EstablishmentCard*> activatedCards = {};
     for(auto it=cardsCounter.begin();it!=cardsCounter.end();it++){
         if(it->first->getType()==Type::secondaryIndustry&& it->first->inActivationNumbers(diceNumber))
-            for (size_t j=0;j<it->second;j++) it->first->activation(*this);
+			for (size_t j = 0; j < it->second; j++) {
+				it->first->activation(*this);
+				activatedCards.push_back(it->first);
+			}
     }
+	return activatedCards;
 }
 void Player::activatePurpleCards(size_t diceNumber){
     for(auto it=cardsCounter.begin();it!=cardsCounter.end();it++){

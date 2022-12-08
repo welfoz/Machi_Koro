@@ -148,7 +148,7 @@ Monument* Game::getMonumentByName(string name) const {
         return *it;
     }
     string error = "error getMonumentByName, didn't find : " + name + "\n";
-    throw error;
+    throw invalid_argument(error);
 }
 
 const size_t Game::getNbDiceChosen(Player& p) { // est appelé par le jeu seulement si le joueur posède station
@@ -213,9 +213,7 @@ void Game::turn(Player* player){
     size_t diceValue=0;
     for (size_t i=0;i<nb;i++) diceValue+=throws[i];
 
-    activationRedCards(player,diceValue);
-    activationGreenAndBlueCards(player,diceValue);
-    activationPurpleCards(player,diceValue);
+    activation(player, diceValue);
 
     cout<<"\nPlayer's balance after activation: " << bank->getAccount(player->getId())->getSolde() << "\n\n";
     action(player);
@@ -274,11 +272,14 @@ void Game::action(Player* player){
             cout<<"Do you want to change your action ? (Y/N)"<<endl;
             cin>>reDo;
             if (reDo=="y" || reDo=="Y"){
-                player->removeEstablishment(card);
-                board->addCard(card);
-                bank->credit(player->getId(),card->getPrice());
-                cout <<"\n-------------------------- Player : " << player->getUsername() << " - Money = " << bank->getAccount(player->getId())->getSolde() << " --------------------------\n";
+                if (card != nullptr) {
+					player->removeEstablishment(card);
+					board->addCard(card);
+					bank->credit(player->getId(), card->getPrice());
+					cout << "\n-------------------------- Player : " << player->getUsername() << " - Money = " << bank->getAccount(player->getId())->getSolde() << " --------------------------\n";
+                }
                 action(player);
+                break;
             }
         }
         break;
@@ -322,10 +323,13 @@ void Game::action(Player* player){
             cout << "Do you want to change your action ? (Y/N)" << endl;
             cin >> reDo;
             if (reDo == "y" || reDo == "Y") {
-                player->removeMonument(monument);
-                bank->credit(player->getId(), monument->getPrice());
-                cout << "\n-------------------------- Player : " << player->getUsername() << " - Money = "<< bank->getAccount(player->getId())->getSolde() << " --------------------------\n";
+                if (monument != nullptr) {
+					player->removeMonument(monument);
+					bank->credit(player->getId(), monument->getPrice());
+					cout << "\n-------------------------- Player : " << player->getUsername() << " - Money = " << bank->getAccount(player->getId())->getSolde() << " --------------------------\n";
+                }
                 action(player);
+                break;
             }
         }
         if (isWinner(player)) winner=player;
@@ -343,7 +347,8 @@ void Game::activationGreenAndBlueCards(Player* p,size_t n) {
     for (size_t i = p->getId() + this->nbPlayers; i > p->getId(); i--){
         unsigned int index = i % this->nbPlayers;
         if (players[index] == p) {
-			players[index]->activateGreenCards(n);
+			vector<EstablishmentCard*> activatedCards = players[index]->activateGreenCards(n);
+            this->activateShoppingMall(p, activatedCards);
         }
         players[index]->activateBlueCards(n);
     }
@@ -354,10 +359,33 @@ void Game::activationRedCards(Player* p, size_t n) {
     for (size_t i = p->getId() + this->nbPlayers; i > p->getId(); i--){
         unsigned int index = i % this->nbPlayers;
         if (players[index] != p) {
-			players[index]->activateRedCards(n);
+			vector<EstablishmentCard*> activatedCards = players[index]->activateRedCards(n);
+            this->activateShoppingMall(p, activatedCards);
         }
     }
 }
+void Game::activateShoppingMall(Player* p, vector<EstablishmentCard*> cards) {
+    if (!p->getMonument("Shopping Mall")) {
+        return;
+    }
+    for (auto it : cards) {
+        if (it->getIcon()->getName() == "bread" || it->getIcon()->getName() == "cup") {
+            // no need to handle the case when Type::majorEstablishment and Type::primaryIndustry
+            // because they never have bread or cup icon
+            switch (it->getType()) {
+			case (Type::restaurants):
+				this->getBank()->trade(p->getId(), getIdCurrentPlayer(), 1);
+                break;
+			case(Type::secondaryIndustry):
+			    this->getBank()->credit(p->getId(), 1);
+                break;
+			default:
+				break;
+            }
+        }
+    }
+}
+
 
 // purple cards can only be activated by the player playing
 void Game::activationPurpleCards(Player* p, size_t n) {
@@ -388,9 +416,8 @@ Player* Game::getPlayerByName(std::string name) const {
     throw error;
 }
 bool Game::isWinner(Player *player) const {
-    bool isWinner=true;
     for (auto it = player->getMonuments().begin(); it != player->getMonuments().end(); it++) {
-        if (!it->second) isWinner=false;
+        if (!it->second) return false;
     }
-    return isWinner;
+    return true;
 }

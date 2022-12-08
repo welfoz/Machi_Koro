@@ -53,6 +53,7 @@ protected:
     const size_t getNbDiceChosen(Player& p);
     bool isWinner(Player* player) const;
     Game();
+    void activateShoppingMall(Player* p, vector<EstablishmentCard*> cards);
 public:
     virtual ~Game();
 
