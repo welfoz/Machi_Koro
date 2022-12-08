@@ -16,6 +16,7 @@ class CornField : public Blue {
         size_t* actNumber = new size_t[2];
         actNumber[0] = 3;
         actNumber[0] = 4;
+        EstablishmentCard::setActivationNumbers(actNumber);
     }
     void activation(Player& p) override {};
 };
@@ -25,6 +26,7 @@ class Vineyard : public Blue {
         BaseCard::setIcon(getIconByName("wheat"));
         size_t* actNumber = new size_t[1];
         actNumber[0] = 7;
+        EstablishmentCard::setActivationNumbers(actNumber);
     }
     void activation(Player& p) override {};
 };
@@ -34,6 +36,7 @@ class GeneralStore : public Green {
         BaseCard::setIcon(getIconByName("bread"));
         size_t* actNumber = new size_t[1];
         actNumber[0] = 2;
+        EstablishmentCard::setActivationNumbers(actNumber);
     }
     void activation(Player& p) override {};
 };
@@ -44,6 +47,7 @@ class MovingCompany : public Green {
         size_t* actNumber = new size_t[2];
         actNumber[0] = 9;
         actNumber[0] = 10;
+        EstablishmentCard::setActivationNumbers(actNumber);
     }
     void activation(Player& p) override {};
 };
@@ -54,6 +58,7 @@ class LoanOffice : public Green {
         size_t* actNumber = new size_t[2];
         actNumber[0] = 5;
         actNumber[0] = 6;
+        EstablishmentCard::setActivationNumbers(actNumber);
     }
     void activation(Player& p) override {};
 };
@@ -63,6 +68,7 @@ class Winery : public Green {
         BaseCard::setIcon(getIconByName("factory"));
         size_t* actNumber = new size_t[1];
         actNumber[0] = 9;
+        EstablishmentCard::setActivationNumbers(actNumber);
     }
     void activation(Player& p) override {};
 };
@@ -72,6 +78,7 @@ class DemolitionCompany : public Green {
         BaseCard::setIcon(getIconByName("suitcase"));
         size_t* actNumber = new size_t[1];
         actNumber[0] = 4;
+        EstablishmentCard::setActivationNumbers(actNumber);
     }
     void activation(Player& p) override {};
 };
@@ -81,6 +88,7 @@ class SodaBottlingPlant : public Green {
         BaseCard::setIcon(getIconByName("factory"));
         size_t* actNumber = new size_t[1];
         actNumber[0] = 11;
+        EstablishmentCard::setActivationNumbers(actNumber);
     }
     void activation(Player& p) override {};
 };
@@ -90,6 +98,7 @@ class FrenchRestaurant : public Red {
         BaseCard::setIcon(getIconByName("cup"));
         size_t* actNumber = new size_t[1];
         actNumber[0] = 5;
+        EstablishmentCard::setActivationNumbers(actNumber);
     }
     void activation(Player& p) override {};
 };
@@ -123,6 +132,7 @@ class RenovationCompany : public Purple {
         BaseCard::setIcon(getIconByName("major"));
         size_t* actNumber = new size_t[1];
         actNumber[0] = 8;
+        EstablishmentCard::setActivationNumbers(actNumber);
     }
     void activation(Player& p) override {};
 };
@@ -132,6 +142,7 @@ class TechStartup : public Purple {
         BaseCard::setIcon(getIconByName("major"));
         size_t* actNumber = new size_t[1];
         actNumber[0] = 10;
+        EstablishmentCard::setActivationNumbers(actNumber);
     }
     void activation(Player& p) override {};
 };
@@ -141,6 +152,7 @@ class InternationalExhibitHall : public Purple {
         BaseCard::setIcon(getIconByName("major"));
         size_t* actNumber = new size_t[1];
         actNumber[0] = 10;
+        EstablishmentCard::setActivationNumbers(actNumber);
     }
     void activation(Player& p) override {};
 };
