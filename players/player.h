@@ -23,9 +23,9 @@ public:
     void removeMonument(Monument* card);
     void purchaseEstablishment(EstablishmentCard* card);
     void removeEstablishment(EstablishmentCard* card);
-    void activateRedCards(size_t diceNumber);
+    vector<EstablishmentCard*> activateRedCards(size_t diceNumber);
     void activateBlueCards(size_t diceNumber);
-    void activateGreenCards(size_t diceNumber);
+    vector<EstablishmentCard*> activateGreenCards(size_t diceNumber);
     void activatePurpleCards(size_t diceNumber);
     // getters
     bool getMonument(string name) const;
