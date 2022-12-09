@@ -117,17 +117,19 @@ void Player::printCards() const {
 	};
     cout << Formatter::formatHeader(headerNames);
 	for (auto it = cardsCounter.begin(); it != cardsCounter.end(); it++) {
+        if (it->second>0){
+            // get all activation numbers
+            string activationNumbers;
+            size_t* actNumbers = it->first->getActivationNumbers();
+            for (unsigned int i = 0; i < it->first->getNumberActivation(); i++) {
+                activationNumbers += std::to_string(*actNumbers) + ' ';
+                actNumbers++;
+            }
 
-        // get all activation numbers
-        string activationNumbers;
-        size_t* actNumbers = it->first->getActivationNumbers();
-        for (unsigned int i = 0; i < it->first->getNumberActivation(); i++) {
-            activationNumbers += std::to_string(*actNumbers) + ' ';
-            actNumbers++;
+            cout << " " << Formatter::format(it->first->getName(), headerNames[0].second - 1) << Formatter::format(std::to_string(it->first->getPrice()), headerNames[1].second) << Formatter::format(activationNumbers, headerNames[2].second);
+            cout << Formatter::format(std::to_string(it->second), headerNames[3].second) << Formatter::format(BaseCard::typeToString(it->first->getType()), headerNames[4].second) << Formatter::format(it->first->getIcon()->getName(), headerNames[5].second) << it->first->getEffetDescription() << "\n";
         }
 
-        cout << " " << Formatter::format(it->first->getName(), headerNames[0].second - 1) << Formatter::format(std::to_string(it->first->getPrice()), headerNames[1].second) << Formatter::format(activationNumbers, headerNames[2].second);
-        cout << Formatter::format(std::to_string(it->second), headerNames[3].second) << Formatter::format(BaseCard::typeToString(it->first->getType()), headerNames[4].second) << Formatter::format(it->first->getIcon()->getName(), headerNames[5].second) << it->first->getEffetDescription() << "\n";
 	}
 }
 

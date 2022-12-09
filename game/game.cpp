@@ -123,8 +123,6 @@ vector<EstablishmentCard*> Game::getPlayerStarterCards() {
     try {
 		starterCards.push_back(getCardByName("Wheat Field"));
         starterCards.push_back(getCardByName("Bakery"));
-        // test
-        starterCards.push_back(getCardByName("Demolition Company"));
     }
     catch (string error) {
         cout << error;

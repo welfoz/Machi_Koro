@@ -123,6 +123,7 @@ void RenovationCompany::activation(Player &p) {
     while (loop) { // then we ask the card the user want to give
         try {
             cout << "Which card do you want to renovate ? (by name)" << endl;
+            cin.ignore();
             getline(cin, closedCard);
             closedCardPtr = Game::getInstance().getCardByName(closedCard);
             if (closedCardPtr->getType() != Type::majorEstablishment) loop = false;
@@ -160,6 +161,7 @@ void InternationalExhibitHall::activation(Player &p) {
         while (loop) { // then we ask the card the user want to give
             try {
                 cout << "Which card do you want to activate ? (by name)" << endl;
+                cin.ignore();
                 getline(cin, card);
                 cardPtr = Game::getInstance().getCardByName(card);
                 if (cardPtr->getType() != Type::majorEstablishment && cardPtr->getType() != Type::restaurants ) loop = false;
@@ -168,6 +170,7 @@ void InternationalExhibitHall::activation(Player &p) {
                 cout << error << endl;
             }
         }
+        cardPtr->activation(p);
         p.removeEstablishment(cardPtr);
         cout<<"\n"<<cardPtr->getName()<<" returned to the market.\n";
     }
