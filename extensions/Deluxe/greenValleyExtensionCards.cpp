@@ -12,13 +12,14 @@ void GeneralStore::activation(Player &p) {
 void MovingCompany::activation(Player &p) {
     string name;
     bool loop = true;
-    Player *p2;
+    Player *p2= nullptr;
     while (loop) {
         try {
             cout << "\nType the name of the player you want to give a card to :" << endl;
+            cin.ignore();
             cin >> name;
             p2 = Game::getInstance().getPlayerByName(name);
-            if (p2 != &p) loop = false;
+            if (p2->getId() != *&p.getId()) loop = false;
             else cout << "Impossible" << endl;
         } catch (string error) {
             cout << error << endl;
@@ -31,6 +32,7 @@ void MovingCompany::activation(Player &p) {
     while (loop) { // then we ask the card the user want to give
         try {
             cout << "Which card do you want to give ? (by name)" << endl;
+            cin.ignore();
             getline(cin, givenCard);
             givenCardPtr = Game::getInstance().getCardByName(givenCard);
             if (givenCardPtr->getType() != Type::majorEstablishment) loop = false;
@@ -50,7 +52,7 @@ void LoanOffice::activation(Player &p) {
 void Winery::activation(Player &p) {
     auto cards=p.getCards();
     for (auto it : cards){
-        if (it.first->getName()=="VineYard"){
+        if (it.first->getName()=="Vineyard"){
             for (size_t i=0;i<it.second;i++) {
                 GreenValley::getInstance().getBank()->credit(p.getId(),6);
                 p.close(it.first);
@@ -60,6 +62,7 @@ void Winery::activation(Player &p) {
 }
 
 void DemolitionCompany::activation(Player &p) {
+    if (p.getNbMonumentsActivated()==0) return;
     p.printMonuments();
     string monument;
     Monument*monumentPtr;

@@ -196,8 +196,6 @@ public:
         BaseCard::setIcon(getIconByName("major"));
         size_t *actNumber = new size_t[1];
         actNumber[0] = 6;
-
-
         EstablishmentCard::setActivationNumbers(actNumber);
     };
 

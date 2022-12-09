@@ -1,5 +1,6 @@
 //#include "./extensions/Marina/marinaExtension.h"
-#include "../game/game.h"
+//#include "../game/game.h"
+#include "extensions/Deluxe/greenValleyExtension.h"
 int main(int argc, const char* argv[]) {
     // insert code here...
     /*
@@ -30,7 +31,7 @@ int main(int argc, const char* argv[]) {
     default:
         break;
     }*/
-    Game::getInstance().match();
+    GreenValley::getInstance().match();
     system("pause");
     return 0;
 }

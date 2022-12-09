@@ -123,6 +123,8 @@ vector<EstablishmentCard*> Game::getPlayerStarterCards() {
     try {
 		starterCards.push_back(getCardByName("Wheat Field"));
         starterCards.push_back(getCardByName("Bakery"));
+        // test
+        starterCards.push_back(getCardByName("Demolition Company"));
     } 
     catch (string error) {
         cout << error;
@@ -211,7 +213,7 @@ void Game::turn(Player* player){
     size_t diceValue=0;
     for (size_t i=0;i<nb;i++) diceValue+=throws[i];
 
-    activation(player,diceValue);
+    activation(player,diceValue);//test
 
     cout<<"\nPlayer's balance after activation: " << bank->getAccount(player->getId())->getSolde() << "\n\n";
     action(player);
@@ -239,7 +241,6 @@ void Game::action(Player* player){
             action(player);
             break;
         }
-        //test
         board->printBoard();
         string choice;
         EstablishmentCard* card = nullptr;
@@ -267,15 +268,23 @@ void Game::action(Player* player){
                 cout << "Select an available card.\n";
                 card = nullptr;
             }
-            string reDo;
-            cout<<"Do you want to change your action ? (Y/N)"<<endl;
-            cin>>reDo;
-            if (reDo=="y" || reDo=="Y"){
-                player->removeEstablishment(card);
-                board->addCard(card);
-                bank->credit(player->getId(),card->getPrice());
-                cout <<"\n-------------------------- Player : " << player->getUsername() << " - Money = " << bank->getAccount(player->getId())->getSolde() << " --------------------------\n";
-                action(player);
+            bool stop=false;
+            while (!stop){
+                string stopAnswer;
+                while ((stopAnswer != "Y") && (stopAnswer != "y") && (stopAnswer != "N") && (stopAnswer != "n")) {
+                    cout << "Do you want to change your action? (Y/N)";
+                    cin >> stopAnswer;
+                }
+                if (stopAnswer == "n" || stopAnswer == "N") {
+                    stop = true;
+                }
+                if (stopAnswer=="y" || stopAnswer=="Y"){
+                    player->removeEstablishment(card);
+                    board->addCard(card);
+                    bank->credit(player->getId(),card->getPrice());
+                    cout <<"\n-------------------------- Player : " << player->getUsername() << " - Money = " << bank->getAccount(player->getId())->getSolde() << " --------------------------\n";
+                    action(player);
+                }
             }
         }
         break;
@@ -315,15 +324,22 @@ void Game::action(Player* player){
                 cout << "Select an available card.\n";
                 monument = nullptr;
             }
-            string reDo;
-            cout << "Do you want to change your action ? (Y/N)" << endl;
-            cin >> reDo;
-            cout<<"ICIIIIIII\n";
-            if (reDo == "y" || reDo == "Y") {
-                player->removeMonument(monument);
-                bank->credit(player->getId(), monument->getPrice());
-                cout << "\n-------------------------- Player : " << player->getUsername() << " - Money = "<< bank->getAccount(player->getId())->getSolde() << " --------------------------\n";
-                action(player);
+            bool stop=false;
+            while (!stop){
+                string stopAnswer;
+                while ((stopAnswer != "Y") && (stopAnswer != "y") && (stopAnswer != "N") && (stopAnswer != "n")) {
+                    cout << "Do you want to change your action? (Y/N)";
+                    cin >> stopAnswer;
+                }
+                if (stopAnswer == "n" || stopAnswer == "N") {
+                    stop = true;
+                }
+                if (stopAnswer=="y" || stopAnswer=="Y"){
+                    player->removeMonument(monument);
+                    bank->credit(player->getId(),monument->getPrice());
+                    cout <<"\n-------------------------- Player : " << player->getUsername() << " - Money = " << bank->getAccount(player->getId())->getSolde() << " --------------------------\n";
+                    action(player);
+                }
             }
         }
         if (isWinner(player)) winner=player;

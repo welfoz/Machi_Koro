@@ -19,6 +19,7 @@ public:
         size_t* actNumber = new size_t[2];
         actNumber[0] = 3;
         actNumber[1] = 4;
+        EstablishmentCard::setActivationNumbers(actNumber);
     }
     void activation(Player& p) override ;
 };
@@ -29,6 +30,7 @@ public:
         BaseCard::setIcon(getIconByName("wheat"));
         size_t* actNumber = new size_t[1];
         actNumber[0] = 7;
+        EstablishmentCard::setActivationNumbers(actNumber);
     }
     void activation(Player& p) override ;
 };
@@ -39,6 +41,7 @@ public:
         BaseCard::setIcon(getIconByName("bread"));
         size_t* actNumber = new size_t[1];
         actNumber[0] = 2;
+        EstablishmentCard::setActivationNumbers(actNumber);
     }
     void activation(Player& p) override ;
 };
@@ -50,6 +53,7 @@ public:
         size_t* actNumber = new size_t[2];
         actNumber[0] = 9;
         actNumber[1] = 10;
+        EstablishmentCard::setActivationNumbers(actNumber);
     }
     void activation(Player& p) override ;
 };
@@ -61,16 +65,18 @@ public:
         size_t* actNumber = new size_t[2];
         actNumber[0] = 5;
         actNumber[1] = 6;
+        EstablishmentCard::setActivationNumbers(actNumber);
     }
     void activation(Player& p) override;
 };
 
 class Winery : public Green {
 public:
-    Winery() : Green(nullptr, 1, "Winery", 3, "Get 6 coins for each vineyard you own. Then, close this building for renovation (your turn only)", 6) {
+    Winery() : Green(nullptr, 1, "Winery", 3, "Get 6 coins for each Vineyard you own. Then, close this building for renovation (your turn only)", 6) {
         BaseCard::setIcon(getIconByName("factory"));
         size_t* actNumber = new size_t[1];
         actNumber[0] = 9;
+        EstablishmentCard::setActivationNumbers(actNumber);
     }
     void activation(Player& p) override;
 };
@@ -81,6 +87,7 @@ public:
         BaseCard::setIcon(getIconByName("suitcase"));
         size_t* actNumber = new size_t[1];
         actNumber[0] = 4;
+        EstablishmentCard::setActivationNumbers(actNumber);
     }
     void activation(Player& p) override ;
 };
@@ -91,6 +98,7 @@ public:
         BaseCard::setIcon(getIconByName("factory"));
         size_t* actNumber = new size_t[1];
         actNumber[0] = 11;
+        EstablishmentCard::setActivationNumbers(actNumber);
     }
     void activation(Player& p) override;
 };
@@ -101,6 +109,7 @@ public:
         BaseCard::setIcon(getIconByName("cup"));
         size_t* actNumber = new size_t[1];
         actNumber[0] = 5;
+        EstablishmentCard::setActivationNumbers(actNumber);
     }
     void activation(Player& p) override;
 };
@@ -137,6 +146,7 @@ public:
         BaseCard::setIcon(getIconByName("major"));
         size_t* actNumber = new size_t[1];
         actNumber[0] = 8;
+        EstablishmentCard::setActivationNumbers(actNumber);
     }
     void activation(Player& p) override;
 };
@@ -148,6 +158,7 @@ public:
         BaseCard::setIcon(getIconByName("major"));
         size_t* actNumber = new size_t[1];
         actNumber[0] = 10;
+        EstablishmentCard::setActivationNumbers(actNumber);
     }
     const map<Player*, size_t> getInvestment() {return investments;}
     void invest(Player* player,size_t amount) {investments[player]++;}
@@ -160,6 +171,7 @@ public:
         BaseCard::setIcon(getIconByName("major"));
         size_t* actNumber = new size_t[1];
         actNumber[0] = 10;
+        EstablishmentCard::setActivationNumbers(actNumber);
     }
     void activation(Player& p) override;
 };
