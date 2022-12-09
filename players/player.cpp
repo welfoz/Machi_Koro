@@ -10,11 +10,17 @@ vector<EstablishmentCard*> Player::activateRedCards(size_t diceNumber) {
 	vector<EstablishmentCard*> activatedCards = {};
     for(auto it=cardsCounter.begin();it!=cardsCounter.end();it++){
         if(it->first->getType()==Type::restaurants&& it->first->inActivationNumbers(diceNumber))
-			for (size_t j = 0; j < it->second; j++)
-			{
-				it->first->activation(*this);
-				activatedCards.push_back(it->first);
-			}
+            if (!isClosed(it->first)){
+                for (size_t j = 0; j < it->second; j++)
+                {
+                    it->first->activation(*this);
+                    activatedCards.push_back(it->first);
+                }
+            }
+            else if (isClosed(it->first)) {
+                open(it->first);
+            }
+
     }
 	return activatedCards;
 }
@@ -34,14 +40,12 @@ void Player::activateBlueCards(size_t diceNumber){
 vector<EstablishmentCard*> Player::activateGreenCards(size_t diceNumber){
 	vector<EstablishmentCard*> activatedCards = {};
     for(auto it=cardsCounter.begin();it!=cardsCounter.end();it++){
-        if(it->first->getType()==Type::secondaryIndustry&& it->first->inActivationNumbers(diceNumber))
-			for (size_t j = 0; j < it->second; j++) {
-				it->first->activation(*this);
-				activatedCards.push_back(it->first);
-			}
         if(it->first->getType()==Type::secondaryIndustry&& it->first->inActivationNumbers(diceNumber)){
             if (!isClosed(it->first)) {
-                for (size_t j = 0; j < it->second; j++) it->first->activation(*this);
+                for (size_t j = 0; j < it->second; j++) {
+                    it->first->activation(*this);
+                    activatedCards.push_back(it->first);
+                }
             }
             else if (isClosed(it->first)) {
                 open(it->first);
