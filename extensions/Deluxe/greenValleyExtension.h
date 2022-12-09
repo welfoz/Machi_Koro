@@ -4,6 +4,8 @@
 
 #ifndef MACHI_KORO_GREENVALLEYEXTENSION_H
 #define MACHI_KORO_GREENVALLEYEXTENSION_H
+#include "../../game/game.h"
+
 
 
 class greenValleyExtension {

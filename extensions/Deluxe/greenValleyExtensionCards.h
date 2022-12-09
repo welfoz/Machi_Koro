@@ -8,10 +8,11 @@
 
 #pragma once
 #include "../../cards/cardColor.h"
+#include "greenValleyExtension.h"
 #include <list>
 
 class CornField : public Blue {
-    CornField() : Blue(nullptr, 2, "Corn Field", 2, "On anyone's turn : If you have less than 2 landmarks built, get 1 coin from the bank", 6) {
+    CornField() : Blue(nullptr, 2, "Corn Field", 2, "If you have less than 2 landmarks built, get 1 coin from the bank, on anyone's turn", 6) {
         BaseCard::setIcon(getIconByName("wheat"));
         size_t* actNumber = new size_t[2];
         actNumber[0] = 3;
@@ -21,7 +22,7 @@ class CornField : public Blue {
 };
 
 class Vineyard : public Blue {
-    Vineyard() : Blue(nullptr, 1, "Vineyard", 3, "On anyone's turn : Get 3 coins from the bank", 6) {
+    Vineyard() : Blue(nullptr, 1, "Vineyard", 3, "Get 3 coins from the bank, on anyone's turn", 6) {
         BaseCard::setIcon(getIconByName("wheat"));
         size_t* actNumber = new size_t[1];
         actNumber[0] = 7;
@@ -30,7 +31,7 @@ class Vineyard : public Blue {
 };
 
 class GeneralStore : public Green {
-    GeneralStore() : Green(nullptr, 1, "General Store", 0, "If you have less than 2 constructed landmarks, get 2 coins from the bank (your turn only)", 6) {
+    GeneralStore() : Green(nullptr, 1, "General Store", 0, "If you have less than 2 constructed landmarks, get 2 coins from the bank, on your turn only", 6) {
         BaseCard::setIcon(getIconByName("bread"));
         size_t* actNumber = new size_t[1];
         actNumber[0] = 2;
@@ -39,7 +40,7 @@ class GeneralStore : public Green {
 };
 
 class MovingCompany : public Green {
-    MovingCompany() : Green(nullptr, 2, "Moving Company", 2, "You must give a non - Major Establishment building that you own to another player.When you do, get 4 coins from the bank (your turn only)", 6) {
+    MovingCompany() : Green(nullptr, 2, "Moving Company", 2, "You must give a non - Major Establishment building that you own to another player. When you do, get 4 coins from the bank, on your turn only", 6) {
         BaseCard::setIcon(getIconByName("suitcase"));
         size_t* actNumber = new size_t[2];
         actNumber[0] = 9;
@@ -49,7 +50,7 @@ class MovingCompany : public Green {
 };
 
 class LoanOffice : public Green {
-    LoanOffice() : Green(nullptr, 2, "Loan Office", 0, "When you construct this building, get 5 coins from the bank. When this building is activated, pay 2 coins to the bank (your turn only)", 6) {
+    LoanOffice() : Green(nullptr, 2, "Loan Office", 0, "When you construct this building, get 5 coins from the bank. When this building is activated, pay 2 coins to the bank, on your turn only", 6) {
         BaseCard::setIcon(getIconByName("suitcase"));
         size_t* actNumber = new size_t[2];
         actNumber[0] = 5;
@@ -77,7 +78,7 @@ class DemolitionCompany : public Green {
 };
 
 class SodaBottlingPlant : public Green {
-    SodaBottlingPlant() : Green(nullptr, 1, "Soda Bottling Plant", 5, "Get 1 coin from the bank for every cup owned by all players (your turn only)", 6) {
+    SodaBottlingPlant() : Green(nullptr, 1, "Soda Bottling Plant", 5, "Get 1 coin from the bank for every cup owned by all players, on your turn only", 6) {
         BaseCard::setIcon(getIconByName("factory"));
         size_t* actNumber = new size_t[1];
         actNumber[0] = 11;
