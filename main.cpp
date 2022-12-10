@@ -1,9 +1,8 @@
-//#include "./extensions/Marina/marinaExtension.h"
-//#include "../game/game.h"
+#include "./extensions/Marina/marinaExtension.h"
 #include "extensions/Deluxe/greenValleyExtension.h"
 int main(int argc, const char* argv[]) {
     // insert code here...
-    /*
+
     cout << "Hello, World!\n";
     cout << "Welcome to Machi Koro! Please choose the extension you want to play to:\n";
     char choice = '0';
@@ -17,22 +16,21 @@ int main(int argc, const char* argv[]) {
     case 'B':
         Game::getInstance().match();
         break;
-    case 'M':
-        #include "./extensions/Marina/marinaExtension.h"
+    case 'M':{
         Marina::getInstance().match();
         break;
-		// case 'G':
-		//     #include "./extensions/Deluxe/greenValleyExtension.h"
-		//     GreenValley::getInstance().match();
-		//     break;
-		// case 'D':
-		//     #include "./extensions/deluxeExtension.h"
-		//     Deluxe::getInstance().match();
-		//     break;
+    }
+
+    case 'G':{
+        GreenValley::getInstance().match();
+        break;
+    }
+        //case 'D':
+		     //Deluxe::getInstance().match();
+		     //break;
     default:
         break;
-    }*/
-    GreenValley::getInstance().match();
+    }
     system("pause");
     return 0;
 }

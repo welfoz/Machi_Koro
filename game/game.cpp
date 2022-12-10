@@ -202,13 +202,19 @@ void Game::turn(Player* player){
 
     if (player->getMonument("Radio Tower")){
         string choice;
-        cout<<"Do you want to re-roll the dice(s) ? (Y/N)"<<endl;
-        cin>>choice;
-        if (choice=="Y" || choice=="y"){
-            for (size_t i=0;i<nb;i++) {
-                throws[i]=dice.throwDice();
-                cout<<"\nValue of dice number "<<i+1<<" : "<<throws[i]<<endl;
+        bool stop = false;
+        while (!stop){
+            cout<<"Do you want to re-roll the dice(s) ? (Y/N)"<<endl;
+            cin>>choice;
+            if (choice=="Y" || choice=="y"){
+                for (size_t i=0;i<nb;i++) {
+                    throws[i]=dice.throwDice();
+                    cout<<"\nValue of dice number "<<i+1<<" : "<<throws[i]<<endl;
+                }
+                stop=true;
             }
+            if (choice=="N" || choice=="n") stop = true;
+            choice="";
         }
     }
     size_t diceValue=0;

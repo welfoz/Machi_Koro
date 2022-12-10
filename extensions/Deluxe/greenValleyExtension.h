@@ -8,7 +8,6 @@ class GreenValley : public Game {
     //board remain the same as standard edition
     void createIcons() override;
     void turn(Player* player) override;
-    map<EstablishmentCard *, bool> createClosed();
     void action(Player* player) override;
 public :
     static GreenValley& getInstance();

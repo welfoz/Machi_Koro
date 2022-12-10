@@ -183,7 +183,7 @@ bool Player::isClosed(EstablishmentCard *card) {
     else return false;// pour l'edition standard où closed n'est pas initialisé - tjr retourner false
 }
 void Player::close(EstablishmentCard *card) {
-    closed.at(card)=true;
+    closed[card]=true;// operateur[] ajoute l'élément si il n'existe pas déja
 }
 void Player::open(EstablishmentCard* card){
     closed.at(card)=false;

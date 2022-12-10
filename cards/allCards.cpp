@@ -105,7 +105,7 @@ void BusinessCenter::activation(Player &p) {
     loop = true;
     while (loop) {// we ask the user which card he want to take from that player
         try {
-            cout << "Which card do want to take ? (by name)" << endl;
+            cout << "Which non-major Establishment card do want to take ? (by name)" << endl;
             fflush(stdin);
             getline(cin, takenCard);
             takenCardPtr = Game::getInstance().getCardByName(takenCard);
@@ -121,7 +121,7 @@ void BusinessCenter::activation(Player &p) {
     loop = true;
     while (loop) { // then we ask the card the user want to give
         try {
-            cout << "Which card do you want to give ? (by name)" << endl;
+            cout << "Which non-major Establishment card do you want to give ? (by name)" << endl;
             getline(cin, givenCard);
             givenCardPtr = Game::getInstance().getCardByName(givenCard);
             if (givenCardPtr->getType() != Type::majorEstablishment) loop = false;
