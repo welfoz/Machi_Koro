@@ -24,6 +24,7 @@ public:
 	virtual void printPlayerInformation(Player* player) const = 0;
 	virtual void printMonuments(Player* player) const = 0;
 	virtual void printCards(Player* player) const = 0;
+	virtual void printDice(size_t diceNumber, size_t diceValue) const = 0;
 }; 
 
 class Cli : public Interface {
@@ -39,6 +40,9 @@ public:
 	void printPlayerInformation(Player* player) const override;
 	void printMonuments(Player* player) const override;
 	void printCards(Player* player) const override;
+	void printDice(size_t diceNumber, size_t diceValue) const override;
+
+	
 };
 
 class Gui : public Interface {
@@ -54,4 +58,5 @@ public:
 	void printPlayerInformation(Player* player) const override {};
 	void printMonuments(Player* player) const override {};
 	void printCards(Player* player) const override {};
+	void printDice(size_t diceNumber, size_t diceValue) const override {};
 };

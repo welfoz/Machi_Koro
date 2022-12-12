@@ -204,7 +204,7 @@ size_t* Game::throwDices(size_t nb) const {
     size_t* throws = new size_t[nb];
     for (size_t i=0;i<nb;i++) {
         throws[i]=dice.throwDice();
-        cout<<"\nDice n°"<<i+1<<": "<<throws[i]<<endl;
+        interface->printDice(i + 1, throws[i]);
     }
     return throws;
 }

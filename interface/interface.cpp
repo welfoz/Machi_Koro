@@ -117,3 +117,8 @@ void Cli::printCards(Player* player) const {
 
 	}
 }
+
+
+void Cli::printDice(size_t diceNumber, size_t diceValue) const {
+	cout << "\nDice n°" << diceNumber << ": " << diceValue << endl;
+}
