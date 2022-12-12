@@ -57,3 +57,8 @@ size_t Cli::getInputNumber() {
 	cin >> number;
 	return number;
 }
+
+void Cli::printTurnCounter(size_t turnCounter) {
+	cout << "\n\n-------------------------------------------------------------------------------";
+	cout << "\n------------------------------- Turn number : " << turnCounter << " -------------------------------\n";
+}

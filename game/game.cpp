@@ -163,18 +163,15 @@ Game::~Game() {
 
 void Game::match(){
     createAll();
-    unsigned int turnCounter = 1;
+    size_t turnCounter = 1;
     idCurrentPlayer = 0;
     while (winner==nullptr) {
-        // interface.printTurnBeginning(turnCounter);
-        cout << "\n\n-------------------------------------------------------------------------------";
-        cout << "\n------------------------------- Turn number : " << turnCounter << " -------------------------------\n";
+		interface->printTurnCounter(turnCounter);
         turn(players[idCurrentPlayer]);
         idCurrentPlayer=(idCurrentPlayer+1)%nbPlayers;
         turnCounter++;
         };
-    cout << "\n\n\n\n\n\nIT'S OVER!!!\n\nThe winner is...\n"<< winner->getUsername() << " 🎉🎉🎉\n";
-    cout << "\n\nThank you for playing Machi Koro!\n\n";
+	interface->printBasicMessage("\n\n\n\n\n\nIT'S OVER!!!\n\nThe winner is...\n" + winner->getUsername() + " 🎉🎉🎉\n\n\nThank you for playing Machi Koro!\n\n");
 };
 
 void Game::turn(Player* player){

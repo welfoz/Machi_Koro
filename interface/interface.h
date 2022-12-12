@@ -20,6 +20,7 @@ public:
 	virtual bool isPlayerWantsToContinue(string message, string firstOption, string secondOption) = 0;
 	virtual void printBasicMessage(string message) = 0;
 	virtual size_t getInputNumber() = 0;
+	virtual void printTurnCounter(size_t counter) = 0;
 
 }; 
 
@@ -32,6 +33,7 @@ public:
 	bool isPlayerWantsToContinue(string message, string firstOption, string secondOption) override;
 	void printBasicMessage(string message) override;
 	size_t getInputNumber() override;
+	void printTurnCounter(size_t counter) override;
 };
 
 class Gui : public Interface {
@@ -43,4 +45,5 @@ public:
 	bool isPlayerWantsToContinue(string message, string firstOption, string secondOption) override { return true; };
 	void printBasicMessage(string message) override {};
 	size_t getInputNumber() override { return 0; };
+	void printTurnCounter(size_t counter) override {};
 };
