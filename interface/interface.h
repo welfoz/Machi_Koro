@@ -9,10 +9,10 @@ using namespace std;
 class Interface {
 protected:
 	Interface() = default;
-	virtual ~Interface() = default;
 
 
 public:
+	virtual ~Interface() = default;
 	enum Type {cli, gui};
 	static Interface* createInterfaceFromOption(Type type);
 	virtual void printWelcomingMessage() = 0;

@@ -157,7 +157,8 @@ Game::~Game() {
     delete board;
     delete bank;
     for (std::vector<const Icon*>::iterator it = icons.begin() ; it != icons.end(); ++it) delete *it;
-    std::cout << "game deleted :)";
+    interface->printBasicMessage("game deleted :)");
+    delete interface;
 };
 
 void Game::match(){
