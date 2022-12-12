@@ -41,6 +41,7 @@ bool Cli::isPlayerWantsToContinue(string message, string firstOption, string sec
 	//while ((stopAnswer != "Y") && (stopAnswer != "y") && (stopAnswer != "N") && (stopAnswer != "n")) {
 	while (Formatter::toLower(stopAnswer) != Formatter::toLower(firstOption) && Formatter::toLower(stopAnswer) != Formatter::toLower(secondOption)) {
 		cout << message << " (" << firstOption << " | " << secondOption << ") ";
+		cin.ignore();
 		cin >> stopAnswer;
 	}
 	if (Formatter::toLower(stopAnswer) == Formatter::toLower(secondOption)) {

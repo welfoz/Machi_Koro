@@ -210,23 +210,11 @@ size_t* Game::throwDices(size_t nb) const {
 }
 
 size_t* Game::activateRadioTower(Player* player, size_t nb, size_t* throws) const{
-    if (player->getMonument("Radio Tower")){
-        // interface
-        string choice;
-        bool stop = false;
-        while (!stop){
-            cout<<"Do you want to re-roll the dice(s) ? (Y/N)"<<endl;
-            cin.ignore();
-            getline(cin, choice);
-            if (choice=="Y" || choice=="y"){
-                for (size_t i=0;i<nb;i++) {
-                    throws[i]=dice.throwDice();
-                    cout<<"\nValue of dice number "<<i+1<<" : "<<throws[i]<<endl;
-                }
-                stop=true;
-            }
-            if (choice=="N" || choice=="n") stop = true;
-        }
+    if (player->getMonument("Radio Tower") && interface->isPlayerWantsToContinue("Do you want to re-roll the dice(s) ? ", "Yes", "No")) {
+		for (size_t i = 0; i < nb; i++) {
+			throws[i] = dice.throwDice();
+			interface->printDice(i + 1, throws[i]);
+		}
     }
     return throws;
 }
