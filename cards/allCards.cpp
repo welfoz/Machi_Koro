@@ -65,9 +65,11 @@ void Stadium::activation(Player &p) {
     }
 }
 void TVStation::activation(Player &p) {
+	// interface printBalances
     for (size_t j=0;j<Game::getInstance().getNbPlayers();j++){
         cout << "\n------ Player : " << Game::getInstance().getPlayer(j).getUsername()<< " - Money = " << Game::getInstance().getBank()->getAccount(j)->getSolde() << "------\n";
     }
+	// Player* p2 = interface.selectPlayerDifferentFromCurrent(Player& p)
     string name;
     Player* p2;
     bool loop=true;
@@ -85,6 +87,7 @@ void TVStation::activation(Player &p) {
     Game::getInstance().getBank()->trade(p.getId(),p2->getId(),5);
 }
 void BusinessCenter::activation(Player &p) {
+	// Player* p2 = interface.selectPlayerDifferentFromCurrent(Player& p)
     string name;
     bool loop = true;
     Player *p2;
@@ -99,7 +102,8 @@ void BusinessCenter::activation(Player &p) {
             cout << error << endl;
         }
     }
-    p2->printCards();
+    // interface.selectOneEstablishementCardFromPlayer(Player& p)
+    Game::getInstance().getInterface()->printCards(p2);
     string takenCard;
     EstablishmentCard *takenCardPtr;
     loop = true;
@@ -115,7 +119,8 @@ void BusinessCenter::activation(Player &p) {
             cout << error << endl;
         }
     }
-    Game::getInstance().getPlayer(p.getId()).printCards();
+    // interface.selectOneEstablishmentCardFromPlayer(Player& p)
+    Game::getInstance().getInterface()->printCards(&Game::getInstance().getPlayer(p.getId()));
     string givenCard;
     EstablishmentCard *givenCardPtr;
     loop = true;

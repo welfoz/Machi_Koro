@@ -116,3 +116,8 @@ public:
     };
     void activation(Player& p) override {};
 };
+
+namespace cli {
+
+}
+

@@ -10,6 +10,7 @@ void GeneralStore::activation(Player &p) {
     if(p.getNbMonumentsActivated()<2) GreenValley::getInstance().getBank()->credit(p.getId(),2);
 }
 void MovingCompany::activation(Player &p) {
+    // interface.selectPlayerToGiveHimAEstablishementCard(Player& currentPlayer)
     string name;
     bool loop = true;
     Player *p2= nullptr;
@@ -25,7 +26,8 @@ void MovingCompany::activation(Player &p) {
             cout << error << endl;
         }
     }
-    p.printCards();
+    // interface.selectEstablishementCard(Player& p)
+    Game::getInstance().getInterface()->printCards(&p);
     string givenCard;
     EstablishmentCard *givenCardPtr;
     loop = true;
@@ -63,7 +65,7 @@ void Winery::activation(Player &p) {
 
 void DemolitionCompany::activation(Player &p) {
     if (p.getNbMonumentsActivated()==0) return;
-    p.printMonuments();
+    Game::getInstance().getInterface()->printMonuments(&p);
     string monument;
     Monument*monumentPtr;
     bool loop = true;
@@ -169,7 +171,7 @@ void InternationalExhibitHall::activation(Player &p) {
     bool loop = true;
     while (loop) { // then we ask the card the user want to give
         try {
-            p.printCards();
+            Game::getInstance().getInterface()->printCards(&p);
             cout << "Which card do you want to activate ? (by name)" << endl;
             cin.ignore();
             getline(cin, card);

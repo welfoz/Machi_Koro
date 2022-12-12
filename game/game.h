@@ -55,7 +55,6 @@ protected:
     bool isWinner(Player* player) const;
     Game(Interface::Type type = Interface::Type::cli);
     void activateShoppingMall(Player* p, vector<EstablishmentCard*> cards);
-    void printPlayerInformation(Player* p) const;
     size_t* throwDices(size_t nb) const;
     size_t* activateRadioTower(Player* player, size_t nb, size_t* throws) const;
     void activateAmusementPark(Player* p, size_t nb, size_t* throws);
@@ -83,4 +82,7 @@ public:
     vector<const Icon*> getIcons() const {return this->icons;};
     //trade
     void tradeCards(Player* p1, Player* p2,EstablishmentCard* cardP1, EstablishmentCard* cardP2);
+    Interface* const getInterface() const {
+        return interface;
+    }
 };

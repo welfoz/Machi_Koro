@@ -1,4 +1,5 @@
 #include "interface.h"
+#include "../game/game.h"
 
 Interface* Interface::createInterfaceFromOption(Type type)
 {
@@ -61,4 +62,58 @@ size_t Cli::getInputNumber() {
 void Cli::printTurnCounter(size_t turnCounter) {
 	cout << "\n\n-------------------------------------------------------------------------------";
 	cout << "\n------------------------------- Turn number : " << turnCounter << " -------------------------------\n";
+}
+
+void Cli::printPlayerInformation(Player* player) const {
+	cout << "\n\n-------------------------- Player : " << player->getUsername() << " - Money = " << Game::getInstance().getBank()->getAccount(player->getId())->getSolde() << " --------------------------\n\n";
+}
+
+void Cli::printMonuments(Player* player) const {
+	cout << "\n" << player->getUsername() << "'s monuments: \n";
+	vector<pair<string, unsigned int>> headerNames;
+	headerNames = {
+		{" Name", 31},
+		{"Activated", 9},
+		{"Price", 5},
+		{"Type" , 20},
+		{"Icon", 8},
+		{"Effect", 50}
+	};
+	cout << Formatter::formatHeader(headerNames);
+	for (auto it = player->getMonuments().begin(); it != player->getMonuments().end(); it++) {
+		cout << " " << Formatter::format(it->first->getName(), headerNames[0].second - 1) << Formatter::format(std::to_string(it->second), headerNames[1].second) << Formatter::format(std::to_string(it->first->getPrice()), headerNames[2].second);
+		cout << Formatter::format(BaseCard::typeToString(it->first->getType()), headerNames[3].second);
+		cout << Formatter::format(it->first->getIcon()->getName(), headerNames[4].second);
+		cout << it->first->getEffetDescription() << "\n";
+	}
+}
+
+void Cli::printCards(Player* player) const {
+	cout << "\n" << player->getUsername() << "'s cards: \n";
+	vector<pair<string, unsigned int>> headerNames;
+	headerNames = {
+		{" Name", 31},
+		{"Price", 5},
+		{"Activation Nb", 13},
+		{"Quantity", 8},
+		{"Type" , 20},
+		{"Icon", 8},
+		{"Effect", 60}
+	};
+    cout << Formatter::formatHeader(headerNames);
+	for (auto it = player->getCards().begin(); it != player->getCards().end(); it++) {
+        if (it->second>0){
+            // get all activation numbers
+            string activationNumbers;
+            size_t* actNumbers = it->first->getActivationNumbers();
+            for (unsigned int i = 0; i < it->first->getNumberActivation(); i++) {
+                activationNumbers += std::to_string(*actNumbers) + ' ';
+                actNumbers++;
+            }
+
+            cout << " " << Formatter::format(it->first->getName(), headerNames[0].second - 1) << Formatter::format(std::to_string(it->first->getPrice()), headerNames[1].second) << Formatter::format(activationNumbers, headerNames[2].second);
+            cout << Formatter::format(std::to_string(it->second), headerNames[3].second) << Formatter::format(BaseCard::typeToString(it->first->getType()), headerNames[4].second) << Formatter::format(it->first->getIcon()->getName(), headerNames[5].second) << it->first->getEffetDescription() << "\n";
+        }
+
+	}
 }

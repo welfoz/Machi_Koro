@@ -35,8 +35,6 @@ public:
     Player(string name, size_t id, vector<Monument*> monuments, vector<EstablishmentCard*> cards, map<EstablishmentCard*,bool>closed={}, bool iP=false);
     const string& getUsername() const {return username;};
     const size_t& getId() const;
-    void printCards() const;
-    void printMonuments() const;
     size_t cheapestMonumentAvailablePrice() const;
     bool isClosed(EstablishmentCard* card);
     void close(EstablishmentCard* card);

@@ -163,6 +163,7 @@ Game::~Game() {
 
 void Game::match(){
     createAll();
+
     size_t turnCounter = 1;
     idCurrentPlayer = 0;
     while (winner==nullptr) {
@@ -171,16 +172,16 @@ void Game::match(){
         idCurrentPlayer=(idCurrentPlayer+1)%nbPlayers;
         turnCounter++;
         };
+
 	interface->printBasicMessage("\n\n\n\n\n\nIT'S OVER!!!\n\nThe winner is...\n" + winner->getUsername() + " 🎉🎉🎉\n\n\nThank you for playing Machi Koro!\n\n");
 };
 
 void Game::turn(Player* player){
     if (winner!= nullptr) return;
 
-    // interface
-    printPlayerInformation(player);
-    player->printMonuments();
-    player->printCards();
+    interface->printPlayerInformation(player);
+    interface->printMonuments(player);
+    interface->printCards(player);
 
     const size_t nb = getNbDiceChosen(*player);
 
@@ -199,10 +200,6 @@ void Game::turn(Player* player){
     this->activateAmusementPark(player, nb, throws);
 };
 
-void Game::printPlayerInformation(Player* player) const {
-    cout << "\n\n-------------------------- Player : " << player->getUsername() << " - Money = " << bank->getAccount(player->getId())->getSolde() << " --------------------------\n\n";
-}
- 
 size_t* Game::throwDices(size_t nb) const {
     size_t* throws = new size_t[nb];
     for (size_t i=0;i<nb;i++) {
@@ -293,7 +290,7 @@ void Game::action(Player* player){
                 player->purchaseEstablishment(card);
                 board->removeCard(card);
                 bank->debit(player->getId(), card->getPrice());
-                player->printCards();
+                interface->printCards(player);
             }
             catch(const std::exception& e)
             {
@@ -328,7 +325,7 @@ void Game::action(Player* player){
             break;
         }
 
-        player->printMonuments();
+        interface->printMonuments(player);
 
         // interface
         string choice;
@@ -348,7 +345,7 @@ void Game::action(Player* player){
 
                 player->purchaseMonument(monument);
                 bank->debit(player->getId(), monument->getPrice());
-                player->printMonuments();
+                interface->printMonuments(player);
             } catch (const std::exception &e) {
                 // interface
                 std::cerr << e.what() << '\n';
