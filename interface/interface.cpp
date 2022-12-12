@@ -123,3 +123,10 @@ void Cli::printCards(Player* player) const {
 void Cli::printDice(size_t diceNumber, size_t diceValue) const {
 	cout << "\nDice n°" << diceNumber << ": " << diceValue << endl;
 }
+
+void Cli::printBalances(Player** players) const {
+    cout << "\nPlayer's balance after activation: \n";
+    for (size_t i = 0; i < Game::getInstance().getNbPlayers(); i++) {
+        cout << "   " << players[i]->getUsername() << " : " << Game::getInstance().getBank()->getAccount(players[i]->getId())->getSolde() << "\n";
+    }
+}

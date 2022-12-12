@@ -193,7 +193,7 @@ void Game::turn(Player* player){
 
     activation(player, diceValue);
 
-    this->printBalances();
+    interface->printBalances(players);
 
     action(player);
 
@@ -233,19 +233,10 @@ size_t Game::getDiceValue(size_t nb, size_t* throws) {
     return diceValue;
 }
 
-void Game::printBalances() const {
-    cout << "\nPlayer's balance after activation: \n";
-    for (size_t i = 0; i < this->nbPlayers; i++) {
-        cout << "   " << players[i]->getUsername() << " : " << bank->getAccount(players[i]->getId())->getSolde() << "\n";
-    }
-}
-
 void Game::action(Player* player){
     
-    // interface
-    cout << "\nWhat do you want to do? (1 = Buy an establishment, 2 = Build a monument, 3 = Nothing!)\n";
-    int choix;
-    cin >> choix;
+    interface->printBasicMessage( "\nWhat do you want to do? (1 = Buy an establishment, 2 = Build a monument, 3 = Nothing!)\n");
+    int choix = interface->getInputNumber();
 
     switch (choix){
     case 1:
