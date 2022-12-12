@@ -51,3 +51,9 @@ bool Cli::isPlayerWantsToContinue(string message, string firstOption, string sec
 void Cli::printBasicMessage(string message) {
 	cout << message;
 }
+
+size_t Cli::getInputNumber() {
+	size_t number;
+	cin >> number;
+	return number;
+}

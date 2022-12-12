@@ -114,7 +114,7 @@ vector<EstablishmentCard*> Game::getPlayerStarterCards() {
         starterCards.push_back(getCardByName("Bakery"));
     } 
     catch (string error) {
-        cout << error;
+        interface->printBasicMessage(error);
     }
     return starterCards;
 }
@@ -143,10 +143,9 @@ const size_t Game::getNbDiceChosen(Player& p) { // est appelé par le jeu seulem
     if (!p.getMonument("Train Station")) return 1;
     size_t n=0;
     while (n>2 || n<1){
-        // n = interface.askNumberOfDices();
-        cout<<"How many dice do you chose to roll ?"<<endl;
-        cin>>n;
-        if (n>2 || n<1) cout<<"Please select a number between 1 and 2\n"<<endl;
+        interface->printBasicMessage("How many dice do you chose to roll ?\n");
+        n = interface->getInputNumber();
+        if (n>2 || n<1) interface->printBasicMessage("Please select a number between 1 and 2\n");
     }
     return n;
 }
