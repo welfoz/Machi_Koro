@@ -5,6 +5,7 @@
 #ifndef MACHI_KORO_PLAYERGREENVALLEY_H
 #define MACHI_KORO_PLAYERGREENVALLEY_H
 #include "../players/player.h"
+#include "../formatter/formatter.h"
 
 class PlayerGreenValley : public Player {
 private:
@@ -18,6 +19,7 @@ public :
     vector<EstablishmentCard *> activateGreenCards(size_t diceNumber) override;
     vector<EstablishmentCard *> activateRedCards(size_t diceNumber) override;
     void activatePurpleCards(size_t diceNumber) override;
+    void printCards() const override;
 };
 
 

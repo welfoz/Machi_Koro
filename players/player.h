@@ -12,11 +12,11 @@ using namespace std;
 
 class Player{
 private:
-    string username;
     size_t id;
     map<Monument*,bool>monuments;
 protected:
     map<EstablishmentCard*,size_t> cardsCounter;
+    string username;
 public:
     bool isPlaying;
     void purchaseMonument(Monument* card);
@@ -35,7 +35,7 @@ public:
     Player(string name, size_t id, vector<Monument*> monuments, vector<EstablishmentCard*> cards, bool iP=false);
     const string& getUsername() const {return username;};
     const size_t& getId() const;
-    void printCards() const;
+    virtual void printCards() const;
     void printMonuments() const;
     size_t cheapestMonumentAvailablePrice() const;
 };
