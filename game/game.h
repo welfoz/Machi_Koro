@@ -53,6 +53,15 @@ protected:
     bool isWinner(Player* player) const;
     Game();
     void activateShoppingMall(Player* p, vector<EstablishmentCard*> cards);
+    void printPlayerInformation(Player* p) const;
+    size_t* throwDices(size_t nb) const;
+    size_t* activateRadioTower(Player* player, size_t nb, size_t* throws) const;
+    void activateAmusementPark(Player* p, size_t nb, size_t* throws);
+    size_t getDiceValue(size_t nb, size_t* throws);
+    void printBalances() const;
+    bool isPlayerAbleToPayEstablishmentCard(Player* p);
+    bool isPlayerAbleToPayMonument(Player* p);
+
 public:
     virtual ~Game();
 

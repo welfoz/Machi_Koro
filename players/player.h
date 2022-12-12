@@ -29,7 +29,7 @@ public:
     virtual void activatePurpleCards(size_t diceNumber);
     // getters
     bool getMonument(string name) const;
-    const map<Monument*, bool> getMonuments() const {return monuments;};
+    const map<Monument*, bool>& getMonuments() const {return monuments;};
     const map<EstablishmentCard*,size_t>& getCards() {return cardsCounter;}
     const size_t getNbMonumentsActivated() const;
     Player(string name, size_t id, vector<Monument*> monuments, vector<EstablishmentCard*> cards, bool iP=false);

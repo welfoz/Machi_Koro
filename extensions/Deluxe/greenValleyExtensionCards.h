@@ -149,7 +149,7 @@ public:
         actNumber[0] = 8;
         EstablishmentCard::setActivationNumbers(actNumber);
     }
-    void activation(Player& p);
+    void activation(Player& p) override;
 };
 
 class TechStartup : public Purple {
