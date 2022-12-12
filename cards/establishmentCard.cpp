@@ -6,3 +6,7 @@ bool EstablishmentCard::inActivationNumbers(size_t diceNumber) const {
     }
     return false;
 }
+
+EstablishmentCard::~EstablishmentCard(){
+    delete[] activationNumbers;
+}
