@@ -9,6 +9,7 @@ Board::Board(vector<EstablishmentCard*> cards) {
 
 Board::~Board(){};
 
+// move the interface.printBoard(const map<EstablishementCard*, size_t>&, )
 void Board::printBoard()
 {
 	cout <<"\nBoard's cards: \n";

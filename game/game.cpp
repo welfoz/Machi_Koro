@@ -15,17 +15,11 @@ void Game::freeInstance()
 
 Game* Game::instance = nullptr;
 
-Game::Game(Interface::Type type) : board(nullptr), bank(nullptr), dice(Dice()), winner(nullptr), players(), nbPlayers(0), idCurrentPlayer(0), interface(nullptr) {
+Game::Game(Interface::Type type) : board(nullptr), bank(nullptr), dice(Dice()), winner(nullptr), players(), nbPlayers(0), idCurrentPlayer(0), interface(Interface::createInterfaceFromOption(type)) {
     instance = this;
-    interface = Interface::createInterfaceFromOption(type);
 };
 
 void Game::createAll() {
-    // welcoming message
-    /*
-    cli: cout
-    gui: popup
-    */
     interface->printWelcomingMessage();
 
     // create cards before players because players needs them to be created
@@ -33,50 +27,36 @@ void Game::createAll() {
     createMonumentCards();
     createEstablishmentCards();
 
-    
     // create all players
     // ask number of players and their names
     unsigned int cpt = 0;
-    string name;
     bool stop = false;
-    string stopAnswer;
     vector<string> names;
     while (cpt <= 10 && !stop) {
 	    
+		string message = "NEW PLAYER!!\nEnter the name of the player number " + std::to_string(cpt + 1) + " : ";
+        interface->printBasicMessage(message);
 
-		/*
-		cli: cout, cin
-		gui: popup, textInput, stop, add with btn
-		*/
-        // string name = interface.getNewPlayerName()
-        cout << "NEW PLAYER!!\nEnter the name of the player number " << cpt + 1 << " : ";
-        cin >> name;
-
+        string name = interface->getInputText();
         while (find_if(names.begin(),names.end(),[&name](string s){return s==name;})!=names.end()){
-            // interface.error(message)
-			// name = interface.getNewPlayerName()
-            cout<<"Error : name already used"<<endl;
-            cout << "Enter the name of the player number " << cpt + 1 << '\n';
-            cin >> name;
+            interface->printBasicMessage("Error : name already used\n");
+            interface->printBasicMessage("Enter the name of the player number " + std::to_string(cpt + 1) + '\n');
+            name = interface->getInputText();
         }
         names.push_back(name);
+
 		createPlayer(name, cpt);
 
-        // interface.askForContinue("Do you want to add another player", "Yes", "No")
-        while ((stopAnswer != "Y") && (stopAnswer != "y") && (stopAnswer != "N") && (stopAnswer != "n")) {
-            cout << "Do you want to add another player? (Y/N)";
-            cin >> stopAnswer;
-        }
-        if (stopAnswer == "n" || stopAnswer == "N") {
+        if (!interface->isPlayerWantsToContinue("Do you want to add another player", "Yes", "No")) {
             stop = true;
         }
-        stopAnswer = "";
 		cpt++;
     }
+
     this->nbPlayers = cpt;
     createBank(cpt);
     createBoard();
-    };
+};
 
 void Game::createPlayer(string name, size_t id) {
     players[id] = new Player(name, id, monuments, getPlayerStarterCards());

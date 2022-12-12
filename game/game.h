@@ -10,6 +10,7 @@
 #include "../cards/icon.h"
 #include "../cards/monument.h"
 #include "../players/player.h"
+#include "../interface/interface.h"
 #include <vector>
 #include <algorithm>
 #include <stdexcept>
@@ -18,6 +19,7 @@ using namespace std;
 class Game{
 protected:
     static Game* instance;
+    Interface* const interface;
     vector<EstablishmentCard*> cards;
     vector<Monument*> monuments;
     Board* board;
@@ -51,7 +53,7 @@ protected:
     virtual void action(Player* player);
     const size_t getNbDiceChosen(Player& p);
     bool isWinner(Player* player) const;
-    Game();
+    Game(Interface::Type type = Interface::Type::cli);
     void activateShoppingMall(Player* p, vector<EstablishmentCard*> cards);
     void printPlayerInformation(Player* p) const;
     size_t* throwDices(size_t nb) const;
