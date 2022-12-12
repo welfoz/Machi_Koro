@@ -317,8 +317,10 @@ void Game::action(Player* player){
 					player->removeEstablishment(card);
 					board->addCard(card);
 					bank->credit(player->getId(), card->getPrice());
-					cout << "\n-------------------------- Player : " << player->getUsername() << " - Money = " << bank->getAccount(player->getId())->getSolde() << " --------------------------\n";
-                }
+					}
+                printPlayerInformation(player);
+                player->printMonuments();
+                player->printCards();
                 action(player);
                 break;
             }
@@ -365,8 +367,10 @@ void Game::action(Player* player){
                 if (monument != nullptr) {
 					player->removeMonument(monument);
 					bank->credit(player->getId(), monument->getPrice());
-					cout << "\n-------------------------- Player : " << player->getUsername() << " - Money = " << bank->getAccount(player->getId())->getSolde() << " --------------------------\n";
-                }
+				}
+                printPlayerInformation(player);
+                player->printMonuments();
+                player->printCards();
                 action(player);
                 break;
             }
