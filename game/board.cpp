@@ -7,8 +7,6 @@ Board::Board(vector<EstablishmentCard*> cards) {
     }
 };
 
-Board::~Board(){};
-
 void Board::printBoard()
 {
 	cout <<"\nBoard's cards: \n";

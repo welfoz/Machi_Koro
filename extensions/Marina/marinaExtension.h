@@ -1,6 +1,7 @@
-#ifndef MACHI_KORO_MARINAEXTENSION_H
-#define MACHI_KORO_MARINAEXTENSION_H
+#pragma once
 #include "../../game/game.h"
+#include "marinaBoard.h"
+
 class Marina: public Game {
 protected:
     void createEstablishmentCards() override;
@@ -13,5 +14,3 @@ public:
     static Marina& getInstance();
     Marina() : Game() {};
 };
-
-#endif //MACHI_KORO_MARINAEXTENSION_H

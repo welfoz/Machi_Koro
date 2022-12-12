@@ -51,9 +51,7 @@ void Marina::createPlayer(string name, size_t id){
 }
 
 void Marina::createBoard(){
-    // why @Pol ?
-    // need to change the Board constructor and the createBoard of Game
-    Game::createBoard();
+    board = new MarinaBoard(cards);
 }
 
 void Marina::createIcons(){
