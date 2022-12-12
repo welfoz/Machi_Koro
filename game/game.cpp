@@ -15,28 +15,25 @@ void Game::freeInstance()
 
 Game* Game::instance = nullptr;
 
-Game::Game() : board(nullptr), bank(nullptr), dice(Dice()), winner(nullptr), players(), nbPlayers(0), idCurrentPlayer(0){
+Game::Game(Interface::Type type) : board(nullptr), bank(nullptr), dice(Dice()), winner(nullptr), players(), nbPlayers(0), idCurrentPlayer(0), interface(nullptr) {
     instance = this;
+    interface = Interface::createInterfaceFromOption(type);
 };
 
 void Game::createAll() {
-    cout << "\n\n";
-    cout << "███    ███  █████   ██████ ██   ██ ██     ██   ██  ██████  ██████   ██████  \n";
-    cout << "████  ████ ██   ██ ██      ██   ██ ██     ██  ██  ██    ██ ██   ██ ██    ██ \n";
-    cout << "██ ████ ██ ███████ ██      ███████ ██     █████   ██    ██ ██████  ██    ██ \n";
-    cout << "██  ██  ██ ██   ██ ██      ██   ██ ██     ██  ██  ██    ██ ██   ██ ██    ██ \n";
-    cout << "██      ██ ██   ██  ██████ ██   ██ ██     ██   ██  ██████  ██   ██  ██████  \n";
-
-    cout << ".   .__. _,  ,           .__. _,  _, \n";
-    cout << "|   |  |'_) /|     ___   [__]'_) '_) \n";
-    cout << "|___|__|/_. .|.          |  |/_. /_. \n\n";
-
-    cout << "Made with ❤️  by MICHEL Fabien - BROSSARD Felix - TAVERNE Jules - CORTY Pol - LEMERLE Xavier\n\n";
+    // welcoming message
+    /*
+    cli: cout
+    gui: popup
+    */
+    interface->printWelcomingMessage();
 
     // create cards before players because players needs them to be created
     createIcons();
     createMonumentCards();
     createEstablishmentCards();
+
+    
     // create all players
     // ask number of players and their names
     unsigned int cpt = 0;
@@ -45,15 +42,27 @@ void Game::createAll() {
     string stopAnswer;
     vector<string> names;
     while (cpt <= 10 && !stop) {
-		cout << "NEW PLAYER!!\nEnter the name of the player number " << cpt + 1 << " : ";
+	    
+
+		/*
+		cli: cout, cin
+		gui: popup, textInput, stop, add with btn
+		*/
+        // string name = interface.getNewPlayerName()
+        cout << "NEW PLAYER!!\nEnter the name of the player number " << cpt + 1 << " : ";
         cin >> name;
+
         while (find_if(names.begin(),names.end(),[&name](string s){return s==name;})!=names.end()){
+            // interface.error(message)
+			// name = interface.getNewPlayerName()
             cout<<"Error : name already used"<<endl;
             cout << "Enter the name of the player number " << cpt + 1 << '\n';
             cin >> name;
         }
         names.push_back(name);
 		createPlayer(name, cpt);
+
+        // interface.askForContinue("Do you want to add another player", "Yes", "No")
         while ((stopAnswer != "Y") && (stopAnswer != "y") && (stopAnswer != "N") && (stopAnswer != "n")) {
             cout << "Do you want to add another player? (Y/N)";
             cin >> stopAnswer;
@@ -154,6 +163,7 @@ const size_t Game::getNbDiceChosen(Player& p) { // est appelé par le jeu seulem
     if (!p.getMonument("Train Station")) return 1;
     size_t n=0;
     while (n>2 || n<1){
+        // n = interface.askNumberOfDices();
         cout<<"How many dice do you chose to roll ?"<<endl;
         cin>>n;
         if (n>2 || n<1) cout<<"Please select a number between 1 and 2\n"<<endl;
@@ -176,6 +186,7 @@ void Game::match(){
     unsigned int turnCounter = 1;
     idCurrentPlayer = 0;
     while (winner==nullptr) {
+        // interface.printTurnBeginning(turnCounter);
         cout << "\n\n-------------------------------------------------------------------------------";
         cout << "\n------------------------------- Turn number : " << turnCounter << " -------------------------------\n";
         turn(players[idCurrentPlayer]);
@@ -189,6 +200,7 @@ void Game::match(){
 void Game::turn(Player* player){
     if (winner!= nullptr) return;
 
+    // interface
     printPlayerInformation(player);
     player->printMonuments();
     player->printCards();
@@ -223,8 +235,9 @@ size_t* Game::throwDices(size_t nb) const {
     return throws;
 }
 
-size_t* Game::activateRadioTower(Player* player, size_t nb, size_t* throws) const {
+size_t* Game::activateRadioTower(Player* player, size_t nb, size_t* throws) const{
     if (player->getMonument("Radio Tower")){
+        // interface
         string choice;
         bool stop = false;
         while (!stop){
@@ -267,6 +280,7 @@ void Game::printBalances() const {
 
 void Game::action(Player* player){
     
+    // interface
     cout << "\nWhat do you want to do? (1 = Buy an establishment, 2 = Build a monument, 3 = Nothing!)\n";
     int choix;
     cin >> choix;
@@ -281,6 +295,8 @@ void Game::action(Player* player){
 
         board->printBoard();
 
+        // interface
+        // click on card
         string choice;
         EstablishmentCard* card = nullptr;
         while (card == nullptr){
@@ -304,11 +320,14 @@ void Game::action(Player* player){
             }
             catch(const std::exception& e)
             {
+                // interface error message
                 std::cerr << e.what() << '\n';
                 cout << "Select an available card.\n";
                 card = nullptr;
             }
 
+            // interface redo popup wait for answer
+            // if (interface.waitForPopupAnswer("Do you want to change your action ?", "Yes", "No")
             string reDo;
             cout<<"Do you want to change your action ? (Y/N)"<<endl;
             cin>>reDo;
@@ -334,6 +353,7 @@ void Game::action(Player* player){
 
         player->printMonuments();
 
+        // interface
         string choice;
         Monument* monument = nullptr;
         while (monument == nullptr) {
@@ -353,11 +373,13 @@ void Game::action(Player* player){
                 bank->debit(player->getId(), monument->getPrice());
                 player->printMonuments();
             } catch (const std::exception &e) {
+                // interface
                 std::cerr << e.what() << '\n';
                 cout << "Select an available card.\n";
                 monument = nullptr;
             }
 
+            // interface
             string reDo;
             cout << "Do you want to change your action ? (Y/N)" << endl;
             cin >> reDo;
@@ -382,10 +404,12 @@ void Game::action(Player* player){
 
 bool Game::isPlayerAbleToPayEstablishmentCard(Player* player) {
         if (bank->getAccount(player->getId())->getSolde() < board->cheapestAvailableCardPrice()){
+            // interface popup
             cout<<"\nYou don't have enough money...\n";
             return false;
         }
         else if (board->cheapestAvailableCardPrice()==0){
+            // interface popup
             cout<<"\nNo card left on the board\n";
             return false;
         }
@@ -394,10 +418,12 @@ bool Game::isPlayerAbleToPayEstablishmentCard(Player* player) {
 
 bool Game::isPlayerAbleToPayMonument(Player* player) {
         if (bank->getAccount(player->getId())->getSolde() < player->cheapestMonumentAvailablePrice()){
+            // interface
             cout<<"\nYou don't have enough money...\n";
             return false;
         }
         else if (player->cheapestMonumentAvailablePrice()==0){
+            // interface
             cout<<"\nNo monument left to buy\n";
             return false;
         }
@@ -471,6 +497,7 @@ void Game::tradeCards(Player* p1, Player* p2, EstablishmentCard *cardP1, Establi
     p1->removeEstablishment(cardP1);
     p1->purchaseEstablishment(cardP2);
     p2->removeEstablishment(cardP2);
+    // interface message(string)
     cout<<p1->getUsername()<<" has taken "<<cardP2->getName()<<" from "<<p2->getUsername()<<" and gave "<<cardP1->getName()<<" in exchange."<<endl;
 }
 
