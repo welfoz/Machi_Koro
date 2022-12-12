@@ -44,12 +44,11 @@ protected:
     
     //match methods
     virtual void turn(Player* player);
-    int throwDice(size_t numberOfDices);
     void activation(Player* p, size_t number);
-    void activationRedCards(Player* p, size_t n);
-    void activationGreenAndBlueCards(Player* p, size_t n);
-    void activationPurpleCards(Player* p, size_t n);
-    void action(Player* player);
+    virtual void activationRedCards(Player* p, size_t n);
+    virtual void activationGreenAndBlueCards(Player* p, size_t n);
+    virtual void activationPurpleCards(Player* p, size_t n);
+    virtual void action(Player* player);
     const size_t getNbDiceChosen(Player& p);
     bool isWinner(Player* player) const;
     Game();
@@ -67,7 +66,7 @@ public:
     virtual ~Game();
 
     // we can't call virtual functions in the constructor
-    void createAll();
+    virtual void createAll();
     void match();
 
     // getter

@@ -123,7 +123,7 @@ public:
 class FruitVegetableMarket : public Green {
 public:
     FruitVegetableMarket(size_t quantity) : Green(nullptr, 2, "Fruit and Vegetable Market", 2, "Get 3 coins from the bank for each \"WheatIcon\" establishment that you own, on your turn only.", quantity) {
-        BaseCard::setIcon(getIconByName("fruit"));
+        BaseCard::setIcon(Green::getIconByName("fruit"));
         size_t* actNumber = new size_t[2];
         actNumber[0] = 11;
         actNumber[1] = 12;
@@ -196,8 +196,6 @@ public:
         BaseCard::setIcon(getIconByName("major"));
         size_t *actNumber = new size_t[1];
         actNumber[0] = 6;
-
-
         EstablishmentCard::setActivationNumbers(actNumber);
     };
 

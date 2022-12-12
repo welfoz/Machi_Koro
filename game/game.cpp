@@ -67,7 +67,6 @@ void Game::createAll() {
     this->nbPlayers = cpt;
     createBank(cpt);
     createBoard();
-
     };
 
 void Game::createPlayer(string name, size_t id) {
@@ -176,7 +175,6 @@ void Game::match(){
     createAll();
     unsigned int turnCounter = 1;
     idCurrentPlayer = 0;
-
     while (winner==nullptr) {
         cout << "\n\n-------------------------------------------------------------------------------";
         cout << "\n------------------------------- Turn number : " << turnCounter << " -------------------------------\n";
@@ -194,7 +192,7 @@ void Game::turn(Player* player){
     printPlayerInformation(player);
     player->printMonuments();
     player->printCards();
-    
+
     const size_t nb = getNbDiceChosen(*player);
 
     size_t* throws = this->throwDices(nb);
@@ -228,13 +226,19 @@ size_t* Game::throwDices(size_t nb) const {
 size_t* Game::activateRadioTower(Player* player, size_t nb, size_t* throws) const {
     if (player->getMonument("Radio Tower")){
         string choice;
-        cout<<"Do you want to re-roll the dice(s) ? (Y/N)"<<endl;
-        cin>>choice;
-        if (choice=="Y" || choice=="y"){
-            for (size_t i=0;i<nb;i++) {
-                throws[i]=dice.throwDice();
-                cout<<"\nValue of dice number "<<i+1<<" : "<<throws[i]<<endl;
+        bool stop = false;
+        while (!stop){
+            cout<<"Do you want to re-roll the dice(s) ? (Y/N)"<<endl;
+            cin.ignore();
+            getline(cin, choice);
+            if (choice=="Y" || choice=="y"){
+                for (size_t i=0;i<nb;i++) {
+                    throws[i]=dice.throwDice();
+                    cout<<"\nValue of dice number "<<i+1<<" : "<<throws[i]<<endl;
+                }
+                stop=true;
             }
+            if (choice=="N" || choice=="n") stop = true;
         }
     }
     return throws;
@@ -466,7 +470,7 @@ void Game::tradeCards(Player* p1, Player* p2, EstablishmentCard *cardP1, Establi
     p2->purchaseEstablishment(cardP1);
     p1->removeEstablishment(cardP1);
     p1->purchaseEstablishment(cardP2);
-    p1->removeEstablishment(cardP2);
+    p2->removeEstablishment(cardP2);
     cout<<p1->getUsername()<<" has taken "<<cardP2->getName()<<" from "<<p2->getUsername()<<" and gave "<<cardP1->getName()<<" in exchange."<<endl;
 }
 
