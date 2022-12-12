@@ -16,7 +16,7 @@ vector<EstablishmentCard*> Player::activateRedCards(size_t diceNumber) {
                     it->first->activation(*this);
                     activatedCards.push_back(it->first);
                 }
-            }
+            } 
             else if (isClosed(it->first)) {
                 open(it->first);
             }
