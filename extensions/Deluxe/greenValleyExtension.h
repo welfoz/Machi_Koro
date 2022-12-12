@@ -1,5 +1,5 @@
 #pragma once
-#include "../game/game.h"
+#include "../../game/game.h"
 #include "greenValleyExtensionCards.h"
 class GreenValley : public Game {
     void createEstablishmentCards() override;
