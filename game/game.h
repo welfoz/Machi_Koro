@@ -64,7 +64,7 @@ public:
     static Game& getInstance();
     const size_t& getNbPlayers() const {return nbPlayers;}
     Bank* getBank() const {return bank;}
-    Player& getPlayer(size_t id) const {return *players[id];}; //pourquoi il y avait *players[id-1] ?
+    virtual Player& getPlayer(size_t id) const {return *players[id];}; //pourquoi il y avait *players[id-1] ?
     const size_t& getIdCurrentPlayer() const {return idCurrentPlayer;}
     EstablishmentCard* getCardByName(string name) const;
     Monument* getMonumentByName(string name) const;

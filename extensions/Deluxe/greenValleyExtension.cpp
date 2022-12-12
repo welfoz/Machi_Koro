@@ -37,7 +37,7 @@ void GreenValley::turn(Player* player){
 }
 
 void GreenValley::createPlayer(string name, size_t id) {
-    players[id] = new Player(name, id, monuments, getPlayerStarterCards());
+    players[id] = new PlayerGreenValley(name, id, monuments, getPlayerStarterCards());
 }
 void GreenValley::action(Player *player) {
     size_t n = player->getCards().count(getCardByName("Loan Office"));

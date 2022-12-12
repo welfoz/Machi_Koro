@@ -11,6 +11,7 @@
 #include "../../cards/cardColor.h"
 #include <list>
 #include "../players/player.h"
+#include "PlayerGreenValley.h"
 #include "cmath"
 class CornField : public Blue {
 public:
@@ -148,7 +149,7 @@ public:
         actNumber[0] = 8;
         EstablishmentCard::setActivationNumbers(actNumber);
     }
-    void activation(Player& p) override;
+    void activation(Player& p);
 };
 
 class TechStartup : public Purple {
