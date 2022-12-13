@@ -116,4 +116,3 @@ public:
     };
     void activation(Player& p) override {};
 };
-
