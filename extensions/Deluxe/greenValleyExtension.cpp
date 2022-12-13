@@ -37,7 +37,7 @@ void GreenValley::turn(Player* player){
 }
 
 void GreenValley::createPlayer(string name, size_t id) {
-    players[id] = new Player(name, id, monuments, getPlayerStarterCards());
+    players[id] = new PlayerGreenValley(name, id, monuments, getPlayerStarterCards());
 }
 void GreenValley::action(Player *player) {
     size_t n = player->getCards().count(getCardByName("Loan Office"));
@@ -52,4 +52,8 @@ void GreenValley::action(Player *player) {
         cin>>choice;
         if (choice=="Y" || choice=="y") techStartup->invest(player,1);
     }
+}
+
+PlayerGreenValley& GreenValley::getPlayer(size_t id) const {
+    return dynamic_cast<PlayerGreenValley&>(*players[id]);
 }

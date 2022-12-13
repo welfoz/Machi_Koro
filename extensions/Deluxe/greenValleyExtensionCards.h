@@ -10,7 +10,8 @@
 #include "greenValleyExtension.h"
 #include "../../cards/cardColor.h"
 #include <list>
-#include "../../players/player.h"
+#include "../players/player.h"
+#include "PlayerGreenValley.h"
 #include "cmath"
 class CornField : public Blue {
 public:

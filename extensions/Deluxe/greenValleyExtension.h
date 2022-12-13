@@ -1,6 +1,7 @@
 #pragma once
 #include "../../game/game.h"
 #include "greenValleyExtensionCards.h"
+#include "PlayerGreenValley.h"
 class GreenValley : public Game {
     void createEstablishmentCards() override;
     //monuments remain the same as standard edition
@@ -11,4 +12,5 @@ class GreenValley : public Game {
     void action(Player* player) override;
 public :
     static GreenValley& getInstance();
+    PlayerGreenValley& getPlayer(size_t id) const override;
 };

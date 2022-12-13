@@ -50,12 +50,13 @@ void LoanOffice::activation(Player &p) {
     GreenValley::getInstance().getBank()->debit(p.getId(),2);
 }
 void Winery::activation(Player &p) {
+    PlayerGreenValley *playerGreenValley=dynamic_cast<PlayerGreenValley*>(&p);
     auto cards=p.getCards();
     for (auto it : cards){
         if (it.first->getName()=="Vineyard"){
             for (size_t i=0;i<it.second;i++) {
                 GreenValley::getInstance().getBank()->credit(p.getId(),6);
-                p.close(it.first);
+                playerGreenValley->close(it.first);
             }
         }
     }
@@ -135,7 +136,7 @@ void RenovationCompany::activation(Player &p) {
         }
     }
     for (size_t i=0; i<GreenValley::getInstance().getNbPlayers();i++){
-        Player* iPlayer=&GreenValley::getInstance().getPlayer(i);
+        PlayerGreenValley* iPlayer=&GreenValley::getInstance().getPlayer(i);
         if (iPlayer->getCards().count(closedCardPtr)){
             size_t nbCard=iPlayer->getCards().at(closedCardPtr);
             if (p.getId()!= i) GreenValley::getInstance().getBank()->trade(p.getId(),i,nbCard);
