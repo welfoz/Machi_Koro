@@ -10,6 +10,7 @@ int main(int argc, const char* argv[]) {
         cout << "Available extensions: Basic (B), Marina (M), Green Valley (G), Deluxe (D).\n";
         cout << "Enter the name of the extension you want to play to (B/M/G/D): \n";
         cin >> choice;
+        cin.ignore();
     }
     switch (choice)
     {

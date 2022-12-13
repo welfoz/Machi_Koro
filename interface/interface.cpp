@@ -28,9 +28,9 @@ void Cli::printWelcomingMessage() {
     cout << "Made with ❤️  by MICHEL Fabien - BROSSARD Felix - TAVERNE Jules - CORTY Pol - LEMERLE Xavier\n\n";
 }
 
-string Cli::getInputText() {
+string Cli::getInputText() const {
 	string text;
-	cin >> text;
+	getline(cin, text);
 	return text;
 }
 
@@ -39,9 +39,9 @@ bool Cli::isPlayerWantsToContinue(string message, string firstOption, string sec
 	string stopAnswer = "";
 	//while ((stopAnswer != "Y") && (stopAnswer != "y") && (stopAnswer != "N") && (stopAnswer != "n")) {
 	while (Formatter::toLower(stopAnswer) != Formatter::toLower(firstOption) && Formatter::toLower(stopAnswer) != Formatter::toLower(secondOption)) {
-		cout << message << " (" << firstOption << " | " << secondOption << ") ";
-		cin.ignore();
+		cout << message << " (" << firstOption << " | " << secondOption << ") : ";
 		cin >> stopAnswer;
+		cin.ignore();
 	}
 	if (Formatter::toLower(stopAnswer) == Formatter::toLower(secondOption)) {
 		return false;
@@ -56,6 +56,7 @@ void Cli::printBasicMessage(string message) {
 size_t Cli::getInputNumber() {
 	size_t number;
 	cin >> number;
+	cin.ignore();
 	return number;
 }
 
@@ -159,3 +160,7 @@ void Cli::printBoard() const {
     }
 };
 
+
+string Cli::selectOneCard() const {
+	return getInputText();
+};

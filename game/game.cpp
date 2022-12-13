@@ -253,9 +253,8 @@ void Game::action(Player* player){
         string choice;
         EstablishmentCard* card = nullptr;
         while (card == nullptr){
-            cout << "Enter the name of the card you want to buy : ";
-            cin.ignore();
-            getline(cin, choice);
+            interface->printBasicMessage( "Enter the name of the card you want to buy : ");
+            choice = interface->getInputText();
             try
             {
                 card = getCardByName(choice);
@@ -311,8 +310,7 @@ void Game::action(Player* player){
         Monument* monument = nullptr;
         while (monument == nullptr) {
             cout << "Enter the name of the monument you want to buy : ";
-            cin.ignore();
-            getline(cin, choice);
+            choice = interface->getInputText();
             try {
                 monument = getMonumentByName(choice);
                 if (monument->getPrice() > bank->getAccount(player->getId())->getSolde()) {
