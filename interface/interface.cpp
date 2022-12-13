@@ -164,3 +164,8 @@ void Cli::printBoard() const {
 string Cli::selectOneCard() const {
 	return getInputText();
 };
+
+
+void Cli::printError(const std::exception& message) const {
+	std::cerr << message.what() << "\n";
+};

@@ -272,10 +272,9 @@ void Game::action(Player* player){
             }
             catch(const std::exception& e)
             {
-                // interface error message
-                std::cerr << e.what() << '\n';
-
+                interface->printError(e);
                 interface->printBasicMessage( "Select an available card.\n");
+
                 card = nullptr;
             }
 
@@ -319,10 +318,9 @@ void Game::action(Player* player){
                 bank->debit(player->getId(), monument->getPrice());
                 interface->printMonuments(player);
             } catch (const std::exception &e) {
-                // interface
-                std::cerr << e.what() << '\n';
-
+                interface->printError(e);
                 interface->printBasicMessage("Select an available card.\n");
+
                 monument = nullptr;
             }
 
@@ -347,13 +345,11 @@ void Game::action(Player* player){
 
 bool Game::isPlayerAbleToPayEstablishmentCard(Player* player) {
         if (bank->getAccount(player->getId())->getSolde() < board->cheapestAvailableCardPrice()){
-            // interface popup
-            cout<<"\nYou don't have enough money...\n";
+            interface->printBasicMessage("\nYou don't have enough money...\n");
             return false;
         }
         else if (board->cheapestAvailableCardPrice()==0){
-            // interface popup
-            cout<<"\nNo card left on the board\n";
+            interface->printBasicMessage("\nNo card left on the board\n");
             return false;
         }
         return true;
@@ -361,13 +357,11 @@ bool Game::isPlayerAbleToPayEstablishmentCard(Player* player) {
 
 bool Game::isPlayerAbleToPayMonument(Player* player) {
         if (bank->getAccount(player->getId())->getSolde() < player->cheapestMonumentAvailablePrice()){
-            // interface
-            cout<<"\nYou don't have enough money...\n";
+            interface->printBasicMessage("\nYou don't have enough money...\n");
             return false;
         }
         else if (player->cheapestMonumentAvailablePrice()==0){
-            // interface
-            cout<<"\nNo monument left to buy\n";
+            interface->printBasicMessage("\nNo monument left to buy\n");
             return false;
         }
         return true;
@@ -440,8 +434,7 @@ void Game::tradeCards(Player* p1, Player* p2, EstablishmentCard *cardP1, Establi
     p1->removeEstablishment(cardP1);
     p1->purchaseEstablishment(cardP2);
     p2->removeEstablishment(cardP2);
-    // interface message(string)
-    cout<<p1->getUsername()<<" has taken "<<cardP2->getName()<<" from "<<p2->getUsername()<<" and gave "<<cardP1->getName()<<" in exchange."<<endl;
+    interface->printBasicMessage(p1->getUsername() + " has taken " + cardP2->getName() + " from " + p2->getUsername() + " and gave " + cardP1->getName() + " in exchange.\n");
 }
 
 Player* Game::getPlayerByName(std::string name) const {
