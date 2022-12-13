@@ -45,7 +45,7 @@ void Board::addCard(EstablishmentCard* card) {
 }
 
 void Board::removeCard(EstablishmentCard* card) {
-    if (cardsDecks.at(card) != 0) {
+    if (auto search = cardsDecks.find(card); search != cardsDecks.end()) {
         cardsDecks.at(card)--;
     }
     else

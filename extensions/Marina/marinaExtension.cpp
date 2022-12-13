@@ -8,22 +8,23 @@ Marina& Marina::getInstance() {
 }
 
 void Marina::createEstablishmentCards(){
-    // base cards with some additional quantities
-	cards.push_back(new WheatField(7));
-	cards.push_back(new Ranch(6));
-	cards.push_back(new Forest(6));
-	cards.push_back(new Mine(6));
-	cards.push_back(new AppleOrchard(6));
-	cards.push_back(new Bakery(7));
-	cards.push_back(new ConvenienceStore(6));
-	cards.push_back(new CheeseFactory(6));
-	cards.push_back(new FurnitureFactory(6));
-	cards.push_back(new FruitVegetableMarket(6));
-	cards.push_back(new Cafe(6));
-	cards.push_back(new FamilyRestaurant(6));
-	cards.push_back(new Stadium(5));
-	cards.push_back(new TVStation(5));
-	cards.push_back(new BusinessCenter(5));
+    // base cards with some additional quantities -> pas dans les règles françaises
+	// cards.push_back(new WheatField(7));
+	// cards.push_back(new Ranch(6));
+	// cards.push_back(new Forest(6));
+	// cards.push_back(new Mine(6));
+	// cards.push_back(new AppleOrchard(6));
+	// cards.push_back(new Bakery(7));
+	// cards.push_back(new ConvenienceStore(6));
+	// cards.push_back(new CheeseFactory(6));
+	// cards.push_back(new FurnitureFactory(6));
+	// cards.push_back(new FruitVegetableMarket(6));
+	// cards.push_back(new Cafe(6));
+	// cards.push_back(new FamilyRestaurant(6));
+	// cards.push_back(new Stadium(5));
+	// cards.push_back(new TVStation(5));
+	// cards.push_back(new BusinessCenter(5));
+    Game::createEstablishmentCards();
 
     // new HE cards
     cards.push_back(new FlowerGarden(6));
@@ -34,8 +35,8 @@ void Marina::createEstablishmentCards(){
     cards.push_back(new SushiBar(6));
     cards.push_back(new PizzaJoint(6));
     cards.push_back(new HamburgerStand(6));
-    cards.push_back(new Publisher(5));
-    cards.push_back(new TaxOffice(5));
+    cards.push_back(new Publisher(4)); //5 dans le wikifan
+    cards.push_back(new TaxOffice(4)); //5 dans le wikifan
 }
 
 void Marina::createMonumentCards(){

@@ -16,7 +16,7 @@ public:
     Board(vector<EstablishmentCard*> cards);
     Board() = default;
     ~Board() = default;
-    void removeCard(EstablishmentCard* card);
+    virtual void removeCard(EstablishmentCard* card);
     void addCard(EstablishmentCard* card);
     virtual void printBoard();
     size_t cheapestAvailableCardPrice() const;
