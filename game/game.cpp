@@ -34,8 +34,7 @@ void Game::createAll() {
     vector<string> names;
     while (cpt <= 10 && !stop) {
 	    
-		string message = "NEW PLAYER!!\nEnter the name of the player number " + std::to_string(cpt + 1) + " : ";
-        interface->printBasicMessage(message);
+        interface->printBasicMessage("NEW PLAYER!!\nEnter the name of the player number " + std::to_string(cpt + 1) + " : ");
 
         string name = interface->getInputText();
         while (find_if(names.begin(),names.end(),[&name](string s){return s==name;})!=names.end()){
