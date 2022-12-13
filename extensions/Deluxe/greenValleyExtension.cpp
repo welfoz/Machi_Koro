@@ -53,3 +53,7 @@ void GreenValley::action(Player *player) {
         if (choice=="Y" || choice=="y") techStartup->invest(player,1);
     }
 }
+
+PlayerGreenValley& GreenValley::getPlayer(size_t id) const {
+    return dynamic_cast<PlayerGreenValley&>(*players[id]);
+}

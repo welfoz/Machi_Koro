@@ -79,7 +79,7 @@ void PlayerGreenValley::printCards() const {
     vector<pair<string, unsigned int>> headerNames;
     headerNames = {
             {" Name", 31},
-            {"Closed", 1},
+            {"Closed", 9},
             {"Price", 5},
             {"Activation Nb", 13},
             {"Quantity", 8},
@@ -97,7 +97,6 @@ void PlayerGreenValley::printCards() const {
                 activationNumbers += std::to_string(*actNumbers) + ' ';
                 actNumbers++;
             }
-            if (closed.count(it->first))
             cout << " " << Formatter::format(it->first->getName(), headerNames[0].second - 1)<<Formatter::format(std::to_string(closed.count(it->first)),headerNames[1].second) << Formatter::format(std::to_string(it->first->getPrice()), headerNames[2].second) << Formatter::format(activationNumbers, headerNames[3].second);
             cout << Formatter::format(std::to_string(it->second), headerNames[4].second) << Formatter::format(BaseCard::typeToString(it->first->getType()), headerNames[5].second) << Formatter::format(it->first->getIcon()->getName(), headerNames[6].second) << it->first->getEffetDescription() << "\n";
         }
