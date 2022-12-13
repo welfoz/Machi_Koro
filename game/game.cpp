@@ -385,7 +385,7 @@ bool Game::isPlayerAbleToPayEstablishmentCard(Player* player) {
             cout<<"\nYou don't have enough money...\n";
             return false;
         }
-        else if (board->cheapestAvailableCardPrice()==0){
+        else if (board->cheapestAvailableCardPrice()<0){ // important de laisser <0 car il y a une carte dont le prix est 0
             cout<<"\nNo card left on the board\n";
             return false;
         }
