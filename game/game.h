@@ -84,4 +84,7 @@ public:
     Interface* const getInterface() const {
         return interface;
     }
+    const Board* const getBoard() const {
+        return board;
+    }
 };

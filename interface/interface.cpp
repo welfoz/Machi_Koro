@@ -34,7 +34,6 @@ string Cli::getInputText() {
 	return text;
 }
 
-
 // be careful! firstOption and secondOption HAS to be UTF-8. No accent.
 bool Cli::isPlayerWantsToContinue(string message, string firstOption, string secondOption) {
 	string stopAnswer = "";
@@ -130,3 +129,33 @@ void Cli::printBalances(Player** players) const {
         cout << "   " << players[i]->getUsername() << " : " << Game::getInstance().getBank()->getAccount(players[i]->getId())->getSolde() << "\n";
     }
 }
+
+
+void Cli::printBoard() const {
+	cout <<"\nBoard's cards: \n";
+    vector<pair<string, unsigned int>> headerNames;
+    headerNames = {
+        {" Name", 31},
+        {"Price", 5},
+        {"Activation Nb", 13},
+        {"Quantity", 8},
+        {"Type" , 20},
+        {"Icon", 8},
+        {"Effect", 60}
+	};
+    cout << Formatter::formatHeader(headerNames);
+    for (auto it = Game::getInstance().getBoard()->getCards().begin(); it != Game::getInstance().getBoard()->getCards().end(); it++) {
+        // get all activation numbers
+        string activationNumbers;
+        size_t* actNumbers = it->first->getActivationNumbers();
+        for (size_t i = 0; i < it->first->getNumberActivation(); i++) {
+            activationNumbers += std::to_string(*actNumbers) + ' ';
+            actNumbers++;
+        }
+
+        cout << " " << Formatter::format(it->first->getName(), headerNames[0].second - 1) << Formatter::format(std::to_string(it->first->getPrice()), headerNames[1].second) << Formatter::format(activationNumbers, headerNames[2].second);
+        cout << Formatter::format(std::to_string(it->second), headerNames[3].second) << Formatter::format(BaseCard::typeToString(it->first->getType()), headerNames[4].second) << Formatter::format(it->first->getIcon()->getName(), headerNames[5].second) << it->first->getEffetDescription() << "\n";
+
+    }
+};
+

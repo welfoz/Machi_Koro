@@ -18,9 +18,11 @@ public:
     ~Board();
     void removeCard(EstablishmentCard* card);
     void addCard(EstablishmentCard* card);
-    void printBoard();
     size_t cheapestAvailableCardPrice() const;
     const size_t& getCard(EstablishmentCard* card) const {
         return cardsDecks.at(card);
+    }
+    const map<EstablishmentCard*, size_t>& getCards() const {
+        return cardsDecks;
     }
 };

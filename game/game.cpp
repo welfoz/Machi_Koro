@@ -246,7 +246,7 @@ void Game::action(Player* player){
             break;
         }
 
-        board->printBoard();
+        interface->printBoard();
 
         // interface
         // click on card
