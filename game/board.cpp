@@ -39,7 +39,9 @@ void Board::printBoard()
 
 // Regarde l'emplacement de la carte dans le Board et ajoute +1
 void Board::addCard(EstablishmentCard* card) {
-    cardsDecks.at(card)++;
+    if (cardsDecks.count(card))
+        cardsDecks.at(card)++;
+    else cardsDecks.insert({card, 1});
 }
 
 void Board::removeCard(EstablishmentCard* card) {
