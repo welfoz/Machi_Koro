@@ -283,7 +283,9 @@ void Game::action(Player* player){
 					player->removeEstablishment(card);
 					board->addCard(card);
 					bank->credit(player->getId(), card->getPrice());
-                    interface->printPlayerInformation(player);
+					interface->printPlayerInformation(player);
+					interface->printMonuments(player);
+					interface->printCards(player);
                 }
                 action(player);
                 break;
@@ -328,7 +330,9 @@ void Game::action(Player* player){
                 if (monument != nullptr) {
 					player->removeMonument(monument);
 					bank->credit(player->getId(), monument->getPrice());
-                    interface->printPlayerInformation(player);
+					interface->printPlayerInformation(player);
+					interface->printMonuments(player);
+					interface->printCards(player);
                 }
                 action(player);
                 break;
