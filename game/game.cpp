@@ -274,21 +274,17 @@ void Game::action(Player* player){
             {
                 // interface error message
                 std::cerr << e.what() << '\n';
-                cout << "Select an available card.\n";
+
+                interface->printBasicMessage( "Select an available card.\n");
                 card = nullptr;
             }
 
-            // interface redo popup wait for answer
-            // if (interface.waitForPopupAnswer("Do you want to change your action ?", "Yes", "No")
-            string reDo;
-            cout<<"Do you want to change your action ? (Y/N)"<<endl;
-            cin>>reDo;
-            if (reDo=="y" || reDo=="Y"){
+            if (interface->isPlayerWantsToContinue("Do you want to change your action ?", "Yes", "No")) {
                 if (card != nullptr) {
 					player->removeEstablishment(card);
 					board->addCard(card);
 					bank->credit(player->getId(), card->getPrice());
-					cout << "\n-------------------------- Player : " << player->getUsername() << " - Money = " << bank->getAccount(player->getId())->getSolde() << " --------------------------\n";
+                    interface->printPlayerInformation(player);
                 }
                 action(player);
                 break;
@@ -305,11 +301,10 @@ void Game::action(Player* player){
 
         interface->printMonuments(player);
 
-        // interface
         string choice;
         Monument* monument = nullptr;
         while (monument == nullptr) {
-            cout << "Enter the name of the monument you want to buy : ";
+            interface->printBasicMessage("Enter the name of the monument you want to buy : ");
             choice = interface->getInputText();
             try {
                 monument = getMonumentByName(choice);
@@ -326,19 +321,16 @@ void Game::action(Player* player){
             } catch (const std::exception &e) {
                 // interface
                 std::cerr << e.what() << '\n';
-                cout << "Select an available card.\n";
+
+                interface->printBasicMessage("Select an available card.\n");
                 monument = nullptr;
             }
 
-            // interface
-            string reDo;
-            cout << "Do you want to change your action ? (Y/N)" << endl;
-            cin >> reDo;
-            if (reDo == "y" || reDo == "Y") {
+            if (interface->isPlayerWantsToContinue("Do you want to change your action ?",  "Yes", "No")) {
                 if (monument != nullptr) {
 					player->removeMonument(monument);
 					bank->credit(player->getId(), monument->getPrice());
-					cout << "\n-------------------------- Player : " << player->getUsername() << " - Money = " << bank->getAccount(player->getId())->getSolde() << " --------------------------\n";
+                    interface->printPlayerInformation(player);
                 }
                 action(player);
                 break;
