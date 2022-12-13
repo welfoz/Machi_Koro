@@ -50,13 +50,13 @@ void LoanOffice::activation(Player &p) {
     GreenValley::getInstance().getBank()->debit(p.getId(),2);
 }
 void Winery::activation(Player &p) {
-    PlayerGreenValley *pgv=dynamic_cast<PlayerGreenValley*>(&p);
+    PlayerGreenValley *playerGreenValley=dynamic_cast<PlayerGreenValley*>(&p);
     auto cards=p.getCards();
     for (auto it : cards){
         if (it.first->getName()=="Vineyard"){
             for (size_t i=0;i<it.second;i++) {
                 GreenValley::getInstance().getBank()->credit(p.getId(),6);
-                pgv->close(it.first);
+                playerGreenValley->close(it.first);
             }
         }
     }
