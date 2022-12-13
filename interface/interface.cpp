@@ -8,6 +8,8 @@ Interface* Interface::createInterfaceFromOption(Option type)
 		return new Cli();
 	case Option::gui:
 		return new Gui();
+	case Option::cliGreenValley:
+		return new GreenValleyCli();
 	default:
 		throw "sa mere";
 	}
@@ -209,3 +211,44 @@ EstablishmentCard* Cli::selectOneEstablishmentCardFromPlayer(Player* player, str
     }
     return takenCardPtr;
 };
+
+void GreenValleyCli::printCards(Player* player) const {
+
+    // to access getClosedCards function
+    PlayerGreenValley* playerGreenValley = dynamic_cast<PlayerGreenValley*>(player);
+
+    if (playerGreenValley != NULL) {
+		cout << "\n" << player->getUsername() << "'s cards: \n";
+		vector<pair<string, unsigned int>> headerNames;
+		headerNames = {
+				{" Name", 31},
+				{"Closed", 9},
+				{"Price", 5},
+				{"Activation Nb", 13},
+				{"Quantity", 8},
+				{"Type" , 20},
+				{"Icon", 8},
+				{"Effect", 60}
+		};
+		cout << Formatter::formatHeader(headerNames);
+		for (auto it = player->getCards().begin(); it != player->getCards().end(); it++) {
+			if (it->second > 0) {
+				// get all activation numbers
+				string activationNumbers;
+				size_t* actNumbers = it->first->getActivationNumbers();
+				for (unsigned int i = 0; i < it->first->getNumberActivation(); i++) {
+					activationNumbers += std::to_string(*actNumbers) + ' ';
+					actNumbers++;
+				}
+
+				cout << " " << Formatter::format(it->first->getName(), headerNames[0].second - 1) << Formatter::format(std::to_string(playerGreenValley->getClosedCards().count(it->first)), headerNames[1].second) << Formatter::format(std::to_string(it->first->getPrice()), headerNames[2].second) << Formatter::format(activationNumbers, headerNames[3].second);
+				cout << Formatter::format(std::to_string(it->second), headerNames[4].second) << Formatter::format(BaseCard::typeToString(it->first->getType()), headerNames[5].second) << Formatter::format(it->first->getIcon()->getName(), headerNames[6].second) << it->first->getEffetDescription() << "\n";
+			}
+
+		}
+	}
+	else {
+		Cli::printCards(player);
+	}
+
+}

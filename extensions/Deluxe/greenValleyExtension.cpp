@@ -3,7 +3,7 @@
 
 GreenValley& GreenValley::getInstance() {
     if (instance == nullptr)
-        instance = new GreenValley;
+        instance = new GreenValley();
     return dynamic_cast<GreenValley&>(*instance);
 }
 

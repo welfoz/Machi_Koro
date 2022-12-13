@@ -4,6 +4,7 @@
 #include "../formatter/formatter.h"
 #include "../players/player.h"
 #include "../cards/icon.h"
+#include "../extensions/Deluxe/PlayerGreenValley.h"
 
 using namespace std;
 
@@ -14,7 +15,7 @@ protected:
 
 public:
 	virtual ~Interface() = default;
-	enum Option {cli, gui};
+	enum Option {cli, gui, cliGreenValley};
 	static Interface* createInterfaceFromOption(Option type);
 	virtual void printWelcomingMessage() = 0;
 	virtual string getInputText() const = 0;
@@ -80,4 +81,9 @@ public:
 	EstablishmentCard* selectOneEstablishmentCardFromPlayer(Player* player, string message) const override { 
 		return player->getCards().begin()->first;
 	};
+};
+
+class GreenValleyCli : public Cli {
+public:
+	void printCards(Player* player) const override;
 };
