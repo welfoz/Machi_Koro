@@ -1,12 +1,12 @@
 #include "interface.h"
 #include "../game/game.h"
 
-Interface* Interface::createInterfaceFromOption(Type type)
+Interface* Interface::createInterfaceFromOption(Option type)
 {
 	switch (type) {
-	case Type::cli:
+	case Option::cli:
 		return new Cli();
-	case Type::gui:
+	case Option::gui:
 		return new Gui();
 	default:
 		throw "sa mere";
@@ -168,4 +168,44 @@ string Cli::selectOneCard() const {
 
 void Cli::printError(const std::exception& message) const {
 	std::cerr << message.what() << "\n";
+};
+
+Player* Cli::selectOnePlayerDifferentFromTheCurrentOne(Player* player) const {
+    string name;
+    bool loop = true;
+    Player *p2;
+    while (loop) {
+        try {
+            cout << "\nType the name of the player you want to trade a card with :" << endl;
+			name = getInputText();
+            p2 = Game::getInstance().getPlayerByName(name);
+            if (p2 != player) loop = false;
+            else cout << "Impossible" << endl;
+        } catch (string error) {
+            cout << error << endl;
+        }
+    }
+	return p2;
+}
+
+EstablishmentCard* Cli::selectOneEstablishmentCardFromPlayer(Player* player, string message) const {
+    cout << player->getUsername() + "'s cards";
+    printCards(player);
+
+    string choosenCard;
+    EstablishmentCard *takenCardPtr;
+    bool loop = true;
+    while (loop) {// we ask the user which card he want to take from that player
+        try {
+            cout << message << endl;
+            fflush(stdin);
+            getline(cin, choosenCard);
+            takenCardPtr = player->getCardByName(choosenCard);
+            if (takenCardPtr->getType() != Type::majorEstablishment) loop = false;
+            else cout << "Untradable card" << endl;
+        } catch (std::exception &error) {
+            cout << error.what() << endl;
+        }
+    }
+    return takenCardPtr;
 };

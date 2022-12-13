@@ -65,75 +65,22 @@ void Stadium::activation(Player &p) {
     }
 }
 void TVStation::activation(Player &p) {
-	// interface printBalances
     for (size_t j=0;j<Game::getInstance().getNbPlayers();j++){
-        cout << "\n------ Player : " << Game::getInstance().getPlayer(j).getUsername()<< " - Money = " << Game::getInstance().getBank()->getAccount(j)->getSolde() << "------\n";
+        Game::getInstance().getInterface()->printPlayerInformation(&Game::getInstance().getPlayer(j));
     }
-	// Player* p2 = interface.selectPlayerDifferentFromCurrent(Player& p)
-    string name;
-    Player* p2;
-    bool loop=true;
-    while(loop){
-        try {
-            cout << "\nType the name of the player you want to take 5 coins from :" << endl;
-            cin >> name;
-            p2 = Game::getInstance().getPlayerByName(name);
-            if (p2 != &p) loop = false;
-            else cout << "Impossible" << endl;
-        } catch (string error) {
-            cout << error << endl;
-        }
-    }
+
+	Player* p2 = Game::getInstance().getInterface()->selectOnePlayerDifferentFromTheCurrentOne(&p);
     Game::getInstance().getBank()->trade(p.getId(),p2->getId(),5);
 }
+
 void BusinessCenter::activation(Player &p) {
-	// Player* p2 = interface.selectPlayerDifferentFromCurrent(Player& p)
-    string name;
-    bool loop = true;
-    Player *p2;
-    while (loop) {
-        try {
-            cout << "\nType the name of the player you want to trade a card with :" << endl;
-            cin >> name;
-            p2 = Game::getInstance().getPlayerByName(name);
-            if (p2 != &p) loop = false;
-            else cout << "Impossible" << endl;
-        } catch (string error) {
-            cout << error << endl;
-        }
-    }
-    // interface.selectOneEstablishementCardFromPlayer(Player& p)
+	Player* p2 = Game::getInstance().getInterface()->selectOnePlayerDifferentFromTheCurrentOne(&p);
+
     Game::getInstance().getInterface()->printCards(p2);
-    string takenCard;
-    EstablishmentCard *takenCardPtr;
-    loop = true;
-    while (loop) {// we ask the user which card he want to take from that player
-        try {
-            cout << "Which non-major Establishment card do want to take ? (by name)" << endl;
-            fflush(stdin);
-            getline(cin, takenCard);
-            takenCardPtr = Game::getInstance().getCardByName(takenCard);
-            if (takenCardPtr->getType() != Type::majorEstablishment) loop = false;
-            else cout << "Untradable card" << endl;
-        } catch (string &error) {
-            cout << error << endl;
-        }
-    }
-    // interface.selectOneEstablishmentCardFromPlayer(Player& p)
-    Game::getInstance().getInterface()->printCards(&Game::getInstance().getPlayer(p.getId()));
-    string givenCard;
-    EstablishmentCard *givenCardPtr;
-    loop = true;
-    while (loop) { // then we ask the card the user want to give
-        try {
-            cout << "Which non-major Establishment card do you want to give ? (by name)" << endl;
-            getline(cin, givenCard);
-            givenCardPtr = Game::getInstance().getCardByName(givenCard);
-            if (givenCardPtr->getType() != Type::majorEstablishment) loop = false;
-            else cout << "Untradable card" << endl;
-        } catch (string &error) {
-            cout << error << endl;
-        }
-    }
+    EstablishmentCard* takenCardPtr = Game::getInstance().getInterface()->selectOneEstablishmentCardFromPlayer(p2, "Which non-major Establishment card do want to take ? (by name)" );
+
+    Game::getInstance().getInterface()->printCards(&p);
+    EstablishmentCard* givenCardPtr = Game::getInstance().getInterface()->selectOneEstablishmentCardFromPlayer(&p, "Which non-major Establishment card do you want to give ? (by name)" );
+
     Game::getInstance().tradeCards(&p, p2, givenCardPtr, takenCardPtr);
 }

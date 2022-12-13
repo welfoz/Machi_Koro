@@ -15,7 +15,7 @@ void Game::freeInstance()
 
 Game* Game::instance = nullptr;
 
-Game::Game(Interface::Type type) : board(nullptr), bank(nullptr), dice(Dice()), winner(nullptr), players(), nbPlayers(0), idCurrentPlayer(0), interface(Interface::createInterfaceFromOption(type)) {
+Game::Game(Interface::Option type) : board(nullptr), bank(nullptr), dice(Dice()), winner(nullptr), players(), nbPlayers(0), idCurrentPlayer(0), interface(Interface::createInterfaceFromOption(type)) {
     instance = this;
 };
 

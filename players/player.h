@@ -39,4 +39,5 @@ public:
     bool isClosed(EstablishmentCard* card);
     void close(EstablishmentCard* card);
     void open(EstablishmentCard* card);
+    EstablishmentCard* getCardByName(string name) const;
 };

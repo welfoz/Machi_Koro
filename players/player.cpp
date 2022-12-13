@@ -99,8 +99,7 @@ Player::Player(string name, size_t id, vector<Monument*> monuments, vector<Estab
 	for (auto it = cards.begin(); it != cards.end(); it++) {
 		purchaseEstablishment(*it);
 	}
-    // interface
-	cout << name << " added!\n";
+    Game::getInstance().getInterface()->printBasicMessage(name + " added!\n");
 };
 
 size_t Player::cheapestMonumentAvailablePrice() const {
@@ -143,4 +142,15 @@ const size_t Player::getNbMonumentsActivated() const{
     size_t nb=0;
     for (auto it : monuments) if (it.second) nb++;
     return nb;
+}
+
+
+EstablishmentCard* Player::getCardByName(string name) const {
+    auto it = find_if(cardsCounter.begin(), cardsCounter.end(), [&name](std::pair<EstablishmentCard* const, size_t> obj) {return obj.first->getName() == name; });
+	if (it != cardsCounter.end()) {
+        //found the name!
+        return it->first;
+    }
+    string error = "error getCardByName, didn't find : " + name + "\n";
+    throw invalid_argument(error);
 }

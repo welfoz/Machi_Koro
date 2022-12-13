@@ -53,7 +53,7 @@ protected:
     virtual void action(Player* player);
     const size_t getNbDiceChosen(Player& p);
     bool isWinner(Player* player) const;
-    Game(Interface::Type type = Interface::Type::cli);
+    Game(Interface::Option type = Interface::Option::cli);
     void activateShoppingMall(Player* p, vector<EstablishmentCard*> cards);
     size_t* throwDices(size_t nb) const;
     size_t* activateRadioTower(Player* player, size_t nb, size_t* throws) const;

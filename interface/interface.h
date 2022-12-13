@@ -3,6 +3,7 @@
 #include <iostream>
 #include "../formatter/formatter.h"
 #include "../players/player.h"
+#include "../cards/icon.h"
 
 using namespace std;
 
@@ -13,8 +14,8 @@ protected:
 
 public:
 	virtual ~Interface() = default;
-	enum Type {cli, gui};
-	static Interface* createInterfaceFromOption(Type type);
+	enum Option {cli, gui};
+	static Interface* createInterfaceFromOption(Option type);
 	virtual void printWelcomingMessage() = 0;
 	virtual string getInputText() const = 0;
 	virtual bool isPlayerWantsToContinue(string message, string firstOption, string secondOption) = 0;
@@ -29,6 +30,8 @@ public:
 	virtual void printBalances(Player** players) const = 0;
 	virtual void printBoard() const = 0;
 	virtual string selectOneCard() const = 0;
+	virtual Player* selectOnePlayerDifferentFromTheCurrentOne(Player* player) const = 0;
+	virtual EstablishmentCard* selectOneEstablishmentCardFromPlayer(Player* player, string message) const = 0;
 }; 
 
 class Cli : public Interface {
@@ -49,6 +52,8 @@ public:
 	void printBalances(Player** players) const override;
 	void printBoard() const override;
 	string selectOneCard() const override;
+	Player* selectOnePlayerDifferentFromTheCurrentOne(Player* player) const override;
+	EstablishmentCard* selectOneEstablishmentCardFromPlayer(Player* player, string message) const override;
 
 	
 };
@@ -71,4 +76,8 @@ public:
 	void printBalances(Player** players) const override {};
 	void printBoard() const override {};
 	string selectOneCard() const override { return ""; };
+	Player* selectOnePlayerDifferentFromTheCurrentOne(Player* player) const override { return player; };
+	EstablishmentCard* selectOneEstablishmentCardFromPlayer(Player* player, string message) const override { 
+		return player->getCards().begin()->first;
+	};
 };
