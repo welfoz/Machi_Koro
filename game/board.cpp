@@ -24,11 +24,10 @@ void Board::printBoard()
 	};
     cout << Formatter::formatHeader(headerNames);
     for (auto it = cardsDecks.begin(); it != cardsDecks.end(); it++) {
-
         // get all activation numbers
         string activationNumbers;
         size_t* actNumbers = it->first->getActivationNumbers();
-        for (unsigned int i = 0; i < it->first->getNumberActivation(); i++) {
+        for (size_t i = 0; i < it->first->getNumberActivation(); i++) {
             activationNumbers += std::to_string(*actNumbers) + ' ';
             actNumbers++;
         }
@@ -58,11 +57,11 @@ void Board::removeCard(EstablishmentCard* card) {
 
 size_t Board::cheapestAvailableCardPrice() const {
     auto it=std::find_if(cardsDecks.begin(),cardsDecks.end(),[](pair<EstablishmentCard*,size_t> it) {return it.second!=0;});
-    size_t min=0;
+    size_t min=-1;
     if (it!=cardsDecks.end()){
         min=it->first->getPrice();
         for (;it!=cardsDecks.end();it++){
-            if (it->first->getPrice()<min) min=it->first->getPrice();
+            if (it->first->getPrice()<min && it->second>0) min=it->first->getPrice();
         }
     }
     return min;

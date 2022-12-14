@@ -14,7 +14,4 @@ public:
     Marina() : Game() {};
 };
 
-
-
-
 #endif //MACHI_KORO_MARINAEXTENSION_H

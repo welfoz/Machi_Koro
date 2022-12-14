@@ -11,7 +11,7 @@ public:
         actNumber[0] = 4;
         EstablishmentCard::setActivationNumbers(actNumber);
     };
-    void activation(Player& p) override {};
+    void activation(Player& p) override;
 };
 
 class MackerelBoat : public Blue {
@@ -22,7 +22,7 @@ public:
         actNumber[0] = 8;
         EstablishmentCard::setActivationNumbers(actNumber);
     };
-    void activation(Player& p) override {};
+    void activation(Player& p) override;
 };
 
 class TunaBoat : public Blue {
@@ -34,7 +34,7 @@ public:
         actNumber[1] = 14;
         EstablishmentCard::setActivationNumbers(actNumber);
     };
-    void activation(Player& p) override {};
+    void activation(Player& p) override;
 };
 
 class FlowerShop : public Green {
@@ -45,7 +45,7 @@ public:
         actNumber[0] = 6;
         EstablishmentCard::setActivationNumbers(actNumber);
     };
-    void activation(Player& p) override {};
+    void activation(Player& p) override;
 };
 
 class FoodWarehouse : public Green {
@@ -57,7 +57,7 @@ public:
         actNumber[1] = 13;
         EstablishmentCard::setActivationNumbers(actNumber);
     };
-    void activation(Player& p) override {};
+    void activation(Player& p) override;
 };
 
 class SushiBar : public Red{
@@ -68,7 +68,7 @@ public:
         actNumber[0] = 1;
         EstablishmentCard::setActivationNumbers(actNumber);
     };
-    void activation(Player& p) override {};
+    void activation(Player& p) override;
 };
 
 class PizzaJoint : public Red{
@@ -79,7 +79,7 @@ public:
         actNumber[0] = 7;
         EstablishmentCard::setActivationNumbers(actNumber);
     };
-    void activation(Player& p) override {};
+    void activation(Player& p) override;
 };
 
 class HamburgerStand : public Red {
@@ -90,7 +90,7 @@ public:
         actNumber[0] = 8;
         EstablishmentCard::setActivationNumbers(actNumber);
     };
-    void activation(Player& p) override {};
+    void activation(Player& p) override;
 };
 
 class Publisher : public Purple {
@@ -101,7 +101,7 @@ public:
         actNumber[0] = 5;
         EstablishmentCard::setActivationNumbers(actNumber);
     };
-    void activation(Player& p) override {};
+    void activation(Player& p) override;
 };
 
 
@@ -114,5 +114,5 @@ public:
         actNumber[1] = 9;
         EstablishmentCard::setActivationNumbers(actNumber);
     };
-    void activation(Player& p) override {};
+    void activation(Player& p) override;
 };

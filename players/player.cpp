@@ -10,35 +10,40 @@ vector<EstablishmentCard*> Player::activateRedCards(size_t diceNumber) {
 	vector<EstablishmentCard*> activatedCards = {};
     for(auto it=cardsCounter.begin();it!=cardsCounter.end();it++){
         if(it->first->getType()==Type::restaurants&& it->first->inActivationNumbers(diceNumber))
-			for (size_t j = 0; j < it->second; j++)
-			{
-				it->first->activation(*this);
-				activatedCards.push_back(it->first);
-			}
+                for (size_t j = 0; j < it->second; j++)
+                {
+                    it->first->activation(*this);
+                    activatedCards.push_back(it->first);
+                }
+
     }
 	return activatedCards;
 }
+
 void Player::activateBlueCards(size_t diceNumber){
     for(auto it=cardsCounter.begin();it!=cardsCounter.end();it++){
-        if(it->first->getType()==Type::primaryIndustry&& it->first->inActivationNumbers(diceNumber))
-            for (size_t j=0;j<it->second;j++) it->first->activation(*this);
+        if(it->first->getType()==Type::primaryIndustry&& it->first->inActivationNumbers(diceNumber)){
+                for (size_t j = 0; j < it->second; j++) it->first->activation(*this);
+        }
     }
 }
 vector<EstablishmentCard*> Player::activateGreenCards(size_t diceNumber){
 	vector<EstablishmentCard*> activatedCards = {};
     for(auto it=cardsCounter.begin();it!=cardsCounter.end();it++){
-        if(it->first->getType()==Type::secondaryIndustry&& it->first->inActivationNumbers(diceNumber))
-			for (size_t j = 0; j < it->second; j++) {
-				it->first->activation(*this);
-				activatedCards.push_back(it->first);
-			}
+        if(it->first->getType()==Type::secondaryIndustry&& it->first->inActivationNumbers(diceNumber)){
+                for (size_t j = 0; j < it->second; j++) {
+                    it->first->activation(*this);
+                    activatedCards.push_back(it->first);
+                }
+        }
     }
 	return activatedCards;
 }
 void Player::activatePurpleCards(size_t diceNumber){
     for(auto it=cardsCounter.begin();it!=cardsCounter.end();it++){
-        if(it->first->getType()==Type::majorEstablishment&& it->first->inActivationNumbers(diceNumber))
-            for (size_t j=0;j<it->second;j++) it->first->activation(*this);
+        if(it->first->getType()==Type::majorEstablishment&& it->first->inActivationNumbers(diceNumber)){
+                for (size_t j = 0; j < it->second; j++) it->first->activation(*this);
+        }
     }
 }
 
@@ -66,7 +71,7 @@ void Player::purchaseEstablishment(EstablishmentCard* card) {
 	}
 }
 
-Player::Player(string name, size_t id, vector<Monument*> monuments, vector<EstablishmentCard*> cards, bool iP) : username(name), id(id), isPlaying(iP) {
+Player::Player(string name, size_t id, vector<Monument*> monuments, vector<EstablishmentCard*> cards, bool iP) : username(name), id(id), isPlaying(iP){
 	for (auto it = monuments.begin(); it != monuments.end(); it++) {
 		// init all monuments to false
 		this->monuments.insert({ *it, 0});
@@ -92,17 +97,19 @@ void Player::printCards() const {
 	};
     cout << Formatter::formatHeader(headerNames);
 	for (auto it = cardsCounter.begin(); it != cardsCounter.end(); it++) {
+        if (it->second>0){
+            // get all activation numbers
+            string activationNumbers;
+            size_t* actNumbers = it->first->getActivationNumbers();
+            for (unsigned int i = 0; i < it->first->getNumberActivation(); i++) {
+                activationNumbers += std::to_string(*actNumbers) + ' ';
+                actNumbers++;
+            }
 
-        // get all activation numbers
-        string activationNumbers;
-        size_t* actNumbers = it->first->getActivationNumbers();
-        for (unsigned int i = 0; i < it->first->getNumberActivation(); i++) {
-            activationNumbers += std::to_string(*actNumbers) + ' ';
-            actNumbers++;
+            cout << " " << Formatter::format(it->first->getName(), headerNames[0].second - 1) << Formatter::format(std::to_string(it->first->getPrice()), headerNames[1].second) << Formatter::format(activationNumbers, headerNames[2].second);
+            cout << Formatter::format(std::to_string(it->second), headerNames[3].second) << Formatter::format(BaseCard::typeToString(it->first->getType()), headerNames[4].second) << Formatter::format(it->first->getIcon()->getName(), headerNames[5].second) << it->first->getEffetDescription() << "\n";
         }
 
-        cout << " " << Formatter::format(it->first->getName(), headerNames[0].second - 1) << Formatter::format(std::to_string(it->first->getPrice()), headerNames[1].second) << Formatter::format(activationNumbers, headerNames[2].second);
-        cout << Formatter::format(std::to_string(it->second), headerNames[3].second) << Formatter::format(BaseCard::typeToString(it->first->getType()), headerNames[4].second) << Formatter::format(it->first->getIcon()->getName(), headerNames[5].second) << it->first->getEffetDescription() << "\n";
 	}
 }
 
@@ -149,3 +156,9 @@ void Player::removeEstablishment(EstablishmentCard* card) {
 	}
 	cardsCounter[card]--;
 }
+
+const size_t Player::getNbMonumentsActivated() const{
+    size_t nb=0;
+    for (auto it : monuments) if (it.second) nb++;
+    return nb;
+};
