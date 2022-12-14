@@ -10,13 +10,13 @@
 using namespace std;
 class Board
 {
-private:
+protected:
     map<EstablishmentCard*, size_t> cardsDecks;
 public:
     Board(vector<EstablishmentCard*> cards);
-
-    ~Board();
-    void removeCard(EstablishmentCard* card);
+    Board() = default;
+    ~Board() = default;
+    virtual void removeCard(EstablishmentCard* card);
     void addCard(EstablishmentCard* card);
     size_t cheapestAvailableCardPrice() const;
     const size_t& getCard(EstablishmentCard* card) const {
