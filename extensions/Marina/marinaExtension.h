@@ -10,6 +10,9 @@ protected:
     void createBoard() override;
     void createIcons() override;
     void turn(Player* player) override;
+    void activateCityHall(Player* player);
+    size_t activateHarbor(size_t diceValue);
+    void activateAirport(Player* player);
 public:
     static Marina& getInstance();
     Marina() : Game() {};
