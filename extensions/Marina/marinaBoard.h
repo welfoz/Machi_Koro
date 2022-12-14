@@ -8,7 +8,7 @@ private:
     vector<EstablishmentCard*> pile;
 public:
     MarinaBoard(vector<EstablishmentCard*> cards);
-    void printBoard();
+    //void printBoard();
     void checkNumberOfDecks();
     void removeCard(EstablishmentCard* card);
 };

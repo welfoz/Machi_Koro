@@ -60,7 +60,7 @@ protected:
     size_t* throwDices(size_t nb) const;
     //size_t* activateRadioTower(Player* player, size_t nb, size_t* throws) const;
     //void activateAmusementPark(Player* p, size_t nb, size_t* throws);
-    size_t getDiceValue(size_t nb, size_t* throws);
+    //size_t getDiceValue(size_t nb, size_t* throws);
     bool isPlayerAbleToPayEstablishmentCard(Player* p);
     bool isPlayerAbleToPayMonument(Player* p);
     void setDiceValue(size_t nb, size_t* throws);

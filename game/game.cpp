@@ -121,7 +121,7 @@ size_t* Game::throwDices(size_t nb) const {
     return throws;
 }
 
-size_t Game::setDiceValue(size_t nb, size_t* throws) {
+void Game::setDiceValue(size_t nb, size_t* throws) {
     size_t diceValue = 0;
     for (size_t i=0;i<nb;i++) diceValue+=throws[i];
     this->diceValue = diceValue;

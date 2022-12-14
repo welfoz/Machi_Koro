@@ -1,19 +1,20 @@
 #include "marinaExtensionCards.h"
+#include "../../game/controller/control.h"
 //Blue card
 
 void FlowerGarden::activation(Player &p) {
-	Game::getInstance().getBank()->credit(p.getId(), 1);
+	Controller::getInstance().getGame()->getBank()->credit(p.getId(), 1);
 }
 
 void MackerelBoat::activation(Player &p) {
 	if (p.getMonument("harbor")) {
-		Game::getInstance().getBank()->credit(p.getId(), 3);
+		Controller::getInstance().getGame()->getBank()->credit(p.getId(), 3);
 	}
 }
  
 void TunaBoat::activation(Player& p) {
-	size_t diceValue = Game::getInstance().getDiceValue();  //Rajouter getter qui renvoie la valeur des dés tirés ??
-	Game::getInstance().getBank()->credit(p.getId(), diceValue);
+	size_t diceValue = Controller::getInstance().getGame()->getDiceValue();  //Rajouter getter qui renvoie la valeur des dés tirés ??
+	Controller::getInstance().getGame()->getBank()->credit(p.getId(), diceValue);
 }
 
 //Green card
@@ -21,7 +22,7 @@ void TunaBoat::activation(Player& p) {
 void FlowerShop::activation(Player &p) {
 	for (auto it = p.getCards().begin(); it != p.getCards().end(); it++) {
 		if (it->first->getName() == "Flower Garden") {
-			for (size_t i = 0; i < it->second; i++) Game::getInstance().getBank()->credit(p.getId(), 1);
+			for (size_t i = 0; i < it->second; i++) Controller::getInstance().getGame()->getBank()->credit(p.getId(), 1);
 		}
 	}
 }
@@ -30,7 +31,7 @@ void FlowerShop::activation(Player &p) {
 void FoodWarehouse::activation(Player &p) {
 	for (auto it = p.getCards().begin(); it != p.getCards().end(); it++) {
 		if (it->first->getIcon()->getName() == "cup") {
-			for (size_t i = 0; i < it->second; i++) Game::getInstance().getBank()->credit(p.getId(), 2);
+			for (size_t i = 0; i < it->second; i++) Controller::getInstance().getGame()->getBank()->credit(p.getId(), 2);
 		}
 	}
 }
@@ -39,30 +40,30 @@ void FoodWarehouse::activation(Player &p) {
 
 void SushiBar::activation(Player& p) {
 	if (p.getMonument("harbor")) {
-		Game::getInstance().getBank()->trade(p.getId(), Game::getInstance().getIdCurrentPlayer(), 3);
+		Controller::getInstance().getGame()->getBank()->trade(p.getId(), Controller::getInstance().getGame()->getIdCurrentPlayer(), 3);
 	}
 }
 
 void PizzaJoint::activation(Player &p) {
-	Game::getInstance().getBank()->trade(p.getId(), Game::getInstance().getIdCurrentPlayer(), 1);
+	Controller::getInstance().getGame()->getBank()->trade(p.getId(), Controller::getInstance().getGame()->getIdCurrentPlayer(), 1);
 }
 
 
 void HamburgerStand::activation(Player& p) {
-	Game::getInstance().getBank()->trade(p.getId(), Game::getInstance().getIdCurrentPlayer(), 1);
+	Controller::getInstance().getGame()->getBank()->trade(p.getId(), Controller::getInstance().getGame()->getIdCurrentPlayer(), 1);
 }
 
 //Purple
 
 //pas sur à 100%, à tester
 void Publisher::activation(Player &p) {
-	for (size_t k = 0; k < Game::getInstance().getNbPlayers(); k++) {
+	for (size_t k = 0; k < Controller::getInstance().getGame()->getNbPlayers(); k++) {
 		if (k != p.getId()) {
-			Player& p2 = Game::getInstance().getPlayer(k);
+			Player& p2 = Controller::getInstance().getGame()->getPlayer(k);
 			for (auto it = p2.getCards().begin(); it != p2.getCards().end(); it++) {
 				if (it->first->getIcon()->getName() == "cup" || it->first->getIcon()->getName() == "bread") {
 					for (size_t i = 0; i < it->second; i++)
-						Game::getInstance().getBank()->trade(p.getId(), p2.getId(), 1);
+						Controller::getInstance().getGame()->getBank()->trade(p.getId(), p2.getId(), 1);
 				}
 			}
 		}
@@ -70,11 +71,11 @@ void Publisher::activation(Player &p) {
 }
 
 void TaxOffice::activation(Player& p) {
-	for (size_t k = 0; k < Game::getInstance().getNbPlayers(); k++) {
+	for (size_t k = 0; k < Controller::getInstance().getGame()->getNbPlayers(); k++) {
 		if (k != p.getId()) {
-			size_t solde = Game::getInstance().getBank()->getAccount(k)->getSolde();
+			size_t solde = Controller::getInstance().getGame()->getBank()->getAccount(k)->getSolde();
 			if (solde >= 10) {
-				Game::getInstance().getBank()->trade(p.getId(), Game::getInstance().getPlayer(k).getId(), solde/2);
+				Controller::getInstance().getGame()->getBank()->trade(p.getId(), Controller::getInstance().getGame()->getPlayer(k).getId(), solde/2);
 			}
 		}
 	}

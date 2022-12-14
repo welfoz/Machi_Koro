@@ -7,8 +7,6 @@ Board::Board(vector<EstablishmentCard*> cards) {
     }
 };
 
-Board::~Board(){};
-
 // Regarde l'emplacement de la carte dans le Board et ajoute +1
 void Board::addCard(EstablishmentCard* card) {
     if (cardsDecks.count(card))
@@ -17,7 +15,8 @@ void Board::addCard(EstablishmentCard* card) {
 }
 
 void Board::removeCard(EstablishmentCard* card) {
-    if (auto search = cardsDecks.find(card); search != cardsDecks.end()) {
+	auto search = cardsDecks.find(card);
+    if (search != cardsDecks.end()) {
         cardsDecks.at(card)--;
     }
     else

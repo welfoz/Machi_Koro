@@ -122,9 +122,9 @@ void Controller::turn(Player* player){
 
     throws = activateRadioTower(player, nb, throws);
 
-    size_t diceValue = getGame()->getDiceValue(nb, throws);
+    getGame()->setDiceValue(nb, throws);
 
-    getGame()->activation(player, diceValue);
+    getGame()->activation(player, game->diceValue);
 
     interface->printBalances(getGame()->players);
 
