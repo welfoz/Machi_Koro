@@ -17,17 +17,14 @@ int main(int argc, const char* argv[]) {
     {
     case 'B':
         Controller::getInstance().match();
-        //Game::getInstance().match();
         break;
     case 'M':{
         MarinaController::getInstance().match();
-        //Marina::getInstance().match();
         break;
     }
 
     case 'G':{
         GreenValleyController::getInstance().match();
-        //GreenValley::getInstance().match();
         break;
     }
         //case 'D':

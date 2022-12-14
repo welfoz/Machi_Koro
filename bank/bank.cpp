@@ -1,4 +1,3 @@
-#include "../game/game.h"
 #include "../game/controller/control.h"
 
 Bank::Bank(size_t nbPlayers) : nbPlayers(nbPlayers){

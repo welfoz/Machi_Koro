@@ -1,6 +1,5 @@
 #include "player.h"
 #include "../formatter/formatter.h"
-#include "../game/game.h"
 #include "../game/controller/control.h"
 
 void Player::purchaseMonument(Monument* card) {

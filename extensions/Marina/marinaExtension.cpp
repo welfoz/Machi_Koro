@@ -1,11 +1,6 @@
 #include "marinaExtension.h"
 #include "marinaExtensionCards.h"
-
-//Marina& Marina::getInstance() {
-//		if (instance == nullptr)
-//			instance = new Marina;
-//		return dynamic_cast<Marina&>(*instance);
-//}
+#include "../../game/controller/control.h"
 
 void Marina::createEstablishmentCards(){
     // base cards with some additional quantities -> pas dans les règles françaises
@@ -71,6 +66,7 @@ void Marina::createIcons(){
     icons.push_back(new Icon("boat", "boat.png", Type::primaryIndustry));
 }
 
+// TO REFRACTOR CONTROLLER
 //void Marina::turn(Player* player){
 //    if (winner!= nullptr) return;
 //
@@ -103,11 +99,12 @@ void Marina::createIcons(){
 //    this->activateAmusementPark(player, nb, throws);
 //}
 
-//void Marina::activateCityHall(Player* player){
-//    if (Marina::getInstance().getBank()->getAccount(player->getId())->getSolde() == 0)
-//    Marina::getInstance().getBank()->credit(player->getId(), 1);
-//}
-//
+void Marina::activateCityHall(Player* player){
+    if (Controller::getInstance().getGame()->getBank()->getAccount(player->getId())->getSolde() == 0)
+    Controller::getInstance().getGame()->getBank()->credit(player->getId(), 1);
+}
+
+// NEED TO MOVE IT IN CONTROLLER
 size_t Marina::activateHarbor(size_t diceValue){
     if (diceValue >= 10){
         string c;
@@ -118,6 +115,6 @@ size_t Marina::activateHarbor(size_t diceValue){
     else return diceValue;
 }
 
-//void Marina::activateAirport(Player* player){
-//    Marina::getInstance().getBank()->credit(player->getId(), 10);
-//}
+void Marina::activateAirport(Player* player){
+    Controller::getInstance().getGame()->getBank()->credit(player->getId(), 10);
+}

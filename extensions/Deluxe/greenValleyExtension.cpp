@@ -1,12 +1,5 @@
 #include "greenValleyExtension.h"
 
-
-//GreenValley& GreenValley::getInstance() {
-//    if (instance == nullptr)
-//        instance = new GreenValley();
-//    return dynamic_cast<GreenValley&>(*instance);
-//}
-
 void GreenValley::createEstablishmentCards(){
     Game::createEstablishmentCards();
     cards.push_back(new CornField());
@@ -31,11 +24,6 @@ void GreenValley::createIcons(){
     icons.push_back(new Icon("suitcase","suitcase.png",Type::secondaryIndustry));
 }
 
-//void GreenValley::turn(Player* player){
-//    cout << "Green Valley \n\n";
-//    Game::turn(player);
-//}
-
 void GreenValley::createPlayer(string name, size_t id) {
     if (!canAddNewPlayer()) {
         throw out_of_range("limit_players_reached");
@@ -50,6 +38,8 @@ void GreenValley::createPlayer(string name, size_t id) {
 
     this->nbPlayers += 1;
 }
+
+//TO REFRACTOR IN CONTROLLER
 //void GreenValley::action(Player *player) {
 //    size_t n = player->getCards().count(getCardByName("Loan Office"));
 //    Game::action(player);

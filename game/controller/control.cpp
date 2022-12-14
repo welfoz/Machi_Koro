@@ -29,18 +29,6 @@ void Controller::createAll() {
     getGame()->createMonumentCards();
     getGame()->createEstablishmentCards();
 
-    // create all players
-    // ask number of players and their names
-
-    // CONTROLLER BE LIKE 
-    // cli
-    /* 
-    while 10 ask if want to add another player 
-    
-    GUI: 
-    click btn add if u want to add 
-    when 10 => disable btn
-    */
     bool stop = false;
 	while (!stop && getGame()->canAddNewPlayer()) {
 
@@ -70,7 +58,6 @@ void Controller::createAll() {
 	getGame()->createBoard();
 };
 
-// CONTROLLER 
 // gui: pop up and btns
 const size_t Controller::getNbDiceChosen(Player& p) { // est appelé par le jeu seulement si le joueur posède station
     if (!p.getMonument("Train Station")) return 1;
@@ -84,12 +71,11 @@ const size_t Controller::getNbDiceChosen(Player& p) { // est appelé par le jeu 
 }
 
 Controller::~Controller() {
-    //delete game;
+    delete game;
     interface->printBasicMessage("game deleted :)");
     delete interface;
 }; 
 
-// controller
 void Controller::match(){
     createAll();
 
@@ -106,7 +92,6 @@ void Controller::match(){
 	interface->printBasicMessage("\n\n\n\n\n\nIT'S OVER!!!\n\nThe winner is...\n" + getGame()->winner->getUsername() + " 🎉🎉🎉\n\n\nThank you for playing Machi Koro!\n\n");
 };
 
-// CONTROLLER
 // we ll not print cards in gui neither player information
 void Controller::turn(Player* player){
     if (getGame()->winner!= nullptr) return;
@@ -133,9 +118,6 @@ void Controller::turn(Player* player){
     activateAmusementPark(player, nb, throws);
 };
 
-// CONTROLLER => tous les activations ? 
-// confirm dialog gui
-// printDices gui
 size_t* Controller::activateRadioTower(Player* player, size_t nb, size_t* throws) const{
     if (player->getMonument("Radio Tower") && interface->confirmationDialog("Do you want to re-roll the dice(s) ? ", "Yes", "No")) {
 		for (size_t i = 0; i < nb; i++) {
@@ -175,12 +157,11 @@ void Controller::action(Player* player){
 
         interface->printBoard();
 
-        // interface
-        // click on card
+        // gui: click on card
         string choice;
         EstablishmentCard* card = nullptr;
         while (card == nullptr){
-            // do another function called askForCardToBuy ?
+            // reflexion: do we need another function called askForCardToBuy ?
             interface->printBasicMessage( "Enter the name of the card you want to buy : ");
             choice = interface->getInputText();
             try
@@ -308,7 +289,6 @@ MarinaController& MarinaController::getInstance()
 }
 
 void MarinaController::turn(Player* player) {
-    cout << "cheat";
     Controller::turn(player);
 }
 
@@ -325,6 +305,5 @@ GreenValleyController& GreenValleyController::getInstance()
 }
 
 void GreenValleyController::turn(Player* player) {
-    cout << "cheat";
     Controller::turn(player);
 }

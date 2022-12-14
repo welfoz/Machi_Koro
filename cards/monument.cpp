@@ -1,5 +1,4 @@
 #include "monument.h"
-#include "../game/game.h"
 #include "../game/controller/control.h"
 
 const Icon* Monument::getIconByName(string name) {

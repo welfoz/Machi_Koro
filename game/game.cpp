@@ -1,7 +1,6 @@
 #include "game.h"
 
 Game::Game() : board(nullptr), bank(nullptr), dice(Dice()), winner(nullptr), players(), nbPlayers(0), idCurrentPlayer(0) {
-    //instance = game;
 };
 
 bool Game::canAddNewPlayer() const {
@@ -12,11 +11,6 @@ bool Game::canAddNewPlayer() const {
 }
 
 void Game::createPlayer(string name, size_t id) {
-    // toute la partie logique de createPlayer se trouve ici
-    // avant de créer un nouveau player
-    // verifier limite 10
-    // verifier homonymes
-
     if (!canAddNewPlayer()) {
         throw out_of_range("limit_players_reached");
     }
@@ -109,8 +103,6 @@ Game::~Game() {
     delete board;
     delete bank;
     for (std::vector<const Icon*>::iterator it = icons.begin() ; it != icons.end(); ++it) delete *it;
-    //interface->printBasicMessage("game deleted :)");
-    //delete interface;
 };
 
 size_t* Game::throwDices(size_t nb) const {
@@ -208,6 +200,7 @@ void Game::tradeCards(Player* p1, Player* p2, EstablishmentCard *cardP1, Establi
     p1->removeEstablishment(cardP1);
     p1->purchaseEstablishment(cardP2);
     p2->removeEstablishment(cardP2);
+    // need to use it in the CONTROLLER
     //interface->printBasicMessage(p1->getUsername() + " has taken " + cardP2->getName() + " from " + p2->getUsername() + " and gave " + cardP1->getName() + " in exchange.\n");
 }
 
