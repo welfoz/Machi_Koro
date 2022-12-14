@@ -58,12 +58,11 @@ void HamburgerStand::activation(Player& p) {
 void Publisher::activation(Player &p) {
 	for (size_t k = 0; k < Game::getInstance().getNbPlayers(); k++) {
 		if (k != p.getId()) {
-			Player* p2; 
-			p2 = Game::getInstance().getPlayer(k);
-			for (auto it = p2->getCards().begin(); it != p2->getCards().end(); it++) {
+			Player& p2 = Game::getInstance().getPlayer(k);
+			for (auto it = p2.getCards().begin(); it != p2.getCards().end(); it++) {
 				if (it->first->getIcon()->getName() == "cup" || it->first->getIcon()->getName() == "bread") {
 					for (size_t i = 0; i < it->second; i++)
-						Game::getInstance().getBank()->trade(p.getId(), p2->getId(), 1);
+						Game::getInstance().getBank()->trade(p.getId(), p2.getId(), 1);
 				}
 			}
 		}
@@ -72,12 +71,10 @@ void Publisher::activation(Player &p) {
 
 void TaxOffice::activation(Player& p) {
 	for (size_t k = 0; k < Game::getInstance().getNbPlayers(); k++) {
-		Player* p2; 
 		if (k != p.getId()) {
-			size_t account = Game::getInstance().getBank()->getAccount(k);
-			if (account >= 10) {
-				p2 = Game::getInstance().getPlayer(k); 
-				Game::getInstance().getBank()->trade(p.getId(), p2->getId(), account/2);
+			size_t solde = Game::getInstance().getBank()->getAccount(k)->getSolde();
+			if (solde >= 10) {
+				Game::getInstance().getBank()->trade(p.getId(), Game::getInstance().getPlayer(k).getId(), solde/2);
 			}
 		}
 	}

@@ -199,9 +199,9 @@ void Game::turn(Player* player){
 
     throws = this->activateRadioTower(player, nb, throws);
 
-    size_t diceValue = this->getDiceValue(nb, throws);
+    this->setDiceValue(nb, throws);
 
-    activation(player, diceValue);
+    activation(player, this->diceValue);
 
     this->printBalances();
 
@@ -252,10 +252,10 @@ void Game::activateAmusementPark(Player* player, size_t nb, size_t* throws) {
     }
 }
 
-size_t Game::getDiceValue(size_t nb, size_t* throws) {
+void Game::setDiceValue(size_t nb, size_t* throws) {
     size_t diceValue = 0;
     for (size_t i=0;i<nb;i++) diceValue+=throws[i];
-    return diceValue;
+    this->diceValue = diceValue;
 }
 
 void Game::printBalances() const {
