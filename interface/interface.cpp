@@ -37,7 +37,7 @@ string Cli::getInputText() const {
 }
 
 // be careful! firstOption and secondOption HAS to be UTF-8. No accent.
-bool Cli::isPlayerWantsToContinue(string message, string firstOption, string secondOption) {
+bool Cli::confirmationDialog(string message, string firstOption, string secondOption) {
 	string stopAnswer = "";
 	//while ((stopAnswer != "Y") && (stopAnswer != "y") && (stopAnswer != "N") && (stopAnswer != "n")) {
 	while (Formatter::toLower(stopAnswer) != Formatter::toLower(firstOption) && Formatter::toLower(stopAnswer) != Formatter::toLower(secondOption)) {

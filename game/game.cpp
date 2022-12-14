@@ -19,6 +19,7 @@ Game::Game(Interface::Option type) : board(nullptr), bank(nullptr), dice(Dice())
     instance = this;
 };
 
+ 
 void Game::createAll() {
     interface->printWelcomingMessage();
 
@@ -46,7 +47,7 @@ void Game::createAll() {
 
 		createPlayer(name, cpt);
 
-        if (!interface->isPlayerWantsToContinue("Do you want to add another player", "Yes", "No")) {
+        if (!interface->confirmationDialog("Do you want to add another player", "Yes", "No")) {
             stop = true;
         }
 		cpt++;
@@ -106,6 +107,7 @@ void Game::createIcons() {
     icons.push_back(new Icon("major", "major.png", Type::landmark));
 };
 
+ 
 vector<EstablishmentCard*> Game::getPlayerStarterCards() {
     vector<EstablishmentCard*> starterCards;
     try {
@@ -138,6 +140,7 @@ Monument* Game::getMonumentByName(string name) const {
     throw invalid_argument(error);
 }
 
+ 
 const size_t Game::getNbDiceChosen(Player& p) { // est appelé par le jeu seulement si le joueur posède station
     if (!p.getMonument("Train Station")) return 1;
     size_t n=0;
@@ -160,6 +163,7 @@ Game::~Game() {
     delete interface;
 };
 
+ 
 void Game::match(){
     createAll();
 
@@ -175,6 +179,7 @@ void Game::match(){
 	interface->printBasicMessage("\n\n\n\n\n\nIT'S OVER!!!\n\nThe winner is...\n" + winner->getUsername() + " 🎉🎉🎉\n\n\nThank you for playing Machi Koro!\n\n");
 };
 
+ 
 void Game::turn(Player* player){
     if (winner!= nullptr) return;
 
@@ -209,7 +214,7 @@ size_t* Game::throwDices(size_t nb) const {
 }
 
 size_t* Game::activateRadioTower(Player* player, size_t nb, size_t* throws) const{
-    if (player->getMonument("Radio Tower") && interface->isPlayerWantsToContinue("Do you want to re-roll the dice(s) ? ", "Yes", "No")) {
+    if (player->getMonument("Radio Tower") && interface->confirmationDialog("Do you want to re-roll the dice(s) ? ", "Yes", "No")) {
 		for (size_t i = 0; i < nb; i++) {
 			throws[i] = dice.throwDice();
 			interface->printDice(i + 1, throws[i]);
@@ -277,7 +282,7 @@ void Game::action(Player* player){
                 card = nullptr;
             }
 
-            if (interface->isPlayerWantsToContinue("Do you want to change your action ?", "Yes", "No")) {
+            if (interface->confirmationDialog("Do you want to change your action ?", "Yes", "No")) {
                 if (card != nullptr) {
 					player->removeEstablishment(card);
 					board->addCard(card);
@@ -325,7 +330,7 @@ void Game::action(Player* player){
                 monument = nullptr;
             }
 
-            if (interface->isPlayerWantsToContinue("Do you want to change your action ?",  "Yes", "No")) {
+            if (interface->confirmationDialog("Do you want to change your action ?",  "Yes", "No")) {
                 if (monument != nullptr) {
 					player->removeMonument(monument);
 					bank->credit(player->getId(), monument->getPrice());
