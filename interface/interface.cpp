@@ -1,5 +1,6 @@
 #include "interface.h"
 #include "../game/game.h"
+#include "../game/controller/control.h"
 
 Interface* Interface::createInterfaceFromOption(Option type)
 {
@@ -68,7 +69,7 @@ void Cli::printTurnCounter(size_t turnCounter) {
 }
 
 void Cli::printPlayerInformation(Player* player) const {
-	cout << "\n\n-------------------------- Player : " << player->getUsername() << " - Money = " << Game::getInstance().getBank()->getAccount(player->getId())->getSolde() << " --------------------------\n\n";
+	cout << "\n\n-------------------------- Player : " << player->getUsername() << " - Money = " << Controller::getInstance().getGame()->getBank()->getAccount(player->getId())->getSolde() << " --------------------------\n\n";
 }
 
 void Cli::printMonuments(Player* player) const {
@@ -122,14 +123,17 @@ void Cli::printCards(Player* player) const {
 }
 
 
-void Cli::printDice(size_t diceNumber, size_t diceValue) const {
-	cout << "\nDice n°" << diceNumber << ": " << diceValue << endl;
+void Cli::printDices(size_t* throws, size_t nb) const {
+	for (unsigned int i = 0; i < nb; i++) {
+		cout << "\nDice n°" << i + 1 << ": " << *throws << endl;
+		throws++;
+	}
 }
 
 void Cli::printBalances(Player** players) const {
     cout << "\nPlayer's balance after activation: \n";
-    for (size_t i = 0; i < Game::getInstance().getNbPlayers(); i++) {
-        cout << "   " << players[i]->getUsername() << " : " << Game::getInstance().getBank()->getAccount(players[i]->getId())->getSolde() << "\n";
+    for (size_t i = 0; i < Controller::getInstance().getGame()->getNbPlayers(); i++) {
+        cout << "   " << players[i]->getUsername() << " : " << Controller::getInstance().getGame()->getBank()->getAccount(players[i]->getId())->getSolde() << "\n";
     }
 }
 
@@ -147,7 +151,7 @@ void Cli::printBoard() const {
         {"Effect", 60}
 	};
     cout << Formatter::formatHeader(headerNames);
-    for (auto it = Game::getInstance().getBoard()->getCards().begin(); it != Game::getInstance().getBoard()->getCards().end(); it++) {
+    for (auto it = Controller::getInstance().getGame()->getBoard()->getCards().begin(); it != Controller::getInstance().getGame()->getBoard()->getCards().end(); it++) {
         // get all activation numbers
         string activationNumbers;
         size_t* actNumbers = it->first->getActivationNumbers();
@@ -180,7 +184,7 @@ Player* Cli::selectOnePlayerDifferentFromTheCurrentOne(Player* player) const {
         try {
             cout << "\nType the name of the player you want to trade a card with :" << endl;
 			name = getInputText();
-            p2 = Game::getInstance().getPlayerByName(name);
+            p2 = Controller::getInstance().getGame()->getPlayerByName(name);
             if (p2 != player) loop = false;
             else cout << "Impossible" << endl;
         } catch (string error) {
@@ -190,19 +194,20 @@ Player* Cli::selectOnePlayerDifferentFromTheCurrentOne(Player* player) const {
 	return p2;
 }
 
-EstablishmentCard* Cli::selectOneEstablishmentCardFromPlayer(Player* player, string message) const {
-    cout << player->getUsername() + "'s cards";
-    printCards(player);
+EstablishmentCard* Cli::selectOneEstablishmentCardFromPlayer(Player* target, Player* decider, string message) const {
+	printCards(decider);
+    cout << target->getUsername() + "'s cards";
+    printCards(target);
 
     string choosenCard;
     EstablishmentCard *takenCardPtr;
     bool loop = true;
-    while (loop) {// we ask the user which card he want to take from that player
+    while (loop) {// we ask the user which card he want to take from that target
         try {
             cout << message << endl;
             fflush(stdin);
             getline(cin, choosenCard);
-            takenCardPtr = player->getCardByName(choosenCard);
+            takenCardPtr = target->getCardByName(choosenCard);
             if (takenCardPtr->getType() != Type::majorEstablishment) loop = false;
             else cout << "Untradable card" << endl;
         } catch (std::exception &error) {

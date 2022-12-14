@@ -1,11 +1,11 @@
 #include "marinaExtension.h"
 #include "marinaExtensionCards.h"
 
-Marina& Marina::getInstance() {
-		if (instance == nullptr)
-			instance = new Marina;
-		return dynamic_cast<Marina&>(*instance);
-}
+//Marina& Marina::getInstance() {
+//		if (instance == nullptr)
+//			instance = new Marina;
+//		return dynamic_cast<Marina&>(*instance);
+//}
 
 void Marina::createEstablishmentCards(){
     // base cards with some additional quantities
@@ -46,8 +46,19 @@ void Marina::createMonumentCards(){
 }
 
 void Marina::createPlayer(string name, size_t id){
+    if (!canAddNewPlayer()) {
+        throw out_of_range("limit_players_reached");
+    }
+
+    for (unsigned int i = 0; i < this->nbPlayers; i++) {
+        if (players[i]->getUsername() == name) {
+			throw invalid_argument("two_players_homonyme");
+        }
+    }
     players[id] = new Player(name, id, monuments, getPlayerStarterCards());
     players[id]->purchaseMonument(getMonumentByName("City Hall"));
+
+    this->nbPlayers += 1;
 }
 
 void Marina::createBoard(){
@@ -61,7 +72,7 @@ void Marina::createIcons(){
     icons.push_back(new Icon("boat", "boat.png", Type::primaryIndustry));
 }
 
-void Marina::turn(Player* player){
-    cout << "Marina turn \n\n";
-    Game::turn(player);
-}
+//void Marina::turn(Player* player){
+//    cout << "Marina turn \n\n";
+//    Game::turn(player);
+//}

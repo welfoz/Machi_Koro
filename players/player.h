@@ -37,4 +37,5 @@ public:
     const size_t& getId() const;
     size_t cheapestMonumentAvailablePrice() const;
     EstablishmentCard* getCardByName(string name) const;
+    bool isAnyMonumentLeftToBuy() const;
 };

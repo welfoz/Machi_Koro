@@ -19,6 +19,7 @@ public:
     void removeCard(EstablishmentCard* card);
     void addCard(EstablishmentCard* card);
     size_t cheapestAvailableCardPrice() const;
+    bool isAnyCardLeftToBuy() const;
     const size_t& getCard(EstablishmentCard* card) const {
         return cardsDecks.at(card);
     }

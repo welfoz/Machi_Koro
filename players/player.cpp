@@ -1,6 +1,7 @@
 #include "player.h"
 #include "../formatter/formatter.h"
 #include "../game/game.h"
+#include "../game/controller/control.h"
 
 void Player::purchaseMonument(Monument* card) {
     if (!monuments[card]) monuments[card]=true;
@@ -79,7 +80,7 @@ Player::Player(string name, size_t id, vector<Monument*> monuments, vector<Estab
 	for (auto it = cards.begin(); it != cards.end(); it++) {
 		purchaseEstablishment(*it);
 	}
-    Game::getInstance().getInterface()->printBasicMessage(name + " added!\n");
+    Controller::getInstance().getInterface()->printBasicMessage(name + " added!\n");
 };
 
 size_t Player::cheapestMonumentAvailablePrice() const {
@@ -121,4 +122,11 @@ EstablishmentCard* Player::getCardByName(string name) const {
     }
     string error = "error getCardByName, didn't find : " + name + "\n";
     throw invalid_argument(error);
+}
+
+bool Player::isAnyMonumentLeftToBuy() const {
+	if (cheapestMonumentAvailablePrice() == 0) {
+		return false;
+	}
+	return true;
 }

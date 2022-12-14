@@ -8,9 +8,9 @@ protected:
     void createPlayer(string name, size_t id) override;
     void createBoard() override;
     void createIcons() override;
-    void turn(Player* player) override;
+    //void turn(Player* player) override;
 public:
-    static Marina& getInstance();
+    //static Marina& getInstance();
     Marina() : Game() {};
 };
 

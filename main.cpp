@@ -1,5 +1,6 @@
 #include "./extensions/Marina/marinaExtension.h"
 #include "extensions/Deluxe/greenValleyExtension.h"
+#include "game/controller/control.h"
 int main(int argc, const char* argv[]) {
     // insert code here...
 
@@ -15,15 +16,18 @@ int main(int argc, const char* argv[]) {
     switch (choice)
     {
     case 'B':
-        Game::getInstance().match();
+        Controller::getInstance().match();
+        //Game::getInstance().match();
         break;
     case 'M':{
-        Marina::getInstance().match();
+        MarinaController::getInstance().match();
+        //Marina::getInstance().match();
         break;
     }
 
     case 'G':{
-        GreenValley::getInstance().match();
+        GreenValleyController::getInstance().match();
+        //GreenValley::getInstance().match();
         break;
     }
         //case 'D':

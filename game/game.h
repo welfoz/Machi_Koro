@@ -17,9 +17,10 @@
 using namespace std;
 
 class Game{
+    friend class Controller;
 protected:
-    static Game* instance;
-    Interface* const interface;
+    //static Game* instance;
+    //Interface* const interface;
     vector<EstablishmentCard*> cards;
     vector<Monument*> monuments;
     Board* board;
@@ -31,7 +32,7 @@ protected:
     size_t nbPlayers;
     size_t idCurrentPlayer;
 
-    static void freeInstance();
+    //static void freeInstance();
     Game(const Game&) = delete;
     Game& operator=(const Game& g) = delete;
 
@@ -45,19 +46,19 @@ protected:
     vector<EstablishmentCard*> getPlayerStarterCards();
     
     //match methods
-    virtual void turn(Player* player);
+    //virtual void turn(Player* player);
     void activation(Player* p, size_t number);
     virtual void activationRedCards(Player* p, size_t n);
     virtual void activationGreenAndBlueCards(Player* p, size_t n);
     virtual void activationPurpleCards(Player* p, size_t n);
-    virtual void action(Player* player);
-    const size_t getNbDiceChosen(Player& p);
+    //virtual void action(Player* player);
+    //const size_t getNbDiceChosen(Player& p);
     bool isWinner(Player* player) const;
-    Game(Interface::Option type = Interface::Option::cli);
+    Game();
     void activateShoppingMall(Player* p, vector<EstablishmentCard*> cards);
     size_t* throwDices(size_t nb) const;
-    size_t* activateRadioTower(Player* player, size_t nb, size_t* throws) const;
-    void activateAmusementPark(Player* p, size_t nb, size_t* throws);
+    //size_t* activateRadioTower(Player* player, size_t nb, size_t* throws) const;
+    //void activateAmusementPark(Player* p, size_t nb, size_t* throws);
     size_t getDiceValue(size_t nb, size_t* throws);
     bool isPlayerAbleToPayEstablishmentCard(Player* p);
     bool isPlayerAbleToPayMonument(Player* p);
@@ -66,11 +67,11 @@ public:
     virtual ~Game();
 
     // we can't call virtual functions in the constructor
-    virtual void createAll();
-    void match();
+    //virtual void createAll();
+    //void match();
 
     // getter
-    static Game& getInstance();
+    //static Game& getInstance();
     const size_t& getNbPlayers() const {return nbPlayers;}
     Bank* getBank() const {return bank;}
     virtual Player& getPlayer(size_t id) const {return *players[id];}; //pourquoi il y avait *players[id-1] ?
@@ -81,10 +82,12 @@ public:
     vector<const Icon*> getIcons() const {return this->icons;};
     //trade
     void tradeCards(Player* p1, Player* p2,EstablishmentCard* cardP1, EstablishmentCard* cardP2);
-    Interface* const getInterface() const {
-        return interface;
-    }
+    //Interface* const getInterface() const {
+    //    return interface;
+    //}
     const Board* const getBoard() const {
         return board;
     }
+    bool canAddNewPlayer() const;
 };
+

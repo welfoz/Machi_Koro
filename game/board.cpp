@@ -37,3 +37,9 @@ size_t Board::cheapestAvailableCardPrice() const {
     return min;
 }
 
+bool Board::isAnyCardLeftToBuy() const {
+    if (cheapestAvailableCardPrice() < 0) { // important de laisser <0 car il y a une carte dont le prix est 0
+        return false;
+    }
+    return true;
+}
