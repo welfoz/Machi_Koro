@@ -121,10 +121,10 @@ size_t* Game::throwDices(size_t nb) const {
     return throws;
 }
 
-size_t Game::getDiceValue(size_t nb, size_t* throws) {
+size_t Game::setDiceValue(size_t nb, size_t* throws) {
     size_t diceValue = 0;
     for (size_t i=0;i<nb;i++) diceValue+=throws[i];
-    return diceValue;
+    this->diceValue = diceValue;
 }
 
 bool Game::isPlayerAbleToPayEstablishmentCard(Player* player) {

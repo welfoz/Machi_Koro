@@ -11,11 +11,13 @@ Board::~Board(){};
 
 // Regarde l'emplacement de la carte dans le Board et ajoute +1
 void Board::addCard(EstablishmentCard* card) {
-    cardsDecks.at(card)++;
+    if (cardsDecks.count(card))
+        cardsDecks.at(card)++;
+    else cardsDecks.insert({card, 1});
 }
 
 void Board::removeCard(EstablishmentCard* card) {
-    if (cardsDecks.at(card) != 0) {
+    if (auto search = cardsDecks.find(card); search != cardsDecks.end()) {
         cardsDecks.at(card)--;
     }
     else

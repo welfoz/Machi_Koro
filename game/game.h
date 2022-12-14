@@ -31,6 +31,7 @@ protected:
     vector<const Icon*> icons;
     size_t nbPlayers;
     size_t idCurrentPlayer;
+    size_t diceValue;
 
     //static void freeInstance();
     Game(const Game&) = delete;
@@ -62,10 +63,14 @@ protected:
     size_t getDiceValue(size_t nb, size_t* throws);
     bool isPlayerAbleToPayEstablishmentCard(Player* p);
     bool isPlayerAbleToPayMonument(Player* p);
+    void setDiceValue(size_t nb, size_t* throws);
 
 public:
     virtual ~Game();
 
+    const size_t getDiceValue() const {
+        return diceValue;
+    };
     // we can't call virtual functions in the constructor
     //virtual void createAll();
     //void match();
