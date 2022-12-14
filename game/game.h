@@ -44,27 +44,36 @@ protected:
     
     //match methods
     virtual void turn(Player* player);
-    int throwDice(size_t numberOfDices);
     void activation(Player* p, size_t number);
-    void activationRedCards(Player* p, size_t n);
-    void activationGreenAndBlueCards(Player* p, size_t n);
-    void activationPurpleCards(Player* p, size_t n);
-    void action(Player* player);
+    virtual void activationRedCards(Player* p, size_t n);
+    virtual void activationGreenAndBlueCards(Player* p, size_t n);
+    virtual void activationPurpleCards(Player* p, size_t n);
+    virtual void action(Player* player);
     const size_t getNbDiceChosen(Player& p);
     bool isWinner(Player* player) const;
     Game();
+    void activateShoppingMall(Player* p, vector<EstablishmentCard*> cards);
+    void printPlayerInformation(Player* p) const;
+    size_t* throwDices(size_t nb) const;
+    size_t* activateRadioTower(Player* player, size_t nb, size_t* throws) const;
+    void activateAmusementPark(Player* p, size_t nb, size_t* throws);
+    size_t getDiceValue(size_t nb, size_t* throws);
+    void printBalances() const;
+    bool isPlayerAbleToPayEstablishmentCard(Player* p);
+    bool isPlayerAbleToPayMonument(Player* p);
+
 public:
     virtual ~Game();
 
     // we can't call virtual functions in the constructor
-    void createAll();
+    virtual void createAll();
     void match();
 
     // getter
     static Game& getInstance();
     const size_t& getNbPlayers() const {return nbPlayers;}
     Bank* getBank() const {return bank;}
-    Player& getPlayer(size_t id) const {return *players[id];}; //pourquoi il y avait *players[id-1] ?
+    virtual Player& getPlayer(size_t id) const {return *players[id];}; //pourquoi il y avait *players[id-1] ?
     const size_t& getIdCurrentPlayer() const {return idCurrentPlayer;}
     EstablishmentCard* getCardByName(string name) const;
     Monument* getMonumentByName(string name) const;

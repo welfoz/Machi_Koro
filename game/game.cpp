@@ -67,7 +67,6 @@ void Game::createAll() {
     this->nbPlayers = cpt;
     createBank(cpt);
     createBoard();
-
     };
 
 void Game::createPlayer(string name, size_t id) {
@@ -148,7 +147,7 @@ Monument* Game::getMonumentByName(string name) const {
         return *it;
     }
     string error = "error getMonumentByName, didn't find : " + name + "\n";
-    throw error;
+    throw invalid_argument(error);
 }
 
 const size_t Game::getNbDiceChosen(Player& p) { // est appelé par le jeu seulement si le joueur posède station
@@ -174,14 +173,14 @@ Game::~Game() {
 
 void Game::match(){
     createAll();
+    unsigned int turnCounter = 1;
     idCurrentPlayer = 0;
-
     while (winner==nullptr) {
         cout << "\n\n-------------------------------------------------------------------------------";
-        //cout << "\n------------------------------- Turn number : " << ???? << " -------------------------------\n";
-        //pas compatible avec le principe de idCurrentPlayer, à voir plus tard si on a la temps
+        cout << "\n------------------------------- Turn number : " << turnCounter << " -------------------------------\n";
         turn(players[idCurrentPlayer]);
         idCurrentPlayer=(idCurrentPlayer+1)%nbPlayers;
+        turnCounter++;
         };
     cout << "\n\n\n\n\n\nIT'S OVER!!!\n\nThe winner is...\n"<< winner->getUsername() << " 🎉🎉🎉\n";
     cout << "\n\nThank you for playing Machi Koro!\n\n";
@@ -189,61 +188,99 @@ void Game::match(){
 
 void Game::turn(Player* player){
     if (winner!= nullptr) return;
-    cout << "\n\n-------------------------- Player : " << player->getUsername() << " - Money = " << bank->getAccount(player->getId())->getSolde() << " --------------------------\n\n";
+
+    printPlayerInformation(player);
     player->printMonuments();
     player->printCards();
+
     const size_t nb = getNbDiceChosen(*player);
+
+    size_t* throws = this->throwDices(nb);
+
+    throws = this->activateRadioTower(player, nb, throws);
+
+    size_t diceValue = this->getDiceValue(nb, throws);
+
+    activation(player, diceValue);
+
+    this->printBalances();
+
+    action(player);
+
+    this->activateAmusementPark(player, nb, throws);
+};
+
+void Game::printPlayerInformation(Player* player) const {
+    cout << "\n\n-------------------------- Player : " << player->getUsername() << " - Money = " << bank->getAccount(player->getId())->getSolde() << " --------------------------\n\n";
+}
+ 
+size_t* Game::throwDices(size_t nb) const {
     size_t* throws = new size_t[nb];
     for (size_t i=0;i<nb;i++) {
         throws[i]=dice.throwDice();
         cout<<"\nDice n°"<<i+1<<": "<<throws[i]<<endl;
     }
+    return throws;
+}
+
+size_t* Game::activateRadioTower(Player* player, size_t nb, size_t* throws) const {
     if (player->getMonument("Radio Tower")){
         string choice;
-        cout<<"Do you want to re-roll the dice(s) ? (Y/N)"<<endl;
-        cin>>choice;
-        if (choice=="Y" || choice=="y"){
-            for (size_t i=0;i<nb;i++) throws[i]=dice.throwDice();
-            for (size_t i=0;i<nb;i++) {
-                throws[i]=dice.throwDice();
-                cout<<"\nValue of dice number "<<i+1<<" : "<<throws[i]<<endl;
+        bool stop = false;
+        while (!stop){
+            cout<<"Do you want to re-roll the dice(s) ? (Y/N)"<<endl;
+            cin.ignore();
+            getline(cin, choice);
+            if (choice=="Y" || choice=="y"){
+                for (size_t i=0;i<nb;i++) {
+                    throws[i]=dice.throwDice();
+                    cout<<"\nValue of dice number "<<i+1<<" : "<<throws[i]<<endl;
+                }
+                stop=true;
             }
+            if (choice=="N" || choice=="n") stop = true;
         }
     }
-    size_t diceValue=0;
-    for (size_t i=0;i<nb;i++) diceValue+=throws[i];
+    return throws;
+}
 
-    activationRedCards(player,diceValue);
-    activationGreenAndBlueCards(player,diceValue);
-    activationPurpleCards(player,diceValue);
-
-    cout<<"\nPlayer's balance after activation: " << bank->getAccount(player->getId())->getSolde() << "\n\n";
-    action(player);
+void Game::activateAmusementPark(Player* player, size_t nb, size_t* throws) {
     if (nb==2 && throws[0]==throws[1] && player->getMonument("Amusement Park") && !player->isPlaying) {
         player->isPlaying=true;
         turn(player);
         player->isPlaying=false;
     }
-};
+}
+
+size_t Game::getDiceValue(size_t nb, size_t* throws) {
+    size_t diceValue = 0;
+    for (size_t i=0;i<nb;i++) diceValue+=throws[i];
+    return diceValue;
+}
+
+void Game::printBalances() const {
+    cout << "\nPlayer's balance after activation: \n";
+    for (size_t i = 0; i < this->nbPlayers; i++) {
+        cout << "   " << players[i]->getUsername() << " : " << bank->getAccount(players[i]->getId())->getSolde() << "\n";
+    }
+}
 
 void Game::action(Player* player){
+    
     cout << "\nWhat do you want to do? (1 = Buy an establishment, 2 = Build a monument, 3 = Nothing!)\n";
     int choix;
     cin >> choix;
+
     switch (choix){
     case 1:
     {
-        if (bank->getAccount(player->getId())->getSolde() < board->cheapestAvailableCardPrice()){
-            cout<<"\nYou don't have enough money...\n";
+        if (!isPlayerAbleToPayEstablishmentCard(player)) {
             action(player);
             break;
         }
-        else if (board->cheapestAvailableCardPrice()==0){
-            cout<<"\nNo card left on the board\n";
-            action(player);
-            break;
-        }
+
         board->printBoard();
+
         string choice;
         EstablishmentCard* card = nullptr;
         while (card == nullptr){
@@ -257,8 +294,9 @@ void Game::action(Player* player){
                     throw invalid_argument("You don't have enough money to buy this card.\n");
                 }
                 if (board->getCard(card) == 0) {
-                    throw invalid_argument("There is no avaible card for this stack.\n");
+                    throw invalid_argument("There is no available card for this stack.\n");
                 }
+
                 player->purchaseEstablishment(card);
                 board->removeCard(card);
                 bank->debit(player->getId(), card->getPrice());
@@ -270,32 +308,34 @@ void Game::action(Player* player){
                 cout << "Select an available card.\n";
                 card = nullptr;
             }
+
             string reDo;
             cout<<"Do you want to change your action ? (Y/N)"<<endl;
             cin>>reDo;
             if (reDo=="y" || reDo=="Y"){
-                player->removeEstablishment(card);
-                board->addCard(card);
-                bank->credit(player->getId(),card->getPrice());
-                cout <<"\n-------------------------- Player : " << player->getUsername() << " - Money = " << bank->getAccount(player->getId())->getSolde() << " --------------------------\n";
+                if (card != nullptr) {
+					player->removeEstablishment(card);
+					board->addCard(card);
+					bank->credit(player->getId(), card->getPrice());
+					}
+                printPlayerInformation(player);
+                player->printMonuments();
+                player->printCards();
                 action(player);
+                break;
             }
         }
         break;
     }
     case 2:
     {
-        if (bank->getAccount(player->getId())->getSolde() < player->cheapestMonumentAvailablePrice()){
-            cout<<"\nYou don't have enough money...\n";
+        if (!isPlayerAbleToPayMonument(player)) {
             action(player);
             break;
         }
-        else if (player->cheapestMonumentAvailablePrice()==0){
-            cout<<"\nNo monument left to buy\n";
-            action(player);
-            break;
-        }
+
         player->printMonuments();
+
         string choice;
         Monument* monument = nullptr;
         while (monument == nullptr) {
@@ -310,6 +350,7 @@ void Game::action(Player* player){
                 if (player->getMonument(choice)) {
                     throw invalid_argument("You already built this monument.\n");
                 }
+
                 player->purchaseMonument(monument);
                 bank->debit(player->getId(), monument->getPrice());
                 player->printMonuments();
@@ -318,14 +359,20 @@ void Game::action(Player* player){
                 cout << "Select an available card.\n";
                 monument = nullptr;
             }
+
             string reDo;
             cout << "Do you want to change your action ? (Y/N)" << endl;
             cin >> reDo;
             if (reDo == "y" || reDo == "Y") {
-                player->removeMonument(monument);
-                bank->credit(player->getId(), monument->getPrice());
-                cout << "\n-------------------------- Player : " << player->getUsername() << " - Money = "<< bank->getAccount(player->getId())->getSolde() << " --------------------------\n";
+                if (monument != nullptr) {
+					player->removeMonument(monument);
+					bank->credit(player->getId(), monument->getPrice());
+				}
+                printPlayerInformation(player);
+                player->printMonuments();
+                player->printCards();
                 action(player);
+                break;
             }
         }
         if (isWinner(player)) winner=player;
@@ -336,6 +383,31 @@ void Game::action(Player* player){
     } 
 };
 
+
+bool Game::isPlayerAbleToPayEstablishmentCard(Player* player) {
+        if (bank->getAccount(player->getId())->getSolde() < board->cheapestAvailableCardPrice()){
+            cout<<"\nYou don't have enough money...\n";
+            return false;
+        }
+        else if (board->cheapestAvailableCardPrice()<0){ // important de laisser <0 car il y a une carte dont le prix est 0
+            cout<<"\nNo card left on the board\n";
+            return false;
+        }
+        return true;
+}
+
+bool Game::isPlayerAbleToPayMonument(Player* player) {
+        if (bank->getAccount(player->getId())->getSolde() < player->cheapestMonumentAvailablePrice()){
+            cout<<"\nYou don't have enough money...\n";
+            return false;
+        }
+        else if (player->cheapestMonumentAvailablePrice()==0){
+            cout<<"\nNo monument left to buy\n";
+            return false;
+        }
+        return true;
+}
+
 // blue cards can be activated at everyone turn 
 // green cards can only be activated by the player playing
 // anti clockwise
@@ -343,7 +415,8 @@ void Game::activationGreenAndBlueCards(Player* p,size_t n) {
     for (size_t i = p->getId() + this->nbPlayers; i > p->getId(); i--){
         unsigned int index = i % this->nbPlayers;
         if (players[index] == p) {
-			players[index]->activateGreenCards(n);
+			vector<EstablishmentCard*> activatedCards = players[index]->activateGreenCards(n);
+            this->activateShoppingMall(p, activatedCards);
         }
         players[index]->activateBlueCards(n);
     }
@@ -354,7 +427,30 @@ void Game::activationRedCards(Player* p, size_t n) {
     for (size_t i = p->getId() + this->nbPlayers; i > p->getId(); i--){
         unsigned int index = i % this->nbPlayers;
         if (players[index] != p) {
-			players[index]->activateRedCards(n);
+			vector<EstablishmentCard*> activatedCards = players[index]->activateRedCards(n);
+            this->activateShoppingMall(p, activatedCards);
+        }
+    }
+}
+
+void Game::activateShoppingMall(Player* p, vector<EstablishmentCard*> cards) {
+    if (!p->getMonument("Shopping Mall")) {
+        return;
+    }
+    for (auto it : cards) {
+        if (it->getIcon()->getName() == "bread" || it->getIcon()->getName() == "cup") {
+            // no need to handle the case when Type::majorEstablishment and Type::primaryIndustry
+            // because they never have bread or cup icon
+            switch (it->getType()) {
+			case (Type::restaurants):
+				this->getBank()->trade(p->getId(), getIdCurrentPlayer(), 1);
+                break;
+			case(Type::secondaryIndustry):
+			    this->getBank()->credit(p->getId(), 1);
+                break;
+			default:
+				break;
+            }
         }
     }
 }
@@ -373,13 +469,15 @@ void Game::activation(Player* p, size_t diceNumber) {
     activationGreenAndBlueCards(p, diceNumber);
     activationPurpleCards(p, diceNumber);
 }
+
 void Game::tradeCards(Player* p1, Player* p2, EstablishmentCard *cardP1, EstablishmentCard *cardP2) {
     p2->purchaseEstablishment(cardP1);
-    //p1->cardsCounter[cardP1]--;
+    p1->removeEstablishment(cardP1);
     p1->purchaseEstablishment(cardP2);
-    //p2->cardsCounter[cardP2]--;
+    p2->removeEstablishment(cardP2);
     cout<<p1->getUsername()<<" has taken "<<cardP2->getName()<<" from "<<p2->getUsername()<<" and gave "<<cardP1->getName()<<" in exchange."<<endl;
 }
+
 Player* Game::getPlayerByName(std::string name) const {
     for (size_t i=0; i<nbPlayers;i++){
         if (players[i]->getUsername()==name) return players[i];
@@ -387,10 +485,10 @@ Player* Game::getPlayerByName(std::string name) const {
     string error = "error getPlayerByName, didn't find : " + name + "\n";
     throw error;
 }
+
 bool Game::isWinner(Player *player) const {
-    bool isWinner=true;
     for (auto it = player->getMonuments().begin(); it != player->getMonuments().end(); it++) {
-        if (!it->second) isWinner=false;
+        if (!it->second) return false;
     }
-    return isWinner;
+    return true;
 }

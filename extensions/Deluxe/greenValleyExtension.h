@@ -1,16 +1,16 @@
-//
-// Created by jules on 05/12/2022.
-//
-
-#ifndef MACHI_KORO_GREENVALLEYEXTENSION_H
-#define MACHI_KORO_GREENVALLEYEXTENSION_H
+#pragma once
 #include "../../game/game.h"
-
-
-
-class greenValleyExtension {
-
+#include "greenValleyExtensionCards.h"
+#include "PlayerGreenValley.h"
+class GreenValley : public Game {
+    void createEstablishmentCards() override;
+    //monuments remain the same as standard edition
+    void createPlayer(string name, size_t id) override;
+    //board remain the same as standard edition
+    void createIcons() override;
+    void turn(Player* player) override;
+    void action(Player* player) override;
+public :
+    static GreenValley& getInstance();
+    PlayerGreenValley& getPlayer(size_t id) const override;
 };
-
-
-#endif //MACHI_KORO_GREENVALLEYEXTENSION_H

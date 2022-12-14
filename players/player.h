@@ -12,29 +12,30 @@ using namespace std;
 
 class Player{
 private:
-    string username;
     size_t id;
-    map<EstablishmentCard*,size_t> cardsCounter;
     map<Monument*,bool>monuments;
+protected:
+    map<EstablishmentCard*,size_t> cardsCounter;
+    string username;
 public:
     bool isPlaying;
     void purchaseMonument(Monument* card);
     void removeMonument(Monument* card);
     void purchaseEstablishment(EstablishmentCard* card);
     void removeEstablishment(EstablishmentCard* card);
-    void activateRedCards(size_t diceNumber);
-    void activateBlueCards(size_t diceNumber);
-    void activateGreenCards(size_t diceNumber);
-    void activatePurpleCards(size_t diceNumber);
+    virtual vector<EstablishmentCard*> activateRedCards(size_t diceNumber);
+    virtual void activateBlueCards(size_t diceNumber);
+    virtual vector<EstablishmentCard*> activateGreenCards(size_t diceNumber);
+    virtual void activatePurpleCards(size_t diceNumber);
+    // getters
     bool getMonument(string name) const;
-    const map<Monument*, bool> getMonuments() const {
-        return monuments;
-    };
+    const map<Monument*, bool>& getMonuments() const {return monuments;};
     const map<EstablishmentCard*,size_t>& getCards() {return cardsCounter;}
+    const size_t getNbMonumentsActivated() const;
     Player(string name, size_t id, vector<Monument*> monuments, vector<EstablishmentCard*> cards, bool iP=false);
     const string& getUsername() const {return username;};
     const size_t& getId() const;
-    void printCards() const;
+    virtual void printCards() const;
     void printMonuments() const;
     size_t cheapestMonumentAvailablePrice() const;
 };
