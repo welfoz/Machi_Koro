@@ -4,8 +4,8 @@
 #pragma once
 #ifndef MACHI_KORO_PLAYERGREENVALLEY_H
 #define MACHI_KORO_PLAYERGREENVALLEY_H
-#include "../players/player.h"
-#include "../formatter/formatter.h"
+#include "../../players/player.h"
+#include "../../formatter/formatter.h"
 
 class PlayerGreenValley : public Player {
 private:
