@@ -219,3 +219,38 @@ bool Game::isWinner(Player *player) const {
     return true;
 }
 
+void Game::purchaseOneEstablismentCard(Player* player, EstablishmentCard* card) {
+	if (card->getPrice() > this->bank->getAccount(player->getId())->getSolde()) {
+		throw invalid_argument("You don't have enough money to buy game card.\n");
+	}
+	if (this->board->getCard(card) == 0) {
+		throw invalid_argument("There is no available card for game stack.\n");
+	}
+
+	player->purchaseEstablishment(card);
+	this->board->removeCard(card);
+	this->bank->debit(player->getId(), card->getPrice());
+}
+
+void Game::undoPurchaseOneEstablismentCard(Player* player, EstablishmentCard* card) {
+	player->removeEstablishment(card);
+	board->addCard(card);
+	bank->credit(player->getId(), card->getPrice());
+}
+
+void Game::purchaseOneMonument(Player* player, Monument* monument) {
+	if (player->getMonument(monument->getName())) {
+		throw invalid_argument("You already built game monument.\n");
+	}
+	if (monument->getPrice() > bank->getAccount(player->getId())->getSolde()) {
+		throw invalid_argument("You don't have enough money to buy game card.\n");
+	}
+
+	player->purchaseMonument(monument);
+	bank->debit(player->getId(), monument->getPrice());
+}
+
+void Game::undoPurchaseOneMonument(Player* player, Monument* monument) {
+	player->removeMonument(monument);
+	bank->credit(player->getId(), monument->getPrice());
+}

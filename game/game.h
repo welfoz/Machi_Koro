@@ -59,6 +59,12 @@ protected:
     bool isPlayerAbleToPayMonument(Player* p);
     bool canAddNewPlayer() const;
 
+    void purchaseOneEstablismentCard(Player* player, EstablishmentCard* card);
+    void undoPurchaseOneEstablismentCard(Player* player, EstablishmentCard* card);
+
+    void purchaseOneMonument(Player* player, Monument* card);
+    void undoPurchaseOneMonument(Player* player, Monument* card);
+
 public:
     virtual ~Game();
 

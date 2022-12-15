@@ -164,39 +164,23 @@ void Controller::action(Player* player){
             // reflexion: do we need another function called askForCardToBuy ?
             interface->printBasicMessage( "Enter the name of the card you want to buy : ");
             choice = interface->getInputText();
+
             try
             {
-                // logic
                 card = getGame()->getCardByName(choice);
-                if (card->getPrice() > getGame()->bank->getAccount(player->getId())->getSolde()){
-                    throw invalid_argument("You don't have enough money to buy game card.\n");
-                }
-                if (getGame()->board->getCard(card) == 0) {
-                    throw invalid_argument("There is no available card for game stack.\n");
-                }
-
-                player->purchaseEstablishment(card);
-                getGame()->board->removeCard(card);
-                getGame()->bank->debit(player->getId(), card->getPrice());
-
-                // end logic
-                interface->printCards(player);
+                getGame()->purchaseOneEstablismentCard(player, card);
             }
             catch(const std::exception& e)
             {
                 interface->printError(e);
-                interface->printBasicMessage( "Select an available card.\n");
-
-                card = nullptr;
+                continue;
             }
+
+			interface->printCards(player);
 
             if (interface->confirmationDialog("Do you want to change your action ?", "Yes", "No")) {
                 if (card != nullptr) {
-                    // logic 
-					player->removeEstablishment(card);
-					getGame()->board->addCard(card);
-					getGame()->bank->credit(player->getId(), card->getPrice());
-                    // end logic
+                    getGame()->undoPurchaseOneEstablismentCard(player, card);
 
 					interface->printPlayerInformation(player);
 					interface->printMonuments(player);
@@ -231,34 +215,21 @@ void Controller::action(Player* player){
             // new method interface askForOneMonument()
             interface->printBasicMessage("Enter the name of the monument you want to buy : ");
             choice = interface->getInputText();
+
             try {
-                // logic
-                monument = getGame()->getMonumentByName(choice);
-                if (monument->getPrice() > getGame()->bank->getAccount(player->getId())->getSolde()) {
-                    throw invalid_argument("You don't have enough money to buy game card.\n");
-                }
-                if (player->getMonument(choice)) {
-                    throw invalid_argument("You already built game monument.\n");
-                }
+				monument = getGame()->getMonumentByName(choice);
+                game->purchaseOneMonument(player, monument);
 
-                player->purchaseMonument(monument);
-                getGame()->bank->debit(player->getId(), monument->getPrice());
-                // end logic
-
-                interface->printMonuments(player);
             } catch (const std::exception &e) {
                 interface->printError(e);
-                interface->printBasicMessage("Select an available card.\n");
-
-                monument = nullptr;
+                continue;
             }
+
+			interface->printMonuments(player);
 
             if (interface->confirmationDialog("Do you want to change your action ?",  "Yes", "No")) {
                 if (monument != nullptr) {
-                    // logic 
-					player->removeMonument(monument);
-					getGame()->bank->credit(player->getId(), monument->getPrice());
-                    // end logic
+                    game->undoPurchaseOneMonument(player, monument);
 
 					interface->printPlayerInformation(player);
 					interface->printMonuments(player);
