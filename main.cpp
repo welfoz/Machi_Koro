@@ -1,5 +1,6 @@
 #include "./extensions/Marina/marinaExtension.h"
 #include "extensions/Deluxe/greenValleyExtension.h"
+#include "game/controller/control.h"
 int main(int argc, const char* argv[]) {
     // insert code here...
 
@@ -10,19 +11,20 @@ int main(int argc, const char* argv[]) {
         cout << "Available extensions: Basic (B), Marina (M), Green Valley (G), Deluxe (D).\n";
         cout << "Enter the name of the extension you want to play to (B/M/G/D): \n";
         cin >> choice;
+        cin.ignore();
     }
     switch (choice)
     {
     case 'B':
-        Game::getInstance().match();
+        Controller::getInstance().match();
         break;
     case 'M':{
-        Marina::getInstance().match();
+        MarinaController::getInstance().match();
         break;
     }
 
     case 'G':{
-        GreenValley::getInstance().match();
+        GreenValleyController::getInstance().match();
         break;
     }
         //case 'D':

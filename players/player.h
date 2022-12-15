@@ -35,7 +35,7 @@ public:
     Player(string name, size_t id, vector<Monument*> monuments, vector<EstablishmentCard*> cards, bool iP=false);
     const string& getUsername() const {return username;};
     const size_t& getId() const;
-    virtual void printCards() const;
-    void printMonuments() const;
     size_t cheapestMonumentAvailablePrice() const;
+    EstablishmentCard* getCardByName(string name) const;
+    bool isAnyMonumentLeftToBuy() const;
 };

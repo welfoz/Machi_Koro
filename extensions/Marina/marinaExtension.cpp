@@ -1,11 +1,6 @@
 #include "marinaExtension.h"
 #include "marinaExtensionCards.h"
-
-Marina& Marina::getInstance() {
-		if (instance == nullptr)
-			instance = new Marina;
-		return dynamic_cast<Marina&>(*instance);
-}
+#include "../../game/controller/control.h"
 
 void Marina::createEstablishmentCards(){
     // base cards with some additional quantities -> pas dans les règles françaises
@@ -47,8 +42,19 @@ void Marina::createMonumentCards(){
 }
 
 void Marina::createPlayer(string name, size_t id){
+    if (!canAddNewPlayer()) {
+        throw out_of_range("limit_players_reached");
+    }
+
+    for (unsigned int i = 0; i < this->nbPlayers; i++) {
+        if (players[i]->getUsername() == name) {
+			throw invalid_argument("two_players_homonyme");
+        }
+    }
     players[id] = new Player(name, id, monuments, getPlayerStarterCards());
     players[id]->purchaseMonument(getMonumentByName("City Hall"));
+
+    this->nbPlayers += 1;
 }
 
 void Marina::createBoard(){
@@ -60,43 +66,45 @@ void Marina::createIcons(){
     icons.push_back(new Icon("boat", "boat.png", Type::primaryIndustry));
 }
 
-void Marina::turn(Player* player){
-    if (winner!= nullptr) return;
-
-    printPlayerInformation(player);
-    player->printMonuments();
-    player->printCards();
-
-    this->activateCityHall(player);
-
-    const size_t nb = getNbDiceChosen(*player);
-
-    size_t* throws = this->throwDices(nb);
-
-    throws = this->activateRadioTower(player, nb, throws);
-
-    size_t diceValue = this->getDiceValue(nb, throws);
-    diceValue = this->activateHarbor(diceValue);
-    activation(player, diceValue);
-
-    this->printBalances();
-
-    map<Monument*,bool> playerMonuments = player->getMonuments();
-    map<EstablishmentCard*,size_t> playerCards = player->getCards();
-
-    action(player);
-
-    if (player->getMonuments() == playerMonuments || player->getCards() == playerCards)
-        this->activateAirport(player);
-
-    this->activateAmusementPark(player, nb, throws);
-}
+// TO REFRACTOR CONTROLLER
+//void Marina::turn(Player* player){
+//    if (winner!= nullptr) return;
+//
+//    printPlayerInformation(player);
+//    player->printMonuments();
+//    player->printCards();
+//
+//    this->activateCityHall(player);
+//
+//    const size_t nb = getNbDiceChosen(*player);
+//
+//    size_t* throws = this->throwDices(nb);
+//
+//    throws = this->activateRadioTower(player, nb, throws);
+//
+//    size_t diceValue = this->getDiceValue(nb, throws);
+//    diceValue = this->activateHarbor(diceValue);
+//    activation(player, diceValue);
+//
+//    this->printBalances();
+//
+//    map<Monument*,bool> playerMonuments = player->getMonuments();
+//    map<EstablishmentCard*,size_t> playerCards = player->getCards();
+//
+//    action(player);
+//
+//    if (player->getMonuments() == playerMonuments || player->getCards() == playerCards)
+//        this->activateAirport(player);
+//
+//    this->activateAmusementPark(player, nb, throws);
+//}
 
 void Marina::activateCityHall(Player* player){
-    if (Marina::getInstance().getBank()->getAccount(player->getId())->getSolde() == 0)
-    Marina::getInstance().getBank()->credit(player->getId(), 1);
+    if (Controller::getInstance().getGame()->getBank()->getAccount(player->getId())->getSolde() == 0)
+    Controller::getInstance().getGame()->getBank()->credit(player->getId(), 1);
 }
 
+// NEED TO MOVE IT IN CONTROLLER
 size_t Marina::activateHarbor(size_t diceValue){
     if (diceValue >= 10){
         string c;
@@ -108,5 +116,5 @@ size_t Marina::activateHarbor(size_t diceValue){
 }
 
 void Marina::activateAirport(Player* player){
-    Marina::getInstance().getBank()->credit(player->getId(), 10);
+    Controller::getInstance().getGame()->getBank()->credit(player->getId(), 10);
 }
