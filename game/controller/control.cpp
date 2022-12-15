@@ -278,3 +278,8 @@ GreenValleyController& GreenValleyController::getInstance()
 void GreenValleyController::turn(Player* player) {
     Controller::turn(player);
 }
+
+void Controller::tradeTwoEstablishmentCards(Player* p1, Player* p2, EstablishmentCard* card1, EstablishmentCard* card2) {
+    game->tradeCards(p1, p2, card1, card2);
+    interface->printBasicMessage(p1->getUsername() + " has taken " + card1->getName() + " from " + p2->getUsername() + " and gave " + card2->getName() + " in exchange.\n");
+}

@@ -200,8 +200,6 @@ void Game::tradeCards(Player* p1, Player* p2, EstablishmentCard *cardP1, Establi
     p1->removeEstablishment(cardP1);
     p1->purchaseEstablishment(cardP2);
     p2->removeEstablishment(cardP2);
-    // need to use it in the CONTROLLER
-    //interface->printBasicMessage(p1->getUsername() + " has taken " + cardP2->getName() + " from " + p2->getUsername() + " and gave " + cardP1->getName() + " in exchange.\n");
 }
 
 Player* Game::getPlayerByName(std::string name) const {

@@ -78,5 +78,5 @@ void BusinessCenter::activation(Player &p) {
 
     EstablishmentCard* givenCardPtr = Controller::getInstance().getInterface()->selectOneEstablishmentCardFromPlayer(&p, p2, "Which non-major Establishment card do you want to give ? (by name)" );
 
-    Controller::getInstance().getGame()->tradeCards(&p, p2, givenCardPtr, takenCardPtr);
+    Controller::getInstance().tradeTwoEstablishmentCards(&p, p2, givenCardPtr, takenCardPtr);
 }

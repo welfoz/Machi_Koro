@@ -30,6 +30,7 @@ public:
         return game;
     }
 
+    void tradeTwoEstablishmentCards(Player* p1, Player* p2, EstablishmentCard* card1, EstablishmentCard* card2);
 };
 
 class MarinaController : public Controller {
