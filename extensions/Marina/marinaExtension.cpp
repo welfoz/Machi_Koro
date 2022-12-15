@@ -76,7 +76,7 @@ void Marina::turn(Player* player){
     throws = this->activateRadioTower(player, nb, throws);
 
     size_t diceValue = this->getDiceValue(nb, throws);
-    diceValue = this->activateHarbor(diceValue);
+    diceValue = this->activateHarbor(player, diceValue);
     activation(player, diceValue);
 
     this->printBalances();
@@ -86,19 +86,20 @@ void Marina::turn(Player* player){
 
     action(player);
 
-    if (player->getMonuments() == playerMonuments || player->getCards() == playerCards)
-        this->activateAirport(player);
+    if (player->getMonuments() == playerMonuments || player->getCards() == playerCards){
+        this->activateAirport(player); //le fait tout le temps...
+    }
 
     this->activateAmusementPark(player, nb, throws);
 }
 
 void Marina::activateCityHall(Player* player){
-    if (Marina::getInstance().getBank()->getAccount(player->getId())->getSolde() == 0)
+    if (player->getMonument("City Hall") && Marina::getInstance().getBank()->getAccount(player->getId())->getSolde() == 0)
     Marina::getInstance().getBank()->credit(player->getId(), 1);
 }
 
-size_t Marina::activateHarbor(size_t diceValue){
-    if (diceValue >= 10){
+size_t Marina::activateHarbor(Player* player, size_t diceValue){
+    if (player->getMonument("Harbor") && diceValue >= 10){
         string c;
         cout << "Do you want to add 2 to your dice? (Y/N)\n";
         cin >> c;
@@ -108,5 +109,7 @@ size_t Marina::activateHarbor(size_t diceValue){
 }
 
 void Marina::activateAirport(Player* player){
-    Marina::getInstance().getBank()->credit(player->getId(), 10);
+    if (player->getMonument("Airport")){
+        Marina::getInstance().getBank()->credit(player->getId(), 10);
+        }
 }
