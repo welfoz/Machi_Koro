@@ -35,10 +35,10 @@ void Marina::createEstablishmentCards(){
 }
 
 void Marina::createMonumentCards(){
-    Game::createMonumentCards();
     monuments.push_back(new Monument("City Hall", 0, "Immediatly before buying establishments, if you have 0 coins, get 1 from the bank."));
     monuments.push_back(new Monument("Harbor", 2, "If the dice total is 10 or more, you may add 2 to the total, on your turn only."));
     monuments.push_back(new Monument("Airport", 30, "If you build nothing on your turn, you get 10 coins from the bank."));
+    Game::createMonumentCards();
 }
 
 void Marina::createPlayer(string name, size_t id){
