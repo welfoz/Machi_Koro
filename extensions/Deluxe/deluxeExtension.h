@@ -11,7 +11,7 @@ class Deluxe : public Marina, public GreenValley {
 	void createBoard() override;
 	void createIcons() override;
     void createPlayer(string name, size_t id) override;
-    template<typename t> void remove_duplicates(std::vector<t> vector);
+    template<typename t> void removeDuplicates(std::vector<t>& vtr);
     PlayerGreenValley& getPlayer(size_t id) const override;
 public:
     Deluxe(){};

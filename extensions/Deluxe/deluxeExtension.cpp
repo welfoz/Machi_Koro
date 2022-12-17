@@ -7,35 +7,37 @@ void Deluxe::createBoard(){
 void Deluxe::createIcons(){
     Marina::createIcons();
     GreenValley::createIcons();
-    remove_duplicates(icons);
+    removeDuplicates(icons);
 };
 
 void Deluxe::createEstablishmentCards() {
     Marina::createEstablishmentCards();
     GreenValley::createEstablishmentCards();
-    remove_duplicates(cards);
+    removeDuplicates(cards);
+
 }
 void Deluxe::createMonumentCards() {
     Marina::createMonumentCards();
-    GreenValley::createMonumentCards();
-    remove_duplicates(monuments);
 }
 
 void Deluxe::createPlayer(string name, size_t id) {
-    Marina::createPlayer(name,id);
-    players[id]=dynamic_cast<PlayerGreenValley*>(players[id]);
+    GreenValley::createPlayer(name,id);
+    players[id]->purchaseMonument(getMonumentByName("City Hall"));
 }
 
-template<typename t>
-void Deluxe::remove_duplicates(vector<t> vector) {
-    auto end = vector.end();
-    for (auto it = vector.begin(); it != end; ++it) {
-        end = std::remove(it + 1, end, *it);
-    }
-
-    vector.erase(end, vector.end());
-}
 PlayerGreenValley& Deluxe::getPlayer(size_t id) const{
     GreenValley::getPlayer(id);
 }
-//void Deluxe::turn(Player* player){};
+
+template<typename t>
+void Deluxe::removeDuplicates(vector<t>& vtr) {
+    for (auto it = vtr.begin(); it != vtr.end(); it++) {
+        for (auto it2= next(it,1);it2!=vtr.end();it2++){
+            if (**it==**it2){
+                auto old=*it2;
+                vtr.erase(it2);
+                delete old;
+            }
+        }
+    }
+}

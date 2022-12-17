@@ -10,11 +10,6 @@ MarinaBoard::MarinaBoard(vector<EstablishmentCard*> cards) /*: Board(cards)  fau
     checkNumberOfDecks();
 }
 
-// TO REFRACTOR CONTROLLER
-//void MarinaBoard::printBoard(){
-//    checkNumberOfDecks();
-//    Board::printBoard();
-//}
 
 void MarinaBoard::checkNumberOfDecks() {
     while ((pile.size() > 0) && (cardsDecks.size() < 10))

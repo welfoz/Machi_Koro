@@ -35,10 +35,10 @@ void Marina::createEstablishmentCards(){
 }
 
 void Marina::createMonumentCards(){
+    Game::createMonumentCards();
     monuments.push_back(new Monument("City Hall", 0, "Immediatly before buying establishments, if you have 0 coins, get 1 from the bank."));
     monuments.push_back(new Monument("Harbor", 2, "If the dice total is 10 or more, you may add 2 to the total, on your turn only."));
     monuments.push_back(new Monument("Airport", 30, "If you build nothing on your turn, you get 10 coins from the bank."));
-    Game::createMonumentCards();
 }
 
 void Marina::createPlayer(string name, size_t id){
@@ -66,36 +66,5 @@ void Marina::createIcons(){
     icons.push_back(new Icon("boat", "boat.png", Type::primaryIndustry));
 }
 
-// TO REFRACTOR CONTROLLER
-//void Marina::turn(Player* player){
-//    if (winner!= nullptr) return;
-//
-//    printPlayerInformation(player);
-//    player->printMonuments();
-//    player->printCards();
-//
-//    this->activateCityHall(player);
-//
-//    const size_t nb = getNbDiceChosen(*player);
-//
-//    size_t* throws = this->throwDices(nb);
-//
-//    throws = this->activateRadioTower(player, nb, throws);
-//
-//    size_t diceValue = this->getDiceValue(nb, throws);
-//    diceValue = this->activateHarbor(diceValue);
-//    activation(player, diceValue);
-//
-//    this->printBalances();
-//
-//    map<Monument*,bool> playerMonuments = player->getMonuments();
-//    map<EstablishmentCard*,size_t> playerCards = player->getCards();
-//
-//    action(player);
-//
-//    if (player->getMonuments() == playerMonuments || player->getCards() == playerCards)
-//        this->activateAirport(player);
-//
-//    this->activateAmusementPark(player, nb, throws);
-//}
+
 

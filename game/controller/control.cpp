@@ -1,5 +1,5 @@
 #include "control.h"
-
+#include "../extensions/Deluxe/deluxeExtension.h"
 Controller& Controller::getInstance()
 {
     if (instance == nullptr)
@@ -287,6 +287,8 @@ void MarinaController::turn(Player* player) {
 
     action(player);
 
+    dynamic_cast<MarinaBoard*>(getGame()->board)->checkNumberOfDecks();
+
     if (player->getMonuments() == playerMonuments || player->getCards() == playerCards)
         activateAirport(player);
 
@@ -357,7 +359,7 @@ DeluxeController::DeluxeController() : Controller() {
 
 DeluxeController& DeluxeController::getInstance(){
     if (instance == nullptr)
-        instance = new GreenValleyController();
+        instance = new DeluxeController();
     return dynamic_cast<DeluxeController&>(*instance);
 }
 
