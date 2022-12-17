@@ -1,6 +1,6 @@
 #include "marinaBoard.h"
 
-MarinaBoard::MarinaBoard(vector<EstablishmentCard*> cards) /*: Board(cards)  faudrait initialiser cardDeck qd mm non ?*/{
+MarinaBoard::MarinaBoard(vector<EstablishmentCard*> cards) {
      for (auto it = cards.begin(); it != cards.end(); it++) {
          for (size_t i = 0; i < cards[it - cards.begin()]->getQuantity(); i++) pile.push_back(*it);
     }
