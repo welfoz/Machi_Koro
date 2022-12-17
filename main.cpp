@@ -1,25 +1,38 @@
-#include <QApplication>
-#include "viewCard.h"
-#include "viewSet.h"
-#include "viewMonument.h"
-#include "viewDice.h"
-#include "game/game.h"
-//#include "C:\Users\lemer\Documents\UTC\GI01\LO21\Projet\Projet Git\Machi_Koro\game\game.h"
-//#include "C:\Users\lemer\Documents\UTC\GI01\LO21\Projet\Projet Git\Qt\Machi_Koro\players\player.h"
+#include "./extensions/Marina/marinaExtension.h"
+#include "extensions/Deluxe/greenValleyExtension.h"
+#include "game/controller/control.h"
+int main(int argc, const char* argv[]) {
+    // insert code here...
 
-int main(int argc, char* argv[]) {
-    QApplication app(argc, argv);
-    ViewCard card;
-    ViewDice dice;
-    ViewSet set;
-    Game::getInstance();
-    ViewMonument monument;
-    set.printCarte();
-    set.show();
-    //card.paintCard();
-    //card.show();
-    /*ViewMonument monument;
-    monument.paintMonument();
-    monument.show();*/
-    return app.exec();
+    cout << "Hello, World!\n";
+    cout << "Welcome to Machi Koro! Please choose the extension you want to play to:\n";
+    char choice = '0';
+    while ((choice != 'B') && (choice != 'M') && (choice != 'G') && (choice != 'D')){
+        cout << "Available extensions: Basic (B), Marina (M), Green Valley (G), Deluxe (D).\n";
+        cout << "Enter the name of the extension you want to play to (B/M/G/D): \n";
+        cin >> choice;
+        cin.ignore();
+    }
+    switch (choice)
+    {
+    case 'B':
+        Controller::getInstance().match();
+        break;
+    case 'M':{
+        MarinaController::getInstance().match();
+        break;
+    }
+
+    case 'G':{
+        GreenValleyController::getInstance().match();
+        break;
+    }
+        //case 'D':
+		     //Deluxe::getInstance().match();
+		     //break;
+    default:
+        break;
+    }
+    system("pause");
+    return 0;
 }

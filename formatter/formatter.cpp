@@ -22,3 +22,9 @@ string Formatter::formatHeader(vector<pair<string, unsigned int>> texts) {
     }
     return header + "\n" + lineSeparator + "\n";
 }
+
+string Formatter::toLower(string text) {
+    std::transform(text.begin(), text.end(), text.begin(),
+        [](unsigned char c) { return std::tolower(c); });
+    return text;
+}

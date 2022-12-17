@@ -1,2 +1,2 @@
-﻿# Machi_Koro
+# Machi_Koro
 Petit test
