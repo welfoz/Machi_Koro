@@ -39,22 +39,6 @@ void GreenValley::createPlayer(string name, size_t id) {
     this->nbPlayers += 1;
 }
 
-//TO REFRACTOR IN CONTROLLER
-//void GreenValley::action(Player *player) {
-//    size_t n = player->getCards().count(getCardByName("Loan Office"));
-//    Game::action(player);
-//    size_t n2=player->getCards().count(getCardByName("Loan Office"));
-//    if (n<n2) bank->credit(player->getId(),5);
-//    EstablishmentCard* card=getCardByName("Tech Startup");
-//    auto techStartup = dynamic_cast<TechStartup*> (card);
-//    if (player->getCards().count(techStartup)){
-//        string choice;
-//        cout<<"Do you want to invest on Tech Startup ? (Y/N)"<<endl;
-//        cin>>choice;
-//        if (choice=="Y" || choice=="y") techStartup->invest(player,1);
-//    }
-//}
-
 PlayerGreenValley& GreenValley::getPlayer(size_t id) const {
     return dynamic_cast<PlayerGreenValley&>(*players[id]);
 }

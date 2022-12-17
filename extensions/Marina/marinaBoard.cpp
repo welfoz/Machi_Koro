@@ -1,8 +1,8 @@
 #include "marinaBoard.h"
 
-MarinaBoard::MarinaBoard(vector<EstablishmentCard*> cards){
+MarinaBoard::MarinaBoard(vector<EstablishmentCard*> cards) /*: Board(cards)  faudrait initialiser cardDeck qd mm non ?*/{
      for (auto it = cards.begin(); it != cards.end(); it++) {
-        for (size_t i = 0; i < cards[it - cards.begin()]->getQuantity(); i++) pile.push_back(*it);
+         for (size_t i = 0; i < cards[it - cards.begin()]->getQuantity(); i++) pile.push_back(*it);
     }
     std::random_device rd; 
     auto rng = std::default_random_engine { rd() };

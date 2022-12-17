@@ -260,7 +260,55 @@ MarinaController& MarinaController::getInstance()
 }
 
 void MarinaController::turn(Player* player) {
-    Controller::turn(player);
+    if (getGame()->getWinner()!= nullptr) return;
+
+    interface->printPlayerInformation(player);
+    interface->printMonuments(player);
+    interface->printCards(player);
+
+    activateCityHall(player);
+
+    const size_t nb = getNbDiceChosen(*player);
+
+    size_t* throws = getGame()->throwDices(nb);
+    interface->printDices(throws,nb);
+
+    throws = activateRadioTower(player, nb, throws);
+
+    getGame()->setDiceValue(nb,throws);
+    getGame()->diceValue= this->activateHarbor(getGame()->diceValue,player);
+
+    getGame()->activation(player, game->diceValue);
+
+    interface->printBalances(game->players);
+
+    map<Monument*,bool> playerMonuments = player->getMonuments();
+    map<EstablishmentCard*,size_t> playerCards = player->getCards();
+
+    action(player);
+
+    if (player->getMonuments() == playerMonuments || player->getCards() == playerCards)
+        activateAirport(player);
+
+    activateAmusementPark(player, nb, throws);
+}
+
+
+void MarinaController::activateCityHall(Player* player){
+    if (Controller::getInstance().getGame()->getBank()->getAccount(player->getId())->getSolde() == 0)
+        Controller::getInstance().getGame()->getBank()->credit(player->getId(), 1);
+}
+
+
+size_t MarinaController::activateHarbor(size_t diceValue, Player* player){
+    if (diceValue >= 10 && player->getMonument("Harbor")){
+        if (interface->confirmationDialog("Do you want to add 2 to the dice value ?","Yes","No")) return diceValue + 2;
+    }
+    else return diceValue;
+}
+
+void MarinaController::activateAirport(Player* player){
+    if (player->getMonument("Airport")) Controller::getInstance().getGame()->getBank()->credit(player->getId(), 10);
 }
 
 GreenValleyController::GreenValleyController() : Controller() {
@@ -268,18 +316,53 @@ GreenValleyController::GreenValleyController() : Controller() {
 	game = dynamic_cast<GreenValley*>(new GreenValley);
 };
 
-GreenValleyController& GreenValleyController::getInstance()
-{
+GreenValleyController& GreenValleyController::getInstance(){
     if (instance == nullptr)
-        instance = new GreenValleyController;
+        instance = new GreenValleyController();
     return dynamic_cast<GreenValleyController&>(*instance);
 }
 
 void GreenValleyController::turn(Player* player) {
     Controller::turn(player);
+    hasBoughtLoanOffice(player);
+    techStartupInvestment(player);
+}
+void GreenValleyController::techStartupInvestment(Player* player) {
+    auto *techStartup = dynamic_cast<TechStartup *>(game->getCardByName("Tech Startup"));
+    if (player->getCards().count(techStartup) && game->getBank()->getAccount(player->getId())->getSolde() >= 1) {
+        if (interface->confirmationDialog("Do you want to invest on Tech Startup ?", "Yes", "No")) {
+            techStartup->invest(player, 1);
+            game->getBank()->debit(player->getId(), 1);
+        }
+
+    }
+}
+void GreenValleyController::hasBoughtLoanOffice(Player *player) {
+    auto loanOffice = dynamic_cast<LoanOffice*>(game->getCardByName("Loan Office"));
+    if (loanOffice->buyingPlayer==player){
+        game->getBank()->credit(player->getId(),5);
+        loanOffice->buyingPlayer= nullptr;
+    }
 }
 
 void Controller::tradeTwoEstablishmentCards(Player* p1, Player* p2, EstablishmentCard* card1, EstablishmentCard* card2) {
     game->tradeCards(p1, p2, card1, card2);
     interface->printBasicMessage(p1->getUsername() + " has taken " + card1->getName() + " from " + p2->getUsername() + " and gave " + card2->getName() + " in exchange.\n");
+}
+
+DeluxeController::DeluxeController() : Controller() {
+    delete game;
+    game = dynamic_cast<Deluxe*>(new Deluxe());
+};
+
+DeluxeController& DeluxeController::getInstance(){
+    if (instance == nullptr)
+        instance = new GreenValleyController();
+    return dynamic_cast<DeluxeController&>(*instance);
+}
+
+void DeluxeController::turn(Player* player){
+    MarinaController::turn(player);
+    hasBoughtLoanOffice(player);
+    techStartupInvestment(player);
 }

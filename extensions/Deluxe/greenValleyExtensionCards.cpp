@@ -1,5 +1,5 @@
 #include "greenValleyExtensionCards.h"
-#include "../../game/controller/control.h"
+//#include "../../game/controller/control.h"
 
 void CornField::activation(Player &p) {
     if (p.getNbMonumentsActivated()<2) Controller::getInstance().getGame()->getBank()->credit(p.getId(),1);
@@ -11,39 +11,8 @@ void GeneralStore::activation(Player &p) {
     if(p.getNbMonumentsActivated()<2) Controller::getInstance().getGame()->getBank()->credit(p.getId(),2);
 }
 void MovingCompany::activation(Player &p) {
-    // interface.selectPlayerToGiveHimAEstablishementCard(Player& currentPlayer)
-    string name;
-    bool loop = true;
-    Player *p2= nullptr;
-    while (loop) {
-        try {
-            cout << "\nType the name of the player you want to give a card to :" << endl;
-            cin.ignore();
-            getline(cin,name);
-            p2 = Controller::getInstance().getGame()->getPlayerByName(name);
-            if (p2->getId() != *&p.getId()) loop = false;
-            else cout << "Impossible" << endl;
-        } catch (string error) {
-            cout << error << endl;
-        }
-    }
-    // interface.selectEstablishementCard(Player& p)
-    Controller::getInstance().getInterface()->printCards(&p);
-    string givenCard;
-    EstablishmentCard *givenCardPtr;
-    loop = true;
-    while (loop) { // then we ask the card the user want to give
-        try {
-            cout << "Which non-major Establishment card do you want to give ? (by name)" << endl;
-            cin.ignore();
-            getline(cin, givenCard);
-            givenCardPtr = Controller::getInstance().getGame()->getCardByName(givenCard);
-            if (givenCardPtr->getType() != Type::majorEstablishment) loop = false;
-            else cout << "Untradable card" << endl;
-        } catch (string &error) {
-            cout << error << endl;
-        }
-    }
+    auto p2=Controller::getInstance().getInterface()->selectOnePlayerDifferentFromTheCurrentOne(&p);
+    auto givenCardPtr=Controller::getInstance().getInterface()->selectOneEstablishmentCardFromPlayer(&p,"Which card do you want to give to "+p2->getUsername());
     p.removeEstablishment(givenCardPtr);
     p2->purchaseEstablishment(givenCardPtr);
     Controller::getInstance().getGame()->getBank()->credit(p.getId(),4);
@@ -66,25 +35,11 @@ void Winery::activation(Player &p) {
 }
 
 void DemolitionCompany::activation(Player &p) {
-    if (p.getNbMonumentsActivated()==0) return;
-    Controller::getInstance().getInterface()->printMonuments(&p);
-    string monument;
-    Monument*monumentPtr;
-    bool loop = true;
-    while (loop) {// we ask the user which monument he wants to demolish
-        try {
-            cout << "Which monument do you want to demolish ? (by name)" << endl;
-            cin.ignore();
-            getline(cin, monument);
-            monumentPtr = Controller::getInstance().getGame()->getMonumentByName(monument);
-            if (p.getMonument(monument)) loop = false;
-            else cout << "You haven't built this monument" << endl;
-        } catch (string &error) {
-            cout << error << endl;
-        }
+    auto monumentPtr= Controller::getInstance().getInterface()->selectMonumentCardFromCurrentPlayer(&p,"Which monument do you want to demolish ?");
+    if (monumentPtr!= nullptr) {
+        p.removeMonument(monumentPtr);
+        Controller::getInstance().getGame()->getBank()->credit(p.getId(),8);
     }
-    p.removeMonument(monumentPtr);
-    Controller::getInstance().getGame()->getBank()->credit(p.getId(),8);
 }
 void SodaBottlingPlant::activation(Player &p) {
     for (size_t j=0;j<Controller::getInstance().getGame()->getNbPlayers();j++){
@@ -122,29 +77,14 @@ void Park::activation(Player &p) {
     }
 }
 void RenovationCompany::activation(Player &p) {
-    string closedCard;
-    EstablishmentCard *closedCardPtr;
-    bool loop = true;
-    while (loop) { // then we ask the card the user want to give
-        try {
-            //print all cards owned by all players
-            cout << "Which non-major Establishment card do you want to renovate ? (by name)" << endl;
-            cin.ignore();
-            getline(cin, closedCard);
-            closedCardPtr = Controller::getInstance().getGame()->getCardByName(closedCard);
-            if (closedCardPtr->getType() != Type::majorEstablishment) loop = false;
-            else cout << "Non-renovable establishment" << endl;
-        } catch (string &error) {
-            cout << error << endl;
-        }
-    }
+    auto renovatedCardPtr=Controller::getInstance().getInterface()->selectOneCardOwnedByAnyPlayer("Which non-major establishment do you want to renovate ?");
     for (size_t i=0; i<Controller::getInstance().getGame()->getNbPlayers();i++){
-        //PlayerGreenValley* iPlayer= &Controller::getInstance().getGame()->getPlayer(i);
-        //if (iPlayer->getCards().count(closedCardPtr)){
-        //    size_t nbCard=iPlayer->getCards().at(closedCardPtr);
-        //    if (p.getId()!= i) Controller::getInstance().getGame()->getBank()->trade(p.getId(),i,nbCard);
-        //    iPlayer->close(closedCardPtr);
-        //}
+        PlayerGreenValley* iPlayer=dynamic_cast<PlayerGreenValley*> (&Controller::getInstance().getGame()->getPlayer(i));
+        if (iPlayer->getCards().count(renovatedCardPtr)){
+            size_t nbCard=iPlayer->getCards().at(renovatedCardPtr);
+            if (p.getId()!= i) Controller::getInstance().getGame()->getBank()->trade(p.getId(),i,nbCard);
+            iPlayer->close(renovatedCardPtr);
+        }
     }
 }
 
@@ -157,34 +97,11 @@ void TechStartup::activation(Player &p) {
 }
 
 void InternationalExhibitHall::activation(Player &p) {
-    bool stop =false;
-    string choice;
-    while (!stop){
-        cout<<"Do you want to activate another of your non-major establishments ? (Y/N)"<<endl;
-        cin>>choice;
-        if (choice=="Y" || choice=="y") stop=true;
-        if (choice=="n" || choice =="Y") {
-            stop = true; return;
-        }
-        choice="";
+    if (Controller::getInstance().getInterface()->confirmationDialog("Do you want to activate another of your non-Major establishment card ?","Yes","No")){
+        auto cardPtr= Controller::getInstance().getInterface()->selectOneEstablishmentCardFromPlayer(&p,"Which non-Major establishment card do you want to activate ?");
+        cardPtr->activation(p);
+        p.removeEstablishment(this);
+        Controller::getInstance().getInterface()->printBasicMessage(cardPtr->getName() + " returned to the market.");
     }
-    string card;
-    EstablishmentCard *cardPtr;
-    bool loop = true;
-    while (loop) { // then we ask the card the user want to give
-        try {
-            Controller::getInstance().getInterface()->printCards(&p);
-            cout << "Which card do you want to activate ? (by name)" << endl;
-            cin.ignore();
-            getline(cin, card);
-            cardPtr = Controller::getInstance().getGame()->getCardByName(card);
-            if (cardPtr->getType() != Type::majorEstablishment && cardPtr->getType() != Type::restaurants ) loop = false;
-            else cout << "Select another establishment" << endl;
-        } catch (string &error) {
-            cout << error << endl;
-        }
-    }
-    cardPtr->activation(p);
-    p.removeEstablishment(this);
-    cout<<"\n"<<cardPtr->getName()<<" returned to the market.\n";
+
 }

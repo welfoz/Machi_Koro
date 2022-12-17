@@ -12,10 +12,9 @@ class Interface {
 protected:
 	Interface() = default;
 
-
 public:
 	virtual ~Interface() = default;
-	enum Option {cli, gui, cliGreenValley};
+	enum Option {cli, gui, cliGreenValley,};
 	static Interface* createInterfaceFromOption(Option type);
 	virtual void printWelcomingMessage() = 0;
 	virtual string getInputText() const = 0;
@@ -31,8 +30,10 @@ public:
 	virtual void printBalances(Player** players) const = 0;
 	virtual void printBoard() const = 0;
 	virtual string selectOneCard() const = 0;
+    virtual EstablishmentCard* selectOneCardOwnedByAnyPlayer(string message) const = 0;
 	virtual Player* selectOnePlayerDifferentFromTheCurrentOne(Player* player) const = 0;
-	virtual EstablishmentCard* selectOneEstablishmentCardFromPlayer(Player* target, Player* decider, string message) const = 0;
+	virtual EstablishmentCard* selectOneEstablishmentCardFromPlayer(Player* target, string message) const = 0;
+    virtual Monument* selectMonumentCardFromCurrentPlayer(Player* player, string message) const = 0;
 }; 
 
 class Cli : public Interface {
@@ -54,8 +55,9 @@ public:
 	void printBoard() const override;
 	string selectOneCard() const override;
 	Player* selectOnePlayerDifferentFromTheCurrentOne(Player* player) const override;
-	EstablishmentCard* selectOneEstablishmentCardFromPlayer(Player* target, Player* decider, string message) const override;
-
+	EstablishmentCard* selectOneEstablishmentCardFromPlayer(Player* target, string message) const override;
+    Monument* selectMonumentCardFromCurrentPlayer(Player* player, string message) const override;
+    EstablishmentCard* selectOneCardOwnedByAnyPlayer(string message) const override;
 	
 };
 
@@ -78,9 +80,11 @@ public:
 	void printBoard() const override {};
 	string selectOneCard() const override { return ""; };
 	Player* selectOnePlayerDifferentFromTheCurrentOne(Player* player) const override { return player; };
-	EstablishmentCard* selectOneEstablishmentCardFromPlayer(Player* target, Player* decider, string message) const override { 
+	EstablishmentCard* selectOneEstablishmentCardFromPlayer(Player* target,string message) const override {
 		return target->getCards().begin()->first;
 	};
+    Monument* selectMonumentCardFromCurrentPlayer(Player* player, string message) const override{};
+    EstablishmentCard* selectOneCardOwnedByAnyPlayer(string message) const override{};
 };
 
 class GreenValleyCli : public Cli {

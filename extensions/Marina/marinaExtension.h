@@ -2,7 +2,7 @@
 #include "../../game/game.h"
 #include "marinaBoard.h"
 
-class Marina: public Game {
+class Marina: public virtual Game {
 protected:
     void createEstablishmentCards() override;
     void createMonumentCards() override;

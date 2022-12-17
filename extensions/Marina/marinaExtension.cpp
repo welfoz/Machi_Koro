@@ -99,22 +99,3 @@ void Marina::createIcons(){
 //    this->activateAmusementPark(player, nb, throws);
 //}
 
-void Marina::activateCityHall(Player* player){
-    if (Controller::getInstance().getGame()->getBank()->getAccount(player->getId())->getSolde() == 0)
-    Controller::getInstance().getGame()->getBank()->credit(player->getId(), 1);
-}
-
-// NEED TO MOVE IT IN CONTROLLER
-size_t Marina::activateHarbor(size_t diceValue){
-    if (diceValue >= 10){
-        string c;
-        cout << "Do you want to add 2 to your dice? (Y/N)\n";
-        cin >> c;
-        if (c=="y" || c=="Y") return diceValue + 2;
-    }
-    else return diceValue;
-}
-
-void Marina::activateAirport(Player* player){
-    Controller::getInstance().getGame()->getBank()->credit(player->getId(), 10);
-}

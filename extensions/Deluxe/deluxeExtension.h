@@ -1,18 +1,19 @@
 #pragma once
+#ifndef MACHI_KORO_DELUXEEXTENSION_H
+#define MACHI_KORO_DELUXEEXTENSION_H
 #include "../Marina/marinaExtension.h"
-#include "../Marina/marinaExtensionCards.h"
-#include "greenValleyExtensionCards.h"
+#include "greenValleyExtension.h"
 #include <list>
 
-class Deluxe : public Marina {
-	// exemple: {card address, [1 if closed else 0, number of remaining turn closed]}
-	map<EstablishmentCard*, list<size_t>> closures;
-public:
-	Deluxe();
-	bool isClosed(EstablishmentCard&);
-	void closeCard(EstablishmentCard& c, size_t nbTurns);
+class Deluxe : public Marina, public GreenValley {
 	void createEstablishmentCards() override;
     void createMonumentCards() override;
 	void createBoard() override;
 	void createIcons() override;
+    void createPlayer(string name, size_t id) override;
+    template<typename t> void remove_duplicates(std::vector<t> vector);
+    PlayerGreenValley& getPlayer(size_t id) const override;
+public:
+    Deluxe(){};
 };
+#endif
