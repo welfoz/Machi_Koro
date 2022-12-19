@@ -1,22 +1,24 @@
 QT += widgets
-SOURCES = $$files(*.cpp, true)
-HEADERS = $$files(*.h, true)
+SOURCES = $$files(*.cpp, true) \
+    Qt/ViewOnePlayer.cpp
+HEADERS = $$files(*.h, true) \
+    Qt/ViewOnePlayer.h
 #SOURCES += \
 #    main.cpp \
-#    viewCard.cpp \
-#    viewDice.cpp \
-#    viewMonument.cpp \
-#    viewSet.cpp \
-#    game\*.cpp\
-#    players\*.cpp
+#    Qt\viewCard.cpp \
+#    Qt\viewDice.cpp \
+#    Qt\viewMonument.cpp \
+#    Qt\viewSet.cpp \
+#    Qt\game\*.cpp\
+#    Qt\players\*.cpp
 
 #HEADERS += \
-#    allCards.h \
-#    viewCard.h \
-#    viewDice.h \
-#    viewMonument.h \
-#    viewSet.h \
-#    players\*.h \
-#    game\*.h \
-#    formatter\*.h
+#    Qt\allCards.h \
+#    Qt\viewCard.h \
+#    Qt\viewDice.h \
+#    Qt\viewMonument.h \
+#    Qt\viewSet.h \
+#    Qt\players\*.h \
+#    Qt\game\*.h \
+#    Qt\formatter\*.h
 
