@@ -327,15 +327,10 @@ void GreenValleyController::turn(Player* player) {
     Controller::turn(player);
     techStartupInvestment(player);
 }
+
 void GreenValleyController::techStartupInvestment(Player* player) {
     auto *techStartup = dynamic_cast<TechStartup *>(game->getCardByName("Tech Startup"));
-    if (player->getCards().count(techStartup) && game->getBank()->getAccount(player->getId())->getSolde() >= 1) {
-        if (interface->confirmationDialog("Do you want to invest on Tech Startup ?", "Yes", "No")) {
-            techStartup->invest(player, 1);
-            game->getBank()->debit(player->getId(), 1);
-        }
-
-    }
+	techStartup->invest(player, 1);
 }
 
 void Controller::tradeTwoEstablishmentCards(Player* p1, Player* p2, EstablishmentCard* card1, EstablishmentCard* card2) {

@@ -227,8 +227,8 @@ Monument* Cli::selectMonumentCardFromCurrentPlayer(Player *player, std::string m
             monumentPtr = Controller::getInstance().getGame()->getMonumentByName(monument);
             if (player->getMonument(monument)) loop = false;
             else cout << "You haven't built this monument" << endl;
-        } catch (string &error) {
-            cout << error << endl;
+		} catch (const std::exception& e) {
+			printError(e);
         }
     }
     return monumentPtr;
