@@ -1,5 +1,6 @@
 #include "control.h"
-#include "../extensions/Deluxe/deluxeExtension.h"
+#include "../../extensions/Deluxe/deluxeExtension.h"
+
 Controller& Controller::getInstance()
 {
     if (instance == nullptr)
@@ -303,9 +304,7 @@ void MarinaController::activateCityHall(Player* player){
 
 
 size_t MarinaController::activateHarbor(size_t diceValue, Player* player){
-    if (diceValue >= 10 && player->getMonument("Harbor")){
-        if (interface->confirmationDialog("Do you want to add 2 to the dice value ?","Yes","No")) return diceValue + 2;
-    }
+    if (diceValue >= 10 && player->getMonument("Harbor") && interface->confirmationDialog("Do you want to add 2 to the dice value ?","Yes","No")) return diceValue + 2;
     else return diceValue;
 }
 

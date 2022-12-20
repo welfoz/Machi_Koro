@@ -80,11 +80,20 @@ public:
 	void printBoard() const override {};
 	string selectOneCard() const override { return ""; };
 	Player* selectOnePlayerDifferentFromTheCurrentOne(Player* player) const override { return player; };
+
+	// WRONG IMPLEMENTATION
+	// NEED TO RETURN SOMETHING TO COMPILE
 	EstablishmentCard* selectOneEstablishmentCardFromPlayer(Player* target,string message) const override {
 		return target->getCards().begin()->first;
 	};
-    Monument* selectMonumentCardFromCurrentPlayer(Player* player, string message) const override{};
-    EstablishmentCard* selectOneCardOwnedByAnyPlayer(string message) const override{};
+
+	// WRONG IMPLEMENTATION
+	// NEED TO RETURN SOMETHING TO COMPILE
+	Monument* selectMonumentCardFromCurrentPlayer(Player* player, string message) const override {
+		return player->getMonuments().begin()->first;
+	};
+
+	EstablishmentCard* selectOneCardOwnedByAnyPlayer(string message) const override;
 };
 
 class GreenValleyCli : public Cli {

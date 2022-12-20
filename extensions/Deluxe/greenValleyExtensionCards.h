@@ -13,7 +13,7 @@
 #include "../../players/player.h"
 #include "PlayerGreenValley.h"
 #include "cmath"
-#include "controller/control.h"
+#include "../../game/controller/control.h"
 class CornField : public Blue {
 public:
     CornField() : Blue(nullptr, 2, "Corn Field", 2, "On anyone's turn : If you have less than 2 landmarks built, get 1 coin from the bank", 6) {

@@ -297,3 +297,9 @@ void GreenValleyCli::printCards(Player* player) const {
 	}
 
 }
+
+// WRONG IMPLEMENTATION
+// JUST NEED TO RETURN SOMETHING TO COMPILE
+EstablishmentCard* Gui::selectOneCardOwnedByAnyPlayer(string message) const {
+	return Controller::getInstance().getGame()->getCardByName(message);
+}
