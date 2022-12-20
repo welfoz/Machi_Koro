@@ -42,3 +42,19 @@ void GreenValley::createPlayer(string name, size_t id) {
 PlayerGreenValley& GreenValley::getPlayer(size_t id) const {
     return dynamic_cast<PlayerGreenValley&>(*players[id]);
 }
+
+void GreenValley::purchaseOneEstablismentCard(Player* player, EstablishmentCard* card) {
+    Game::purchaseOneEstablismentCard(player, card);
+
+    if (card->getName() == "Loan Office") {
+		this->bank->credit(player->getId(), 5);
+    }
+}
+
+void GreenValley::undoPurchaseOneEstablismentCard(Player* player, EstablishmentCard* card) {
+    Game::undoPurchaseOneEstablismentCard(player, card);
+
+    if (card->getName() == "Loan Office") {
+		this->bank->debit(player->getId(), 5);
+    }
+}
