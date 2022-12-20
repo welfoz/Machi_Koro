@@ -20,7 +20,6 @@ public :
     vector<EstablishmentCard *> activateRedCards(size_t diceNumber) override;
     void activatePurpleCards(size_t diceNumber) override;
     const map<EstablishmentCard*, bool>& getClosedCards() const {return closed;}
-    void purchaseEstablishment(EstablishmentCard* card);
 };
 
 

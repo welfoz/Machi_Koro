@@ -325,7 +325,6 @@ GreenValleyController& GreenValleyController::getInstance(){
 
 void GreenValleyController::turn(Player* player) {
     Controller::turn(player);
-    //hasBoughtLoanOffice(player);
     techStartupInvestment(player);
 }
 void GreenValleyController::techStartupInvestment(Player* player) {
@@ -338,13 +337,6 @@ void GreenValleyController::techStartupInvestment(Player* player) {
 
     }
 }
-//void GreenValleyController::hasBoughtLoanOffice(Player *player) {
-//    auto loanOffice = dynamic_cast<LoanOffice*>(game->getCardByName("Loan Office"));
-//    if (loanOffice->buyingPlayer==player){
-//        game->getBank()->credit(player->getId(),5);
-//        loanOffice->buyingPlayer= nullptr;
-//    }
-//}
 
 void Controller::tradeTwoEstablishmentCards(Player* p1, Player* p2, EstablishmentCard* card1, EstablishmentCard* card2) {
     game->tradeCards(p1, p2, card1, card2);
@@ -364,6 +356,5 @@ DeluxeController& DeluxeController::getInstance(){
 
 void DeluxeController::turn(Player* player){
     MarinaController::turn(player);
-    //hasBoughtLoanOffice(player);
     techStartupInvestment(player);
 }

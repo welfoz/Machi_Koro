@@ -73,9 +73,3 @@ void PlayerGreenValley::close(EstablishmentCard *card) {
 void PlayerGreenValley::open(EstablishmentCard* card){
     closed.erase(card);
 }
-void PlayerGreenValley::purchaseEstablishment(EstablishmentCard *card) {
-    Player::purchaseEstablishment(card);
-    //if (card->getName()=="Loan Office"){
-    //    card->buyingPlayer=this;
-    //}
-}

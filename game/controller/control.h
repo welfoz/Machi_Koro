@@ -50,8 +50,6 @@ class GreenValleyController : public virtual Controller {
 protected:
     void turn(Player* player) override;
     void techStartupInvestment(Player* player);
-    // it has to be in the logic part
-    //void hasBoughtLoanOffice(Player* player);
    
 public:
     static GreenValleyController& getInstance();

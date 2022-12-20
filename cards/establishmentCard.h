@@ -8,7 +8,6 @@ class EstablishmentCard : public BaseCard {
 	const size_t numberActivation;
 	const size_t quantity;
 protected:
-	//EstablishmentCard(size_t* act, size_t number, string name, Type type, size_t price, string desc, size_t quantity) : BaseCard(name, type, price, nullptr, desc), activationNumbers(act), numberActivation(number), quantity(quantity), buyingPlayer(nullptr) {};
 	EstablishmentCard(size_t* act, size_t number, string name, Type type, size_t price, string desc, size_t quantity) : BaseCard(name, type, price, nullptr, desc), activationNumbers(act), numberActivation(number), quantity(quantity) {};
 
 
@@ -33,5 +32,4 @@ public:
 	const size_t getQuantity() const {
 		return quantity;
 	}
-    //Player* buyingPlayer;
 };
