@@ -26,18 +26,26 @@ void Deluxe::createPlayer(string name, size_t id) {
 }
 
 PlayerGreenValley& Deluxe::getPlayer(size_t id) const{
-    GreenValley::getPlayer(id);
+    return GreenValley::getPlayer(id);
 }
 
 template<typename t>
 void Deluxe::removeDuplicates(vector<t>& vtr) {
+    vector<t> duplicates;
+
     for (auto it = vtr.begin(); it != vtr.end(); it++) {
         for (auto it2= next(it,1);it2!=vtr.end();it2++){
             if (**it==**it2){
-                auto old=*it2;
-                vtr.erase(it2);
-                delete old;
+                duplicates.push_back(*it2);
             }
         }
     }
+
+    for (auto it = duplicates.begin(); it != duplicates.end(); it++) {
+        auto itDuplicate = std::find(vtr.begin(), vtr.end(), *it);
+        if (itDuplicate != vtr.end()) {
+            vtr.erase(itDuplicate);
+        }
+    }
+
 }
