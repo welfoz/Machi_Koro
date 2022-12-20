@@ -88,11 +88,16 @@ void RenovationCompany::activation(Player &p) {
     }
 }
 
+bool TechStartup::isAbleToInvest(Player* player) {
+    if (player->getCards().count(this) && Controller::getInstance().getGame()->getBank()->getAccount(player->getId())->getSolde() >= 1) {
+		return true;
+    }
+    return false;
+}
+
 void TechStartup::invest(Player* player, size_t amount) {
-	if (player->getCards().count(this) && Controller::getInstance().getGame()->getBank()->getAccount(player->getId())->getSolde() >= 1 && Controller::getInstance().getInterface()->confirmationDialog("Do you want to invest on Tech Startup ?", "Yes", "No")) {
-		investments[player]++;
-		Controller::getInstance().getGame()->getBank()->debit(player->getId(), 1);
-	}
+	investments[player]++;
+	Controller::getInstance().getGame()->getBank()->debit(player->getId(), 1);
 }
 
 void TechStartup::activation(Player &p) {

@@ -163,6 +163,7 @@ public:
         EstablishmentCard::setActivationNumbers(actNumber);
     }
     const map<Player*, size_t> getInvestment() {return investments;}
+    bool isAbleToInvest(Player* player);
     void invest(Player* player, size_t amount);
     void activation(Player& p) override;
 };
