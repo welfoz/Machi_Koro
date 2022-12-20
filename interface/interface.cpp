@@ -213,9 +213,11 @@ EstablishmentCard* Cli::selectOneEstablishmentCardFromPlayer(Player* target, str
     }
     return takenCardPtr;
 };
+
 Monument* Cli::selectMonumentCardFromCurrentPlayer(Player *player, std::string message) const {
     if (player->getNbMonumentsActivated()==0) return nullptr;
-    Controller::getInstance().getInterface()->printMonuments(player);
+    printMonuments(player);
+    
     string monument;
     Monument* monumentPtr;
     bool loop = true;
@@ -235,10 +237,11 @@ Monument* Cli::selectMonumentCardFromCurrentPlayer(Player *player, std::string m
 }
 
 EstablishmentCard* Cli::selectOneCardOwnedByAnyPlayer(string message) const {
-    auto game=Controller::getInstance().getGame();
+    Game* game=Controller::getInstance().getGame();
     for (size_t i=0; i<game->getNbPlayers();i++){
         printCards(&game->getPlayer(i));
     }
+
     string choosenCard;
     EstablishmentCard *chosenCardPtr;
     bool loop = true;
