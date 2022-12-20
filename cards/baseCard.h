@@ -41,4 +41,5 @@ public:
 	}
 	
 	static string typeToString(Type type);
+    bool operator==(BaseCard& card) {return (card.getName()==this->name);}
 };

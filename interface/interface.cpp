@@ -193,11 +193,9 @@ Player* Cli::selectOnePlayerDifferentFromTheCurrentOne(Player* player) const {
 	return p2;
 }
 
-EstablishmentCard* Cli::selectOneEstablishmentCardFromPlayer(Player* target, Player* decider, string message) const {
-	printCards(decider);
+EstablishmentCard* Cli::selectOneEstablishmentCardFromPlayer(Player* target, string message) const {// je vois pas le but de "decider"
     cout << target->getUsername() + "'s cards";
     printCards(target);
-
     string choosenCard;
     EstablishmentCard *takenCardPtr;
     bool loop = true;
@@ -215,6 +213,52 @@ EstablishmentCard* Cli::selectOneEstablishmentCardFromPlayer(Player* target, Pla
     }
     return takenCardPtr;
 };
+
+Monument* Cli::selectMonumentCardFromCurrentPlayer(Player *player, std::string message) const {
+    if (player->getNbMonumentsActivated()==0) return nullptr;
+    printMonuments(player);
+    
+    string monument;
+    Monument* monumentPtr;
+    bool loop = true;
+    while (loop) {// we ask the user which monument he wants to demolish
+        try {
+            cout << message << endl;
+            cin.ignore();
+            getline(cin, monument);
+            monumentPtr = Controller::getInstance().getGame()->getMonumentByName(monument);
+            if (player->getMonument(monument)) loop = false;
+            else cout << "You haven't built this monument" << endl;
+		} catch (const std::exception& e) {
+			printError(e);
+        }
+    }
+    return monumentPtr;
+}
+
+EstablishmentCard* Cli::selectOneCardOwnedByAnyPlayer(string message) const {
+    Game* game=Controller::getInstance().getGame();
+    for (size_t i=0; i<game->getNbPlayers();i++){
+        printCards(&game->getPlayer(i));
+    }
+
+    string choosenCard;
+    EstablishmentCard *chosenCardPtr;
+    bool loop = true;
+    while (loop) {// we ask the user which card he want to take from that target
+        try {
+            cout << message << endl;
+            fflush(stdin);
+            getline(cin, choosenCard);
+            chosenCardPtr = Controller::getInstance().getGame()->getCardByName(choosenCard);
+            if (chosenCardPtr->getType() != Type::majorEstablishment) loop = false;
+            else cout << "Untradable card" << endl;
+        } catch (std::exception &error) {
+            cout << error.what() << endl;
+        }
+    }
+    return chosenCardPtr;
+}
 
 void GreenValleyCli::printCards(Player* player) const {
 
@@ -255,4 +299,10 @@ void GreenValleyCli::printCards(Player* player) const {
 		Cli::printCards(player);
 	}
 
+}
+
+// WRONG IMPLEMENTATION
+// JUST NEED TO RETURN SOMETHING TO COMPILE
+EstablishmentCard* Gui::selectOneCardOwnedByAnyPlayer(string message) const {
+	return Controller::getInstance().getGame()->getCardByName(message);
 }

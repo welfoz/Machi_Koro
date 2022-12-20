@@ -21,7 +21,7 @@ public:
     bool isPlaying;
     void purchaseMonument(Monument* card);
     void removeMonument(Monument* card);
-    void purchaseEstablishment(EstablishmentCard* card);
+    virtual void purchaseEstablishment(EstablishmentCard* card);
     void removeEstablishment(EstablishmentCard* card);
     virtual vector<EstablishmentCard*> activateRedCards(size_t diceNumber);
     virtual void activateBlueCards(size_t diceNumber);

@@ -1,7 +1,7 @@
 #pragma once
-#include "../game.h"
 #include "../../extensions/Deluxe/greenValleyExtension.h"
 #include "../../extensions/Marina/marinaExtension.h"
+//#include "../extensions/Deluxe/deluxeExtension.h"
 
 class Controller {
 protected:
@@ -33,9 +33,12 @@ public:
     void tradeTwoEstablishmentCards(Player* p1, Player* p2, EstablishmentCard* card1, EstablishmentCard* card2);
 };
 
-class MarinaController : public Controller {
-
+class MarinaController : public virtual Controller {
+protected:
     void turn(Player* player) override;
+    void activateAirport(Player* player);
+    size_t activateHarbor(size_t diceValue, Player* player);
+    void activateCityHall(Player* player);
 public:
     static MarinaController& getInstance();
     MarinaController();
@@ -43,11 +46,19 @@ public:
 };
 
 
-class GreenValleyController : public Controller {
-
+class GreenValleyController : public virtual Controller {
+protected:
     void turn(Player* player) override;
+    void techStartupInvestment(Player* player);
+   
 public:
     static GreenValleyController& getInstance();
     GreenValleyController();
    
+};
+class DeluxeController : public GreenValleyController, public MarinaController{
+    void turn(Player* player) override;
+public:
+    static DeluxeController& getInstance();
+    DeluxeController();
 };

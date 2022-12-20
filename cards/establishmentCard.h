@@ -8,12 +8,11 @@ class EstablishmentCard : public BaseCard {
 	const size_t numberActivation;
 	const size_t quantity;
 protected:
-	EstablishmentCard(size_t* act, size_t number, string name, Type type, size_t price, string desc, size_t quantity) : BaseCard(name, type, price, nullptr, desc), activationNumbers(act), numberActivation(number), quantity(quantity) {
-	};
+	EstablishmentCard(size_t* act, size_t number, string name, Type type, size_t price, string desc, size_t quantity) : BaseCard(name, type, price, nullptr, desc), activationNumbers(act), numberActivation(number), quantity(quantity) {};
 
-virtual ~EstablishmentCard();
 
 public:
+    virtual ~EstablishmentCard();
 	virtual const Icon* getIconByName(string name) = 0;
 	void setActivationNumbers(size_t* const act) {
 		activationNumbers = act;
