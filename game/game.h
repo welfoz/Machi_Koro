@@ -1,4 +1,6 @@
 #pragma once
+#ifndef MACHI_KORO_GAME_H
+#define MACHI_KORO_GAME_H
 #include "../bank/account.h"
 #include "../cards/allCards.h"
 #include "../bank/bank.h"
@@ -18,6 +20,7 @@ using namespace std;
 
 class Game{
     friend class Controller;
+    friend class MarinaController;
 protected:
     vector<EstablishmentCard*> cards;
     vector<Monument*> monuments;
@@ -61,8 +64,8 @@ protected:
     bool isPlayerAbleToPayMonument(Player* p);
     bool canAddNewPlayer() const;
 
-    void purchaseOneEstablismentCard(Player* player, EstablishmentCard* card);
-    void undoPurchaseOneEstablismentCard(Player* player, EstablishmentCard* card);
+    virtual void purchaseOneEstablismentCard(Player* player, EstablishmentCard* card);
+    virtual void undoPurchaseOneEstablismentCard(Player* player, EstablishmentCard* card);
 
     void purchaseOneMonument(Player* player, Monument* card);
     void undoPurchaseOneMonument(Player* player, Monument* card);
@@ -89,10 +92,10 @@ public:
     Monument* getMonumentByName(string name) const;
     Player* getPlayerByName(string name) const;
     vector<const Icon*> getIcons() const {return this->icons;};
-    const Board* const getBoard() const {
-        return board;
-    }
+    const Board* const getBoard() const {return board;}
+    const Player* getWinner() const {return winner;}
 
     void tradeCards(Player* p1, Player* p2,EstablishmentCard* cardP1, EstablishmentCard* cardP2);
 };
 
+#endif

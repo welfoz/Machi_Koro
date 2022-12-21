@@ -1,8 +1,5 @@
 #pragma once
-#include "../game.h"
-#include "../../extensions/Deluxe/greenValleyExtension.h"
-#include "../../extensions/Marina/marinaExtension.h"
-#include "../../extensions/Deluxe/deluxeExtension.h"
+#include "../../game/game.h"
 
 class Controller {
 protected:
