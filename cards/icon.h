@@ -23,4 +23,5 @@ public:
 	const Type getType() const {
 		return type;
 	}
+    bool operator==(const Icon& i)const {return (this->name==i.name && this->type==i.getType());}
 };
