@@ -10,5 +10,7 @@ protected:
     void createBoard() override;
     void createIcons() override;
 public:
-    Marina() : Game() {};
+    Marina() : Game() {
+		this->numberOfPlayersMax = 5;
+    };
 };
