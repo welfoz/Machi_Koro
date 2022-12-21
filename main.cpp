@@ -1,6 +1,8 @@
 #include "./extensions/Marina/marinaExtension.h"
 #include "extensions/Deluxe/greenValleyExtension.h"
 #include "game/controller/control.h"
+#include "game/controller/marinaController.h"
+#include "game/controller/greenValleyController.h"
 int main(int argc, const char* argv[]) {
     // insert code here...
 

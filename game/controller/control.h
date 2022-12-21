@@ -32,22 +32,3 @@ public:
 
     void tradeTwoEstablishmentCards(Player* p1, Player* p2, EstablishmentCard* card1, EstablishmentCard* card2);
 };
-
-class MarinaController : public Controller {
-
-    void turn(Player* player) override;
-public:
-    static MarinaController& getInstance();
-    MarinaController();
-   
-};
-
-
-class GreenValleyController : public Controller {
-
-    void turn(Player* player) override;
-public:
-    static GreenValleyController& getInstance();
-    GreenValleyController();
-   
-};

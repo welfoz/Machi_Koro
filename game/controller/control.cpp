@@ -247,38 +247,6 @@ void Controller::action(Player* player){
     } 
 };
 
-MarinaController::MarinaController() : Controller() {
-    delete game;
-	game = dynamic_cast<Marina*>(new Marina);
-};
-
-MarinaController& MarinaController::getInstance()
-{
-    if (instance == nullptr)
-        instance = new MarinaController;
-    return dynamic_cast<MarinaController&>(*instance);
-}
-
-void MarinaController::turn(Player* player) {
-    Controller::turn(player);
-}
-
-GreenValleyController::GreenValleyController() : Controller() {
-    delete game;
-	game = dynamic_cast<GreenValley*>(new GreenValley);
-};
-
-GreenValleyController& GreenValleyController::getInstance()
-{
-    if (instance == nullptr)
-        instance = new GreenValleyController;
-    return dynamic_cast<GreenValleyController&>(*instance);
-}
-
-void GreenValleyController::turn(Player* player) {
-    Controller::turn(player);
-}
-
 void Controller::tradeTwoEstablishmentCards(Player* p1, Player* p2, EstablishmentCard* card1, EstablishmentCard* card2) {
     game->tradeCards(p1, p2, card1, card2);
     interface->printBasicMessage(p1->getUsername() + " has taken " + card1->getName() + " from " + p2->getUsername() + " and gave " + card2->getName() + " in exchange.\n");
