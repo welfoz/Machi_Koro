@@ -30,6 +30,8 @@ protected:
     size_t nbPlayers;
     size_t idCurrentPlayer;
     size_t diceValue;
+    size_t numberOfPlayersMax;
+    size_t numberOfPlayersMin;
 
     Game();
     Game(const Game&) = delete;
@@ -64,6 +66,13 @@ protected:
 
     void purchaseOneMonument(Player* player, Monument* card);
     void undoPurchaseOneMonument(Player* player, Monument* card);
+    bool isMinimumNumbersOfPlayersReached();
+    size_t getMinimumNumerbOfPlayers() {
+        return this->numberOfPlayersMin;
+    }
+    size_t getMaximumNumerbOfPlayers() {
+        return this->numberOfPlayersMax;
+    }
 
 public:
     virtual ~Game();

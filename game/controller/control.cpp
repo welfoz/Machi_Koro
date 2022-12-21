@@ -47,11 +47,16 @@ void Controller::createAll() {
 		}
 
 		if (!interface->confirmationDialog("Do you want to add another player", "Yes", "No")) {
-			stop = true;
+			if (!getGame()->isMinimumNumbersOfPlayersReached()) {
+				interface->printBasicMessage("The minimum number of player is : " + std::to_string(game->getMinimumNumerbOfPlayers()) + "\nPlease add more.\n");
+            }
+            else {
+				stop = true;
+            }
 		}
 	}
     if (!getGame()->canAddNewPlayer()) {
-		interface->printBasicMessage("Limit of 10 players reached\n");
+		interface->printBasicMessage("Limit of " + std::to_string(game->getMaximumNumerbOfPlayers()) + " players reached\n");
     }
 
 	getGame()->createBank(getGame()->nbPlayers);

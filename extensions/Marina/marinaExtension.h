@@ -13,5 +13,7 @@ protected:
     size_t activateHarbor(size_t diceValue);
     void activateAirport(Player* player);
 public:
-    Marina() : Game() {};
+    Marina() : Game() {
+		this->numberOfPlayersMax = 5;
+    };
 };

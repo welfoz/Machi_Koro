@@ -3,6 +3,7 @@
 #include "game/controller/control.h"
 #include "game/controller/marinaController.h"
 #include "game/controller/greenValleyController.h"
+#include "game/controller/deluxeController.h"
 int main(int argc, const char* argv[]) {
     // insert code here...
 
@@ -29,9 +30,9 @@ int main(int argc, const char* argv[]) {
         GreenValleyController::getInstance().match();
         break;
     }
-        //case 'D':
-		     //Deluxe::getInstance().match();
-		     //break;
+	case 'D':
+        //DeluxeController::getInstance().match();
+		break;
     default:
         break;
     }

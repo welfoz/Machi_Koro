@@ -1,10 +1,12 @@
 #include "game.h"
 
 Game::Game() : board(nullptr), bank(nullptr), dice(Dice()), winner(nullptr), players(), nbPlayers(0), idCurrentPlayer(0) {
+    this->numberOfPlayersMin = 2;
+    this->numberOfPlayersMax = 4;
 };
 
 bool Game::canAddNewPlayer() const {
-    if (this->nbPlayers >= 10) {
+    if (this->nbPlayers >= numberOfPlayersMax) {
         return false;
     }
     return true;
@@ -251,4 +253,11 @@ void Game::purchaseOneMonument(Player* player, Monument* monument) {
 void Game::undoPurchaseOneMonument(Player* player, Monument* monument) {
 	player->removeMonument(monument);
 	bank->credit(player->getId(), monument->getPrice());
+}
+
+bool Game::isMinimumNumbersOfPlayersReached() {
+    if (this->nbPlayers < this->numberOfPlayersMin) {
+        return false;
+    }
+    return true;
 }
