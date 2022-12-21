@@ -1,3 +1,4 @@
+
 #include "./extensions/Marina/marinaExtension.h"
 #include "extensions/Deluxe/greenValleyExtension.h"
 #include "game/controller/control.h"
@@ -27,9 +28,9 @@ int main(int argc, const char* argv[]) {
         GreenValleyController::getInstance().match();
         break;
     }
-        //case 'D':
-		     //Deluxe::getInstance().match();
-		     //break;
+    case 'D':
+        DeluxeController::getInstance().match();
+		     break;
     default:
         break;
     }
