@@ -290,7 +290,7 @@ void MarinaController::turn(Player* player) {
 
     dynamic_cast<MarinaBoard*>(getGame()->board)->checkNumberOfDecks();
 
-    if (player->getMonuments() == playerMonuments || player->getCards() == playerCards)
+    if (player->getMonuments() == playerMonuments && player->getCards() == playerCards)
         activateAirport(player);
 
     activateAmusementPark(player, nb, throws);
