@@ -19,7 +19,7 @@ void Game::createPlayer(string name, size_t id) {
 
     for (unsigned int i = 0; i < this->nbPlayers; i++) {
         if (players[i]->getUsername() == name) {
-			throw invalid_argument("two_players_homonyme");
+			throw invalid_argument("Error : name already used\n");
         }
     }
     players[id] = new Player(name, id, monuments, getPlayerStarterCards());
