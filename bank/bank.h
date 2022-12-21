@@ -1,4 +1,4 @@
-
+#pragma once
 #include "account.h"
 #include "../players/player.h"
 #include <vector>

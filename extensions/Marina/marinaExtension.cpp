@@ -1,11 +1,6 @@
 #include "marinaExtension.h"
 #include "marinaExtensionCards.h"
-
-Marina& Marina::getInstance() {
-		if (instance == nullptr)
-			instance = new Marina;
-		return dynamic_cast<Marina&>(*instance);
-}
+#include "../../game/controller/control.h"
 
 void Marina::createEstablishmentCards(){
     // base cards with some additional quantities -> pas dans les règles françaises
@@ -47,8 +42,19 @@ void Marina::createMonumentCards(){
 }
 
 void Marina::createPlayer(string name, size_t id){
+    if (!canAddNewPlayer()) {
+        throw out_of_range("limit_players_reached");
+    }
+
+    for (unsigned int i = 0; i < this->nbPlayers; i++) {
+        if (players[i]->getUsername() == name) {
+			throw invalid_argument("two_players_homonyme");
+        }
+    }
     players[id] = new Player(name, id, monuments, getPlayerStarterCards());
     players[id]->purchaseMonument(getMonumentByName("City Hall"));
+
+    this->nbPlayers += 1;
 }
 
 void Marina::createBoard(){
@@ -58,58 +64,4 @@ void Marina::createBoard(){
 void Marina::createIcons(){
     Game::createIcons();
     icons.push_back(new Icon("boat", "boat.png", Type::primaryIndustry));
-}
-
-void Marina::turn(Player* player){
-    if (winner!= nullptr) return;
-
-    printPlayerInformation(player);
-    player->printMonuments();
-    player->printCards();
-
-    this->activateCityHall(player);
-
-    const size_t nb = getNbDiceChosen(*player);
-
-    size_t* throws = this->throwDices(nb);
-
-    throws = this->activateRadioTower(player, nb, throws);
-
-    size_t diceValue = this->getDiceValue(nb, throws);
-    diceValue = this->activateHarbor(player, diceValue);
-    activation(player, diceValue);
-
-    this->printBalances();
-
-    map<Monument*,bool> playerMonuments = player->getMonuments();
-    map<EstablishmentCard*,size_t> playerCards = player->getCards();
-
-    action(player);
-
-    if (player->getMonuments() == playerMonuments || player->getCards() == playerCards){
-        this->activateAirport(player); //le fait tout le temps...
-    }
-
-    this->activateAmusementPark(player, nb, throws);
-}
-
-void Marina::activateCityHall(Player* player){
-    if (player->getMonument("City Hall") && Marina::getInstance().getBank()->getAccount(player->getId())->getSolde() == 0)
-    Marina::getInstance().getBank()->credit(player->getId(), 1);
-}
-
-size_t Marina::activateHarbor(Player* player, size_t diceValue){
-    if (player->getMonument("Harbor") && diceValue >= 10){
-        string c;
-        cout << "Do you want to add 2 to your dice? (Y/N)\n";
-        cin >> c;
-        if (c=="y" || c=="Y") return diceValue + 2;
-    }
-    else return diceValue;
-}
-
-void Marina::activateAirport(Player* player){
-    if (player->getMonument("Airport")){
-        Marina::getInstance().getBank()->credit(player->getId(), 10);
-        }
 }

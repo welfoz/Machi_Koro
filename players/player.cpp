@@ -1,7 +1,6 @@
-
 #include "player.h"
 #include "../formatter/formatter.h"
-#include "../game/game.h"
+#include "../game/controller/control.h"
 
 void Player::purchaseMonument(Monument* card) {
     if (!monuments[card]) monuments[card]=true;
@@ -10,16 +9,11 @@ vector<EstablishmentCard*> Player::activateRedCards(size_t diceNumber) {
 	vector<EstablishmentCard*> activatedCards = {};
     for(auto it=cardsCounter.begin();it!=cardsCounter.end();it++){
         if(it->first->getType()==Type::restaurants&& it->first->inActivationNumbers(diceNumber))
-            if (!isClosed(it->first)){
                 for (size_t j = 0; j < it->second; j++)
                 {
                     it->first->activation(*this);
                     activatedCards.push_back(it->first);
                 }
-            } 
-            else if (isClosed(it->first)) {
-                open(it->first);
-            }
 
     }
 	return activatedCards;
@@ -28,12 +22,7 @@ vector<EstablishmentCard*> Player::activateRedCards(size_t diceNumber) {
 void Player::activateBlueCards(size_t diceNumber){
     for(auto it=cardsCounter.begin();it!=cardsCounter.end();it++){
         if(it->first->getType()==Type::primaryIndustry&& it->first->inActivationNumbers(diceNumber)){
-            if (!isClosed(it->first)) {
                 for (size_t j = 0; j < it->second; j++) it->first->activation(*this);
-            }
-            else if (isClosed(it->first)) {
-                open(it->first);
-            }
         }
     }
 }
@@ -41,15 +30,10 @@ vector<EstablishmentCard*> Player::activateGreenCards(size_t diceNumber){
 	vector<EstablishmentCard*> activatedCards = {};
     for(auto it=cardsCounter.begin();it!=cardsCounter.end();it++){
         if(it->first->getType()==Type::secondaryIndustry&& it->first->inActivationNumbers(diceNumber)){
-            if (!isClosed(it->first)) {
                 for (size_t j = 0; j < it->second; j++) {
                     it->first->activation(*this);
                     activatedCards.push_back(it->first);
                 }
-            }
-            else if (isClosed(it->first)) {
-                open(it->first);
-            }
         }
     }
 	return activatedCards;
@@ -57,12 +41,7 @@ vector<EstablishmentCard*> Player::activateGreenCards(size_t diceNumber){
 void Player::activatePurpleCards(size_t diceNumber){
     for(auto it=cardsCounter.begin();it!=cardsCounter.end();it++){
         if(it->first->getType()==Type::majorEstablishment&& it->first->inActivationNumbers(diceNumber)){
-            if (!isClosed(it->first)) {
                 for (size_t j = 0; j < it->second; j++) it->first->activation(*this);
-            }
-            else if (isClosed(it->first)) {
-                open(it->first);
-            }
         }
     }
 }
@@ -91,7 +70,7 @@ void Player::purchaseEstablishment(EstablishmentCard* card) {
 	}
 }
 
-Player::Player(string name, size_t id, vector<Monument*> monuments, vector<EstablishmentCard*> cards, map<EstablishmentCard*,bool>closed, bool iP) : username(name), id(id), isPlaying(iP), closed(closed){
+Player::Player(string name, size_t id, vector<Monument*> monuments, vector<EstablishmentCard*> cards, bool iP) : username(name), id(id), isPlaying(iP){
 	for (auto it = monuments.begin(); it != monuments.end(); it++) {
 		// init all monuments to false
 		this->monuments.insert({ *it, 0});
@@ -100,59 +79,9 @@ Player::Player(string name, size_t id, vector<Monument*> monuments, vector<Estab
 	for (auto it = cards.begin(); it != cards.end(); it++) {
 		purchaseEstablishment(*it);
 	}
-	cout << name << " added!\n";
+    Controller::getInstance().getInterface()->printBasicMessage(name + " added!\n");
 };
 
-void Player::printCards() const {
-	cout << "\n" << username << "'s cards: \n";
-	vector<pair<string, unsigned int>> headerNames;
-	headerNames = {
-		{" Name", 31},
-		{"Price", 5},
-		{"Activation Nb", 13},
-		{"Quantity", 8},
-		{"Type" , 20},
-		{"Icon", 8},
-		{"Effect", 60}
-	};
-    cout << Formatter::formatHeader(headerNames);
-	for (auto it = cardsCounter.begin(); it != cardsCounter.end(); it++) {
-        if (it->second>0){
-            // get all activation numbers
-            string activationNumbers;
-            size_t* actNumbers = it->first->getActivationNumbers();
-            for (unsigned int i = 0; i < it->first->getNumberActivation(); i++) {
-                activationNumbers += std::to_string(*actNumbers) + ' ';
-                actNumbers++;
-            }
-
-            cout << " " << Formatter::format(it->first->getName(), headerNames[0].second - 1) << Formatter::format(std::to_string(it->first->getPrice()), headerNames[1].second) << Formatter::format(activationNumbers, headerNames[2].second);
-            cout << Formatter::format(std::to_string(it->second), headerNames[3].second) << Formatter::format(BaseCard::typeToString(it->first->getType()), headerNames[4].second) << Formatter::format(it->first->getIcon()->getName(), headerNames[5].second) << it->first->getEffetDescription() << "\n";
-        }
-
-	}
-}
-
-void Player::printMonuments() const {
-	cout << "\n" << username << "'s monuments: \n";
-	vector<pair<string, unsigned int>> headerNames;
-	headerNames = {
-		{" Name", 31},
-		{"Activated", 9},
-		{"Price", 5},
-		{"Type" , 20},
-		{"Icon", 8},
-		{"Effect", 50}
-	};
-	cout << Formatter::formatHeader(headerNames);
-	for (auto it = monuments.begin(); it != monuments.end(); it++) {
-
-		cout << " " << Formatter::format(it->first->getName(), headerNames[0].second - 1) << Formatter::format(std::to_string(it->second), headerNames[1].second) << Formatter::format(std::to_string(it->first->getPrice()), headerNames[2].second);
-		cout << Formatter::format(BaseCard::typeToString(it->first->getType()), headerNames[3].second);
-		cout << Formatter::format(it->first->getIcon()->getName(), headerNames[4].second);
-		cout << it->first->getEffetDescription() << "\n";
-	}
-}
 size_t Player::cheapestMonumentAvailablePrice() const {
     auto it= find_if(monuments.begin(),monuments.end(),[](pair<Monument*,bool> it){return it.second==false;});
     size_t min=0;
@@ -177,20 +106,26 @@ void Player::removeEstablishment(EstablishmentCard* card) {
 	cardsCounter[card]--;
 }
 
-bool Player::isClosed(EstablishmentCard *card) {
-    auto it=find_if(closed.begin(),closed.end(),[card](pair<EstablishmentCard*,bool> elem){return elem.first==card;});
-    if (it!=closed.end()) return it->second;
-    else return false;// pour l'edition standard où closed n'est pas initialisé - tjr retourner false
-}
-void Player::close(EstablishmentCard *card) {
-    closed[card]=true;// operateur[] ajoute l'élément si il n'existe pas déja
-}
-void Player::open(EstablishmentCard* card){
-    closed.at(card)=false;
-}
-
 const size_t Player::getNbMonumentsActivated() const{
     size_t nb=0;
     for (auto it : monuments) if (it.second) nb++;
     return nb;
+}
+
+
+EstablishmentCard* Player::getCardByName(string name) const {
+    auto it = find_if(cardsCounter.begin(), cardsCounter.end(), [&name](std::pair<EstablishmentCard* const, size_t> obj) {return obj.first->getName() == name; });
+	if (it != cardsCounter.end()) {
+        //found the name!
+        return it->first;
+    }
+    string error = "error getCardByName, didn't find : " + name + "\n";
+    throw invalid_argument(error);
+}
+
+bool Player::isAnyMonumentLeftToBuy() const {
+	if (cheapestMonumentAvailablePrice() == 0) {
+		return false;
+	}
+	return true;
 }

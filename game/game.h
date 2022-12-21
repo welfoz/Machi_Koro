@@ -1,4 +1,6 @@
 #pragma once
+#ifndef MACHI_KORO_GAME_H
+#define MACHI_KORO_GAME_H
 #include "../bank/account.h"
 #include "../cards/allCards.h"
 #include "../bank/bank.h"
@@ -10,14 +12,16 @@
 #include "../cards/icon.h"
 #include "../cards/monument.h"
 #include "../players/player.h"
+#include "../interface/interface.h"
 #include <vector>
 #include <algorithm>
 #include <stdexcept>
 using namespace std;
 
 class Game{
+    friend class Controller;
+    friend class MarinaController;
 protected:
-    static Game* instance;
     vector<EstablishmentCard*> cards;
     vector<Monument*> monuments;
     Board* board;
@@ -28,8 +32,9 @@ protected:
     vector<const Icon*> icons;
     size_t nbPlayers;
     size_t idCurrentPlayer;
+    size_t diceValue;
 
-    static void freeInstance();
+    Game();
     Game(const Game&) = delete;
     Game& operator=(const Game& g) = delete;
 
@@ -41,44 +46,47 @@ protected:
     virtual void createBoard();
     virtual void createIcons();
     vector<EstablishmentCard*> getPlayerStarterCards();
+
+    void setDiceValue(size_t nb, size_t* throws);
     
-    //match methods
-    virtual void turn(Player* player);
     void activation(Player* p, size_t number);
     virtual void activationRedCards(Player* p, size_t n);
     virtual void activationGreenAndBlueCards(Player* p, size_t n);
     virtual void activationPurpleCards(Player* p, size_t n);
-    virtual void action(Player* player);
-    const size_t getNbDiceChosen(Player& p);
-    bool isWinner(Player* player) const;
-    Game();
     void activateShoppingMall(Player* p, vector<EstablishmentCard*> cards);
-    void printPlayerInformation(Player* p) const;
+
     size_t* throwDices(size_t nb) const;
-    size_t* activateRadioTower(Player* player, size_t nb, size_t* throws) const;
-    void activateAmusementPark(Player* p, size_t nb, size_t* throws);
-    size_t getDiceValue(size_t nb, size_t* throws);
-    void printBalances() const;
+    bool isWinner(Player* player) const;
+
     bool isPlayerAbleToPayEstablishmentCard(Player* p);
     bool isPlayerAbleToPayMonument(Player* p);
+    bool canAddNewPlayer() const;
+
+    virtual void purchaseOneEstablismentCard(Player* player, EstablishmentCard* card);
+    virtual void undoPurchaseOneEstablismentCard(Player* player, EstablishmentCard* card);
+
+    void purchaseOneMonument(Player* player, Monument* card);
+    void undoPurchaseOneMonument(Player* player, Monument* card);
 
 public:
     virtual ~Game();
 
-    // we can't call virtual functions in the constructor
-    virtual void createAll();
-    void match();
-
     // getter
-    static Game& getInstance();
+    const size_t getDiceValue() const {
+        return diceValue;
+    };
     const size_t& getNbPlayers() const {return nbPlayers;}
     Bank* getBank() const {return bank;}
-    Player& getPlayer(size_t id) const {return *players[id];}; //pourquoi il y avait *players[id-1] ?
+    virtual Player& getPlayer(size_t id) const {return *players[id];}; //pourquoi il y avait *players[id-1] ?
     const size_t& getIdCurrentPlayer() const {return idCurrentPlayer;}
     EstablishmentCard* getCardByName(string name) const;
     Monument* getMonumentByName(string name) const;
     Player* getPlayerByName(string name) const;
     vector<const Icon*> getIcons() const {return this->icons;};
-    //trade
+    const Board* const getBoard() const {return board;}
+    const Player* getWinner() const {return winner;}
+
     void tradeCards(Player* p1, Player* p2,EstablishmentCard* cardP1, EstablishmentCard* cardP2);
 };
+
+#endif

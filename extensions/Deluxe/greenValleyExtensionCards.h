@@ -11,7 +11,9 @@
 #include "../../cards/cardColor.h"
 #include <list>
 #include "../../players/player.h"
+#include "PlayerGreenValley.h"
 #include "cmath"
+#include "../../game/controller/control.h"
 class CornField : public Blue {
 public:
     CornField() : Blue(nullptr, 2, "Corn Field", 2, "On anyone's turn : If you have less than 2 landmarks built, get 1 coin from the bank", 6) {
@@ -161,7 +163,8 @@ public:
         EstablishmentCard::setActivationNumbers(actNumber);
     }
     const map<Player*, size_t> getInvestment() {return investments;}
-    void invest(Player* player,size_t amount) {investments[player]++;}
+    bool isAbleToInvest(Player* player);
+    void invest(Player* player, size_t amount);
     void activation(Player& p) override;
 };
 

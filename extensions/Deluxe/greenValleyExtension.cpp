@@ -1,12 +1,5 @@
 #include "greenValleyExtension.h"
 
-
-GreenValley& GreenValley::getInstance() {
-    if (instance == nullptr)
-        instance = new GreenValley;
-    return dynamic_cast<GreenValley&>(*instance);
-}
-
 void GreenValley::createEstablishmentCards(){
     Game::createEstablishmentCards();
     cards.push_back(new CornField());
@@ -31,25 +24,37 @@ void GreenValley::createIcons(){
     icons.push_back(new Icon("suitcase","suitcase.png",Type::secondaryIndustry));
 }
 
-void GreenValley::turn(Player* player){
-    cout << "Green Valley \n\n";
-    Game::turn(player);
+void GreenValley::createPlayer(string name, size_t id) {
+    if (!canAddNewPlayer()) {
+        throw out_of_range("limit_players_reached");
+    }
+
+    for (unsigned int i = 0; i < this->nbPlayers; i++) {
+        if (players[i]->getUsername() == name) {
+			throw invalid_argument("two_players_homonyme");
+        }
+    }
+    players[id] = new PlayerGreenValley(name, id, monuments, getPlayerStarterCards());
+
+    this->nbPlayers += 1;
 }
 
-void GreenValley::createPlayer(string name, size_t id) {
-    players[id] = new Player(name, id, monuments, getPlayerStarterCards());
+PlayerGreenValley& GreenValley::getPlayer(size_t id) const {
+    return dynamic_cast<PlayerGreenValley&>(*players[id]);
 }
-void GreenValley::action(Player *player) {
-    size_t n = player->getCards().count(getCardByName("Loan Office"));
-    Game::action(player);
-    size_t n2=player->getCards().count(getCardByName("Loan Office"));
-    if (n<n2) bank->credit(player->getId(),5);
-    EstablishmentCard* card=getCardByName("Tech Startup");
-    auto techStartup = dynamic_cast<TechStartup*> (card);
-    if (player->getCards().count(techStartup)){
-        string choice;
-        cout<<"Do you want to invest on Tech Startup ? (Y/N)"<<endl;
-        cin>>choice;
-        if (choice=="Y" || choice=="y") techStartup->invest(player,1);
+
+void GreenValley::purchaseOneEstablismentCard(Player* player, EstablishmentCard* card) {
+    Game::purchaseOneEstablismentCard(player, card);
+
+    if (card->getName() == "Loan Office") {
+		this->bank->credit(player->getId(), 5);
+    }
+}
+
+void GreenValley::undoPurchaseOneEstablismentCard(Player* player, EstablishmentCard* card) {
+    Game::undoPurchaseOneEstablismentCard(player, card);
+
+    if (card->getName() == "Loan Office") {
+		this->bank->debit(player->getId(), 5);
     }
 }
