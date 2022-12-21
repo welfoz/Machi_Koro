@@ -39,7 +39,7 @@ void Controller::createAll() {
 			getGame()->createPlayer(interface->getInputText(), getGame()->nbPlayers);
 		}
         catch (std::invalid_argument& error) {
-            interface->printBasicMessage("Error : name already used\n");
+            interface->printError(error);
             continue;
         }
 		catch (std::out_of_range& error) {
