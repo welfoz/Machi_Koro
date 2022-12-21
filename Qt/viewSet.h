@@ -14,7 +14,7 @@
 #include "viewCard.h"
 #include "viewMonument.h"
 #include "viewDice.h"
-#include "ViewOnePlayer.h"
+#include "viewOnePlayer.h"
 
 class QLabel;
 class QLineEdit;

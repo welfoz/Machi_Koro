@@ -1,4 +1,4 @@
-#include "ViewOnePlayer.h"
+#include "viewOnePlayer.h"
 #include <QPainter>
 #include <QString>
 #include <QStaticText>

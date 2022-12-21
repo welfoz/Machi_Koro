@@ -122,4 +122,3 @@ void ViewSet::monumentClick(ViewMonument *vm)
     qmsgbox.setText(QString::fromStdString(vm->getMonument()->getName()));
     qmsgbox.exec();
 }
-
