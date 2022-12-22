@@ -44,7 +44,7 @@ void Controller::createAll() {
 			getGame()->createPlayer(interface->getInputText(), getGame()->nbPlayers);
 		}
         catch (std::invalid_argument& error) {
-            interface->printBasicMessage("Error : name already used\n");
+            interface->printError(error);
             continue;
         }
 		catch (std::out_of_range& error) {
@@ -53,11 +53,16 @@ void Controller::createAll() {
 		}
 
 		if (!interface->confirmationDialog("Do you want to add another player", "Yes", "No")) {
-			stop = true;
+			if (!getGame()->isMinimumNumbersOfPlayersReached()) {
+				interface->printBasicMessage("The minimum number of player is : " + std::to_string(game->getMinimumNumerbOfPlayers()) + "\nPlease add more.\n");
+            }
+            else {
+				stop = true;
+            }
 		}
 	}
     if (!getGame()->canAddNewPlayer()) {
-		interface->printBasicMessage("Limit of 10 players reached\n");
+		interface->printBasicMessage("Limit of " + std::to_string(game->getMaximumNumerbOfPlayers()) + " players reached\n");
     }
 
 	getGame()->createBank(getGame()->nbPlayers);
@@ -257,110 +262,7 @@ void Controller::action(Player* player){
     } 
 };
 
-MarinaController::MarinaController() : Controller() {
-    delete game;
-	game = dynamic_cast<Marina*>(new Marina);
-};
-
-MarinaController& MarinaController::getInstance()
-{
-    if (instance == nullptr)
-        instance = new MarinaController;
-    return dynamic_cast<MarinaController&>(*instance);
-}
-
-void MarinaController::turn(Player* player) {
-    if (getGame()->getWinner()!= nullptr) return;
-
-    interface->printPlayerInformation(player);
-    interface->printMonuments(player);
-    interface->printCards(player);
-
-    activateCityHall(player);
-
-    const size_t nb = getNbDiceChosen(*player);
-
-    size_t* throws = getGame()->throwDices(nb);
-    interface->printDices(throws,nb);
-
-    throws = activateRadioTower(player, nb, throws);
-
-    getGame()->setDiceValue(nb,throws);
-    getGame()->diceValue= this->activateHarbor(getGame()->diceValue,player);
-
-    getGame()->activation(player, game->diceValue);
-
-    interface->printBalances(game->players);
-
-    map<Monument*,bool> playerMonuments = player->getMonuments();
-    map<EstablishmentCard*,size_t> playerCards = player->getCards();
-
-    action(player);
-
-    dynamic_cast<MarinaBoard*>(getGame()->board)->checkNumberOfDecks();
-
-    if (player->getMonuments() == playerMonuments || player->getCards() == playerCards)
-        activateAirport(player);
-
-    activateAmusementPark(player, nb, throws);
-}
-
-
-void MarinaController::activateCityHall(Player* player){
-    if (Controller::getInstance().getGame()->getBank()->getAccount(player->getId())->getSolde() == 0)
-        Controller::getInstance().getGame()->getBank()->credit(player->getId(), 1);
-}
-
-
-size_t MarinaController::activateHarbor(size_t diceValue, Player* player){
-    if (diceValue >= 10 && player->getMonument("Harbor") && interface->confirmationDialog("Do you want to add 2 to the dice value ?","Yes","No")) return diceValue + 2;
-    else return diceValue;
-}
-
-void MarinaController::activateAirport(Player* player){
-    if (player->getMonument("Airport")) Controller::getInstance().getGame()->getBank()->credit(player->getId(), 10);
-}
-
-GreenValleyController::GreenValleyController() : Controller() {
-    delete game;
-	game = dynamic_cast<GreenValley*>(new GreenValley);
-};
-
-GreenValleyController& GreenValleyController::getInstance(){
-    if (instance == nullptr)
-        instance = new GreenValleyController();
-    return dynamic_cast<GreenValleyController&>(*instance);
-}
-
-void GreenValleyController::turn(Player* player) {
-    Controller::turn(player);
-    techStartupInvestment(player);
-}
-
-void GreenValleyController::techStartupInvestment(Player* player) {
-    auto *techStartup = dynamic_cast<TechStartup *>(game->getCardByName("Tech Startup"));
-    if (techStartup->isAbleToInvest(player) && interface->confirmationDialog("Do you want to invest on Tech Startup ?", "Yes", "No")) {
-		techStartup->invest(player, 1);
-    }
-}
-
 void Controller::tradeTwoEstablishmentCards(Player* p1, Player* p2, EstablishmentCard* card1, EstablishmentCard* card2) {
     game->tradeCards(p1, p2, card1, card2);
     interface->printBasicMessage(p1->getUsername() + " has taken " + card1->getName() + " from " + p2->getUsername() + " and gave " + card2->getName() + " in exchange.\n");
-}
-
-DeluxeController::DeluxeController() : Controller() {
-    delete game;
-    game = dynamic_cast<Deluxe*>(new Deluxe());
-};
-
-DeluxeController& DeluxeController::getInstance(){
-    if (instance == nullptr)
-        instance = new DeluxeController();
-    return dynamic_cast<DeluxeController&>(*instance);
-}
-
-void DeluxeController::turn(Player* player){
-    MarinaController::turn(player);
-    techStartupInvestment(player);
 }
