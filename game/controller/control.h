@@ -8,7 +8,7 @@ protected:
     Interface* const interface;
     static void freeInstance();
     virtual void turn(Player* player);
-    //virtual void createAll();
+    virtual void createAll();
     Controller(Interface::Option type = Interface::Option::cli);
     const size_t getNbDiceChosen(Player& p);
     virtual void action(Player* player);
