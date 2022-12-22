@@ -1,11 +1,14 @@
-
+#include <QApplication>
 #include "./extensions/Marina/marinaExtension.h"
 #include "extensions/Deluxe/greenValleyExtension.h"
 #include "game/controller/control.h"
-int main(int argc, const char* argv[]) {
+int main(int argc, char* argv[]) {
+    QApplication app(argc, argv);
+
+    Controller::getInstance().match();
     // insert code here...
 
-    cout << "Hello, World!\n";
+   /* cout << "Hello, World!\n";
     cout << "Welcome to Machi Koro! Please choose the extension you want to play to:\n";
     char choice = '0';
     while ((choice != 'B') && (choice != 'M') && (choice != 'G') && (choice != 'D')){
@@ -35,5 +38,7 @@ int main(int argc, const char* argv[]) {
         break;
     }
     system("pause");
-    return 0;
+    return 0;*/
+    return app.exec();
+
 }

@@ -38,7 +38,6 @@ void ViewSetting::viewInputText(){
 
 void ViewSetting::clickValidate(){
     playerName = editPlayer->text();
-    isClicked=1;
     close();
 }
 

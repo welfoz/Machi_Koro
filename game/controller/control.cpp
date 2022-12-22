@@ -1,5 +1,6 @@
 #include "control.h"
 #include "../../extensions/Deluxe/deluxeExtension.h"
+#include "../Qt/viewSet.h"
 
 Controller& Controller::getInstance()
 {
@@ -23,6 +24,10 @@ Controller::Controller(Interface::Option type) : interface(Interface::createInte
 
  
 void Controller::createAll() {
+    //ViewSet* viewSet = new ViewSet;
+    //viewSet->show();
+    // For Qt : initialize the set
+
     interface->printWelcomingMessage();
 
     // create cards before players because players needs them to be created
@@ -57,6 +62,10 @@ void Controller::createAll() {
 
 	getGame()->createBank(getGame()->nbPlayers);
 	getGame()->createBoard();
+
+
+    //viewSet->setSet();
+    //For Qt : print the board on the set
 };
 
 // gui: pop up and btns

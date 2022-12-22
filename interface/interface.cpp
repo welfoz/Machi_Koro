@@ -314,10 +314,15 @@ void Gui::printBasicMessage(string message){
 }
 
 string Gui::getInputText() const {
-    /*ViewSetting* viewSetting = new ViewSetting;
-    viewSetting->viewInputText();
-    string name = viewSetting->clickValidate();
-    return name;*/
+    return std::to_string(Controller::getInstance().getGame()->getNbPlayers());
+    //Not working, but at least return something correct fro Controller::CreateAll()
+}
+
+
+void Gui::printTurnCounter(size_t turnCounter) {
+    ViewMessage* viewMessage = new ViewMessage;
+    viewMessage->viewBasicMessage(QString::number(static_cast<int>(turnCounter))
+);
 }
 
 // WRONG IMPLEMENTATION
