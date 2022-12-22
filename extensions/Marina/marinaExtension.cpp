@@ -65,6 +65,3 @@ void Marina::createIcons(){
     Game::createIcons();
     icons.push_back(new Icon("boat", "boat.png", Type::primaryIndustry));
 }
-
-
-
