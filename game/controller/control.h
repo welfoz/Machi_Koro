@@ -18,7 +18,6 @@ protected:
 public:
     virtual ~Controller();
 
-    void createAll();
 
     static Controller& getInstance();
     Interface* const getInterface() const {
