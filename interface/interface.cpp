@@ -1,19 +1,21 @@
 #include "interface.h"
 #include "../game/game.h"
 #include "../game/controller/control.h"
+#include "../Qt/viewMessage.h"
+#include "../Qt/viewSetting.h"
 
 Interface* Interface::createInterfaceFromOption(Option type)
 {
-	switch (type) {
+    switch (type) {
 	case Option::cli:
 		return new Cli();
-	case Option::gui:
-		return new Gui();
-	case Option::cliGreenValley:
+    case Option::gui:
+        return new Gui();
+    case Option::cliGreenValley:
 		return new GreenValleyCli();
 	default:
 		throw "sa mere";
-	}
+    }
 }
 
 void Cli::printWelcomingMessage() {
@@ -295,10 +297,32 @@ void GreenValleyCli::printCards(Player* player) const {
 
 		}
 	}
-	else {
+    else {
 		Cli::printCards(player);
 	}
 
+}
+
+void Gui::printWelcomingMessage(){
+    ViewMessage* viewMessage = new ViewMessage;
+    viewMessage->viewWelcomingMessage();
+}
+
+void Gui::printBasicMessage(string message){
+    ViewMessage* viewMessage = new ViewMessage;
+    viewMessage->viewBasicMessage(QString::fromStdString(message));
+}
+
+string Gui::getInputText() const {
+    return std::to_string(Controller::getInstance().getGame()->getNbPlayers());
+    //Not working, but at least return something correct fro Controller::CreateAll()
+}
+
+
+void Gui::printTurnCounter(size_t turnCounter) {
+    ViewMessage* viewMessage = new ViewMessage;
+    viewMessage->viewBasicMessage(QString::number(static_cast<int>(turnCounter))
+);
 }
 
 // WRONG IMPLEMENTATION
