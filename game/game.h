@@ -42,7 +42,7 @@ protected:
 
     // initialisation : toutes ces méthodes sont appellés dans le constructeur Game()
     void createBank(size_t nbOfPlayers);
-    virtual void createPlayer(string name, size_t id);
+    virtual void createPlayer(string name, size_t id, bool isAi);
     virtual void createEstablishmentCards();
     virtual void createMonumentCards();
     virtual void createBoard();

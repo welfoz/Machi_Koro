@@ -32,11 +32,11 @@ void Controller::createAll() {
 
     bool stop = false;
 	while (!stop && getGame()->canAddNewPlayer()) {
-
+        bool isAi = interface->confirmationDialog("What type of player do you want to add ?","AI","Human");
 		interface->printBasicMessage("\nEnter the name of the player number " + std::to_string(getGame()->nbPlayers + 1) + " : ");
 
 		try {
-			getGame()->createPlayer(interface->getInputText(), getGame()->nbPlayers);
+			getGame()->createPlayer(interface->getInputText(), getGame()->nbPlayers,isAi);
 		}
         catch (std::invalid_argument& error) {
             interface->printError(error);

@@ -193,7 +193,7 @@ Player* Cli::selectOnePlayerDifferentFromTheCurrentOne(Player* player) const {
 	return p2;
 }
 
-EstablishmentCard* Cli::selectOneEstablishmentCardFromPlayer(Player* target, string message) const {// je vois pas le but de "decider"
+EstablishmentCard* Cli::selectOneEstablishmentCardFromPlayer(Player* target, string message) const {
     cout << target->getUsername() + "'s cards";
     printCards(target);
     string choosenCard;

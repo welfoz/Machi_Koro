@@ -12,7 +12,7 @@ bool Game::canAddNewPlayer() const {
     return true;
 }
 
-void Game::createPlayer(string name, size_t id) {
+void Game::createPlayer(string name, size_t id, bool isAi) {
     if (!canAddNewPlayer()) {
         throw out_of_range("limit_players_reached");
     }
@@ -22,7 +22,7 @@ void Game::createPlayer(string name, size_t id) {
 			throw invalid_argument("Error : name already used\n");
         }
     }
-    players[id] = new Player(name, id, monuments, getPlayerStarterCards());
+    players[id] = new Player(name, id, monuments, getPlayerStarterCards(),isAi);
 
     this->nbPlayers += 1;
 };

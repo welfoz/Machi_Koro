@@ -14,6 +14,7 @@ class Player{
 private:
     size_t id;
     map<Monument*,bool>monuments;
+    bool aI;
 protected:
     map<EstablishmentCard*,size_t> cardsCounter;
     string username;
@@ -32,10 +33,11 @@ public:
     const map<Monument*, bool>& getMonuments() const {return monuments;};
     const map<EstablishmentCard*,size_t>& getCards() {return cardsCounter;}
     const size_t getNbMonumentsActivated() const;
-    Player(string name, size_t id, vector<Monument*> monuments, vector<EstablishmentCard*> cards, bool iP=false);
+    Player(string name, size_t id, vector<Monument*> monuments, vector<EstablishmentCard*> cards,bool isAi, bool iP=false);
     const string& getUsername() const {return username;};
     const size_t& getId() const;
     size_t cheapestMonumentAvailablePrice() const;
     EstablishmentCard* getCardByName(string name) const;
     bool isAnyMonumentLeftToBuy() const;
+    const bool& isAi() const {return aI;}
 };
