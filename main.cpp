@@ -1,11 +1,11 @@
-
+#include <QApplication>
 #include "./extensions/Marina/marinaExtension.h"
 #include "extensions/Deluxe/greenValleyExtension.h"
 #include "game/controller/control.h"
 #include "game/controller/marinaController.h"
 #include "game/controller/greenValleyController.h"
 #include "game/controller/deluxeController.h"
-int main(int argc, const char* argv[]) {
+int main(int argc, char* argv[]) {
     // insert code here...
 
     cout << "Hello, World!\n";
@@ -39,4 +39,6 @@ int main(int argc, const char* argv[]) {
     }
     system("pause");
     return 0;
+    return app.exec();
+
 }

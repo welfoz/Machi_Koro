@@ -17,6 +17,7 @@ protected:
 public:
     virtual ~Controller();
 
+
     static Controller& getInstance();
     Interface* const getInterface() const {
         return interface;
