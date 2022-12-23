@@ -5,11 +5,12 @@ class Controller {
 protected:
     Game* game;
     static Controller* instance;
+    static Interface::Option interfaceType;
     Interface* const interface;
     static void freeInstance();
     virtual void turn(Player* player);
     virtual void createAll();
-    Controller(Interface::Option type = Interface::Option::gui);
+    Controller(Interface::Option type = interfaceType);
     const size_t getNbDiceChosen(Player& p);
     virtual void action(Player* player);
 	size_t* activateRadioTower(Player* player, size_t nb, size_t* throws) const;
@@ -18,7 +19,7 @@ protected:
 public:
     virtual ~Controller();
 
-
+    static void setInterfaceType(Interface::Option);
     static Controller& getInstance();
     Interface* const getInterface() const {
         return interface;

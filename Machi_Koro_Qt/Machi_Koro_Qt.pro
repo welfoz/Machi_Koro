@@ -28,6 +28,9 @@ HEADERS += \
     ../formatter/formatter.h \
     ../game/board.h \
     ../game/controller/control.h \
+    ../game/controller/deluxeController.h \
+    ../game/controller/marinaController.h \
+    ../game/controller/greenValleyController.h \
     ../game/dice.h \
     ../game/game.h \
     ../interface/interface.h \
@@ -60,6 +63,9 @@ SOURCES += \
     ../formatter/formatter.cpp \
     ../game/board.cpp \
     ../game/controller/control.cpp \
+    ../game/controller/deluxeController.cpp \
+    ../game/controller/marinaController.cpp \
+    ../game/controller/greenValleyController.cpp \
     ../game/dice.cpp \
     ../game/game.cpp \
     ../interface/interface.cpp \

@@ -8,6 +8,7 @@
 int main(int argc, char* argv[]) {
     // insert code here...
     /*
+    Controller::setInterfaceType(Interface::Option::cli);
     cout << "Hello, World!\n";
     cout << "Welcome to Machi Koro! Please choose the extension you want to play to:\n";
     char choice = '0';
@@ -41,6 +42,7 @@ int main(int argc, char* argv[]) {
     return 0;
     */
     QApplication app(argc, argv);
+    Controller::setInterfaceType(Interface::Option::gui);
     Controller::getInstance().match();
     return app.exec();
 }

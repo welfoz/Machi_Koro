@@ -266,3 +266,9 @@ void Controller::tradeTwoEstablishmentCards(Player* p1, Player* p2, Establishmen
     game->tradeCards(p1, p2, card1, card2);
     interface->printBasicMessage(p1->getUsername() + " has taken " + card1->getName() + " from " + p2->getUsername() + " and gave " + card2->getName() + " in exchange.\n");
 }
+
+Interface::Option Controller::interfaceType = Interface::Option::cli;
+
+void Controller::setInterfaceType(Interface::Option type){
+    Controller::interfaceType = type;
+};
