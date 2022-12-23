@@ -9,7 +9,7 @@ protected:
     static void freeInstance();
     virtual void turn(Player* player);
     virtual void createAll();
-    Controller(Interface::Option type = Interface::Option::cli);
+    Controller(Interface::Option type = Interface::Option::gui);
     const size_t getNbDiceChosen(Player& p);
     virtual void action(Player* player);
 	size_t* activateRadioTower(Player* player, size_t nb, size_t* throws) const;
