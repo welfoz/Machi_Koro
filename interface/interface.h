@@ -36,7 +36,6 @@ public:
 	virtual EstablishmentCard* selectOneEstablishmentCardFromPlayer(Player* target, string message,bool isAi) const = 0;
     virtual Monument* selectMonumentCardFromCurrentPlayer(Player* player, string message,bool isAi) const = 0;
     template<typename t> t getAiChoice(std::vector<t> options,std::vector<t> exceptions={}) const;
-    //template<typename t> t getAiChoice(std::map<t,size_t> options,std::vector<t> exceptions={}) const; // surcharge pour supporter les maps
 }; 
 
 class Cli : public Interface {
