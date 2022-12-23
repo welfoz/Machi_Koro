@@ -20,8 +20,8 @@ void Deluxe::createMonumentCards() {
     Marina::createMonumentCards();
 }
 
-void Deluxe::createPlayer(string name, size_t id) {
-    GreenValley::createPlayer(name,id);
+void Deluxe::createPlayer(string name, size_t id, bool isAi) {
+    GreenValley::createPlayer(name,id,isAi);
     players[id]->purchaseMonument(getMonumentByName("City Hall"));
 }
 

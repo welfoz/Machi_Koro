@@ -70,7 +70,7 @@ const size_t Controller::getNbDiceChosen(Player& p) { // est appelé par le jeu 
     size_t n=0;
     while (n>2 || n<1){
         interface->printBasicMessage("How many dice do you chose to roll ?\n");
-        n = interface->getInputNumber();
+        n = interface->getInputNumber(1,2,p.isAi());
         if (n>2 || n<1) interface->printBasicMessage("Please select a number between 1 and 2\n");
     }
     return n;
@@ -125,11 +125,13 @@ void Controller::turn(Player* player){
 };
 
 size_t* Controller::activateRadioTower(Player* player, size_t nb, size_t* throws) const{
-    if (player->getMonument("Radio Tower") && interface->confirmationDialog("Do you want to re-roll the dice(s) ? ", "Yes", "No")) {
-		for (size_t i = 0; i < nb; i++) {
-			throws[i] = game->dice.throwDice();
-		}
-        interface->printDices(throws, nb);
+    if (player->getMonument("Radio Tower")){
+        if (interface->confirmationDialog("Do you want to re-roll the dice(s) ? ", "Yes", "No")) {
+            for (size_t i = 0; i < nb; i++) {
+                throws[i] = game->dice.throwDice();
+            }
+            interface->printDices(throws, nb);
+        }
     }
     return throws;
 }
@@ -145,7 +147,7 @@ void Controller::activateAmusementPark(Player* player, size_t nb, size_t* throws
 void Controller::action(Player* player){
     
     interface->printBasicMessage( "\nWhat do you want to do? (1 = Buy an establishment, 2 = Build a monument, 3 = Nothing!)\n");
-    int choix = interface->getInputNumber();
+    int choix = interface->getInputNumber(1,3,player->isAi());
 
     switch (choix){
     case 1:
@@ -169,7 +171,11 @@ void Controller::action(Player* player){
         while (card == nullptr){
             // reflexion: do we need another function called askForCardToBuy ?
             interface->printBasicMessage( "Enter the name of the card you want to buy : ");
-            choice = interface->getInputText();
+
+            vector<string> context;
+            for (auto it : game->board->getCards()) context.push_back(it.first->getName());
+
+            choice = interface->getInputText(context,player->isAi());
 
             try
             {
@@ -220,7 +226,11 @@ void Controller::action(Player* player){
             // same as card
             // new method interface askForOneMonument()
             interface->printBasicMessage("Enter the name of the monument you want to buy : ");
-            choice = interface->getInputText();
+
+            vector<string> context;
+            for (auto it : game->monuments) if (!player->getMonument(it->getName())) context.push_back(it->getName()); // to tell th AI what can be written
+
+            choice = interface->getInputText(context,player->isAi());
 
             try {
 				monument = getGame()->getMonumentByName(choice);
@@ -230,7 +240,6 @@ void Controller::action(Player* player){
                 interface->printError(e);
                 continue;
             }
-
 			interface->printMonuments(player);
 
             if (interface->confirmationDialog("Do you want to change your action ?",  "Yes", "No")) {
@@ -257,3 +266,4 @@ void Controller::tradeTwoEstablishmentCards(Player* p1, Player* p2, Establishmen
     game->tradeCards(p1, p2, card1, card2);
     interface->printBasicMessage(p1->getUsername() + " has taken " + card1->getName() + " from " + p2->getUsername() + " and gave " + card2->getName() + " in exchange.\n");
 }
+

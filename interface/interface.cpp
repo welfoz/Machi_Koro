@@ -31,34 +31,57 @@ void Cli::printWelcomingMessage() {
     cout << "Made with ❤️  by MICHEL Fabien - BROSSARD Felix - TAVERNE Jules - CORTY Pol - LEMERLE Xavier\n\n";
 }
 
-string Cli::getInputText() const {
+string Cli::getInputText(vector<string> context,bool isAi) const {// context give the context to the AI
 	string text;
-	getline(cin, text);
+    if (isAi){
+        text= getAiChoice(context);
+        printBasicMessage("\n"+text+"\n");
+        fflush(stdout);
+    }
+	else {
+        getline(cin, text);
+    }
 	return text;
 }
 
 // be careful! firstOption and secondOption HAS to be UTF-8. No accent.
-bool Cli::confirmationDialog(string message, string firstOption, string secondOption) {
+bool Cli::confirmationDialog(string message, string firstOption, string secondOption,bool isAi) {
 	string stopAnswer = "";
-	while (Formatter::toLower(stopAnswer) != Formatter::toLower(firstOption) && Formatter::toLower(stopAnswer) != Formatter::toLower(secondOption)) {
-		cout << message << " (" << firstOption << " | " << secondOption << ") : ";
-		cin >> stopAnswer;
-		cin.ignore();
-	}
+    if (isAi) {
+        stopAnswer=getAiChoice(vector<string>({firstOption,secondOption}));
+        printBasicMessage("\n"+stopAnswer+"\n");
+        fflush(stdout);
+    }
+    else {
+        while (Formatter::toLower(stopAnswer) != Formatter::toLower(firstOption) && Formatter::toLower(stopAnswer) != Formatter::toLower(secondOption)) {
+            cout << message << " (" << firstOption << " | " << secondOption << ") : ";
+            cin >> stopAnswer;
+            cin.ignore();
+        }
+    }
 	if (Formatter::toLower(stopAnswer) == Formatter::toLower(secondOption)) {
 		return false;
 	}
 	return true;
 }
 
-void Cli::printBasicMessage(string message) {
+void Cli::printBasicMessage(string message) const {
 	cout << message;
 }
 
-size_t Cli::getInputNumber() {
+size_t Cli::getInputNumber(size_t min, size_t max,bool isAi) {
+    vector<size_t> options;
+    for (size_t i=min; i<= max;i++) options.push_back(i);
 	size_t number;
-	cin >> number;
-	cin.ignore();
+    if (isAi) {
+        number= getAiChoice(options);
+        printBasicMessage("\n"+to_string(number)+"\n");
+        fflush(stdout);
+    }
+	else {
+        cin >> number;
+        cin.ignore();
+    }
 	return number;
 }
 
@@ -175,86 +198,125 @@ void Cli::printError(const std::exception& message) const {
 	std::cerr << message.what() << "\n";
 };
 
-Player* Cli::selectOnePlayerDifferentFromTheCurrentOne(Player* player) const {
-    string name;
-    bool loop = true;
+Player* Cli::selectOnePlayerDifferentFromTheCurrentOne(Player* player,bool isAi) const {
     Player *p2;
-    while (loop) {
-        try {
-            cout << "\nType the name of the player you want to trade a card with :" << endl;
-			name = getInputText();
-            p2 = Controller::getInstance().getGame()->getPlayerByName(name);
-            if (p2 != player) loop = false;
-            else cout << "Impossible" << endl;
-        } catch (string error) {
-            cout << error << endl;
+    Game* game = Controller::getInstance().getGame();
+    if (isAi){
+        p2= getAiChoice(game->getPlayers(),vector<Player*> ({player}));
+        printBasicMessage("\n"+player->getUsername()+"\n");
+        fflush(stdout);
+    }
+    else {
+        string name;
+        bool loop = true;
+        while (loop) {
+            try {
+                cout << "\nType the name of the player you want to trade a card with :" << endl;
+                name = getInputText();
+                p2 = game->getPlayerByName(name);
+                if (p2 != player) loop = false;
+                else cout << "Impossible" << endl;
+            } catch (string error) {
+                cout << error << endl;
+            }
         }
     }
 	return p2;
 }
 
-EstablishmentCard* Cli::selectOneEstablishmentCardFromPlayer(Player* target, string message) const {
+EstablishmentCard* Cli::selectOneEstablishmentCardFromPlayer(Player* target, string message,bool isAi) const {
     cout << target->getUsername() + "'s cards";
     printCards(target);
-    string choosenCard;
     EstablishmentCard *takenCardPtr;
-    bool loop = true;
-    while (loop) {// we ask the user which card he want to take from that target
-        try {
-            cout << message << endl;
-            fflush(stdin);
-            getline(cin, choosenCard);
-            takenCardPtr = target->getCardByName(choosenCard);
-            if (takenCardPtr->getType() != Type::majorEstablishment) loop = false;
-            else cout << "Untradable card" << endl;
-        } catch (std::exception &error) {
-            cout << error.what() << endl;
+    if (isAi){
+        vector<EstablishmentCard*> options;
+        for (auto it : target->getCards()) if (it.first->getType()!=Type::majorEstablishment) options.push_back(it.first);
+        takenCardPtr= getAiChoice(options);
+        printBasicMessage("\n"+takenCardPtr->getName()+"\n");
+        fflush(stdout);
+    }
+    else {
+        string choosenCard;
+        bool loop = true;
+        while (loop) {// we ask the user which card he want to take from that target
+            try {
+                cout << message << endl;
+                fflush(stdin);
+                getline(cin, choosenCard);
+                takenCardPtr = target->getCardByName(choosenCard);
+                if (takenCardPtr->getType() != Type::majorEstablishment) loop = false;
+                else cout << "Untradable card" << endl;
+            } catch (std::exception &error) {
+                cout << error.what() << endl;
+            }
         }
     }
     return takenCardPtr;
 };
 
-Monument* Cli::selectMonumentCardFromCurrentPlayer(Player *player, std::string message) const {
+Monument* Cli::selectMonumentCardFromCurrentPlayer(Player *player, std::string message,bool isAi) const {
     if (player->getNbMonumentsActivated()==0) return nullptr;
     printMonuments(player);
-    
-    string monument;
     Monument* monumentPtr;
-    bool loop = true;
-    while (loop) {// we ask the user which monument he wants to demolish
-        try {
-            cout << message << endl;
-            cin.ignore();
-            getline(cin, monument);
-            monumentPtr = Controller::getInstance().getGame()->getMonumentByName(monument);
-            if (player->getMonument(monument)) loop = false;
-            else cout << "You haven't built this monument" << endl;
-		} catch (const std::exception& e) {
-			printError(e);
-        }
+    if (isAi){
+        vector<Monument*> options;
+        for (auto it : player->getMonuments()) if (it.second) options.push_back(it.first);
+        monumentPtr= getAiChoice(options);
+        printBasicMessage("\n"+monumentPtr->getName()+"\n");
+        fflush(stdout);
     }
-    return monumentPtr;
+    else {
+        string monument;
+        bool loop = true;
+        while (loop) {
+            try {
+                cout << message << endl;
+                cin.ignore();
+                getline(cin, monument);
+                monumentPtr = Controller::getInstance().getGame()->getMonumentByName(monument);
+                if (player->getMonument(monument)) loop = false;
+                else cout << "You haven't built this monument" << endl;
+            } catch (const std::exception& e) {
+                printError(e);
+            }
+        }
+        return monumentPtr;
+    }
 }
 
-EstablishmentCard* Cli::selectOneCardOwnedByAnyPlayer(string message) const {
+EstablishmentCard* Cli::selectOneCardOwnedByAnyPlayer(string message,bool isAi) const {
     Game* game=Controller::getInstance().getGame();
     for (size_t i=0; i<game->getNbPlayers();i++){
         printCards(&game->getPlayer(i));
     }
-
-    string choosenCard;
     EstablishmentCard *chosenCardPtr;
-    bool loop = true;
-    while (loop) {// we ask the user which card he want to take from that target
-        try {
-            cout << message << endl;
-            fflush(stdin);
-            getline(cin, choosenCard);
-            chosenCardPtr = Controller::getInstance().getGame()->getCardByName(choosenCard);
-            if (chosenCardPtr->getType() != Type::majorEstablishment) loop = false;
-            else cout << "Untradable card" << endl;
-        } catch (std::exception &error) {
-            cout << error.what() << endl;
+    if (isAi){
+        vector<EstablishmentCard*> options;
+        for (size_t j =0;j<game->getNbPlayers();j++){
+            for (auto it : game->getPlayer(j).getCards()) options.push_back(it.first);
+        }
+        chosenCardPtr= getAiChoice(options);
+        printBasicMessage("\n"+chosenCardPtr->getName()+"\n");
+        fflush(stdout);
+    }
+    else {
+        string chosenCard;
+        bool loop = true;
+        while (loop) {// we ask the user which card he want to take from that target
+            try {
+                cout << message << endl;
+                fflush(stdin);
+                getline(cin, chosenCard);
+                chosenCardPtr = Controller::getInstance().getGame()->getCardByName(chosenCard);
+                bool owned=false;
+                for (size_t i=0;i<game->getNbPlayers() && !owned ;i++){ // we check if at least one player own the chosen card
+                    if (game->getPlayer(i).getCards().count(chosenCardPtr)) owned =true;
+                }
+                if (chosenCardPtr->getType() != Type::majorEstablishment && owned) loop = false;
+                else cout << "Non-renewable card" << endl;
+            } catch (std::exception &error) {
+                cout << error.what() << endl;
+            }
         }
     }
     return chosenCardPtr;
@@ -303,6 +365,17 @@ void GreenValleyCli::printCards(Player* player) const {
 
 // WRONG IMPLEMENTATION
 // JUST NEED TO RETURN SOMETHING TO COMPILE
-EstablishmentCard* Gui::selectOneCardOwnedByAnyPlayer(string message) const {
+EstablishmentCard* Gui::selectOneCardOwnedByAnyPlayer(string message,bool isAi) const {
 	return Controller::getInstance().getGame()->getCardByName(message);
+}
+
+template<typename t>
+t Interface::getAiChoice(vector<t> options, vector<t> exceptions) const {
+    if (exceptions.size() > 0)
+        for (auto it: exceptions)
+            if (count(options.begin(), options.end(), it)) std::remove(options.begin(), options.end(), it);
+    std::random_device dev;
+    std::mt19937 rng(dev());
+    std::uniform_int_distribution<std::mt19937::result_type> dist(0, options.size() - 1);
+    return options[dist(rng)]; // renvoie un élément situé à un index aléatoire entre le début et la fin du vector
 }

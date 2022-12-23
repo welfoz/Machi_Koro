@@ -4,6 +4,7 @@
 
 #pragma once
 #include "stdio.h"
+#include <random>
 using namespace std;
 
 class Dice {

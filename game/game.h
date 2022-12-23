@@ -94,6 +94,7 @@ public:
     vector<const Icon*> getIcons() const {return this->icons;};
     const Board* const getBoard() const {return board;}
     const Player* getWinner() const {return winner;}
+    const vector<Player*> getPlayers() const {return vector<Player*> (players,+players+nbPlayers);}
 
     void tradeCards(Player* p1, Player* p2,EstablishmentCard* cardP1, EstablishmentCard* cardP2);
 };
