@@ -7,7 +7,7 @@
 #include "game/controller/deluxeController.h"
 int main(int argc, char* argv[]) {
     // insert code here...
-
+    /*
     cout << "Hello, World!\n";
     cout << "Welcome to Machi Koro! Please choose the extension you want to play to:\n";
     char choice = '0';
@@ -39,6 +39,8 @@ int main(int argc, char* argv[]) {
     }
     system("pause");
     return 0;
+    */
+    QApplication app(argc, argv);
+    Controller::getInstance().match();
     return app.exec();
-
 }
