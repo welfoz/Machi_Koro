@@ -75,6 +75,7 @@ public:
 	void printError(const std::exception& message) const override {};
 	size_t getInputNumber(size_t min, size_t max,bool isAi) override { return 0; };
 	void printTurnCounter(size_t counter) override {};
+
 	void printPlayerInformation(Player* player) const override {};
 	void printMonuments(Player* player) const override {};
 	void printCards(Player* player) const override {};
