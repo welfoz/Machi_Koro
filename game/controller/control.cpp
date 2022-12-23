@@ -92,7 +92,7 @@ void Controller::match(){
         turn(getGame()->players[getGame()->idCurrentPlayer]);
 
         getGame()->idCurrentPlayer=(getGame()->idCurrentPlayer+1)%getGame()->nbPlayers;
-        turnCounter++;
+        if (getGame()->idCurrentPlayer) turnCounter++;
 	};
 
 	interface->printBasicMessage("\n\n\n\n\n\nIT'S OVER!!!\n\nThe winner is...\n" + getGame()->winner->getUsername() + " 🎉🎉🎉\n\n\nThank you for playing Machi Koro!\n\n");
@@ -126,7 +126,7 @@ void Controller::turn(Player* player){
 
 size_t* Controller::activateRadioTower(Player* player, size_t nb, size_t* throws) const{
     if (player->getMonument("Radio Tower")){
-        if (interface->confirmationDialog("Do you want to re-roll the dice(s) ? ", "Yes", "No")) {
+        if (interface->confirmationDialog("Do you want to re-roll the dice(s) ? ", "Yes", "No"),player->isAi()) {
             for (size_t i = 0; i < nb; i++) {
                 throws[i] = game->dice.throwDice();
             }
@@ -190,7 +190,7 @@ void Controller::action(Player* player){
 
 			interface->printCards(player);
 
-            if (interface->confirmationDialog("Do you want to change your action ?", "Yes", "No")) {
+            if (interface->confirmationDialog("Do you want to change your action ?", "Yes", "No",player->isAi())) {
                 if (card != nullptr) {
                     getGame()->undoPurchaseOneEstablismentCard(player, card);
 
@@ -242,7 +242,7 @@ void Controller::action(Player* player){
             }
 			interface->printMonuments(player);
 
-            if (interface->confirmationDialog("Do you want to change your action ?",  "Yes", "No")) {
+            if (interface->confirmationDialog("Do you want to change your action ?",  "Yes", "No",player->isAi())) {
                 if (monument != nullptr) {
                     game->undoPurchaseOneMonument(player, monument);
 

@@ -35,8 +35,8 @@ string Cli::getInputText(vector<string> context,bool isAi) const {// context giv
 	string text;
     if (isAi){
         text= getAiChoice(context);
-        printBasicMessage("\n"+text+"\n");
-        fflush(stdout);
+        printBasicMessage("\n"+text);
+        cout<<endl;
     }
 	else {
         getline(cin, text);
@@ -50,7 +50,6 @@ bool Cli::confirmationDialog(string message, string firstOption, string secondOp
     if (isAi) {
         stopAnswer=getAiChoice(vector<string>({firstOption,secondOption}));
         printBasicMessage("\n"+stopAnswer+"\n");
-        fflush(stdout);
     }
     else {
         while (Formatter::toLower(stopAnswer) != Formatter::toLower(firstOption) && Formatter::toLower(stopAnswer) != Formatter::toLower(secondOption)) {
@@ -76,7 +75,6 @@ size_t Cli::getInputNumber(size_t min, size_t max,bool isAi) {
     if (isAi) {
         number= getAiChoice(options);
         printBasicMessage("\n"+to_string(number)+"\n");
-        fflush(stdout);
     }
 	else {
         cin >> number;
@@ -203,8 +201,7 @@ Player* Cli::selectOnePlayerDifferentFromTheCurrentOne(Player* player,bool isAi)
     Game* game = Controller::getInstance().getGame();
     if (isAi){
         p2= getAiChoice(game->getPlayers(),vector<Player*> ({player}));
-        printBasicMessage("\n"+player->getUsername()+"\n");
-        fflush(stdout);
+        printBasicMessage("\n"+p2->getUsername()+"\n");
     }
     else {
         string name;
@@ -233,7 +230,6 @@ EstablishmentCard* Cli::selectOneEstablishmentCardFromPlayer(Player* target, str
         for (auto it : target->getCards()) if (it.first->getType()!=Type::majorEstablishment) options.push_back(it.first);
         takenCardPtr= getAiChoice(options);
         printBasicMessage("\n"+takenCardPtr->getName()+"\n");
-        fflush(stdout);
     }
     else {
         string choosenCard;
@@ -241,7 +237,6 @@ EstablishmentCard* Cli::selectOneEstablishmentCardFromPlayer(Player* target, str
         while (loop) {// we ask the user which card he want to take from that target
             try {
                 cout << message << endl;
-                fflush(stdin);
                 getline(cin, choosenCard);
                 takenCardPtr = target->getCardByName(choosenCard);
                 if (takenCardPtr->getType() != Type::majorEstablishment) loop = false;
@@ -263,7 +258,6 @@ Monument* Cli::selectMonumentCardFromCurrentPlayer(Player *player, std::string m
         for (auto it : player->getMonuments()) if (it.second) options.push_back(it.first);
         monumentPtr= getAiChoice(options);
         printBasicMessage("\n"+monumentPtr->getName()+"\n");
-        fflush(stdout);
     }
     else {
         string monument;
@@ -297,7 +291,6 @@ EstablishmentCard* Cli::selectOneCardOwnedByAnyPlayer(string message,bool isAi) 
         }
         chosenCardPtr= getAiChoice(options);
         printBasicMessage("\n"+chosenCardPtr->getName()+"\n");
-        fflush(stdout);
     }
     else {
         string chosenCard;
