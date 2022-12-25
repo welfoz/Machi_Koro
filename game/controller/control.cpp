@@ -93,7 +93,7 @@ Controller::~Controller() {
 
 void Controller::match(){
     createAll();
-
+    if (dynamic_cast<Gui*>(Controller::getInstance().interface) != nullptr) dynamic_cast<Gui*>(Controller::getInstance().interface)->setGui();
     size_t turnCounter = 1;
     getGame()->idCurrentPlayer = 0;
     while (getGame()->winner==nullptr) {

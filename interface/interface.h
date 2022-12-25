@@ -63,8 +63,9 @@ public:
 
 class Gui : public Interface {
 public:
-	Gui() : Interface() {};
+    Gui() : Interface() {};
 	~Gui() {};
+    void setGui();
     void printWelcomingMessage() override;
     string getInputText() const override;
 	bool confirmationDialog(string message, string firstOption, string secondOption) override { return true; };

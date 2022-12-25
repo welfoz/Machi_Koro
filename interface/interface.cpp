@@ -3,6 +3,7 @@
 #include "../game/controller/control.h"
 #include "../Qt/viewMessage.h"
 #include "../Qt/viewSetting.h"
+#include "../Qt/viewSet.h"
 
 Interface* Interface::createInterfaceFromOption(Option type)
 {
@@ -301,6 +302,14 @@ void GreenValleyCli::printCards(Player* player) const {
 		Cli::printCards(player);
 	}
 
+}
+
+
+
+void Gui::setGui(){
+    ViewSet* viewSet = new ViewSet;
+    viewSet->setSet();
+    viewSet->show();
 }
 
 void Gui::printWelcomingMessage(){
