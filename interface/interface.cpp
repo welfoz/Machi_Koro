@@ -1,3 +1,5 @@
+#include <QInputDialog>
+#include <QComboBox>
 #include "interface.h"
 #include "../game/game.h"
 #include "../game/controller/control.h"
@@ -329,4 +331,59 @@ void Gui::printTurnCounter(size_t turnCounter) {
 // JUST NEED TO RETURN SOMETHING TO COMPILE
 EstablishmentCard* Gui::selectOneCardOwnedByAnyPlayer(string message) const {
 	return Controller::getInstance().getGame()->getCardByName(message);
+}
+
+Interface::Extension Cli::chooseExtension() const {
+    cout << "Hello, World!\n";
+    cout << "Welcome to Machi Koro! Please choose the extension you want to play to:\n";
+    char choice = '0';
+    while ((choice != 'B') && (choice != 'M') && (choice != 'G') && (choice != 'D')){
+        cout << "Available extensions: Basic (B), Marina (M), Green Valley (G), Deluxe (D).\n";
+        cout << "Enter the name of the extension you want to play to (B/M/G/D): \n";
+        cin >> choice;
+        cin.ignore();
+    }
+    switch (choice)
+    {
+    case 'B':
+        return Extension::Base;
+    case 'M':{
+        return Extension::Marina;
+    }
+    case 'G':{
+        return Extension::GreenValley;
+    }
+    case 'D':
+        return Extension::Deluxe;
+    default:
+        throw "Error extension not reconized";
+        break;
+    }
+};
+
+
+Interface::Extension Gui::chooseExtension() const {
+    QStringList list = {
+        "Base",
+        "Marina",
+        "Green Valley",
+        "Deluxe"
+    };
+
+    QInputDialog *dialog = new QInputDialog();
+    bool accepted;
+    QString choice = dialog->getItem(0, "Choose The Extension", "Extensions:", list, 0, false, &accepted);
+
+    if (accepted && !choice.isEmpty()) {
+        if (choice == "Base") {
+            return Extension::Base;
+        } else if (choice == "Marina"){
+            return Extension::Marina;
+        } else if (choice == "Green Valley") {
+            return Extension::GreenValley;
+        } else if (choice == "Deluxe") {
+            return Extension::Deluxe;
+        }
+    }
+    throw "error";
 }
