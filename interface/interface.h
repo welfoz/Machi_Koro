@@ -14,8 +14,8 @@ protected:
 
 public:
     enum Extension {Marina, GreenValley, Deluxe, Base};
-	virtual ~Interface() = default;
-	enum Option {cli, gui, cliGreenValley,};
+    enum Option {cli, gui, cliGreenValley};
+    virtual ~Interface() = default;
 	static Interface* createInterfaceFromOption(Option type);
 	virtual void printWelcomingMessage() = 0;
 	virtual string getInputText() const = 0;
