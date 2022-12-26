@@ -1,9 +1,9 @@
 #include "./machiKoro.h"
 
-void MachiKoro::play() const {
+void MACHI_KORO::play() {
     // here to add the code of Pol
     // to choose Cli or Gui
-//    Cli interface;
+    //    Cli interface;
     Gui interface;
     switch (interface.chooseExtension()) {
     case (Interface::Extension::Base): {

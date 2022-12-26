@@ -5,8 +5,7 @@ int main(int argc, char* argv[]) {
 
     QApplication app(argc, argv);
 
-    MachiKoro machiKoro;
-    machiKoro.play();
+    MACHI_KORO::play();
 
     return app.exec();
 }
