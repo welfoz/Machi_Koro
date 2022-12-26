@@ -97,6 +97,8 @@ Controller::~Controller() {
 void Controller::match(){
     createAll();
 
+    interface->init();
+
     size_t turnCounter = 1;
     getGame()->idCurrentPlayer = 0;
     while (getGame()->winner==nullptr) {

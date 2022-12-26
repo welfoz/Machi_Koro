@@ -5,19 +5,12 @@
 #include "../game/controller/control.h"
 #include "../Qt/viewMessage.h"
 #include "../Qt/viewSetting.h"
+#include "../Qt/viewSet.h"
 
-Interface* Interface::createInterfaceFromOption(Option type)
-{
-    switch (type) {
-	case Option::cli:
-		return new Cli();
-    case Option::gui:
-        return new Gui();
-    case Option::cliGreenValley:
-		return new GreenValleyCli();
-	default:
-		throw "sa mere";
-    }
+void Gui::init() const {
+    ViewSet* viewSet = new ViewSet;
+    viewSet->setSet();
+    viewSet->show();
 }
 
 void Cli::printWelcomingMessage() {
