@@ -101,7 +101,7 @@ void Controller::match(){
         turn(getGame()->players[getGame()->idCurrentPlayer]);
 
         getGame()->idCurrentPlayer=(getGame()->idCurrentPlayer+1)%getGame()->nbPlayers;
-        if (getGame()->idCurrentPlayer) turnCounter++;
+        if (getGame()->idCurrentPlayer==1) turnCounter++;
 	};
 
 	interface->printBasicMessage("\n\n\n\n\n\nIT'S OVER!!!\n\nThe winner is...\n" + getGame()->winner->getUsername() + " 🎉🎉🎉\n\n\nThank you for playing Machi Koro!\n\n");
@@ -182,7 +182,7 @@ void Controller::action(Player* player){
             interface->printBasicMessage( "Enter the name of the card you want to buy : ");
 
             vector<string> context;
-            for (auto it : game->board->getCards()) context.push_back(it.first->getName());
+            for (auto it : game->board->getCards()) if (it.first->getPrice()<=game->getBank()->getAccount(player->getId())->getSolde()) context.push_back(it.first->getName());
 
             choice = interface->getInputText(context,player->isAi());
 
@@ -237,7 +237,7 @@ void Controller::action(Player* player){
             interface->printBasicMessage("Enter the name of the monument you want to buy : ");
 
             vector<string> context;
-            for (auto it : game->monuments) if (!player->getMonument(it->getName())) context.push_back(it->getName()); // to tell th AI what can be written
+            for (auto it : game->monuments) if (!player->getMonument(it->getName()) && (it->getPrice()<=game->getBank()->getAccount(player->getId())->getSolde())) context.push_back(it->getName()); // to tell th AI what can be written
 
             choice = interface->getInputText(context,player->isAi());
 
