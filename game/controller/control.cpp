@@ -2,10 +2,10 @@
 #include "../../extensions/Deluxe/deluxeExtension.h"
 #include "../Qt/viewSet.h"
 
-Controller& Controller::getInstance()
+Controller& Controller::getInstance(Interface* interface)
 {
     if (instance == nullptr)
-        instance = new Controller;
+        instance = new Controller(interface);
     return *instance;
 }
 
@@ -17,7 +17,10 @@ void Controller::freeInstance()
 
 Controller* Controller::instance = nullptr;
 
-Controller::Controller(Interface::Option type) : interface(Interface::createInterfaceFromOption(type)) {
+Controller::Controller(Interface* interface) : interface(interface) {
+    if (interface == nullptr) {
+        throw "error";
+    }
     instance = this;
     game = new Game();
 };

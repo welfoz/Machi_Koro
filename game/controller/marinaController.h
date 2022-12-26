@@ -9,7 +9,7 @@ protected:
     size_t activateHarbor(size_t diceValue, Player* player);
     void activateCityHall(Player* player);
 public:
-    static MarinaController& getInstance();
-    MarinaController();
+    static MarinaController& getInstance(Interface* interface = nullptr);
+    MarinaController(Interface* interface);
 };
 

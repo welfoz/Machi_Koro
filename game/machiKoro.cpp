@@ -1,29 +1,43 @@
 #include "./machiKoro.h"
 
-void MACHI_KORO::play() {
-    // here to add the code of Pol
-    // to choose Cli or Gui
-    //    Cli interface;
-    Gui interface;
-    switch (interface.chooseExtension()) {
+void MACHI_KORO::play(Interface::Option option) {
+    Interface* interface = nullptr;
+
+    switch (option) {
+    case Interface::Option::cli:
+        interface = new Cli();
+        break;
+    case Interface::Option::gui:
+        interface = new Gui();
+        break;
+    case Interface::Option::cliGreenValley:
+        interface = new GreenValleyCli();
+        break;
+    default:
+        throw "sa mere";
+        break;
+    }
+
+    switch (interface->chooseExtension()) {
     case (Interface::Extension::Base): {
-        Controller::getInstance().match();
+        Controller::getInstance(interface).match();
         break;
     }
     case (Interface::Extension::Marina): {
-        MarinaController::getInstance().match();
+        MarinaController::getInstance(interface).match();
         break;
     }
     case (Interface::Extension::GreenValley): {
-        GreenValleyController::getInstance().match();
+        GreenValleyController::getInstance(interface).match();
         break;
     }
     case (Interface::Extension::Deluxe): {
-        DeluxeController::getInstance().match();
+        DeluxeController::getInstance(interface).match();
         break;
     }
     default:
         throw "error";
         break;
     }
+    delete interface;
 }
