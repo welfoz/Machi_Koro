@@ -1,46 +1,62 @@
 #include <QApplication>
-#include "./extensions/Marina/marinaExtension.h"
-#include "extensions/Deluxe/greenValleyExtension.h"
-#include "game/controller/control.h"
-#include "game/controller/marinaController.h"
-#include "game/controller/greenValleyController.h"
+#include "game/machiKoro.h"
 #include "game/controller/deluxeController.h"
+#include "game/controller/greenValleyController.h"
+#include "game/controller/marinaController.h"
+#include "game/controller/control.h"
+#include "interface/interface.h"
+
 int main(int argc, char* argv[]) {
-    // insert code here...
-    /*
-    cout << "Hello, World!\n";
-    cout << "Welcome to Machi Koro! Please choose the extension you want to play to:\n";
-    char choice = '0';
-    while ((choice != 'B') && (choice != 'M') && (choice != 'G') && (choice != 'D')){
-        cout << "Available extensions: Basic (B), Marina (M), Green Valley (G), Deluxe (D).\n";
-        cout << "Enter the name of the extension you want to play to (B/M/G/D): \n";
-        cin >> choice;
-        cin.ignore();
-    }
-    switch (choice)
-    {
-    case 'B':
-        Controller::getInstance().match();
+
+    QApplication app(argc, argv);
+
+    MACHI_KORO::play(Interface::Option::gui);
+
+    return app.exec();
+}
+
+namespace MACHI_KORO {
+
+void play(Interface::Option option) {
+    Interface* interface = nullptr;
+
+    switch (option) {
+    case Interface::Option::cli:
+        interface = new Cli();
         break;
-    case 'M':{
-        MarinaController::getInstance().match();
+    case Interface::Option::gui:
+        interface = new Gui();
+        break;
+    case Interface::Option::cliGreenValley:
+        interface = new GreenValleyCli();
+        break;
+    default:
+        throw "sa mere";
         break;
     }
 
-    case 'G':{
-        GreenValleyController::getInstance().match();
+    switch (interface->chooseExtension()) {
+    case (Interface::Extension::Base): {
+        Controller::getInstance(interface).match();
         break;
     }
-    case 'D':
-        DeluxeController::getInstance().match();
-		     break;
+    case (Interface::Extension::Marina): {
+        MarinaController::getInstance(interface).match();
+        break;
+    }
+    case (Interface::Extension::GreenValley): {
+        GreenValleyController::getInstance(interface).match();
+        break;
+    }
+    case (Interface::Extension::Deluxe): {
+        DeluxeController::getInstance(interface).match();
+        break;
+    }
     default:
+        throw "error";
         break;
     }
-    system("pause");
-    return 0;
-    */
-    QApplication app(argc, argv);
-    Controller::getInstance().match();
-    return app.exec();
+    delete interface;
+}
+
 }

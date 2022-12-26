@@ -1,14 +1,14 @@
 #include "marinaController.h"
 
-MarinaController::MarinaController() : Controller() {
+MarinaController::MarinaController(Interface* interface) : Controller(interface) {
     delete game;
     game = dynamic_cast<Marina*>(new Marina());
 };
 
-MarinaController& MarinaController::getInstance()
+MarinaController& MarinaController::getInstance(Interface* interface)
 {
     if (instance == nullptr)
-        instance = new MarinaController;
+        instance = new MarinaController(interface);
     return dynamic_cast<MarinaController&>(*instance);
 }
 
