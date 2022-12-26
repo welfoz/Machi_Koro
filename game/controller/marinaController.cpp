@@ -1,9 +1,6 @@
 #include "marinaController.h"
 
 MarinaController::MarinaController(Interface* interface) : Controller(interface) {
-    if (interface == nullptr) {
-        throw "error";
-    }
     delete game;
     game = dynamic_cast<Marina*>(new Marina());
 };

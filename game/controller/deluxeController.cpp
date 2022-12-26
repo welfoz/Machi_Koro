@@ -4,9 +4,6 @@ DeluxeController::DeluxeController(Interface* interface) :  Controller(interface
     GreenValleyController(interface),
     MarinaController(interface)
 {
-    if (interface == nullptr) {
-        throw "error";
-    }
     delete game;
     game = dynamic_cast<Deluxe*>(new Deluxe());
 };

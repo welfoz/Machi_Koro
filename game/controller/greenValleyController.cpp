@@ -1,9 +1,6 @@
 #include "greenValleyController.h"
 
 GreenValleyController::GreenValleyController(Interface* interface) : Controller(interface) {
-    if (interface == nullptr) {
-        throw "error";
-    }
     delete game;
 	game = dynamic_cast<GreenValley*>(new GreenValley);
 };

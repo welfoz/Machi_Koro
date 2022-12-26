@@ -19,7 +19,7 @@ Controller* Controller::instance = nullptr;
 
 Controller::Controller(Interface* interface) : interface(interface) {
     if (interface == nullptr) {
-        throw "error";
+        throw "ERROR: interface need to be defined to create a Controller";
     }
     instance = this;
     game = new Game();
