@@ -1,19 +1,9 @@
 #include <QApplication>
-#include "game/machiKoro.h"
 #include "game/controller/deluxeController.h"
 #include "game/controller/greenValleyController.h"
 #include "game/controller/marinaController.h"
 #include "game/controller/control.h"
 #include "interface/interface.h"
-
-int main(int argc, char* argv[]) {
-
-    QApplication app(argc, argv);
-
-    MACHI_KORO::play(Interface::Option::gui);
-
-    return app.exec();
-}
 
 namespace MACHI_KORO {
 
@@ -60,3 +50,14 @@ void play(Interface::Option option) {
 }
 
 }
+
+int main(int argc, char* argv[]) {
+
+    QApplication app(argc, argv);
+
+    MACHI_KORO::play(Interface::Option::gui);
+
+    return app.exec();
+}
+
+
