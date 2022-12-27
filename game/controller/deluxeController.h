@@ -7,6 +7,6 @@
 class DeluxeController : public GreenValleyController, public MarinaController {
     void turn(Player* player) override;
 public:
-    static DeluxeController& getInstance();
-    DeluxeController();
+    static DeluxeController& getInstance(Interface* interface = nullptr);
+    DeluxeController(Interface* interface);
 };

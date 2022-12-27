@@ -13,8 +13,10 @@ protected:
 	Interface() = default;
 
 public:
-	virtual ~Interface() = default;
-	enum Option {cli, gui, cliGreenValley,};
+    enum Extension {Marina, GreenValley, Deluxe, Base};
+    enum Option {cli, gui, cliGreenValley};
+    virtual ~Interface() = default;
+    virtual void init() const = 0;
 	static Interface* createInterfaceFromOption(Option type);
 	virtual void printWelcomingMessage() = 0;
 	virtual string getInputText() const = 0;
@@ -34,13 +36,15 @@ public:
 	virtual Player* selectOnePlayerDifferentFromTheCurrentOne(Player* player) const = 0;
 	virtual EstablishmentCard* selectOneEstablishmentCardFromPlayer(Player* target, string message) const = 0;
     virtual Monument* selectMonumentCardFromCurrentPlayer(Player* player, string message) const = 0;
+    virtual enum Extension chooseExtension() const = 0;
 }; 
 
 class Cli : public Interface {
 public:
 	Cli() : Interface() {};
 	~Cli() {};
-	void printWelcomingMessage() override;
+    void init() const override {};
+    void printWelcomingMessage() override;
 	string getInputText() const override;
 	bool confirmationDialog(string message, string firstOption, string secondOption) override;
 	void printBasicMessage(string message) override;
@@ -58,13 +62,14 @@ public:
 	EstablishmentCard* selectOneEstablishmentCardFromPlayer(Player* target, string message) const override;
     Monument* selectMonumentCardFromCurrentPlayer(Player* player, string message) const override;
     EstablishmentCard* selectOneCardOwnedByAnyPlayer(string message) const override;
-	
+    enum Extension chooseExtension() const override;
 };
 
 class Gui : public Interface {
 public:
 	Gui() : Interface() {};
 	~Gui() {};
+    void init() const override;
     void printWelcomingMessage() override;
     string getInputText() const override;
 	bool confirmationDialog(string message, string firstOption, string secondOption) override { return true; };
@@ -94,6 +99,7 @@ public:
 	};
 
 	EstablishmentCard* selectOneCardOwnedByAnyPlayer(string message) const override;
+    enum Extension chooseExtension() const override;
 };
 
 class GreenValleyCli : public Cli {
