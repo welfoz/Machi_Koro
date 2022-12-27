@@ -33,10 +33,10 @@ void Cli::printWelcomingMessage() {
     cout << "Made with ❤️  by MICHEL Fabien - BROSSARD Felix - TAVERNE Jules - CORTY Pol - LEMERLE Xavier\n\n";
 }
 
-string Cli::getInputText(vector<string> context,bool isAi) const {// context give the context to the AI
+string Cli::getInputText(vector<string> context) const {// context give the context to the AI
 	string text;
-    if (isAi){
-        text= getAiChoice(context);
+    if (getGameCurrentPlayer()->isAi()){
+        text= ai->getAiChoice(context);
         printBasicMessage("\n"+text);
         cout<<endl;
     }
@@ -47,10 +47,10 @@ string Cli::getInputText(vector<string> context,bool isAi) const {// context giv
 }
 
 // be careful! firstOption and secondOption HAS to be UTF-8. No accent.
-bool Cli::confirmationDialog(string message, string firstOption, string secondOption,bool isAi) {
+bool Cli::confirmationDialog(string message, string firstOption, string secondOption) {
 	string stopAnswer = "";
-    if (isAi) {
-        stopAnswer=getAiChoice(vector<string>({firstOption,secondOption}));
+    if (getGameCurrentPlayer()->isAi()) {
+        stopAnswer=ai->getAiChoice(vector<string>({firstOption,secondOption}));
         printBasicMessage("\n"+stopAnswer+"\n");
     }
     else {
@@ -70,12 +70,12 @@ void Cli::printBasicMessage(string message) const {
 	cout << message;
 }
 
-size_t Cli::getInputNumber(size_t min, size_t max,bool isAi) {
+size_t Cli::getInputNumber(size_t min, size_t max) {
     vector<size_t> options;
     for (size_t i=min; i<= max;i++) options.push_back(i);
 	size_t number;
-    if (isAi) {
-        number= getAiChoice(options);
+    if (getGameCurrentPlayer()->isAi()) {
+        number= ai->getAiChoice(options);
         printBasicMessage("\n"+to_string(number)+"\n");
     }
 	else {
@@ -196,13 +196,18 @@ string Cli::selectOneCard() const {
 
 void Cli::printError(const std::exception& message) const {
 	std::cerr << message.what() << "\n";
+}
+
+Player *Cli::getGameCurrentPlayer() const {
+    Game* game=Controller::getInstance().getGame();
+    return &game->getPlayer(game->getIdCurrentPlayer());
 };
 
-Player* Cli::selectOnePlayerDifferentFromTheCurrentOne(Player* player,bool isAi) const {
+Player* Cli::selectOnePlayerDifferentFromTheCurrentOne(Player* player) const {
     Player *p2;
     Game* game = Controller::getInstance().getGame();
-    if (isAi){
-        p2= getAiChoice(game->getPlayers(),vector<Player*> ({player}));
+    if (getGameCurrentPlayer()->isAi()){
+        p2= ai->getAiChoice(game->getPlayers(),vector<Player*> ({player}));
         printBasicMessage("\n"+p2->getUsername()+"\n");
     }
     else {
@@ -223,14 +228,14 @@ Player* Cli::selectOnePlayerDifferentFromTheCurrentOne(Player* player,bool isAi)
 	return p2;
 }
 
-EstablishmentCard* Cli::selectOneEstablishmentCardFromPlayer(Player* target, string message,bool isAi) const {
+EstablishmentCard* Cli::selectOneEstablishmentCardFromPlayer(Player* target, string message) const {
     cout << target->getUsername() + "'s cards";
     printCards(target);
     EstablishmentCard *takenCardPtr;
-    if (isAi){
+    if (getGameCurrentPlayer()->isAi()){
         vector<EstablishmentCard*> options;
         for (auto it : target->getCards()) if (it.first->getType()!=Type::majorEstablishment) options.push_back(it.first);
-        takenCardPtr= getAiChoice(options);
+        takenCardPtr= ai->getAiChoice(options);
         printBasicMessage("\n"+takenCardPtr->getName()+"\n");
     }
     else {
@@ -251,14 +256,14 @@ EstablishmentCard* Cli::selectOneEstablishmentCardFromPlayer(Player* target, str
     return takenCardPtr;
 };
 
-Monument* Cli::selectMonumentCardFromCurrentPlayer(Player *player, std::string message,bool isAi) const {
+Monument* Cli::selectMonumentCardFromCurrentPlayer(Player *player, std::string message) const {
     if (player->getNbMonumentsActivated()==0) return nullptr;
     printMonuments(player);
     Monument* monumentPtr;
-    if (isAi){
+    if (getGameCurrentPlayer()->isAi()){
         vector<Monument*> options;
         for (auto it : player->getMonuments()) if (it.second) options.push_back(it.first);
-        monumentPtr= getAiChoice(options);
+        monumentPtr= ai->getAiChoice(options);
         printBasicMessage("\n"+monumentPtr->getName()+"\n");
     }
     else {
@@ -280,18 +285,18 @@ Monument* Cli::selectMonumentCardFromCurrentPlayer(Player *player, std::string m
     }
 }
 
-EstablishmentCard* Cli::selectOneCardOwnedByAnyPlayer(string message,bool isAi) const {
+EstablishmentCard* Cli::selectOneCardOwnedByAnyPlayer(string message) const {
     Game* game=Controller::getInstance().getGame();
     for (size_t i=0; i<game->getNbPlayers();i++){
         printCards(&game->getPlayer(i));
     }
     EstablishmentCard *chosenCardPtr;
-    if (isAi){
+    if (getGameCurrentPlayer()->isAi()){
         vector<EstablishmentCard*> options;
         for (size_t j =0;j<game->getNbPlayers();j++){
             for (auto it : game->getPlayer(j).getCards()) options.push_back(it.first);
         }
-        chosenCardPtr= getAiChoice(options);
+        chosenCardPtr= ai->getAiChoice(options);
         printBasicMessage("\n"+chosenCardPtr->getName()+"\n");
     }
     else {
@@ -386,13 +391,3 @@ EstablishmentCard* Gui::selectOneCardOwnedByAnyPlayer(string message,bool isAi) 
 	return Controller::getInstance().getGame()->getCardByName(message);
 }
 
-template<typename t>
-t Interface::getAiChoice(vector<t> options, vector<t> exceptions) const {
-    if (exceptions.size() > 0)
-        for (auto it: exceptions)
-            if (count(options.begin(), options.end(), it)) std::remove(options.begin(), options.end(), it);
-    std::random_device dev;
-    std::mt19937 rng(dev());
-    std::uniform_int_distribution<std::mt19937::result_type> dist(0, options.size() - 1);
-    return options[dist(rng)]; // renvoie un élément situé à un index aléatoire entre le début et la fin du vector
-}

@@ -40,7 +40,8 @@ void Controller::createAll() {
 
     bool stop = false;
 	while (!stop && getGame()->canAddNewPlayer()) {
-        bool isAi = interface->confirmationDialog("What type of player do you want to add ?","AI","Human");
+        bool isAi=false;
+        if (game->nbPlayers>1) isAi = interface->confirmationDialog("What type of player do you want to add ?","AI","Human"); //le premier joueur ne peut être une IA
 		interface->printBasicMessage("\nEnter the name of the player number " + std::to_string(getGame()->nbPlayers + 1) + " : ");
 
 		try {
@@ -82,7 +83,7 @@ const size_t Controller::getNbDiceChosen(Player& p) { // est appelé par le jeu 
     size_t n=0;
     while (n>2 || n<1){
         interface->printBasicMessage("How many dice do you chose to roll ?\n");
-        n = interface->getInputNumber(1,2,p.isAi());
+        n = interface->getInputNumber(1,2);
         if (n>2 || n<1) interface->printBasicMessage("Please select a number between 1 and 2\n");
     }
     return n;
@@ -161,7 +162,7 @@ void Controller::activateAmusementPark(Player* player, size_t nb, size_t* throws
 void Controller::action(Player* player){
     
     interface->printBasicMessage( "\nWhat do you want to do? (1 = Buy an establishment, 2 = Build a monument, 3 = Nothing!)\n");
-    int choix = interface->getInputNumber(1,3,player->isAi());
+    int choix = interface->getInputNumber(1,3);
 
     switch (choix){
     case 1:
@@ -189,7 +190,7 @@ void Controller::action(Player* player){
             vector<string> context;
             for (auto it : game->board->getCards()) if (it.first->getPrice()<=game->getBank()->getAccount(player->getId())->getSolde()) context.push_back(it.first->getName());
 
-            choice = interface->getInputText(context,player->isAi());
+            choice = interface->getInputText(context);
 
             try
             {
@@ -204,7 +205,7 @@ void Controller::action(Player* player){
 
 			interface->printCards(player);
 
-            if (interface->confirmationDialog("Do you want to change your action ?", "Yes", "No",player->isAi())) {
+            if (interface->confirmationDialog("Do you want to change your action ?", "Yes", "No")) {
                 if (card != nullptr) {
                     getGame()->undoPurchaseOneEstablismentCard(player, card);
 
@@ -244,7 +245,7 @@ void Controller::action(Player* player){
             vector<string> context;
             for (auto it : game->monuments) if (!player->getMonument(it->getName()) && (it->getPrice()<=game->getBank()->getAccount(player->getId())->getSolde())) context.push_back(it->getName()); // to tell th AI what can be written
 
-            choice = interface->getInputText(context,player->isAi());
+            choice = interface->getInputText(context);
 
             try {
 				monument = getGame()->getMonumentByName(choice);
@@ -256,7 +257,7 @@ void Controller::action(Player* player){
             }
 			interface->printMonuments(player);
 
-            if (interface->confirmationDialog("Do you want to change your action ?",  "Yes", "No",player->isAi())) {
+            if (interface->confirmationDialog("Do you want to change your action ?",  "Yes", "No")) {
                 if (monument != nullptr) {
                     game->undoPurchaseOneMonument(player, monument);
 
