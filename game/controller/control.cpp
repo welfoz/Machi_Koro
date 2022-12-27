@@ -165,7 +165,7 @@ void Controller::action(Player* player){
     case 1:
     {
         if (!getGame()->board->isAnyCardLeftToBuy()) {
-			interface->printBasicMessage("\nNo card left on the board\n");
+            interface->printBasicMessage("\nNo card left on the board\n");
             action(player);
             break;
         }
@@ -193,18 +193,25 @@ void Controller::action(Player* player){
             catch(const std::exception& e)
             {
                 interface->printError(e);
+
+                if (interface->confirmationDialog("Do you want to change your action ?",  "Yes", "No")) {
+                    action(player);
+                    break;
+                }
+
+                card = nullptr;
                 continue;
             }
 
-			interface->printCards(player);
+            interface->printCards(player);
 
             if (interface->confirmationDialog("Do you want to change your action ?", "Yes", "No")) {
                 if (card != nullptr) {
                     getGame()->undoPurchaseOneEstablismentCard(player, card);
 
-					interface->printPlayerInformation(player);
-					interface->printMonuments(player);
-					interface->printCards(player);
+                    interface->printPlayerInformation(player);
+                    interface->printMonuments(player);
+                    interface->printCards(player);
                 }
                 action(player);
                 break;
@@ -215,7 +222,7 @@ void Controller::action(Player* player){
     case 2:
     {
         if (!player->isAnyMonumentLeftToBuy()) {
-			interface->printBasicMessage("\nNo monument left on the board\n");
+            interface->printBasicMessage("\nNo monument left on the board\n");
             action(player);
             break;
         }
@@ -230,42 +237,49 @@ void Controller::action(Player* player){
         string choice;
         Monument* monument = nullptr;
         while (monument == nullptr) {
-            
+
             // same as card
             // new method interface askForOneMonument()
             interface->printBasicMessage("Enter the name of the monument you want to buy : ");
             choice = interface->getInputText();
 
             try {
-				monument = getGame()->getMonumentByName(choice);
+                monument = getGame()->getMonumentByName(choice);
                 game->purchaseOneMonument(player, monument);
 
             } catch (const std::exception &e) {
                 interface->printError(e);
+
+                if (interface->confirmationDialog("Do you want to change your action ?",  "Yes", "No")) {
+                    action(player);
+                    break;
+                }
+
+                monument = nullptr;
                 continue;
             }
 
-			interface->printMonuments(player);
+            interface->printMonuments(player);
 
             if (interface->confirmationDialog("Do you want to change your action ?",  "Yes", "No")) {
                 if (monument != nullptr) {
-                    game->undoPurchaseOneMonument(player, monument);
+                        game->undoPurchaseOneMonument(player, monument);
 
-					interface->printPlayerInformation(player);
-					interface->printMonuments(player);
-					interface->printCards(player);
+                        interface->printPlayerInformation(player);
+                        interface->printMonuments(player);
+                        interface->printCards(player);
+                    }
+                    action(player);
+                    break;
                 }
-                action(player);
-                break;
             }
+            if (getGame()->isWinner(player)) getGame()->winner=player;
+            break;
         }
-        if (getGame()->isWinner(player)) getGame()->winner=player;
-        break;
-    }
     default:
-        break;
-    } 
-};
+            break;
+        }
+    };
 
 void Controller::tradeTwoEstablishmentCards(Player* p1, Player* p2, EstablishmentCard* card1, EstablishmentCard* card2) {
     game->tradeCards(p1, p2, card1, card2);
