@@ -5,7 +5,7 @@
 #include "../players/player.h"
 #include "../cards/icon.h"
 #include "../extensions/Deluxe/PlayerGreenValley.h"
-#include <random>
+
 using namespace std;
 
 class Interface {
@@ -13,8 +13,10 @@ protected:
 	Interface() = default;
 
 public:
-	virtual ~Interface() = default;
-	enum Option {cli, gui, cliGreenValley,};
+    enum Extension {Marina, GreenValley, Deluxe, Base};
+    enum Option {cli, gui, cliGreenValley};
+    virtual ~Interface() = default;
+    virtual void init() const = 0;
 	static Interface* createInterfaceFromOption(Option type);
 	virtual void printWelcomingMessage() = 0;
 	virtual string getInputText(vector<string> context={}, bool isAi=false) const = 0;

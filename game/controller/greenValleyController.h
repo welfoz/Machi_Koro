@@ -8,7 +8,7 @@ protected:
     void techStartupInvestment(Player* player);
    
 public:
-    static GreenValleyController& getInstance();
-    GreenValleyController();
+    static GreenValleyController& getInstance(Interface* interface = nullptr);
+    GreenValleyController(Interface* interface);
    
 };
