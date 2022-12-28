@@ -329,14 +329,29 @@ bool Gui::confirmationDialog(string message, string firstOption, string secondOp
     if((viewSetting->getMessage()).toStdString() == secondOption)
         return false;
     return true;
-
 }
 
+void Gui::printBoard() const {
+    ViewSet* viewSet = new ViewSet;
+    viewSet->setSet();
+    viewSet->show();
+}
 
+void Gui::printBalances(Player** players) const {
+    ViewSet* viewSet = new ViewSet;
+    viewSet->setSet();
+    viewSet->show();
+}
 
 void Gui::printTurnCounter(size_t turnCounter) {
     ViewMessage* viewMessage = new ViewMessage;
-    viewMessage->viewBasicMessage(QString::number(static_cast<int>(turnCounter)));
+    QString message = "Turn count : " + QString::number(static_cast<int>(turnCounter));
+    viewMessage->viewBasicMessage(message);
+}
+
+void Gui::printError(const exception &message) const {
+    ViewMessage* viewMessage = new ViewMessage;
+    viewMessage->viewBasicMessage(message.what());
 }
 
 // WRONG IMPLEMENTATION

@@ -50,6 +50,7 @@ void play(Interface::Option option) {
 }
 
 }
+
 int main(int argc, char* argv[]) {
 
     QApplication app(argc, argv);
@@ -58,3 +59,5 @@ int main(int argc, char* argv[]) {
 
     return app.exec();
 }
+
+
