@@ -11,8 +11,8 @@ void GeneralStore::activation(Player &p) {
     if(p.getNbMonumentsActivated()<2) Controller::getInstance().getGame()->getBank()->credit(p.getId(),2);
 }
 void MovingCompany::activation(Player &p) {
-    auto p2=Controller::getInstance().getInterface()->selectOnePlayerDifferentFromTheCurrentOne(&p,p.isAi());
-    auto givenCardPtr=Controller::getInstance().getInterface()->selectOneEstablishmentCardFromPlayer(&p,"Which card do you want to give to "+p2->getUsername(),p.isAi());
+    auto p2=Controller::getInstance().getInterface()->selectOnePlayerDifferentFromTheCurrentOne(&p);
+    auto givenCardPtr=Controller::getInstance().getInterface()->selectOneEstablishmentCardFromPlayer(&p,"Which card do you want to give to "+p2->getUsername());
     p.removeEstablishment(givenCardPtr);
     p2->purchaseEstablishment(givenCardPtr);
     Controller::getInstance().getGame()->getBank()->credit(p.getId(),4);
@@ -35,7 +35,7 @@ void Winery::activation(Player &p) {
 }
 
 void DemolitionCompany::activation(Player &p) {
-    auto monumentPtr= Controller::getInstance().getInterface()->selectMonumentCardFromCurrentPlayer(&p,"Which monument do you want to demolish ?",p.isAi());
+    auto monumentPtr= Controller::getInstance().getInterface()->selectMonumentCardFromCurrentPlayer(&p,"Which monument do you want to demolish ?");
     if (monumentPtr!= nullptr) {
         p.removeMonument(monumentPtr);
         Controller::getInstance().getGame()->getBank()->credit(p.getId(),8);
@@ -77,7 +77,7 @@ void Park::activation(Player &p) {
     }
 }
 void RenovationCompany::activation(Player &p) {
-    auto renovatedCardPtr=Controller::getInstance().getInterface()->selectOneCardOwnedByAnyPlayer("Which non-major establishment do you want to renovate ?",p.isAi());
+    auto renovatedCardPtr=Controller::getInstance().getInterface()->selectOneCardOwnedByAnyPlayer("Which non-major establishment do you want to renovate ?");
     for (size_t i=0; i<Controller::getInstance().getGame()->getNbPlayers();i++){
         PlayerGreenValley* iPlayer=dynamic_cast<PlayerGreenValley*> (&Controller::getInstance().getGame()->getPlayer(i));
         if (iPlayer->getCards().count(renovatedCardPtr)){
@@ -110,7 +110,7 @@ void TechStartup::activation(Player &p) {
 
 void InternationalExhibitHall::activation(Player &p) {
     if (Controller::getInstance().getInterface()->confirmationDialog("Do you want to activate another of your non-Major establishment card ?","Yes","No")){
-        auto cardPtr= Controller::getInstance().getInterface()->selectOneEstablishmentCardFromPlayer(&p,"Which non-Major establishment card do you want to activate ?",p.isAi());
+        auto cardPtr= Controller::getInstance().getInterface()->selectOneEstablishmentCardFromPlayer(&p,"Which non-Major establishment card do you want to activate ?");
         cardPtr->activation(p);
         p.removeEstablishment(this);
         Controller::getInstance().getInterface()->printBasicMessage(cardPtr->getName() + " returned to the market.");

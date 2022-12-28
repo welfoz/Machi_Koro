@@ -168,7 +168,7 @@ void Controller::action(Player* player){
     case 1:
     {
         if (!getGame()->board->isAnyCardLeftToBuy()) {
-			interface->printBasicMessage("\nNo card left on the board\n");
+            interface->printBasicMessage("\nNo card left on the board\n");
             action(player);
             break;
         }
@@ -200,6 +200,13 @@ void Controller::action(Player* player){
             catch(const std::exception& e)
             {
                 interface->printError(e);
+
+                if (interface->confirmationDialog("Do you want to change your action ?",  "Yes", "No")) {
+                    action(player);
+                    break;
+                }
+
+                card = nullptr;
                 continue;
             }
 
@@ -209,9 +216,9 @@ void Controller::action(Player* player){
                 if (card != nullptr) {
                     getGame()->undoPurchaseOneEstablismentCard(player, card);
 
-					interface->printPlayerInformation(player);
-					interface->printMonuments(player);
-					interface->printCards(player);
+                    interface->printPlayerInformation(player);
+                    interface->printMonuments(player);
+                    interface->printCards(player);
                 }
                 action(player);
                 break;
@@ -237,7 +244,7 @@ void Controller::action(Player* player){
         string choice;
         Monument* monument = nullptr;
         while (monument == nullptr) {
-            
+
             // same as card
             // new method interface askForOneMonument()
             interface->printBasicMessage("Enter the name of the monument you want to buy : ");
@@ -253,8 +260,16 @@ void Controller::action(Player* player){
 
             } catch (const std::exception &e) {
                 interface->printError(e);
+
+                if (interface->confirmationDialog("Do you want to change your action ?",  "Yes", "No")) {
+                    action(player);
+                    break;
+                }
+
+                monument = nullptr;
                 continue;
             }
+
 			interface->printMonuments(player);
 
             if (interface->confirmationDialog("Do you want to change your action ?",  "Yes", "No")) {
@@ -281,4 +296,3 @@ void Controller::tradeTwoEstablishmentCards(Player* p1, Player* p2, Establishmen
     game->tradeCards(p1, p2, card1, card2);
     interface->printBasicMessage(p1->getUsername() + " has taken " + card1->getName() + " from " + p2->getUsername() + " and gave " + card2->getName() + " in exchange.\n");
 }
-

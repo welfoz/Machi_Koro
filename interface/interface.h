@@ -65,13 +65,13 @@ class Gui : public Interface {
 public:
 	Gui() : Interface() {};
 	~Gui() {};
-	void printWelcomingMessage() override {};
-	string getInputText(vector<string> context={}) const override { return ""; };
+	void printWelcomingMessage() override;
+	string getInputText(vector<string> context={}) const override ;
 	bool confirmationDialog(string message, string firstOption, string secondOption) override { return true; };
-	void printBasicMessage(string message) const override {};
+	void printBasicMessage(string message) const override ;
 	void printError(const std::exception& message) const override {};
 	size_t getInputNumber(size_t min, size_t max) override { return 0; };
-	void printTurnCounter(size_t counter) override {};
+	void printTurnCounter(size_t counter) override;
 	void printPlayerInformation(Player* player) const override {};
 	void printMonuments(Player* player) const override {};
 	void printCards(Player* player) const override {};

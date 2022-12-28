@@ -310,12 +310,12 @@ void Gui::printWelcomingMessage(){
     viewMessage->viewWelcomingMessage();
 }
 
-void Gui::printBasicMessage(string message){
+void Gui::printBasicMessage(string message) const{
     ViewMessage* viewMessage = new ViewMessage;
     viewMessage->viewBasicMessage(QString::fromStdString(message));
 }
 
-string Gui::getInputText() const {
+string Gui::getInputText(vector<string> context) const {
     return std::to_string(Controller::getInstance().getGame()->getNbPlayers());
     //Not working, but at least return something correct fro Controller::CreateAll()
 }
@@ -329,7 +329,7 @@ void Gui::printTurnCounter(size_t turnCounter) {
 
 // WRONG IMPLEMENTATION
 // JUST NEED TO RETURN SOMETHING TO COMPILE
-EstablishmentCard* Gui::selectOneCardOwnedByAnyPlayer(string message,bool isAi) const {
+EstablishmentCard* Gui::selectOneCardOwnedByAnyPlayer(string message) const {
 	return Controller::getInstance().getGame()->getCardByName(message);
 }
 
