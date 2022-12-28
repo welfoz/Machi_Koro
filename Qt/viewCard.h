@@ -1,11 +1,8 @@
-#ifndef VIEWCARD_H
-#define VIEWCARD_H
-
+#pragma once
 #include <QWidget>
 #include <QPen>
 #include <QBrush>
 #include <QPushButton>
-#include "../game/game.h"
 #include "../game/controller/control.h"
 
 class ViewCard : public QPushButton
@@ -25,5 +22,3 @@ signals:
 private slots:
     void clickedEvent() {emit cardClicked(this);}
 };
-
-#endif // VIEWCARD_H
