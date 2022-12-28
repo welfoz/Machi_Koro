@@ -35,6 +35,7 @@ public:
 	virtual Player* selectOnePlayerDifferentFromTheCurrentOne(Player* player) const = 0;
 	virtual EstablishmentCard* selectOneEstablishmentCardFromPlayer(Player* target, string message) const = 0;
     virtual Monument* selectMonumentCardFromCurrentPlayer(Player* player, string message) const = 0;
+    virtual enum Extension chooseExtension() const = 0;
 }; 
 
 class Cli : public Interface {
@@ -60,6 +61,7 @@ public:
 	EstablishmentCard* selectOneEstablishmentCardFromPlayer(Player* target, string message) const override;
     Monument* selectMonumentCardFromCurrentPlayer(Player* player, string message) const override;
     EstablishmentCard* selectOneCardOwnedByAnyPlayer(string message) const override;
+    enum Extension chooseExtension() const override;
 };
 
 class Gui : public Interface {
@@ -96,6 +98,7 @@ public:
 	};
 
 	EstablishmentCard* selectOneCardOwnedByAnyPlayer(string message) const override;
+    enum Extension chooseExtension() const override;
 };
 
 class GreenValleyCli : public Cli {
