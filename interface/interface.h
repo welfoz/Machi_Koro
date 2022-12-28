@@ -10,12 +10,11 @@ using namespace std;
 
 class Interface {
 protected:
-	Interface() : ai(new Ai) {};
+	Interface() =default;
 
 public:
     enum Extension {Marina, GreenValley, Deluxe, Base};
     enum Option {cli, gui, cliGreenValley};
-    Ai* ai;
     virtual ~Interface() = default;
     virtual void init() const = 0;
 	static Interface* createInterfaceFromOption(Option type);
