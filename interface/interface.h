@@ -41,6 +41,7 @@ class Cli : public Interface {
 public:
 	Cli() : Interface() {};
 	~Cli() {};
+    void init() const {};
 	void printWelcomingMessage() override;
 	string getInputText(vector<string> context={}) const override;
 	bool confirmationDialog(string message, string firstOption, string secondOption) override;
@@ -65,6 +66,7 @@ class Gui : public Interface {
 public:
 	Gui() : Interface() {};
 	~Gui() {};
+    void init() const {};
 	void printWelcomingMessage() override;
 	string getInputText(vector<string> context={}) const override ;
 	bool confirmationDialog(string message, string firstOption, string secondOption) override { return true; };
