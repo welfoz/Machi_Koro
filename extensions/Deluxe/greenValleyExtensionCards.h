@@ -1,11 +1,3 @@
-//
-// Created by jules on 05/12/2022.
-//
-
-#ifndef MACHI_KORO_GREENVALLEYEXTENSIONCARDS_H
-#define MACHI_KORO_GREENVALLEYEXTENSIONCARDS_H
-
-
 #pragma once
 #include "greenValleyExtension.h"
 #include "../../cards/cardColor.h"
@@ -178,6 +170,3 @@ public:
     }
     void activation(Player& p) override;
 };
-
-
-#endif //MACHI_KORO_GREENVALLEYEXTENSIONCARDS_H

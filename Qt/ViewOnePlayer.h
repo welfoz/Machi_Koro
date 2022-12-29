@@ -1,6 +1,4 @@
-#ifndef VIEWONEPLAYER_H
-#define VIEWONEPLAYER_H
-
+#pragma once
 #include <QWidget>
 #include <QPen>
 #include <QBrush>
@@ -16,5 +14,3 @@ public:
     explicit ViewOnePlayer(QWidget *parent = nullptr) : QVBoxLayout(parent){}
     void setOnePlayer(Player player);
 };
-
-#endif // VIEWONEPLAYER_H

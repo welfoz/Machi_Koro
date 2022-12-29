@@ -1,6 +1,4 @@
-#ifndef VIEWSET_H
-#define VIEWSET_H
-
+#pragma once
 #include <vector>
 #include <set>
 #include <QWidget>
@@ -57,5 +55,3 @@ private slots:
     void diceClick(ViewDice* vd);
 
 };
-
-#endif // VIEWSET_H

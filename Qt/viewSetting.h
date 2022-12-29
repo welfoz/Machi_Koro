@@ -1,6 +1,4 @@
-#ifndef VIEWSETTINGS_H
-#define VIEWSETTINGS_H
-
+#pragma once
 #include <QWidget>
 #include <QPen>
 #include <QBrush>
@@ -49,6 +47,3 @@ public slots:
     void clickFirstOption();
     void clickSecondOption();
 };
-
-
-#endif // VIEWSETTINGS_H
