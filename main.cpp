@@ -1,10 +1,13 @@
 #pragma once
-#include <QApplication>
 #include "game/controller/deluxeController.h"
 #include "game/controller/greenValleyController.h"
 #include "game/controller/marinaController.h"
 #include "game/controller/control.h"
-#include "interface/interface.h"
+#include "interface/cli.h"
+
+// comment to play in cli
+#include <QApplication>
+#include "interface/gui.h"
 
 namespace MACHI_KORO {
 
@@ -16,6 +19,7 @@ void play(Interface::Option option) {
         interface = new Cli();
         break;
     case Interface::Option::gui:
+        // comment to play in cli
         interface = new Gui();
         break;
     case Interface::Option::cliGreenValley:
@@ -52,6 +56,15 @@ void play(Interface::Option option) {
 
 }
 
+// to play in CLI
+//int main(int argc, char* argv[]) {
+
+//    MACHI_KORO::play(Interface::Option::cli);
+
+//    return 0;
+//}
+
+// to play in GUI
 int main(int argc, char* argv[]) {
 
     QApplication app(argc, argv);
