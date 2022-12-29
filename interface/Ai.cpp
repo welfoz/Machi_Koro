@@ -34,7 +34,6 @@ bool Ai::confirmationDialog(string message, string firstOption, string secondOpt
 string Ai::getInputText(vector<string> context) const{
     string text="";
     text=getAiChoice(context);
-    printBasicMessage("\n"+text);
     return text;
 }
 

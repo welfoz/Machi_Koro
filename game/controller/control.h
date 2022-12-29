@@ -22,6 +22,7 @@ public:
 
     static Controller& getInstance(Interface* interface = nullptr);
     Interface* const getInterface() const {
+
         return interface;
     }
 

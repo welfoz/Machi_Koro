@@ -2,9 +2,9 @@
 // Created by jules on 29/12/2022.
 //
 
-#ifndef MACHI_KORO_AI_H
-#define MACHI_KORO_AI_H
-#include "interface.h"
+#pragma once
+#include "./interface.h"
+#include "random"
 
 class Ai : public Interface{
     template<typename t> t getAiChoice(std::vector<t> options,std::vector<t> exceptions={}) const;
@@ -18,4 +18,4 @@ class Ai : public Interface{
 };
 
 
-#endif //MACHI_KORO_AI_H
+

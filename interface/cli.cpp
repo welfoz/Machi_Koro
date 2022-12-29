@@ -17,7 +17,7 @@ void Cli::printWelcomingMessage() {
     cout << "Made with ❤️  by MICHEL Fabien - BROSSARD Felix - TAVERNE Jules - CORTY Pol - LEMERLE Xavier\n\n";
 }
 
-string Cli::getInputText() const {
+string Cli::getInputText(vector<string> context) const {
     string text;
     getline(cin, text);
     return text;
@@ -41,7 +41,7 @@ void Cli::printBasicMessage(string message) {
     cout << message;
 }
 
-size_t Cli::getInputNumber() {
+size_t Cli::getInputNumber(size_t min, size_t max) {
     size_t number;
     cin >> number;
     cin.ignore();

@@ -7,11 +7,11 @@ public:
     ~Gui() {};
     void init() const override;
     void printWelcomingMessage() override;
-    string getInputText() const override;
+    string getInputText(vector<string> constext={}) const override;
     bool confirmationDialog(string message, string firstOption, string secondOption) override;
     void printBasicMessage(string message) override;
     void printError(const std::exception& message) const override;
-    size_t getInputNumber() override;
+    size_t getInputNumber(size_t min=0,size_t max=0) override;
     void printTurnCounter(size_t counter) override;
     void printPlayerInformation(Player* player) const override {};
     void printMonuments(Player* player) const override {};

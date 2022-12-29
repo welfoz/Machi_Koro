@@ -23,14 +23,14 @@ void Gui::printBasicMessage(string message){
     viewMessage->viewBasicMessage(QString::fromStdString(message));
 }
 
-string Gui::getInputText() const {
+string Gui::getInputText(vector<string> context) const {
     ViewSetting* viewSetting = new ViewSetting;
     viewSetting->viewInputText();
     viewSetting->exec();
     return (viewSetting->getText()).toStdString();
 }
 
-size_t Gui::getInputNumber() {
+size_t Gui::getInputNumber(size_t min,size_t max) {
     ViewSetting* viewSetting = new ViewSetting;
     viewSetting->viewInputNumber();
     viewSetting->exec();
