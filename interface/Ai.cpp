@@ -1,7 +1,7 @@
 //
 // Created by jules on 29/12/2022.
 //
-
+#include "controller/control.h"
 #include "Ai.h"
 size_t Ai::getInputNumber(size_t min, size_t max) {
     vector<size_t> options;

@@ -1,12 +1,12 @@
 #pragma once
-#include "../../game/game.h"
+#include  "../../game/game.h"
 #include "Proxy.h"
 
 class Controller {
 protected:
     Game* game;
     static Controller* instance;
-    Proxy* proxy;
+          Proxy* proxy;
     static void freeInstance();
     virtual void turn(Player* player);
     virtual void createAll();

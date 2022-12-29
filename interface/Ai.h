@@ -1,6 +1,6 @@
 
 #pragma once
-#include "controller/control.h"
+
 #include "./interface.h"
 #include "random"
 class Ai : public Interface{
