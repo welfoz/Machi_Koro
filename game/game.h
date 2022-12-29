@@ -12,7 +12,6 @@
 #include "../cards/icon.h"
 #include "../cards/monument.h"
 #include "../players/player.h"
-#include "../interface/interface.h"
 #include <vector>
 #include <algorithm>
 #include <stdexcept>

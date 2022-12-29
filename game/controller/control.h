@@ -1,5 +1,8 @@
 #pragma once
-#include "../../game/game.h"
+#include "../game/game.h"
+#include "../interface/interface.h"
+
+class Interface;
 
 class Controller {
 protected:

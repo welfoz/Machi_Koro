@@ -5,6 +5,10 @@
 #include "../players/player.h"
 #include "../cards/icon.h"
 #include "../extensions/Deluxe/PlayerGreenValley.h"
+#include <QInputDialog>
+#include "../game/game.h"
+#include "../Qt/viewMessage.h"
+#include "../Qt/viewSetting.h"
 using namespace std;
 
 class Interface {

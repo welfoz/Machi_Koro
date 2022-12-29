@@ -1,8 +1,4 @@
 #include "interface.h"
-#include "../game/game.h"
-#include "../game/controller/control.h"
-#include "../Qt/viewMessage.h"
-#include "../Qt/viewSetting.h"
 
 Interface* Interface::createInterfaceFromOption(Option type)
 {
