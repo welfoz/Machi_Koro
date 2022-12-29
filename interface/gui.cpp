@@ -85,7 +85,7 @@ Interface::Extension Gui::chooseExtension() const {
 
     QInputDialog *dialog = new QInputDialog();
     bool accepted;
-    QString choice = dialog->getItem(0, "Choose The Extension", "Extensions:", list, 0, false, &accepted);
+    QString choice = dialog->getItem(0, "Welcome to Machi Koro", "Choose an edition:", list, 0, false, &accepted);
 
     if (accepted && !choice.isEmpty()) {
         if (choice == "Base") {
