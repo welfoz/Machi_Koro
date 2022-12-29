@@ -4,7 +4,8 @@
 #include "game/controller/greenValleyController.h"
 #include "game/controller/marinaController.h"
 #include "game/controller/control.h"
-#include "interface/interface.h"
+#include "interface/cli.h"
+#include "interface/gui.h"
 
 namespace MACHI_KORO {
 
