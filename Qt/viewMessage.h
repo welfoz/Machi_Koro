@@ -8,5 +8,5 @@ class ViewMessage : public QMessageBox
 public:
     explicit ViewMessage(QWidget *parent = nullptr);
     void viewWelcomingMessage();
-    void viewBasicMessage(QString);
+    void viewBasicMessage(QString message);
 };

@@ -8,17 +8,17 @@ public:
     void init() const override;
     void printWelcomingMessage() override;
     string getInputText() const override;
-    bool confirmationDialog(string message, string firstOption, string secondOption) override { return true; };
+    bool confirmationDialog(string message, string firstOption, string secondOption) override;
     void printBasicMessage(string message) override;
-    void printError(const std::exception& message) const override {};
-    size_t getInputNumber() override { return 0; };
+    void printError(const std::exception& message) const override;
+    size_t getInputNumber() override;
     void printTurnCounter(size_t counter) override;
     void printPlayerInformation(Player* player) const override {};
     void printMonuments(Player* player) const override {};
     void printCards(Player* player) const override {};
     void printDices(size_t* throws, size_t nb) const override {};
-    void printBalances(Player** players) const override {};
-    void printBoard() const override {};
+    void printBalances(Player** players) const override;
+    void printBoard() const override;
     string selectOneCard() const override { return ""; };
     Player* selectOnePlayerDifferentFromTheCurrentOne(Player* player) const override { return player; };
 
