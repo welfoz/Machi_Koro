@@ -1,5 +1,4 @@
 #include "control.h"
-#include "../../extensions/Deluxe/deluxeExtension.h"
 
 Controller& Controller::getInstance(Interface* interface)
 {
@@ -16,12 +15,11 @@ void Controller::freeInstance()
 
 Controller* Controller::instance = nullptr;
 
-Controller::Controller(Interface* interface){
+Controller::Controller(Interface* interface) {
     proxy = new Proxy(interface);
     instance = this;
     game = new Game();
 };
-
  
 void Controller::createAll() {
     //ViewSet* viewSet = new ViewSet;
@@ -90,7 +88,6 @@ Controller::~Controller() {
     delete game;
     proxy->getInterface()->printBasicMessage("game deleted :)");
     delete proxy;
-    delete game;
 }; 
 
 void Controller::match(){
@@ -293,4 +290,8 @@ void Controller::action(Player* player){
 void Controller::tradeTwoEstablishmentCards(Player* p1, Player* p2, EstablishmentCard* card1, EstablishmentCard* card2) {
     game->tradeCards(p1, p2, card1, card2);
     proxy->getInterface()->printBasicMessage(p1->getUsername() + " has taken " + card1->getName() + " from " + p2->getUsername() + " and gave " + card2->getName() + " in exchange.\n");
+}
+
+Interface* Controller::getInterface() {
+    return proxy->getInterface();
 }

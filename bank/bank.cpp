@@ -15,17 +15,17 @@ void Bank::trade(size_t idReceiver, size_t idGiver, int amount){
         accounts[idGiver]->add(-accounts[idGiver]->getSolde());
         }
     accounts[idReceiver]->add(actual_amount);
-    Controller::getInstance().getProxy()->getInterface()->printBasicMessage( "[BANK] Traded " + std::to_string(actual_amount) + " from " + Controller::getInstance().getGame()->getPlayer(idGiver).getUsername() + " to " + Controller::getInstance().getGame()->getPlayer(idReceiver).getUsername() +"\n");
+    Controller::getInstance().getInterface()->printBasicMessage( "[BANK] Traded " + std::to_string(actual_amount) + " from " + Controller::getInstance().getGame()->getPlayer(idGiver).getUsername() + " to " + Controller::getInstance().getGame()->getPlayer(idReceiver).getUsername() +"\n");
 }
 
 void Bank::credit(size_t idReceiver, int amount){
     accounts[idReceiver]->add(amount);
-    Controller::getInstance().getProxy()->getInterface()->printBasicMessage( "[BANK] Credited " + std::to_string(amount) + " to " + Controller::getInstance().getGame()->getPlayer(idReceiver).getUsername() + "\n");
+    Controller::getInstance().getInterface()->printBasicMessage( "[BANK] Credited " + std::to_string(amount) + " to " + Controller::getInstance().getGame()->getPlayer(idReceiver).getUsername() + "\n");
 }
 void Bank::debit(size_t idGiver, int amount){
     if (accounts[idGiver]->getSolde()>=amount) {
         accounts[idGiver]->add(-amount);
     }
     else accounts[idGiver]->add(-accounts[idGiver]->getSolde());
-    Controller::getInstance().getProxy()->getInterface()->printBasicMessage( "[BANK] Debited " + std::to_string(amount) + " to " + Controller::getInstance().getGame()->getPlayer(idGiver).getUsername() + "\n");
+    Controller::getInstance().getInterface()->printBasicMessage( "[BANK] Debited " + std::to_string(amount) + " to " + Controller::getInstance().getGame()->getPlayer(idGiver).getUsername() + "\n");
 }

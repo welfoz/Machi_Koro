@@ -2,11 +2,13 @@
 #include  "../../game/game.h"
 #include "Proxy.h"
 
+class Proxy;
+
 class Controller {
 protected:
     Game* game;
     static Controller* instance;
-          Proxy* proxy;
+	Proxy* proxy;
     static void freeInstance();
     virtual void turn(Player* player);
     virtual void createAll();
@@ -22,7 +24,8 @@ public:
 
     static Controller& getInstance(Interface* interface = nullptr);
 
-    const Proxy* getProxy() const { return proxy;}
+    Interface* getInterface();
+
     void match();
     Game* getGame() {
         return game;

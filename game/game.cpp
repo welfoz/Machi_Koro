@@ -1,6 +1,6 @@
 #include "game.h"
 
-Game::Game() : board(nullptr), bank(nullptr), dice(Dice()), winner(nullptr), players(), nbPlayers(0), idCurrentPlayer(0) {
+Game::Game() : board(nullptr), bank(nullptr), dice(Dice()), winner(nullptr), players(), nbPlayers(0), idCurrentPlayer(0), diceValue(0) {
     this->numberOfPlayersMin = 2;
     this->numberOfPlayersMax = 4;
 };

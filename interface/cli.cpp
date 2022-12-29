@@ -1,6 +1,4 @@
 #include "./cli.h"
-#include "../game/game.h"
-#include "../game/controller/control.h"
 
 void Cli::printWelcomingMessage() {
     cout<< "\n\n";

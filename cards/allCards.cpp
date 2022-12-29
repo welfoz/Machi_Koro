@@ -67,16 +67,16 @@ void Stadium::activation(Player &p) {
     }
 }
 void TVStation::activation(Player &p) {
-	Player* p2 = Controller::getInstance().getProxy()->getInterface()->selectOnePlayerDifferentFromTheCurrentOne(&p);
+	Player* p2 = Controller::getInstance().getInterface()->selectOnePlayerDifferentFromTheCurrentOne(&p);
     Controller::getInstance().getGame()->getBank()->trade(p.getId(),p2->getId(),5);
 }
 
 void BusinessCenter::activation(Player &p) {
-	Player* p2 = Controller::getInstance().getProxy()->getInterface()->selectOnePlayerDifferentFromTheCurrentOne(&p);
+	Player* p2 = Controller::getInstance().getInterface()->selectOnePlayerDifferentFromTheCurrentOne(&p);
 
-    EstablishmentCard* takenCardPtr = Controller::getInstance().getProxy()->getInterface()->selectOneEstablishmentCardFromPlayer(p2, "Which non-major Establishment card do want to take ? (by name)");
+    EstablishmentCard* takenCardPtr = Controller::getInstance().getInterface()->selectOneEstablishmentCardFromPlayer(p2, "Which non-major Establishment card do want to take ? (by name)");
 
-    EstablishmentCard* givenCardPtr = Controller::getInstance().getProxy()->getInterface()->selectOneEstablishmentCardFromPlayer(&p, "Which non-major Establishment card do you want to give ? (by name)");
+    EstablishmentCard* givenCardPtr = Controller::getInstance().getInterface()->selectOneEstablishmentCardFromPlayer(&p, "Which non-major Establishment card do you want to give ? (by name)");
 
     Controller::getInstance().tradeTwoEstablishmentCards(&p, p2, givenCardPtr, takenCardPtr);
 }

@@ -1,8 +1,9 @@
-
 #pragma once
 
 #include "./interface.h"
 #include "random"
+#include "../game/controller/control.h"
+
 class Ai : public Interface{
     Interface* humanInterface; //pointeur vers l'interface humaine référente
 public:

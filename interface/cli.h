@@ -1,5 +1,7 @@
 #pragma once
 #include "./interface.h"
+#include "../game/game.h"
+#include "../game/controller/control.h"
 
 class Cli : public Interface {
 public:
