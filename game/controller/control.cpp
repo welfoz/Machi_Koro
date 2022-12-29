@@ -1,6 +1,5 @@
 #include "control.h"
 #include "../../extensions/Deluxe/deluxeExtension.h"
-#include "../Qt/viewSet.h"
 
 Controller& Controller::getInstance(Interface* interface)
 {

@@ -1,7 +1,3 @@
-//
-// Created by jules on 12/11/2022.
-//
-
 #pragma once
 #include "stdio.h"
 #include <random>

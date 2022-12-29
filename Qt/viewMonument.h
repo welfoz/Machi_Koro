@@ -1,11 +1,8 @@
-#ifndef VIEWMONUMENT_H
-#define VIEWMONUMENT_H
-
+#pragma once
 #include <QWidget>
 #include <QPen>
 #include <QBrush>
 #include <QPushButton>
-#include "../game/game.h"
 #include "../game/controller/control.h"
 
 class ViewMonument : public QPushButton
@@ -23,7 +20,3 @@ signals:
 private slots:
     void clickedEvent() {emit monumentClicked(this);}
 };
-
-
-
-#endif // VIEWMONUMENT_H

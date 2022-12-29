@@ -1,17 +1,12 @@
 #pragma once
-#ifndef MACHI_KORO_GAME_H
-#define MACHI_KORO_GAME_H
-#include "../bank/account.h"
-#include "../cards/allCards.h"
 #include "../bank/bank.h"
-#include "../cards/baseCard.h"
 #include "board.h"
-#include "../cards/cardColor.h"
 #include "dice.h"
 #include "../cards/establishmentCard.h"
 #include "../cards/icon.h"
 #include "../cards/monument.h"
 #include "../players/player.h"
+#include "../cards/allCards.h"
 #include <vector>
 #include <algorithm>
 #include <stdexcept>
@@ -97,5 +92,3 @@ public:
 
     void tradeCards(Player* p1, Player* p2,EstablishmentCard* cardP1, EstablishmentCard* cardP2);
 };
-
-#endif

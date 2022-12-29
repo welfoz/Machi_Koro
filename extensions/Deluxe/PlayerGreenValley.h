@@ -1,9 +1,4 @@
-//
-// Created by jules on 10/12/2022.
-//
 #pragma once
-#ifndef MACHI_KORO_PLAYERGREENVALLEY_H
-#define MACHI_KORO_PLAYERGREENVALLEY_H
 #include "../../players/player.h"
 #include "../../formatter/formatter.h"
 
@@ -21,6 +16,3 @@ public :
     void activatePurpleCards(size_t diceNumber) override;
     const map<EstablishmentCard*, bool>& getClosedCards() const {return closed;}
 };
-
-
-#endif //MACHI_KORO_PLAYERGREENVALLEY_H

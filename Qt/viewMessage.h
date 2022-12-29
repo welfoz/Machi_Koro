@@ -1,7 +1,4 @@
-#ifndef VIEWMESSAGE_H
-#define VIEWMESSAGE_H
-
-#include "../game/game.h"
+#pragma once
 #include "../game/controller/control.h"
 #include <QMessageBox>
 
@@ -11,8 +8,5 @@ class ViewMessage : public QMessageBox
 public:
     explicit ViewMessage(QWidget *parent = nullptr);
     void viewWelcomingMessage();
-    void viewBasicMessage(QString);
+    void viewBasicMessage(QString message);
 };
-
-
-#endif // VIEWMESSAGE_H

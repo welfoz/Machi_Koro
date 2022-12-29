@@ -1,8 +1,6 @@
 #pragma once
-#include "../game/game.h"
-#include "../interface/interface.h"
-
-class Interface;
+#include "../../game/game.h"
+#include "../../interface/interface.h"
 
 class Controller {
 protected:
@@ -17,6 +15,7 @@ protected:
     virtual void action(Player* player);
 	size_t* activateRadioTower(Player* player, size_t nb, size_t* throws) const;
 	void activateAmusementPark(Player* p, size_t nb, size_t* throws);
+
 public:
     virtual ~Controller();
 
