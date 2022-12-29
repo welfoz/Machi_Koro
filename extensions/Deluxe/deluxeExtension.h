@@ -1,6 +1,4 @@
 #pragma once
-#ifndef MACHI_KORO_DELUXEEXTENSION_H
-#define MACHI_KORO_DELUXEEXTENSION_H
 #include "../Marina/marinaExtension.h"
 #include "greenValleyExtension.h"
 #include <list>
@@ -16,4 +14,3 @@ class Deluxe : public Marina, public GreenValley {
 public:
     Deluxe(){};
 };
-#endif

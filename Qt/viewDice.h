@@ -1,6 +1,4 @@
-#ifndef VIEWDICE_H
-#define VIEWDICE_H
-
+#pragma once
 #include <QWidget>
 #include <QPen>
 #include <QBrush>
@@ -22,5 +20,3 @@ signals:
 private slots:
     void clickedEvent() {emit diceClicked(this);}
 };
-
-#endif // VIEWDICE_H

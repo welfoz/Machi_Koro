@@ -1,7 +1,4 @@
-#ifndef VIEWMESSAGE_H
-#define VIEWMESSAGE_H
-
-#include "../game/game.h"
+#pragma once
 #include "../game/controller/control.h"
 #include <QMessageBox>
 
@@ -13,6 +10,3 @@ public:
     void viewWelcomingMessage();
     void viewBasicMessage(QString);
 };
-
-
-#endif // VIEWMESSAGE_H

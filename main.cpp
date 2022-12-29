@@ -1,3 +1,4 @@
+#pragma once
 #include <QApplication>
 #include "game/controller/deluxeController.h"
 #include "game/controller/greenValleyController.h"

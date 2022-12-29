@@ -1,6 +1,4 @@
-#ifndef VIEWSETTINGS_H
-#define VIEWSETTINGS_H
-
+#pragma once
 #include <QWidget>
 #include <QPen>
 #include <QBrush>
@@ -31,6 +29,3 @@ private:
 public slots:
     void clickValidate();
 };
-
-
-#endif // VIEWSETTINGS_H

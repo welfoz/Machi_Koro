@@ -3,7 +3,6 @@
 #include <iostream>
 #include "../formatter/formatter.h"
 #include "../players/player.h"
-#include "../cards/icon.h"
 #include "../extensions/Deluxe/PlayerGreenValley.h"
 
 using namespace std;

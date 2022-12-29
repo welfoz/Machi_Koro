@@ -4,7 +4,6 @@
 #include "../cards/establishmentCard.h"
 #include "../cards/monument.h"
 #include <iostream>
-#include "ostream"
 #include <vector>
 #include <algorithm>
 // need to comment it if we want to use EstablishmentCard methods
