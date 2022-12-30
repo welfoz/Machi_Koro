@@ -246,11 +246,9 @@ void Controller::action(Player* player){
 
             vector<string> context;
             for (auto it : game->monuments) if (!player->getMonument(it->getName()) && (it->getPrice()<=game->getBank()->getAccount(player->getId())->getSolde())) context.push_back(it->getName()); // to tell th AI what can be written
-            //test
-            try {
-                choice = proxy->getInterface()->getInputText(context);
-            }catch(string e){ getInterface()->printBasicMessage(e);}
-            //test
+
+            choice = proxy->getInterface()->getInputText(context);
+
             try {
 				monument = getGame()->getMonumentByName(choice);
                 game->purchaseOneMonument(player, monument);

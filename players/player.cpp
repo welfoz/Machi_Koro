@@ -88,7 +88,7 @@ size_t Player::cheapestMonumentAvailablePrice() const {
     if(it!=monuments.end()){
         min=it->first->getPrice();
         for (;it!=monuments.end();it++){
-            if (it->first->getPrice()<min ) min=it->first->getPrice();
+            if (it->first->getPrice()<min && !it->second) min=it->first->getPrice();
         }
     }
     return min;

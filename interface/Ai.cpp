@@ -14,7 +14,7 @@ size_t Ai::getInputNumber(size_t min, size_t max)const {
 
 template<typename t>
 t Ai::getAiChoice(std::vector<t> options, std::vector<t> exceptions) const {
-    if (options.empty()) throw invalid_argument("No choice anymore here");
+    size_t n=options.size();
     if (exceptions.size() > 0)
         for (auto it: exceptions)
             if (count(options.begin(), options.end(), it)) std::remove(options.begin(), options.end(), it);
@@ -43,11 +43,12 @@ string Ai::getInputText(vector<string> context) const{
 }
 
 EstablishmentCard *Ai::selectOneCardOwnedByAnyPlayer(string message) const {
+    printBasicMessage(message);
     EstablishmentCard* chosenCardPtr;
     Game* game=Controller::getInstance().getGame();
     vector<EstablishmentCard*> options;
     for (size_t j =0;j<game->getNbPlayers();j++){
-        for (auto it : game->getPlayer(j).getCards()) options.push_back(it.first);
+        for (auto it : game->getPlayer(j).getCards()) if (it.second) options.push_back(it.first);
     }
     chosenCardPtr= getAiChoice(options);
     printBasicMessage(chosenCardPtr->getName());
@@ -55,6 +56,7 @@ EstablishmentCard *Ai::selectOneCardOwnedByAnyPlayer(string message) const {
 }
 
 Player *Ai::selectOnePlayerDifferentFromTheCurrentOne(Player *player) const {
+    printBasicMessage("Type the name of the player you want to trade a card with :");
     Player *p2;
     Game* game = Controller::getInstance().getGame();
     p2= getAiChoice(game->getPlayers(),vector<Player*> ({player}));
@@ -63,15 +65,18 @@ Player *Ai::selectOnePlayerDifferentFromTheCurrentOne(Player *player) const {
 }
 
 EstablishmentCard *Ai::selectOneEstablishmentCardFromPlayer(Player *target, string message) const {
+    printBasicMessage(message);
     EstablishmentCard *takenCardPtr;
     vector<EstablishmentCard*> options;
-    for (auto it : target->getCards()) if (it.first->getType()!=Type::majorEstablishment) options.push_back(it.first);
+    for (auto it : target->getCards()) if (it.first->getType()!=Type::majorEstablishment && it.second) options.push_back(it.first);
     takenCardPtr= getAiChoice(options);
     printBasicMessage(takenCardPtr->getName());
     return takenCardPtr;
 }
 
 Monument *Ai::selectMonumentCardFromCurrentPlayer(Player *player, string message) const {
+    if (player->getNbMonumentsActivated()==0) return nullptr;
+    printBasicMessage(message);
     Monument* monumentPtr;
     vector<Monument*> options;
     for (auto it : player->getMonuments()) if (it.second) options.push_back(it.first);
