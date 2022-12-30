@@ -134,6 +134,7 @@ void Controller::turn(Player* player){
 
     action(player);
 
+
     activateAmusementPark(player, nb, throws);
 };
 

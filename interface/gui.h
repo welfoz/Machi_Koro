@@ -1,10 +1,12 @@
 #pragma once
 #include "./interface.h"
+#include "../Qt/viewSet.h"
 
 class Gui : public Interface {
 public:
     Gui() : Interface() {};
     ~Gui() {};
+    static ViewSet* board;
     void init() const override;
     void printWelcomingMessage() override;
     string getInputText() const override;
