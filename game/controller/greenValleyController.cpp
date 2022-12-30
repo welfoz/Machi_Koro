@@ -18,7 +18,7 @@ void GreenValleyController::turn(Player* player) {
 
 void GreenValleyController::techStartupInvestment(Player* player) {
     auto *techStartup = dynamic_cast<TechStartup *>(game->getCardByName("Tech Startup"));
-    if (techStartup->isAbleToInvest(player) && interface->confirmationDialog("Do you want to invest on Tech Startup ?", "Yes", "No")) {
+    if (techStartup->isAbleToInvest(player) && proxy->getInterface()->confirmationDialog("Do you want to invest on Tech Startup ?", "Yes", "No")) {
 		techStartup->invest(player, 1);
     }
 }

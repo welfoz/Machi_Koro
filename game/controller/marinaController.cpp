@@ -15,16 +15,16 @@ MarinaController& MarinaController::getInstance(Interface* interface)
 void MarinaController::turn(Player* player) {
     if (getGame()->getWinner()!= nullptr) return;
 
-    interface->printPlayerInformation(player);
-    interface->printMonuments(player);
-    interface->printCards(player);
+    proxy->getInterface()->printPlayerInformation(player);
+    proxy->getInterface()->printMonuments(player);
+    proxy->getInterface()->printCards(player);
 
     activateCityHall(player);
 
     const size_t nb = getNbDiceChosen(*player);
 
     size_t* throws = getGame()->throwDices(nb);
-    interface->printDices(throws,nb);
+    proxy->getInterface()->printDices(throws,nb);
 
     throws = activateRadioTower(player, nb, throws);
 
@@ -33,7 +33,7 @@ void MarinaController::turn(Player* player) {
 
     getGame()->activation(player, game->diceValue);
 
-    interface->printBalances(game->players);
+    proxy->getInterface()->printBalances(game->players);
 
     map<Monument*,bool> playerMonuments = player->getMonuments();
     map<EstablishmentCard*,size_t> playerCards = player->getCards();
@@ -56,7 +56,7 @@ void MarinaController::activateCityHall(Player* player){
 
 
 size_t MarinaController::activateHarbor(size_t diceValue, Player* player){
-    if (diceValue >= 10 && player->getMonument("Harbor") && interface->confirmationDialog("Do you want to add 2 to the dice value ?","Yes","No")) return diceValue + 2;
+    if (diceValue >= 10 && player->getMonument("Harbor") && proxy->getInterface()->confirmationDialog("Do you want to add 2 to the dice value ?","Yes","No")) return diceValue + 2;
     else return diceValue;
 }
 

@@ -1,18 +1,20 @@
 #pragma once
 #include "./interface.h"
+#include "../game/game.h"
+#include "../game/controller/control.h"
 
 class Cli : public Interface {
 public:
     Cli() : Interface() {};
     ~Cli() {};
     void init() override {};
-    void printWelcomingMessage() override;
-    string getInputText() const override;
-    bool confirmationDialog(string message, string firstOption, string secondOption) override;
-    void printBasicMessage(string message) override;
+    void printWelcomingMessage() const override;
+    string getInputText(vector<string> context={}) const override;
+    bool confirmationDialog(string message, string firstOption, string secondOption) const override;
+    void printBasicMessage(string message) const override;
     void printError(const std::exception& message) const override;
-    size_t getInputNumber() override;
-    void printTurnCounter(size_t counter) override;
+    size_t getInputNumber(size_t min=0,size_t max=0) const override;
+    void printTurnCounter(size_t counter) const override;
     void printPlayerInformation(Player* player) const override;
     void printMonuments(Player* player) const override;
     void printCards(Player* player) const override;

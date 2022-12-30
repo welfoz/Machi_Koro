@@ -19,7 +19,7 @@ ViewSet::ViewSet(QWidget *parent) : QWidget(parent),
     viewEstablishments(Controller::getInstance().getGame()->getBoard()->getCards().size(), nullptr),
     viewmonuments(Controller::getInstance().getGame()->getPlayer(0).getMonuments().size(), nullptr),
     viewPlayers(Controller::getInstance().getGame()->getNbPlayers(), nullptr),
-    viewDices(2, nullptr), cardsOnlyName(20, nullptr)
+    cardsOnlyName(20, nullptr)
 {
     setBackgroundRole(QPalette::Base);
     setAutoFillBackground(true);
@@ -91,13 +91,15 @@ ViewSet::ViewSet(QWidget *parent) : QWidget(parent),
     }
 
     layoutDice = new QVBoxLayout;
-    for (i=0; i<2; i++){
-        viewDices[i] = new ViewDice(Controller::getInstance().getGame()->getDiceValue());
-        viewDices[i]->setDice();
-        layoutDice->addWidget(viewDices[i], Qt::AlignTop);
-        connect(viewDices[i], SIGNAL(diceClicked(ViewDice*)), this, SLOT(diceClick(ViewDice*)));
-
-    }
+    QLabel* diceText = new QLabel(this);
+    diceText->setText("Dice value :");
+    diceText->setStyleSheet("font-weight: bold; font-size: 10pt");
+    dice = new ViewDice(Controller::getInstance().getGame()->getDiceValue());
+    dice->setDice();
+    layoutDice->addWidget(diceText);
+    layoutDice->addWidget(dice);
+    layoutDice->setAlignment(Qt::AlignTop);
+    connect(dice, SIGNAL(diceClicked(ViewDice*)), this, SLOT(diceClick(ViewDice*)));
 
     couche->addLayout(layoutCards);
     couche->addLayout(layoutDice);

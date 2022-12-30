@@ -1,8 +1,6 @@
 #include "./cli.h"
-#include "../game/game.h"
-#include "../game/controller/control.h"
 
-void Cli::printWelcomingMessage() {
+void Cli::printWelcomingMessage() const{
     cout<< "\n\n";
     cout << "███    ███  █████   ██████ ██   ██ ██     ██   ██  ██████  ██████   ██████  \n";
     cout << "████  ████ ██   ██ ██      ██   ██ ██     ██  ██  ██    ██ ██   ██ ██    ██ \n";
@@ -17,14 +15,14 @@ void Cli::printWelcomingMessage() {
     cout << "Made with ❤️  by MICHEL Fabien - BROSSARD Felix - TAVERNE Jules - CORTY Pol - LEMERLE Xavier\n\n";
 }
 
-string Cli::getInputText() const {
+string Cli::getInputText(vector<string> context) const {
     string text;
     getline(cin, text);
     return text;
 }
 
 // be careful! firstOption and secondOption HAS to be UTF-8. No accent.
-bool Cli::confirmationDialog(string message, string firstOption, string secondOption) {
+bool Cli::confirmationDialog(string message, string firstOption, string secondOption)const {
     string stopAnswer = "";
     while (Formatter::toLower(stopAnswer) != Formatter::toLower(firstOption) && Formatter::toLower(stopAnswer) != Formatter::toLower(secondOption)) {
         cout << message << " (" << firstOption << " | " << secondOption << ") : ";
@@ -37,18 +35,18 @@ bool Cli::confirmationDialog(string message, string firstOption, string secondOp
     return true;
 }
 
-void Cli::printBasicMessage(string message) {
-    cout << message;
+void Cli::printBasicMessage(string message) const{
+    cout << message<<endl;
 }
 
-size_t Cli::getInputNumber() {
+size_t Cli::getInputNumber(size_t min, size_t max) const{
     size_t number;
     cin >> number;
     cin.ignore();
     return number;
 }
 
-void Cli::printTurnCounter(size_t turnCounter) {
+void Cli::printTurnCounter(size_t turnCounter) const{
     cout << "\n\n-------------------------------------------------------------------------------";
     cout << "\n------------------------------- Turn number : " << turnCounter << " -------------------------------\n";
 }

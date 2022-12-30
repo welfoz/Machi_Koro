@@ -7,36 +7,36 @@
 #include "../Qt/viewSetting.h"
 #include "../Qt/viewSet.h"
 
-void Gui::init(){
+void Gui::init() {
     this->board = new ViewSet;
     this->board->show();
 }
 
-void Gui::printWelcomingMessage(){
+void Gui::printWelcomingMessage()const {
     ViewMessage* viewMessage = new ViewMessage;
     viewMessage->viewWelcomingMessage();
 }
 
-void Gui::printBasicMessage(string message){
+void Gui::printBasicMessage(string message)const {
     ViewMessage* viewMessage = new ViewMessage;
     viewMessage->viewBasicMessage(QString::fromStdString(message));
 }
 
-string Gui::getInputText() const {
+string Gui::getInputText(vector<string> context) const {
     ViewSetting* viewSetting = new ViewSetting;
     viewSetting->viewInputText();
     viewSetting->exec();
     return (viewSetting->getText()).toStdString();
 }
 
-size_t Gui::getInputNumber() {
+size_t Gui::getInputNumber(size_t min,size_t max) const {
     ViewSetting* viewSetting = new ViewSetting;
     viewSetting->viewInputNumber();
     viewSetting->exec();
     return static_cast<size_t>(viewSetting->getNumber());
 }
 
-bool Gui::confirmationDialog(string message, string firstOption, string secondOption){
+bool Gui::confirmationDialog(string message, string firstOption, string secondOption)const {
     ViewSetting* viewSetting = new ViewSetting;
     viewSetting->viewConfirmationDialog(QString::fromStdString(message), QString::fromStdString(firstOption), QString::fromStdString(secondOption));
     viewSetting->exec();
@@ -53,7 +53,7 @@ void Gui::printBalances(Player** players){
     this->board->setSet();
 }
 
-void Gui::printTurnCounter(size_t turnCounter) {
+void Gui::printTurnCounter(size_t turnCounter) const{
     ViewMessage* viewMessage = new ViewMessage;
     QString message = "Turn count : " + QString::number(static_cast<int>(turnCounter));
     viewMessage->viewBasicMessage(message);
@@ -80,7 +80,7 @@ Interface::Extension Gui::chooseExtension() const {
 
     QInputDialog *dialog = new QInputDialog();
     bool accepted;
-    QString choice = dialog->getItem(0, "Choose The Extension", "Extensions:", list, 0, false, &accepted);
+    QString choice = dialog->getItem(0, "Welcome to Machi Koro", "Choose an edition:", list, 0, false, &accepted);
 
     if (accepted && !choice.isEmpty()) {
         if (choice == "Base") {

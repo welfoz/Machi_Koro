@@ -1,12 +1,14 @@
 #pragma once
-#include "../../game/game.h"
-#include "../../interface/interface.h"
+#include  "../../game/game.h"
+#include "Proxy.h"
+
+class Proxy;
 
 class Controller {
 protected:
     Game* game;
     static Controller* instance;
-    Interface* const interface;
+	Proxy* proxy;
     static void freeInstance();
     virtual void turn(Player* player);
     virtual void createAll();
@@ -21,9 +23,8 @@ public:
 
 
     static Controller& getInstance(Interface* interface = nullptr);
-    Interface* const getInterface() const {
-        return interface;
-    }
+
+    Interface* getInterface(bool gameCreation=false);
 
     void match();
     Game* getGame() {

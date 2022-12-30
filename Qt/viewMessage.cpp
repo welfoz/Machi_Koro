@@ -6,8 +6,8 @@ ViewMessage::ViewMessage(QWidget *parent) : QMessageBox(parent) {
 }
 
 void ViewMessage::viewWelcomingMessage(){
-    //setFixedSize(500, 500);
-    setText("MACHI KORO - LO21\n\nMade with ❤️ by MICHEL Fabien - BROSSARD Felix - TAVERNE Jules - CORTY Pol - LEMERLE Xavier");
+    setText("MACHI KORO - LO21");
+    setInformativeText("Made with ❤ by MICHEL Fabien - BROSSARD Felix - TAVERNE Jules - CORTY Pol - LEMERLE Xavier");
     exec();
 }
 

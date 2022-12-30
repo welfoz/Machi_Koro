@@ -103,6 +103,7 @@ void ViewCard::setCard(){
     QHBoxLayout *layoutEffect = new QHBoxLayout();
     layoutEffect->addWidget(effectText);
     layoutEffect->addWidget(effectValue);
+    layoutEffect->setAlignment(Qt::AlignTop);
 
     layoutCard->addWidget(cardname, 0, Qt::AlignHCenter);
     layoutCard->addLayout(layoutCardRemaining);

@@ -45,11 +45,9 @@ private:
     std::vector<ViewCard*> cardsOnlyName;
     ViewMonument* monuments;
     std::vector<ViewMonument*> viewmonuments;
-    ViewDice* viewdice;
     ViewOnePlayer* player;
     std::vector<ViewOnePlayer*> viewPlayers;
     ViewDice* dice;
-    std::vector<ViewDice*> viewDices;
 private slots:
     void cardClick(ViewCard* vc);
     void monumentClick(ViewMonument* vm);

@@ -1,4 +1,3 @@
-#pragma once
 #include "game/controller/deluxeController.h"
 #include "game/controller/greenValleyController.h"
 #include "game/controller/marinaController.h"
