@@ -125,9 +125,10 @@ void ViewCard::setCard(EstablishmentCard* card){
     layoutIcon->addWidget(iconText);
     layoutIcon->addWidget(iconValue);
 
-    QHBoxLayout *layoutEffect = new QHBoxLayout(this);
+    QVBoxLayout *layoutEffect = new QVBoxLayout(this);
     layoutEffect->addWidget(effectText);
     layoutEffect->addWidget(effectValue);
+    layoutEffect->setAlignment(Qt::AlignTop);
 
     layoutCard->addWidget(cardname, 0, Qt::AlignHCenter);
     layoutCard->addLayout(layoutCardRemaining);

@@ -39,8 +39,6 @@ void ViewMonument::setMonument(Monument* monument)
     QLabel *priceValue = new QLabel(this);
     priceValue->setNum(static_cast<int>(monument->getPrice()));
 
-    QLabel *effectText = new QLabel(this);
-    effectText->setText("Effect : ");
     QLabel *effectValue = new QLabel(this);
     effectValue->setWordWrap(true);
     effectValue->setText(QString::fromStdString(monument->getEffetDescription()));
@@ -51,11 +49,7 @@ void ViewMonument::setMonument(Monument* monument)
     layoutPrice->addWidget(priceText, 0, Qt::AlignLeft);
     layoutPrice->addWidget(priceValue, 0, Qt::AlignLeft);
 
-    QHBoxLayout *layoutEffect = new QHBoxLayout(this);
-    layoutEffect->addWidget(effectText);
-    layoutEffect->addWidget(effectValue);
-
     layoutCard->addWidget(cardName, 0, Qt::AlignHCenter);
     layoutCard->addLayout(layoutPrice);
-    layoutCard->addLayout(layoutEffect);
+    layoutCard->addWidget(effectValue);
 }
