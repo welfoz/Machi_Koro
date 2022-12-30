@@ -2,21 +2,25 @@
 #include <QWidget>
 #include <QPen>
 #include <QBrush>
+#include <QLabel>
 #include <QPushButton>
+#include <QVBoxLayout>
 #include "../game/controller/control.h"
 
 class ViewCard : public QPushButton
 {
     Q_OBJECT
 public:
-    ViewCard(const EstablishmentCard* card, QWidget *parent = nullptr);
-    explicit ViewCard(QWidget *parent = nullptr);
+    ViewCard(EstablishmentCard* card, QWidget *parent = nullptr);
+//    explicit ViewCard(QWidget *parent = nullptr);
     void setCardOnlyName(EstablishmentCard* card);
-    void setCard(EstablishmentCard* card);
+    void setCard();
     const EstablishmentCard* getCard() const {return card;}
 protected:
 private:
-    const EstablishmentCard* card = nullptr;
+    EstablishmentCard* card = nullptr;
+    void clearLayout(QLayout* layout);
+    QVBoxLayout* layoutCard;
 signals:
     void cardClicked(ViewCard*);
 private slots:

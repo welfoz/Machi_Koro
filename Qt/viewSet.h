@@ -41,7 +41,8 @@ private:
     QHBoxLayout* layoutPlayerMoney;
 
     ViewCard* cards;
-    std::vector<ViewCard*> viewcards;
+    std::vector<ViewCard*> viewEstablishments;
+    std::vector<ViewCard*> cardsOnlyName;
     ViewMonument* monuments;
     std::vector<ViewMonument*> viewmonuments;
     ViewDice* viewdice;
@@ -53,5 +54,4 @@ private slots:
     void cardClick(ViewCard* vc);
     void monumentClick(ViewMonument* vm);
     void diceClick(ViewDice* vd);
-
 };

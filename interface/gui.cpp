@@ -9,7 +9,6 @@
 
 void Gui::init(){
     this->board = new ViewSet;
-    this->board->setSet();
     this->board->show();
 }
 
@@ -48,15 +47,10 @@ bool Gui::confirmationDialog(string message, string firstOption, string secondOp
 
 void Gui::printBoard() const {
     this->board->setSet();
-    this->board->show();
 }
 
 void Gui::printBalances(Player** players){
-    this->board->close();
-    this->board = nullptr;
-    this->board = new ViewSet;
     this->board->setSet();
-    this->board->show();
 }
 
 void Gui::printTurnCounter(size_t turnCounter) {

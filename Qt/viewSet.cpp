@@ -13,25 +13,28 @@
 
 
 
-ViewSet::ViewSet(QWidget *parent) : QWidget(parent), viewcards(20, nullptr), viewmonuments(6, nullptr), viewPlayers(4, nullptr), viewDices(2, nullptr)
+// à quoi servent cardsOnlyName -> de setCardOnlyName
+// attention les cartes des joueurs ne s'affichent plus
+ViewSet::ViewSet(QWidget *parent) : QWidget(parent),
+    viewEstablishments(Controller::getInstance().getGame()->getBoard()->getCards().size(), nullptr),
+    viewmonuments(Controller::getInstance().getGame()->getPlayer(0).getMonuments().size(), nullptr),
+    viewPlayers(Controller::getInstance().getGame()->getNbPlayers(), nullptr),
+    viewDices(2, nullptr), cardsOnlyName(20, nullptr)
 {
     setBackgroundRole(QPalette::Base);
     setAutoFillBackground(true);
     setFixedSize(1400,800);
     setWindowTitle("Machi Koro");
-}
 
-void ViewSet::setSet()
-{
     couche = new QHBoxLayout;
 
     layoutCards = new QGridLayout;
     int i=0;
     for(auto it=Controller::getInstance().getGame()->getBoard()->getCards().begin(); it != Controller::getInstance().getGame()->getBoard()->getCards().end(); it++){
-        viewcards[i] = new ViewCard(it->first);
-        viewcards[i]->setCard(it->first);
-        layoutCards->addWidget(viewcards[i], i/5, i%5, Qt::AlignTop);
-        connect(viewcards[i], SIGNAL(cardClicked(ViewCard*)), this, SLOT(cardClick(ViewCard*)));
+        viewEstablishments[i] = new ViewCard(it->first);
+        viewEstablishments[i]->setCard();
+        layoutCards->addWidget(viewEstablishments[i], i/5, i%5, Qt::AlignTop);
+        connect(viewEstablishments[i], SIGNAL(cardClicked(ViewCard*)), this, SLOT(cardClick(ViewCard*)));
         i++;
     }
 
@@ -69,10 +72,10 @@ void ViewSet::setSet()
         layoutPlayerCards = new QVBoxLayout;
         for (auto it = player.getCards().begin(); it != player.getCards().end(); it++){
             if (it->second>0){
-                viewcards[k] = new ViewCard(it->first);
-                viewcards[k]->setCardOnlyName(it->first);
-                layoutPlayerCards->addWidget(viewcards[k]);
-                connect(viewcards[k], SIGNAL(cardClicked(ViewCard*)), this, SLOT(cardClick(ViewCard*)));
+                cardsOnlyName[k] = new ViewCard(it->first);
+                cardsOnlyName[k]->setCardOnlyName(it->first);
+                layoutPlayerCards->addWidget(cardsOnlyName[k]);
+                connect(cardsOnlyName[k], SIGNAL(cardClicked(ViewCard*)), this, SLOT(cardClick(ViewCard*)));
                 k++;
             }
         }
@@ -100,6 +103,22 @@ void ViewSet::setSet()
     couche->addLayout(layoutDice);
     couche->addLayout(layoutAllPlayers);
     setLayout(couche);
+
+}
+
+void ViewSet::setSet()
+{
+    // update Establishment Cards
+    for (auto cards: viewEstablishments) {
+        if (cards != nullptr) {
+            cards->setCard();
+        }
+    }
+
+    // quels updates sont nécessaires ?
+    layoutCards->update();
+    couche->update();
+    update();
 }
 
 void ViewSet::cardClick(ViewCard* vc)
