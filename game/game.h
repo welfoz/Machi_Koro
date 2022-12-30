@@ -36,7 +36,7 @@ protected:
 
     // initialisation : toutes ces méthodes sont appellés dans le constructeur Game()
     void createBank(size_t nbOfPlayers);
-    virtual void createPlayer(string name, size_t id);
+    virtual void createPlayer(string name, size_t id, bool isAi);
     virtual void createEstablishmentCards();
     virtual void createMonumentCards();
     virtual void createBoard();
@@ -88,6 +88,7 @@ public:
     vector<const Icon*> getIcons() const {return this->icons;};
     const Board* const getBoard() const {return board;}
     const Player* getWinner() const {return winner;}
+    const vector<Player*> getPlayers() const {return vector<Player*> (players,+players+nbPlayers);}
 
     void tradeCards(Player* p1, Player* p2,EstablishmentCard* cardP1, EstablishmentCard* cardP2);
 };

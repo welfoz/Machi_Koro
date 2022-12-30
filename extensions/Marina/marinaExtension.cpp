@@ -41,7 +41,7 @@ void Marina::createMonumentCards(){
     Game::createMonumentCards();
 }
 
-void Marina::createPlayer(string name, size_t id){
+void Marina::createPlayer(string name, size_t id, bool isAi){
     if (!canAddNewPlayer()) {
         throw out_of_range("limit_players_reached");
     }
@@ -51,7 +51,7 @@ void Marina::createPlayer(string name, size_t id){
 			throw invalid_argument("two_players_homonyme");
         }
     }
-    players[id] = new Player(name, id, monuments, getPlayerStarterCards());
+    players[id] = new Player(name, id, monuments, getPlayerStarterCards(), isAi);
     players[id]->purchaseMonument(getMonumentByName("City Hall"));
 
     this->nbPlayers += 1;

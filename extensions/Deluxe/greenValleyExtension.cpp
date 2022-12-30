@@ -24,7 +24,7 @@ void GreenValley::createIcons(){
     icons.push_back(new Icon("suitcase","suitcase.png",Type::secondaryIndustry));
 }
 
-void GreenValley::createPlayer(string name, size_t id) {
+void GreenValley::createPlayer(string name, size_t id, bool isAi) {
     if (!canAddNewPlayer()) {
         throw out_of_range("limit_players_reached");
     }
@@ -34,7 +34,7 @@ void GreenValley::createPlayer(string name, size_t id) {
 			throw invalid_argument("two_players_homonyme");
         }
     }
-    players[id] = new PlayerGreenValley(name, id, monuments, getPlayerStarterCards());
+    players[id] = new PlayerGreenValley(name, id, monuments, getPlayerStarterCards(), isAi);
 
     this->nbPlayers += 1;
 }

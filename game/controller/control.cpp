@@ -1,5 +1,4 @@
 #include "control.h"
-#include "../../extensions/Deluxe/deluxeExtension.h"
 
 Controller& Controller::getInstance(Interface* interface)
 {
@@ -16,21 +15,18 @@ void Controller::freeInstance()
 
 Controller* Controller::instance = nullptr;
 
-Controller::Controller(Interface* interface) : interface(interface) {
-    if (interface == nullptr) {
-        throw "ERROR: interface need to be defined to create a Controller";
-    }
+Controller::Controller(Interface* interface) {
+    proxy = new Proxy(interface);
     instance = this;
     game = new Game();
 };
-
  
 void Controller::createAll() {
     //ViewSet* viewSet = new ViewSet;
     //viewSet->show();
     // For Qt : initialize the set
 
-    interface->printWelcomingMessage();
+    proxy->getInterface(true)->printWelcomingMessage();
 
     // create cards before players because players needs them to be created
     getGame()->createIcons();
@@ -38,25 +34,26 @@ void Controller::createAll() {
     getGame()->createEstablishmentCards();
 
     bool stop = false;
+    bool isAi;
 	while (!stop && getGame()->canAddNewPlayer()) {
-
-		interface->printBasicMessage("\nEnter the name of the player number " + std::to_string(getGame()->nbPlayers + 1) + " : ");
-
+        isAi = proxy->getInterface(true)->confirmationDialog("What type of player do you want to add ?","AI","Human");
+        proxy->getInterface(true)->printBasicMessage("\nEnter the name of the player number " + std::to_string(getGame()->nbPlayers + 1) + " : ");
+        string name=proxy->getInterface(true)->getInputText();
 		try {
-			getGame()->createPlayer(interface->getInputText(), getGame()->nbPlayers);
+			getGame()->createPlayer(name, getGame()->nbPlayers,isAi);
 		}
         catch (std::invalid_argument& error) {
-            interface->printError(error);
+            proxy->getInterface(true)->printError(error);
             continue;
         }
 		catch (std::out_of_range& error) {
             // get out of the while loop
             break;
 		}
-
-		if (!interface->confirmationDialog("Do you want to add another player", "Yes", "No")) {
+        proxy->getInterface(true)->printBasicMessage( name+ " added!\n");
+		if (!proxy->getInterface(true)->confirmationDialog("Do you want to add another player", "Yes", "No")) {
 			if (!getGame()->isMinimumNumbersOfPlayersReached()) {
-				interface->printBasicMessage("The minimum number of player is : " + std::to_string(game->getMinimumNumerbOfPlayers()) + "\nPlease add more.\n");
+                proxy->getInterface(true)->printBasicMessage("The minimum number of player is : " + std::to_string(game->getMinimumNumerbOfPlayers()) + "\nPlease add more.\n");
             }
             else {
 				stop = true;
@@ -64,7 +61,7 @@ void Controller::createAll() {
 		}
 	}
     if (!getGame()->canAddNewPlayer()) {
-		interface->printBasicMessage("Limit of " + std::to_string(game->getMaximumNumerbOfPlayers()) + " players reached\n");
+        proxy->getInterface(true)->printBasicMessage("Limit of " + std::to_string(game->getMaximumNumerbOfPlayers()) + " players reached\n");
     }
 
 	getGame()->createBank(getGame()->nbPlayers);
@@ -80,49 +77,49 @@ const size_t Controller::getNbDiceChosen(Player& p) { // est appelé par le jeu 
     if (!p.getMonument("Train Station")) return 1;
     size_t n=0;
     while (n>2 || n<1){
-        interface->printBasicMessage("How many dice do you chose to roll ?\n");
-        n = interface->getInputNumber();
-        if (n>2 || n<1) interface->printBasicMessage("Please select a number between 1 and 2\n");
+        proxy->getInterface()->printBasicMessage("How many dice do you chose to roll ?\n");
+        n = proxy->getInterface()->getInputNumber(1,2);
+        if (n>2 || n<1) proxy->getInterface()->printBasicMessage("Please select a number between 1 and 2\n");
     }
     return n;
 }
 
 Controller::~Controller() {
     delete game;
-    interface->printBasicMessage("game deleted :)");
-    delete interface;
+    proxy->getInterface()->printBasicMessage("game deleted :)");
+    delete proxy;
 }; 
 
 void Controller::match(){
     createAll();
 
-    interface->init();
+    proxy->getInterface()->init();
 
     size_t turnCounter = 1;
     getGame()->idCurrentPlayer = 0;
     while (getGame()->winner==nullptr) {
-		interface->printTurnCounter(turnCounter);
+        proxy->getInterface()->printTurnCounter(turnCounter);
         turn(getGame()->players[getGame()->idCurrentPlayer]);
 
         getGame()->idCurrentPlayer=(getGame()->idCurrentPlayer+1)%getGame()->nbPlayers;
-        turnCounter++;
+        if (getGame()->idCurrentPlayer==0) turnCounter++;
 	};
 
-	interface->printBasicMessage("\n\n\n\n\n\nIT'S OVER!!!\n\nThe winner is...\n" + getGame()->winner->getUsername() + " 🎉🎉🎉\n\n\nThank you for playing Machi Koro!\n\n");
+    proxy->getInterface()->printBasicMessage("\n\n\n\n\n\nIT'S OVER!!!\n\nThe winner is...\n" + getGame()->winner->getUsername() + " 🎉🎉🎉\n\n\nThank you for playing Machi Koro!\n\n");
 };
 
 // we ll not print cards in gui neither player information
 void Controller::turn(Player* player){
     if (getGame()->winner!= nullptr) return;
 
-    interface->printPlayerInformation(player);
-    interface->printMonuments(player);
-    interface->printCards(player);
+    proxy->getInterface()->printPlayerInformation(player);
+    proxy->getInterface()->printMonuments(player);
+    proxy->getInterface()->printCards(player);
 
     const size_t nb = getNbDiceChosen(*player);
 
     size_t* throws = getGame()->throwDices(nb);
-    interface->printDices(throws, nb);
+    proxy->getInterface()->printDices(throws, nb);
 
     throws = activateRadioTower(player, nb, throws);
 
@@ -130,7 +127,7 @@ void Controller::turn(Player* player){
 
     getGame()->activation(player, game->diceValue);
 
-    interface->printBalances(getGame()->players);
+    proxy->getInterface()->printBalances(getGame()->players);
 
     action(player);
 
@@ -138,11 +135,13 @@ void Controller::turn(Player* player){
 };
 
 size_t* Controller::activateRadioTower(Player* player, size_t nb, size_t* throws) const{
-    if (player->getMonument("Radio Tower") && interface->confirmationDialog("Do you want to re-roll the dice(s) ? ", "Yes", "No")) {
-		for (size_t i = 0; i < nb; i++) {
-			throws[i] = game->dice.throwDice();
-		}
-        interface->printDices(throws, nb);
+    if (player->getMonument("Radio Tower")){
+        if (proxy->getInterface()->confirmationDialog("Do you want to re-roll the dice(s) ? ", "Yes", "No"),player->isAi()) {
+            for (size_t i = 0; i < nb; i++) {
+                throws[i] = game->dice.throwDice();
+            }
+            proxy->getInterface()->printDices(throws, nb);
+        }
     }
     return throws;
 }
@@ -156,33 +155,37 @@ void Controller::activateAmusementPark(Player* player, size_t nb, size_t* throws
 }
 
 void Controller::action(Player* player){
-    
-    interface->printBasicMessage( "\nWhat do you want to do? (1 = Buy an establishment, 2 = Build a monument, 3 = Nothing!)\n");
-    int choix = interface->getInputNumber();
+
+    proxy->getInterface()->printBasicMessage( "\nWhat do you want to do? (1 = Buy an establishment, 2 = Build a monument, 3 = Nothing!)\n");
+    int choix = proxy->getInterface()->getInputNumber(1,3);
 
     switch (choix){
     case 1:
     {
         if (!getGame()->board->isAnyCardLeftToBuy()) {
-            interface->printBasicMessage("\nNo card left on the board\n");
+            proxy->getInterface()->printBasicMessage("\nNo card left on the board\n");
             action(player);
             break;
         }
         if (!getGame()->isPlayerAbleToPayEstablishmentCard(player)) {
-            interface->printBasicMessage("\nYou don't have enough money...\n");
+            proxy->getInterface()->printBasicMessage("\nYou don't have enough money...\n");
             action(player);
             break;
         }
 
-        interface->printBoard();
+        proxy->getInterface()->printBoard();
 
         // gui: click on card
         string choice;
         EstablishmentCard* card = nullptr;
         while (card == nullptr){
             // reflexion: do we need another function called askForCardToBuy ?
-            interface->printBasicMessage( "Enter the name of the card you want to buy : ");
-            choice = interface->getInputText();
+            proxy->getInterface()->printBasicMessage( "Enter the name of the card you want to buy : ");
+
+            vector<string> context;
+            for (auto it : game->board->getCards()) if (it.first->getPrice()<=game->getBank()->getAccount(player->getId())->getSolde()) context.push_back(it.first->getName());
+
+            choice = proxy->getInterface()->getInputText(context);
 
             try
             {
@@ -191,9 +194,9 @@ void Controller::action(Player* player){
             }
             catch(const std::exception& e)
             {
-                interface->printError(e);
+                proxy->getInterface()->printError(e);
 
-                if (interface->confirmationDialog("Do you want to change your action ?",  "Yes", "No")) {
+                if (proxy->getInterface()->confirmationDialog("Do you want to change your action ?",  "Yes", "No")) {
                     action(player);
                     break;
                 }
@@ -202,15 +205,15 @@ void Controller::action(Player* player){
                 continue;
             }
 
-            interface->printCards(player);
+            proxy->getInterface()->printCards(player);
 
-            if (interface->confirmationDialog("Do you want to change your action ?", "Yes", "No")) {
+            if (proxy->getInterface()->confirmationDialog("Do you want to change your action ?", "Yes", "No")) {
                 if (card != nullptr) {
                     getGame()->undoPurchaseOneEstablismentCard(player, card);
 
-                    interface->printPlayerInformation(player);
-                    interface->printMonuments(player);
-                    interface->printCards(player);
+                    proxy->getInterface()->printPlayerInformation(player);
+                    proxy->getInterface()->printMonuments(player);
+                    proxy->getInterface()->printCards(player);
                 }
                 action(player);
                 break;
@@ -221,17 +224,17 @@ void Controller::action(Player* player){
     case 2:
     {
         if (!player->isAnyMonumentLeftToBuy()) {
-            interface->printBasicMessage("\nNo monument left on the board\n");
+            proxy->getInterface()->printBasicMessage("\nNo monument left on the board\n");
             action(player);
             break;
         }
         if (!getGame()->isPlayerAbleToPayMonument(player)) {
-            interface->printBasicMessage("\nYou don't have enough money...\n");
+            proxy->getInterface()->printBasicMessage("\nYou don't have enough money...\n");
             action(player);
             break;
         }
 
-        interface->printMonuments(player);
+        proxy->getInterface()->printMonuments(player);
 
         string choice;
         Monument* monument = nullptr;
@@ -239,17 +242,21 @@ void Controller::action(Player* player){
 
             // same as card
             // new method interface askForOneMonument()
-            interface->printBasicMessage("Enter the name of the monument you want to buy : ");
-            choice = interface->getInputText();
+            proxy->getInterface()->printBasicMessage("Enter the name of the monument you want to buy : ");
+
+            vector<string> context;
+            for (auto it : game->monuments) if (!player->getMonument(it->getName()) && (it->getPrice()<=game->getBank()->getAccount(player->getId())->getSolde())) context.push_back(it->getName()); // to tell th AI what can be written
+
+            choice = proxy->getInterface()->getInputText(context);
 
             try {
-                monument = getGame()->getMonumentByName(choice);
+				monument = getGame()->getMonumentByName(choice);
                 game->purchaseOneMonument(player, monument);
 
             } catch (const std::exception &e) {
-                interface->printError(e);
+                proxy->getInterface()->printError(e);
 
-                if (interface->confirmationDialog("Do you want to change your action ?",  "Yes", "No")) {
+                if (proxy->getInterface()->confirmationDialog("Do you want to change your action ?",  "Yes", "No")) {
                     action(player);
                     break;
                 }
@@ -258,29 +265,33 @@ void Controller::action(Player* player){
                 continue;
             }
 
-            interface->printMonuments(player);
+            proxy->getInterface()->printMonuments(player);
 
-            if (interface->confirmationDialog("Do you want to change your action ?",  "Yes", "No")) {
+            if (proxy->getInterface()->confirmationDialog("Do you want to change your action ?",  "Yes", "No")) {
                 if (monument != nullptr) {
-                        game->undoPurchaseOneMonument(player, monument);
+                    game->undoPurchaseOneMonument(player, monument);
 
-                        interface->printPlayerInformation(player);
-                        interface->printMonuments(player);
-                        interface->printCards(player);
-                    }
-                    action(player);
-                    break;
+                    proxy->getInterface()->printPlayerInformation(player);
+                    proxy->getInterface()->printMonuments(player);
+                    proxy->getInterface()->printCards(player);
                 }
+                action(player);
+                break;
             }
-            if (getGame()->isWinner(player)) getGame()->winner=player;
-            break;
         }
+        if (getGame()->isWinner(player)) getGame()->winner=player;
+        break;
+    }
     default:
-            break;
-        }
-    };
+        break;
+    } 
+};
 
 void Controller::tradeTwoEstablishmentCards(Player* p1, Player* p2, EstablishmentCard* card1, EstablishmentCard* card2) {
     game->tradeCards(p1, p2, card1, card2);
-    interface->printBasicMessage(p1->getUsername() + " has taken " + card1->getName() + " from " + p2->getUsername() + " and gave " + card2->getName() + " in exchange.\n");
+    proxy->getInterface()->printBasicMessage(p1->getUsername() + " has taken " + card1->getName() + " from " + p2->getUsername() + " and gave " + card2->getName() + " in exchange.\n");
+}
+
+Interface* Controller::getInterface(bool gameCreation) {
+    return proxy->getInterface(gameCreation);
 }

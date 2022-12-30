@@ -7,7 +7,7 @@ class GreenValley : public virtual Game {
 protected:
     void createEstablishmentCards() override;
     //monuments remain the same as standard edition
-    void createPlayer(string name, size_t id) override;
+    void createPlayer(string name, size_t id, bool isAi) override;
     //board remain the same as standard edition
     void createIcons() override;
     void purchaseOneEstablismentCard(Player* player, EstablishmentCard* card) override;

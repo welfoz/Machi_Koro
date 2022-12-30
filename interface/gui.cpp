@@ -13,31 +13,31 @@ void Gui::init() const {
     viewSet->show();
 }
 
-void Gui::printWelcomingMessage(){
+void Gui::printWelcomingMessage()const {
     ViewMessage* viewMessage = new ViewMessage;
     viewMessage->viewWelcomingMessage();
 }
 
-void Gui::printBasicMessage(string message){
+void Gui::printBasicMessage(string message)const {
     ViewMessage* viewMessage = new ViewMessage;
     viewMessage->viewBasicMessage(QString::fromStdString(message));
 }
 
-string Gui::getInputText() const {
+string Gui::getInputText(vector<string> context) const {
     ViewSetting* viewSetting = new ViewSetting;
     viewSetting->viewInputText();
     viewSetting->exec();
     return (viewSetting->getText()).toStdString();
 }
 
-size_t Gui::getInputNumber() {
+size_t Gui::getInputNumber(size_t min,size_t max) const {
     ViewSetting* viewSetting = new ViewSetting;
     viewSetting->viewInputNumber();
     viewSetting->exec();
     return static_cast<size_t>(viewSetting->getNumber());
 }
 
-bool Gui::confirmationDialog(string message, string firstOption, string secondOption){
+bool Gui::confirmationDialog(string message, string firstOption, string secondOption)const {
     ViewSetting* viewSetting = new ViewSetting;
     viewSetting->viewConfirmationDialog(QString::fromStdString(message), QString::fromStdString(firstOption), QString::fromStdString(secondOption));
     viewSetting->exec();
@@ -58,7 +58,7 @@ void Gui::printBalances(Player** players) const {
     viewSet->show();
 }
 
-void Gui::printTurnCounter(size_t turnCounter) {
+void Gui::printTurnCounter(size_t turnCounter) const{
     ViewMessage* viewMessage = new ViewMessage;
     QString message = "Turn count : " + QString::number(static_cast<int>(turnCounter));
     viewMessage->viewBasicMessage(message);

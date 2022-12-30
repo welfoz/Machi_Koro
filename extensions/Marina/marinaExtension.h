@@ -6,7 +6,7 @@ class Marina: public virtual Game {
 protected:
     void createEstablishmentCards() override;
     void createMonumentCards() override;
-    void createPlayer(string name, size_t id) override;
+    void createPlayer(string name, size_t id, bool isAi) override;
     void createBoard() override;
     void createIcons() override;
 public:
