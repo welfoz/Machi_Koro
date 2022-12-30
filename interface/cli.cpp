@@ -1,6 +1,6 @@
 #include "./cli.h"
 
-void Cli::printWelcomingMessage() {
+void Cli::printWelcomingMessage() const{
     cout<< "\n\n";
     cout << "███    ███  █████   ██████ ██   ██ ██     ██   ██  ██████  ██████   ██████  \n";
     cout << "████  ████ ██   ██ ██      ██   ██ ██     ██  ██  ██    ██ ██   ██ ██    ██ \n";
@@ -22,7 +22,7 @@ string Cli::getInputText(vector<string> context) const {
 }
 
 // be careful! firstOption and secondOption HAS to be UTF-8. No accent.
-bool Cli::confirmationDialog(string message, string firstOption, string secondOption) {
+bool Cli::confirmationDialog(string message, string firstOption, string secondOption)const {
     string stopAnswer = "";
     while (Formatter::toLower(stopAnswer) != Formatter::toLower(firstOption) && Formatter::toLower(stopAnswer) != Formatter::toLower(secondOption)) {
         cout << message << " (" << firstOption << " | " << secondOption << ") : ";
@@ -35,18 +35,18 @@ bool Cli::confirmationDialog(string message, string firstOption, string secondOp
     return true;
 }
 
-void Cli::printBasicMessage(string message) {
-    cout << message;
+void Cli::printBasicMessage(string message) const{
+    cout << message<<endl;
 }
 
-size_t Cli::getInputNumber(size_t min, size_t max) {
+size_t Cli::getInputNumber(size_t min, size_t max) const{
     size_t number;
     cin >> number;
     cin.ignore();
     return number;
 }
 
-void Cli::printTurnCounter(size_t turnCounter) {
+void Cli::printTurnCounter(size_t turnCounter) const{
     cout << "\n\n-------------------------------------------------------------------------------";
     cout << "\n------------------------------- Turn number : " << turnCounter << " -------------------------------\n";
 }

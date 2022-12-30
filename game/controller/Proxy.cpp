@@ -6,8 +6,10 @@
 
 Interface *Proxy::getInterface(bool gameCreation) const {
     Game* game = Controller::getInstance().getGame();
-    if (!gameCreation) if (game->getPlayer(game->getIdCurrentPlayer()).isAi()){
-        return aiInterface;
+    if (!gameCreation) {
+        if (game->getPlayer(game->getIdCurrentPlayer()).isAi()){
+            return aiInterface;
+        }
     }
     return interface;
 }

@@ -8,13 +8,13 @@ public:
     Cli() : Interface() {};
     ~Cli() {};
     void init() const override {};
-    void printWelcomingMessage() override;
+    void printWelcomingMessage() const override;
     string getInputText(vector<string> context={}) const override;
-    bool confirmationDialog(string message, string firstOption, string secondOption) override;
-    void printBasicMessage(string message) override;
+    bool confirmationDialog(string message, string firstOption, string secondOption) const override;
+    void printBasicMessage(string message) const override;
     void printError(const std::exception& message) const override;
-    size_t getInputNumber(size_t min=0,size_t max=0) override;
-    void printTurnCounter(size_t counter) override;
+    size_t getInputNumber(size_t min=0,size_t max=0) const override;
+    void printTurnCounter(size_t counter) const override;
     void printPlayerInformation(Player* player) const override;
     void printMonuments(Player* player) const override;
     void printCards(Player* player) const override;

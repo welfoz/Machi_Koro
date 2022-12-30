@@ -24,7 +24,7 @@ public:
 
     static Controller& getInstance(Interface* interface = nullptr);
 
-    Interface* getInterface();
+    Interface* getInterface(bool gameCreation=false);
 
     void match();
     Game* getGame() {

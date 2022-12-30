@@ -79,16 +79,16 @@ Player::Player(string name, size_t id, vector<Monument*> monuments, vector<Estab
 	for (auto it = cards.begin(); it != cards.end(); it++) {
 		purchaseEstablishment(*it);
 	}
-    Controller::getInstance().getInterface()->printBasicMessage(name + " added!\n");
+    Controller::getInstance().getInterface(true)->printBasicMessage(name + " added!\n");
 };
 
 size_t Player::cheapestMonumentAvailablePrice() const {
     auto it= find_if(monuments.begin(),monuments.end(),[](pair<Monument*,bool> it){return it.second==false;});
-    size_t min=0;
+    size_t min=-1;
     if(it!=monuments.end()){
         min=it->first->getPrice();
         for (;it!=monuments.end();it++){
-            if (it->first->getPrice()<min) min=it->first->getPrice();
+            if (it->first->getPrice()<min ) min=it->first->getPrice();
         }
     }
     return min;

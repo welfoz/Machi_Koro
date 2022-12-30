@@ -26,7 +26,7 @@ void Controller::createAll() {
     //viewSet->show();
     // For Qt : initialize the set
 
-    proxy->getInterface()->printWelcomingMessage();
+    proxy->getInterface(true)->printWelcomingMessage();
 
     // create cards before players because players needs them to be created
     getGame()->createIcons();
@@ -37,13 +37,13 @@ void Controller::createAll() {
     bool isAi;
 	while (!stop && getGame()->canAddNewPlayer()) {
         isAi = proxy->getInterface(true)->confirmationDialog("What type of player do you want to add ?","AI","Human");
-        proxy->getInterface()->printBasicMessage("\nEnter the name of the player number " + std::to_string(getGame()->nbPlayers + 1) + " : ");
+        proxy->getInterface(true)->printBasicMessage("\nEnter the name of the player number " + std::to_string(getGame()->nbPlayers + 1) + " : ");
 
 		try {
 			getGame()->createPlayer(proxy->getInterface(true)->getInputText(), getGame()->nbPlayers,isAi);
 		}
         catch (std::invalid_argument& error) {
-            proxy->getInterface()->printError(error);
+            proxy->getInterface(true)->printError(error);
             continue;
         }
 		catch (std::out_of_range& error) {
@@ -53,7 +53,7 @@ void Controller::createAll() {
 
 		if (!proxy->getInterface(true)->confirmationDialog("Do you want to add another player", "Yes", "No")) {
 			if (!getGame()->isMinimumNumbersOfPlayersReached()) {
-                proxy->getInterface()->printBasicMessage("The minimum number of player is : " + std::to_string(game->getMinimumNumerbOfPlayers()) + "\nPlease add more.\n");
+                proxy->getInterface(true)->printBasicMessage("The minimum number of player is : " + std::to_string(game->getMinimumNumerbOfPlayers()) + "\nPlease add more.\n");
             }
             else {
 				stop = true;
@@ -61,7 +61,7 @@ void Controller::createAll() {
 		}
 	}
     if (!getGame()->canAddNewPlayer()) {
-        proxy->getInterface()->printBasicMessage("Limit of " + std::to_string(game->getMaximumNumerbOfPlayers()) + " players reached\n");
+        proxy->getInterface(true)->printBasicMessage("Limit of " + std::to_string(game->getMaximumNumerbOfPlayers()) + " players reached\n");
     }
 
 	getGame()->createBank(getGame()->nbPlayers);
@@ -102,7 +102,7 @@ void Controller::match(){
         turn(getGame()->players[getGame()->idCurrentPlayer]);
 
         getGame()->idCurrentPlayer=(getGame()->idCurrentPlayer+1)%getGame()->nbPlayers;
-        if (getGame()->idCurrentPlayer==1) turnCounter++;
+        if (getGame()->idCurrentPlayer==0) turnCounter++;
 	};
 
     proxy->getInterface()->printBasicMessage("\n\n\n\n\n\nIT'S OVER!!!\n\nThe winner is...\n" + getGame()->winner->getUsername() + " 🎉🎉🎉\n\n\nThank you for playing Machi Koro!\n\n");
@@ -246,9 +246,11 @@ void Controller::action(Player* player){
 
             vector<string> context;
             for (auto it : game->monuments) if (!player->getMonument(it->getName()) && (it->getPrice()<=game->getBank()->getAccount(player->getId())->getSolde())) context.push_back(it->getName()); // to tell th AI what can be written
-
-            choice = proxy->getInterface()->getInputText(context);
-
+            //test
+            try {
+                choice = proxy->getInterface()->getInputText(context);
+            }catch(string e){ getInterface()->printBasicMessage(e);}
+            //test
             try {
 				monument = getGame()->getMonumentByName(choice);
                 game->purchaseOneMonument(player, monument);
@@ -292,6 +294,6 @@ void Controller::tradeTwoEstablishmentCards(Player* p1, Player* p2, Establishmen
     proxy->getInterface()->printBasicMessage(p1->getUsername() + " has taken " + card1->getName() + " from " + p2->getUsername() + " and gave " + card2->getName() + " in exchange.\n");
 }
 
-Interface* Controller::getInterface() {
-    return proxy->getInterface();
+Interface* Controller::getInterface(bool gameCreation) {
+    return proxy->getInterface(gameCreation);
 }
