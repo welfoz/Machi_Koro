@@ -5,7 +5,7 @@ class Cli : public Interface {
 public:
     Cli() : Interface() {};
     ~Cli() {};
-    void init() const override {};
+    void init() override {};
     void printWelcomingMessage() override;
     string getInputText() const override;
     bool confirmationDialog(string message, string firstOption, string secondOption) override;
@@ -17,7 +17,7 @@ public:
     void printMonuments(Player* player) const override;
     void printCards(Player* player) const override;
     void printDices(size_t* throws, size_t nb) const override;
-    void printBalances(Player** players) const override;
+    void printBalances(Player** players) override;
     void printBoard() const override;
     string selectOneCard() const override;
     Player* selectOnePlayerDifferentFromTheCurrentOne(Player* player) const override;

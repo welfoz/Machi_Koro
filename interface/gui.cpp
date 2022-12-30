@@ -7,12 +7,10 @@
 #include "../Qt/viewSetting.h"
 #include "../Qt/viewSet.h"
 
-ViewSet* Gui::board = nullptr;
-
-void Gui::init() const {
-    Gui::board = new ViewSet;
-    Gui::board->setSet();
-    Gui::board->show();
+void Gui::init(){
+    this->board = new ViewSet;
+    this->board->setSet();
+    this->board->show();
 }
 
 void Gui::printWelcomingMessage(){
@@ -49,16 +47,16 @@ bool Gui::confirmationDialog(string message, string firstOption, string secondOp
 }
 
 void Gui::printBoard() const {
-    Gui::board->setSet();
-    Gui::board->show();
+    this->board->setSet();
+    this->board->show();
 }
 
-void Gui::printBalances(Player** players) const {
-    Gui::board->close();
-    Gui::board = nullptr;
-    Gui::board = new ViewSet;
-    Gui::board->setSet();
-    Gui::board->show();
+void Gui::printBalances(Player** players){
+    this->board->close();
+    this->board = nullptr;
+    this->board = new ViewSet;
+    this->board->setSet();
+    this->board->show();
 }
 
 void Gui::printTurnCounter(size_t turnCounter) {

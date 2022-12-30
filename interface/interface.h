@@ -15,7 +15,7 @@ public:
     enum Extension {Marina, GreenValley, Deluxe, Base};
     enum Option {cli, gui, cliGreenValley};
     virtual ~Interface() = default;
-    virtual void init() const = 0;
+    virtual void init() = 0;
     static Interface* createInterfaceFromOption(Option type);
     virtual void printWelcomingMessage() = 0;
     virtual string getInputText() const = 0;
@@ -28,7 +28,7 @@ public:
     virtual void printMonuments(Player* player) const = 0;
     virtual void printCards(Player* player) const = 0;
     virtual void printDices(size_t* throws, size_t nb)const = 0;
-    virtual void printBalances(Player** players) const = 0;
+    virtual void printBalances(Player** players) = 0;
     virtual void printBoard() const = 0;
     virtual string selectOneCard() const = 0;
     virtual EstablishmentCard* selectOneCardOwnedByAnyPlayer(string message) const = 0;
