@@ -38,9 +38,9 @@ void Controller::createAll() {
 	while (!stop && getGame()->canAddNewPlayer()) {
         isAi = proxy->getInterface(true)->confirmationDialog("What type of player do you want to add ?","AI","Human");
         proxy->getInterface(true)->printBasicMessage("\nEnter the name of the player number " + std::to_string(getGame()->nbPlayers + 1) + " : ");
-
+        string name=proxy->getInterface(true)->getInputText();
 		try {
-			getGame()->createPlayer(proxy->getInterface(true)->getInputText(), getGame()->nbPlayers,isAi);
+			getGame()->createPlayer(name, getGame()->nbPlayers,isAi);
 		}
         catch (std::invalid_argument& error) {
             proxy->getInterface(true)->printError(error);
@@ -50,7 +50,7 @@ void Controller::createAll() {
             // get out of the while loop
             break;
 		}
-
+        proxy->getInterface(true)->printBasicMessage( name+ " added!\n");
 		if (!proxy->getInterface(true)->confirmationDialog("Do you want to add another player", "Yes", "No")) {
 			if (!getGame()->isMinimumNumbersOfPlayersReached()) {
                 proxy->getInterface(true)->printBasicMessage("The minimum number of player is : " + std::to_string(game->getMinimumNumerbOfPlayers()) + "\nPlease add more.\n");

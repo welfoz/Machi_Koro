@@ -79,7 +79,6 @@ Player::Player(string name, size_t id, vector<Monument*> monuments, vector<Estab
 	for (auto it = cards.begin(); it != cards.end(); it++) {
 		purchaseEstablishment(*it);
 	}
-    Controller::getInstance().getInterface(true)->printBasicMessage(name + " added!\n");
 };
 
 size_t Player::cheapestMonumentAvailablePrice() const {
