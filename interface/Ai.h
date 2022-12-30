@@ -19,7 +19,7 @@ public:
     EstablishmentCard* selectOneEstablishmentCardFromPlayer(Player* target, string message) const override;
     Monument* selectMonumentCardFromCurrentPlayer(Player* player, string message) const override;
 
-    // never used methods
+    // redirecting to corresponding human interface methods -> usefull when the current player is AI, but the controller needs to use ny of these methods
     void init() const override {return humanInterface->init();};
     void printWelcomingMessage() const override{return humanInterface->printWelcomingMessage();};
     void printBasicMessage(string message) const override{return humanInterface->printBasicMessage(message);};
