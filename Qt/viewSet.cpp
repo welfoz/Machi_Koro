@@ -53,7 +53,7 @@ ViewSet::ViewSet(QWidget *parent) : QWidget(parent),
         playerMoneyText->setText("Money : ");
         QLabel *playerMoney = new QLabel(this);
         playerMoney->setNum(static_cast<int>(Controller::getInstance().getGame()->getBank()->getAccount(player.getId())->getSolde()));
-        layoutPlayerMoney = new QHBoxLayout;
+        layoutPlayerMoney = new QHBoxLayout();
         layoutPlayerMoney->addWidget(playerMoneyText);
         layoutPlayerMoney->addWidget(playerMoney);
 
@@ -73,7 +73,7 @@ ViewSet::ViewSet(QWidget *parent) : QWidget(parent),
         for (auto it = player.getCards().begin(); it != player.getCards().end(); it++){
             if (it->second>0){
                 cardsOnlyName[k] = new ViewCard(it->first);
-                cardsOnlyName[k]->setCardOnlyName(it->first);
+                cardsOnlyName[k]->setCardOnlyName();
                 layoutPlayerCards->addWidget(cardsOnlyName[k]);
                 connect(cardsOnlyName[k], SIGNAL(cardClicked(ViewCard*)), this, SLOT(cardClick(ViewCard*)));
                 k++;
@@ -117,8 +117,12 @@ void ViewSet::setSet()
         }
     }
 
+    //update Dice
+    dice->setDice();
+
     // quels updates sont nécessaires ?
-    layoutCards->update();
+
+    layoutDice->update();
     couche->update();
     update();
 }

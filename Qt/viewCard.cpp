@@ -113,8 +113,34 @@ void ViewCard::setCard(){
     layoutCard->addLayout(layoutEffect);
 }
 
-void ViewCard::setCardOnlyName(EstablishmentCard* card){
-    this->update();
+void ViewCard::setCardOnlyName(){
+    clearLayout(this->layoutCard);
+    delete layoutCard;
+    this->layoutCard = new QVBoxLayout(this);
+
+    setStyleSheet("background-color:white; color:black; font-size: 5pt");
+    setFixedSize(113,40);
+
+    QLabel *cardName = new QLabel(this);
+    cardName->setWordWrap(true);
+    cardName->setText(QString::fromStdString(card->getName()));
+
+    switch (card->getType()) {
+    case Type::primaryIndustry:
+        cardName->setStyleSheet("font-weight: bold; color: blue; font-size: 8pt");
+        break;
+    case Type::secondaryIndustry:
+        cardName->setStyleSheet("font-weight: bold; color: green; font-size: 8pt");
+        break;
+    case Type::restaurants:
+        cardName->setStyleSheet("font-weight: bold; color: red; font-size: 8pt");
+        break;
+    case Type::majorEstablishment:
+        cardName->setStyleSheet("font-weight: bold; color: purple; font-size: 8pt");
+        break;
+    }
+
+    layoutCard->addWidget(cardName, 0, Qt::AlignHCenter);
 }
 
 void ViewCard::clearLayout(QLayout* layout)

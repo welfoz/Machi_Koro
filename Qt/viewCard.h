@@ -13,7 +13,7 @@ class ViewCard : public QPushButton
 public:
     ViewCard(EstablishmentCard* card, QWidget *parent = nullptr);
 //    explicit ViewCard(QWidget *parent = nullptr);
-    void setCardOnlyName(EstablishmentCard* card);
+    void setCardOnlyName();
     void setCard();
     const EstablishmentCard* getCard() const {return card;}
 protected:
