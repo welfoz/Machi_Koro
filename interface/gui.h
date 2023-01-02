@@ -1,6 +1,7 @@
 #pragma once
 #include "./interface.h"
 #include "../Qt/viewSet.h"
+#include "../Qt/chatwindow.h"
 
 class Gui : public Interface {
 public:

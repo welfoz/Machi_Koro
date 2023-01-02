@@ -19,7 +19,8 @@ ViewSet::ViewSet(QWidget *parent) : QWidget(parent),
     viewEstablishments(Controller::getInstance().getGame()->getBoard()->getCards().size(), nullptr),
     viewmonuments(Controller::getInstance().getGame()->getPlayer(0).getMonuments().size(), nullptr),
     viewPlayers(Controller::getInstance().getGame()->getNbPlayers(), nullptr),
-    cardsOnlyName(20, nullptr), layoutAllPlayers(nullptr)
+    cardsOnlyName(20, nullptr), layoutAllPlayers(nullptr),
+    chat(new ChatWindow)
 {
     setBackgroundRole(QPalette::Base);
     setAutoFillBackground(true);
@@ -58,7 +59,6 @@ ViewSet::ViewSet(QWidget *parent) : QWidget(parent),
     couche->addLayout(layoutDice);
     couche->addLayout(layoutAllPlayers);
     setLayout(couche);
-
 }
 
 void ViewSet::setSet()
@@ -88,7 +88,7 @@ void ViewSet::setSet()
 void ViewSet::setAllPlayers() {
 
     // clear all layouts & widgets relative to layoutCard
-    clearLayout(this->layoutAllPlayers);
+    clearLayout(this->layoutAllPlayers, {chat});
 
     int i=0;
     for(size_t j = 0; j<Controller::getInstance().getGame()->getNbPlayers(); j++){
@@ -139,6 +139,8 @@ void ViewSet::setAllPlayers() {
         layoutAllPlayers->addLayout(layoutPlayer, 0, i, Qt::AlignTop);
         i++;
     }
+
+    this->layoutAllPlayers->addWidget(chat);
 }
 
 void ViewSet::cardClick(ViewCard* vc)
@@ -162,7 +164,7 @@ void ViewSet::monumentClick(ViewMonument *vm)
     qmsgbox.exec();
 }
 
-void ViewSet::clearLayout(QLayout* layout)
+void ViewSet::clearLayout(QLayout* layout, vector<QWidget*> exceptions)
 {
     if (layout == nullptr) {
         return;
@@ -172,10 +174,17 @@ void ViewSet::clearLayout(QLayout* layout)
            if (vpItem->layout()) {
                clearLayout(vpItem->layout());
                vpItem->layout()->deleteLater();
-           }
-           if (vpItem->widget()) {
+       }
+       if (vpItem->widget()) {
+           auto it = std::find(exceptions.begin(), exceptions.end(), vpItem->widget());
+           if (it == exceptions.end()) {
                vpItem->widget()->deleteLater();
            }
-           delete vpItem;
        }
+       delete vpItem;
+       }
+}
+
+void ViewSet::sendMessageToChat(string message) {
+    chat->messageReceived(QString::fromStdString(message));
 }

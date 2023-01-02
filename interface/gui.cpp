@@ -13,13 +13,17 @@ void Gui::init() {
 }
 
 void Gui::printWelcomingMessage()const {
-    ViewMessage* viewMessage = new ViewMessage;
+    ViewMessage* viewMessage = new ViewMessage();
     viewMessage->viewWelcomingMessage();
 }
 
 void Gui::printBasicMessage(string message)const {
-    ViewMessage* viewMessage = new ViewMessage;
-    viewMessage->viewBasicMessage(QString::fromStdString(message));
+    if (board != nullptr) {
+        board->sendMessageToChat(message);
+    } else {
+        ViewMessage* viewMessage = new ViewMessage();
+        viewMessage->viewBasicMessage(QString::fromStdString(message));
+    }
 }
 
 string Gui::getInputText(vector<string> context) const {
@@ -51,9 +55,11 @@ void Gui::printBalances(Player** players){
 }
 
 void Gui::printTurnCounter(size_t turnCounter) const{
-    ViewMessage* viewMessage = new ViewMessage;
-    QString message = "Turn count : " + QString::number(static_cast<int>(turnCounter));
-    viewMessage->viewBasicMessage(message);
+    board->sendMessageToChat("Turn count : " + std::to_string(turnCounter));
+    // ancien code
+    //    ViewMessage* viewMessage = new ViewMessage;
+    //    QString message = "Turn count : " + QString::number(static_cast<int>(turnCounter));
+    //    viewMessage->viewBasicMessage(message);
 }
 
 void Gui::printError(const exception &message) const {
