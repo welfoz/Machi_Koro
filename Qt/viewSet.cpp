@@ -19,7 +19,7 @@ ViewSet::ViewSet(QWidget *parent) : QWidget(parent),
     viewEstablishments(Controller::getInstance().getGame()->getBoard()->getCards().size(), nullptr),
     viewmonuments(Controller::getInstance().getGame()->getPlayer(0).getMonuments().size(), nullptr),
     viewPlayers(Controller::getInstance().getGame()->getNbPlayers(), nullptr),
-    cardsOnlyName(20, nullptr)
+    cardsOnlyName(20, nullptr), layoutAllPlayers(nullptr)
 {
     setBackgroundRole(QPalette::Base);
     setAutoFillBackground(true);
@@ -38,9 +38,63 @@ ViewSet::ViewSet(QWidget *parent) : QWidget(parent),
         i++;
     }
 
-    layoutAllPlayers = new QGridLayout;
+    // setPlayers
+    this->layoutAllPlayers = new QGridLayout;
+    this->setAllPlayers();
 
-    i=0;
+
+    layoutDice = new QVBoxLayout;
+    QLabel* diceText = new QLabel(this);
+    diceText->setText("Dice value :");
+    diceText->setStyleSheet("font-weight: bold; font-size: 10pt");
+    dice = new ViewDice(Controller::getInstance().getGame()->getDiceValue());
+    dice->setDice();
+    layoutDice->addWidget(diceText);
+    layoutDice->addWidget(dice);
+    layoutDice->setAlignment(Qt::AlignTop);
+    connect(dice, SIGNAL(diceClicked(ViewDice*)), this, SLOT(diceClick(ViewDice*)));
+
+    couche->addLayout(layoutCards);
+    couche->addLayout(layoutDice);
+    couche->addLayout(layoutAllPlayers);
+    setLayout(couche);
+
+}
+
+void ViewSet::setSet()
+{
+    // update Establishment Cards
+    for (auto cards: viewEstablishments) {
+        if (cards != nullptr) {
+            cards->setCard();
+        }
+    }
+
+    //update Dice
+    dice->setDice();
+
+    // update money
+    // update player cards
+    // update player
+    this->setAllPlayers();
+
+    // update monuments player
+
+    layoutDice->update();
+    layoutAllPlayers->update();
+    couche->update();
+    update();
+}
+
+void ViewSet::setAllPlayers() {
+
+    // clear all layouts & widgets relative to layoutCard
+    clearLayout(this->layoutAllPlayers);
+
+//    delete layoutAllPlayers;
+//    this->layoutAllPlayers = new QGridLayout;
+
+    int i=0;
     for(size_t j = 0; j<Controller::getInstance().getGame()->getNbPlayers(); j++){
         Player player = Controller::getInstance().getGame()->getPlayer(j);
         viewPlayers[i] = new ViewOnePlayer;
@@ -89,42 +143,6 @@ ViewSet::ViewSet(QWidget *parent) : QWidget(parent),
         layoutAllPlayers->addLayout(layoutPlayer, 0, i, Qt::AlignTop);
         i++;
     }
-
-    layoutDice = new QVBoxLayout;
-    QLabel* diceText = new QLabel(this);
-    diceText->setText("Dice value :");
-    diceText->setStyleSheet("font-weight: bold; font-size: 10pt");
-    dice = new ViewDice(Controller::getInstance().getGame()->getDiceValue());
-    dice->setDice();
-    layoutDice->addWidget(diceText);
-    layoutDice->addWidget(dice);
-    layoutDice->setAlignment(Qt::AlignTop);
-    connect(dice, SIGNAL(diceClicked(ViewDice*)), this, SLOT(diceClick(ViewDice*)));
-
-    couche->addLayout(layoutCards);
-    couche->addLayout(layoutDice);
-    couche->addLayout(layoutAllPlayers);
-    setLayout(couche);
-
-}
-
-void ViewSet::setSet()
-{
-    // update Establishment Cards
-    for (auto cards: viewEstablishments) {
-        if (cards != nullptr) {
-            cards->setCard();
-        }
-    }
-
-    //update Dice
-    dice->setDice();
-
-    // quels updates sont nécessaires ?
-
-    layoutDice->update();
-    couche->update();
-    update();
 }
 
 void ViewSet::cardClick(ViewCard* vc)
@@ -146,4 +164,22 @@ void ViewSet::monumentClick(ViewMonument *vm)
     QMessageBox qmsgbox;
     qmsgbox.setText(QString::fromStdString(vm->getMonument()->getName()));
     qmsgbox.exec();
+}
+
+void ViewSet::clearLayout(QLayout* layout)
+{
+    if (layout == nullptr) {
+        return;
+    }
+    QLayoutItem *vpItem;
+       while ((vpItem = layout->takeAt(0)) != 0)  {
+           if (vpItem->layout()) {
+               clearLayout(vpItem->layout());
+               vpItem->layout()->deleteLater();
+           }
+           if (vpItem->widget()) {
+               vpItem->widget()->deleteLater();
+           }
+           delete vpItem;
+       }
 }

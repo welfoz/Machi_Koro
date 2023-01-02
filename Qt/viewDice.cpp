@@ -10,7 +10,8 @@
 #include "../game/controller/control.h"
 
 
-ViewDice::ViewDice(const size_t dice, QWidget *parent): QPushButton(parent), dice(dice)
+ViewDice::ViewDice(const size_t dice, QWidget *parent): QPushButton(parent), dice(dice),
+    layoutDice(nullptr)
 {
     setBackgroundRole(QPalette::Base);
     setAutoFillBackground(true);
