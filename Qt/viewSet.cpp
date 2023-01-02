@@ -71,7 +71,6 @@ void ViewSet::setSet()
     }
 
     //update Dice
-    // TO DO: marche quand il y a 2 dés ?
     dice->setDice();
 
     // update money

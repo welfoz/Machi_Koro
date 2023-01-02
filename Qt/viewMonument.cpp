@@ -48,9 +48,9 @@ void ViewMonument::setMonument(Monument* monument, bool isOwnedByPlayer)
     effectValue->setWordWrap(true);
     effectValue->setText(QString::fromStdString(monument->getEffetDescription()));
 
-    QVBoxLayout *layoutCard = new QVBoxLayout(this);
+    QVBoxLayout *layoutCard = new QVBoxLayout();
 
-    QHBoxLayout *layoutPrice = new QHBoxLayout(this);
+    QHBoxLayout *layoutPrice = new QHBoxLayout();
     layoutPrice->addWidget(priceText, 0, Qt::AlignLeft);
     layoutPrice->addWidget(priceValue, 0, Qt::AlignLeft);
 
