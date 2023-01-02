@@ -4,8 +4,10 @@
 
 class Gui : public Interface {
 public:
-    Gui() : Interface() {};
-    ~Gui() {};
+    Gui() : Interface(), board(nullptr) {};
+    ~Gui() {
+        delete board;
+    };
     ViewSet* board;
     void init() override;
     void printWelcomingMessage()const override;
@@ -20,7 +22,7 @@ public:
     void printCards(Player* player) const override {};
     void printDices(size_t* throws, size_t nb) const override {};
     void printBalances(Player** players) override;
-    void printBoard() const override;
+    void printBoard() const override {};
     string selectOneCard() const override { return ""; };
     Player* selectOnePlayerDifferentFromTheCurrentOne(Player* player) const override { return player; };
 
@@ -38,4 +40,5 @@ public:
 
     EstablishmentCard* selectOneCardOwnedByAnyPlayer(string message) const override;
     enum Extension chooseExtension() const override;
+    void update() const;
 };

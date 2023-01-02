@@ -45,12 +45,9 @@ bool Gui::confirmationDialog(string message, string firstOption, string secondOp
     return true;
 }
 
-void Gui::printBoard() const {
-    this->board->setSet();
-}
-
 void Gui::printBalances(Player** players){
-    this->board->setSet();
+    // ???
+    // print in the chat
 }
 
 void Gui::printTurnCounter(size_t turnCounter) const{
@@ -61,6 +58,7 @@ void Gui::printTurnCounter(size_t turnCounter) const{
 
 void Gui::printError(const exception &message) const {
     ViewMessage* viewMessage = new ViewMessage;
+    // TO DO: handle the error message
     viewMessage->viewBasicMessage(message.what());
 }
 
@@ -94,4 +92,10 @@ Interface::Extension Gui::chooseExtension() const {
         }
     }
     throw "error";
+}
+
+void Gui::update() const {
+    if (board != nullptr) {
+        this->board->setSet();
+    }
 }

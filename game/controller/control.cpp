@@ -22,10 +22,6 @@ Controller::Controller(Interface* interface) {
 };
  
 void Controller::createAll() {
-    //ViewSet* viewSet = new ViewSet;
-    //viewSet->show();
-    // For Qt : initialize the set
-
     proxy->getInterface(true)->printWelcomingMessage();
 
     // create cards before players because players needs them to be created

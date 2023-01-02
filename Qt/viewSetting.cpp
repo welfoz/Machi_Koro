@@ -8,6 +8,7 @@
 #include <QFont>
 #include "../game/game.h"
 #include "../game/controller/control.h"
+#include "../interface/gui.h"
 
 ViewSetting::ViewSetting(QWidget *parent) : QDialog(parent){
     setWindowTitle("Machi Koro Settings");
@@ -77,21 +78,29 @@ void ViewSetting::viewConfirmationDialog(QString message, QString firstOption, Q
 
 void ViewSetting::clickValidateText(){
     text = editText->text();
+    if (dynamic_cast<Gui*>(Controller::getInstance().getInterface(true)) != nullptr)
+        dynamic_cast<Gui*>(Controller::getInstance().getInterface(true))->update();
     close();
 }
 
 void ViewSetting::clickValidateNumber(){
     number = spinBoxNumber->value();
+    if (dynamic_cast<Gui*>(Controller::getInstance().getInterface(true)) != nullptr)
+        dynamic_cast<Gui*>(Controller::getInstance().getInterface(true))->update();
     close();
 }
 
 void ViewSetting::clickFirstOption(){
     message = validateFirstOption->text();
+    if (dynamic_cast<Gui*>(Controller::getInstance().getInterface(true)) != nullptr)
+        dynamic_cast<Gui*>(Controller::getInstance().getInterface(true))->update();
     close();
 }
 
 void ViewSetting::clickSecondOption(){
     message = validateSecondOption->text();
+    if (dynamic_cast<Gui*>(Controller::getInstance().getInterface(true)) != nullptr)
+        dynamic_cast<Gui*>(Controller::getInstance().getInterface(true))->update();
     close();
 }
 

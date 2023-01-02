@@ -33,6 +33,7 @@ public:
     void printBoard() const override {return humanInterface->printBoard();};
     string selectOneCard() const override {return humanInterface->selectOneCard();};
     enum Extension chooseExtension() const override {return humanInterface->chooseExtension();};
+//    void update() const override { return humanInterface->update(); };
 };
 
 
