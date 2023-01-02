@@ -71,14 +71,14 @@ void ViewSet::setSet()
     }
 
     //update Dice
+    // TO DO: marche quand il y a 2 dés ?
     dice->setDice();
 
     // update money
+    // update monuments
     // update player cards
     // update player
     this->setAllPlayers();
-
-    // update monuments player
 
     layoutDice->update();
     layoutAllPlayers->update();
@@ -90,9 +90,6 @@ void ViewSet::setAllPlayers() {
 
     // clear all layouts & widgets relative to layoutCard
     clearLayout(this->layoutAllPlayers);
-
-//    delete layoutAllPlayers;
-//    this->layoutAllPlayers = new QGridLayout;
 
     int i=0;
     for(size_t j = 0; j<Controller::getInstance().getGame()->getNbPlayers(); j++){
@@ -116,7 +113,7 @@ void ViewSet::setAllPlayers() {
         layoutPlayerMonuments = new QGridLayout;
         for (auto it = player.getMonuments().begin(); it!=player.getMonuments().end(); it++){
             viewmonuments[k] = new ViewMonument(it->first);
-            viewmonuments[k]->setMonument(it->first);
+            viewmonuments[k]->setMonument(it->first, it->second);
             layoutPlayerMonuments->addWidget(viewmonuments[k], k/2, k%2);
             connect(viewmonuments[k], SIGNAL(monumentClicked(ViewMonument*)), this, SLOT(monumentClick(ViewMonument*)));
             k++;

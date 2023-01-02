@@ -11,7 +11,7 @@ class ViewMonument : public QPushButton
 public:
     ViewMonument(const Monument* monument, QWidget *parent = nullptr);
     explicit ViewMonument(QWidget *parent = nullptr);
-    void setMonument(Monument* monument);
+    void setMonument(Monument* monument, bool isOwnedByPlayer);
     const Monument* getMonument() const {return monument;}
 private:
     const Monument* monument = nullptr;
