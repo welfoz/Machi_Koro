@@ -1,6 +1,6 @@
 #include "game.h"
 
-Game::Game() : board(nullptr), bank(nullptr), dice(Dice()), winner(nullptr), players(), nbPlayers(0), idCurrentPlayer(0), diceValue(0) {
+Game::Game() : board(nullptr), bank(nullptr), dice(Dice()), players(), nbPlayers(0), idCurrentPlayer(0), diceValue(0) {
     this->numberOfPlayersMin = 2;
     this->numberOfPlayersMax = 4;
 };
@@ -141,10 +141,7 @@ bool Game::isPlayerAbleToPayMonument(Player* player) {
 void Game::activationGreenAndBlueCards(Player* p,size_t n) {
     for (size_t i = p->getId() + this->nbPlayers; i > p->getId(); i--){
         unsigned int index = i % this->nbPlayers;
-        if (players[index] == p) {
-			vector<EstablishmentCard*> activatedCards = players[index]->activateGreenCards(n);
-            this->activateShoppingMall(p, activatedCards);
-        }
+        if (players[index] == p) p->activateGreenCards(n);
         players[index]->activateBlueCards(n);
     }
 }
@@ -153,32 +150,7 @@ void Game::activationGreenAndBlueCards(Player* p,size_t n) {
 void Game::activationRedCards(Player* p, size_t n) {
     for (size_t i = p->getId() + this->nbPlayers; i > p->getId(); i--){
         unsigned int index = i % this->nbPlayers;
-        if (players[index] != p) {
-			vector<EstablishmentCard*> activatedCards = players[index]->activateRedCards(n);
-            activateShoppingMall(p, activatedCards);
-        }
-    }
-}
-
-void Game::activateShoppingMall(Player* p, vector<EstablishmentCard*> cards) {
-    if (!p->getMonument("Shopping Mall")) {
-        return;
-    }
-    for (auto it : cards) {
-        if (it->getIcon()->getName() == "bread" || it->getIcon()->getName() == "cup") {
-            // no need to handle the case when Type::majorEstablishment and Type::primaryIndustry
-            // because they never have bread or cup icon
-            switch (it->getType()) {
-			case (Type::restaurants):
-				this->getBank()->trade(p->getId(), getIdCurrentPlayer(), 1);
-                break;
-			case(Type::secondaryIndustry):
-			    this->getBank()->credit(p->getId(), 1);
-                break;
-			default:
-				break;
-            }
-        }
+        if (players[index] != p) players[index]->activateRedCards(n);
     }
 }
 
@@ -210,13 +182,6 @@ Player* Game::getPlayerByName(std::string name) const {
     }
     string error = "error getPlayerByName, didn't find : " + name + "\n";
     throw error;
-}
-
-bool Game::isWinner(Player *player) const {
-    for (auto it = player->getMonuments().begin(); it != player->getMonuments().end(); it++) {
-        if (!it->second) return false;
-    }
-    return true;
 }
 
 void Game::purchaseOneEstablismentCard(Player* player, EstablishmentCard* card) {
