@@ -9,6 +9,7 @@ protected:
     Game* game;
     static Controller* instance;
 	Proxy* proxy;
+    Player* winner = nullptr;
     static void freeInstance();
     virtual void turn(Player* player);
     virtual void createAll();
@@ -17,7 +18,8 @@ protected:
     virtual void action(Player* player);
 	size_t* activateRadioTower(Player* player, size_t nb, size_t* throws) const;
 	void activateAmusementPark(Player* p, size_t nb, size_t* throws);
-
+    void activateShoppingMall(Player* p, vector<EstablishmentCard*> cards);
+    bool isWinner(Player* player) const;
 public:
     virtual ~Controller();
 
