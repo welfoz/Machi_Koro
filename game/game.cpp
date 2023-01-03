@@ -1,6 +1,6 @@
 #include "game.h"
 
-Game::Game() : board(nullptr), bank(nullptr), dice(Dice()), winner(nullptr), players(), nbPlayers(0), idCurrentPlayer(0), diceValue(0) {
+Game::Game() : board(nullptr), bank(nullptr), dice(Dice()), players(), nbPlayers(0), idCurrentPlayer(0), diceValue(0) {
     this->numberOfPlayersMin = 2;
     this->numberOfPlayersMax = 4;
 };
@@ -182,13 +182,6 @@ Player* Game::getPlayerByName(std::string name) const {
     }
     string error = "error getPlayerByName, didn't find : " + name + "\n";
     throw error;
-}
-
-bool Game::isWinner(Player *player) const {
-    for (auto it = player->getMonuments().begin(); it != player->getMonuments().end(); it++) {
-        if (!it->second) return false;
-    }
-    return true;
 }
 
 void Game::purchaseOneEstablismentCard(Player* player, EstablishmentCard* card) {

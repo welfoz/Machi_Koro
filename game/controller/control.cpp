@@ -97,7 +97,7 @@ void Controller::match(){
 
     size_t turnCounter = 1;
     getGame()->idCurrentPlayer = 0;
-    while (getGame()->winner==nullptr) {
+    while (winner==nullptr) {
         proxy->getInterface()->printTurnCounter(turnCounter);
         turn(getGame()->players[getGame()->idCurrentPlayer]);
 
@@ -105,12 +105,12 @@ void Controller::match(){
         if (getGame()->idCurrentPlayer==0) turnCounter++;
 	};
 
-    proxy->getInterface()->printBasicMessage("\n\n\n\n\n\nIT'S OVER!!!\n\nThe winner is...\n" + getGame()->winner->getUsername() + " 🎉🎉🎉\n\n\nThank you for playing Machi Koro!\n\n");
+    proxy->getInterface()->printBasicMessage("\n\n\n\n\n\nIT'S OVER!!!\n\nThe winner is...\n" + winner->getUsername() + " 🎉🎉🎉\n\n\nThank you for playing Machi Koro!\n\n");
 };
 
 // we ll not print cards in gui neither player information
 void Controller::turn(Player* player){
-    if (getGame()->winner!= nullptr) return;
+    if (winner!= nullptr) return;
 
     proxy->getInterface()->printPlayerInformation(player);
     proxy->getInterface()->printMonuments(player);
@@ -180,6 +180,13 @@ void Controller::activateAmusementPark(Player* player, size_t nb, size_t* throws
         turn(player);
         player->isPlaying=false;
     }
+}
+
+bool Controller::isWinner(Player *player) const {
+    for (auto it = player->getMonuments().begin(); it != player->getMonuments().end(); it++) {
+        if (!it->second) return false;
+    }
+    return true;
 }
 
 void Controller::action(Player* player){
@@ -307,7 +314,7 @@ void Controller::action(Player* player){
                 break;
             }
         }
-        if (getGame()->isWinner(player)) getGame()->winner=player;
+        if (isWinner(player)) winner = player;
         break;
     }
     default:
