@@ -100,7 +100,7 @@ void ViewCard::setCard(){
     layoutIcon->addWidget(iconText);
     layoutIcon->addWidget(iconValue);
 
-    QHBoxLayout *layoutEffect = new QHBoxLayout();
+    QVBoxLayout *layoutEffect = new QVBoxLayout();
     layoutEffect->addWidget(effectText);
     layoutEffect->addWidget(effectValue);
     layoutEffect->setAlignment(Qt::AlignTop);

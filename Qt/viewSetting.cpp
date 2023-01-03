@@ -40,8 +40,8 @@ void ViewSetting::viewInputNumber(){
     layoutButtons->addWidget(validateButtonNumber);
 
     spinBoxNumber = new QSpinBox;
-    spinBoxNumber->setMinimum(0);
-    spinBoxNumber->setMaximum(100);
+    spinBoxNumber->setMinimum(1);
+    spinBoxNumber->setMaximum(3);
     labelNumber = new QLabel;
     labelNumber->setText("Enter the number");
 

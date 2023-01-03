@@ -24,17 +24,23 @@ ViewSet::ViewSet(QWidget *parent) : QWidget(parent),
 {
     setBackgroundRole(QPalette::Base);
     setAutoFillBackground(true);
-    setFixedSize(1400,800);
+
+    this->setWindowState(Qt::WindowMaximized);
+
     setWindowTitle("Machi Koro");
 
     couche = new QHBoxLayout;
 
     layoutCards = new QGridLayout;
     int i=0;
+
     for(auto it=Controller::getInstance().getGame()->getBoard()->getCards().begin(); it != Controller::getInstance().getGame()->getBoard()->getCards().end(); it++){
         viewEstablishments[i] = new ViewCard(it->first);
         viewEstablishments[i]->setCard();
-        layoutCards->addWidget(viewEstablishments[i], i/5, i%5, Qt::AlignTop);
+        layoutCards->addWidget(viewEstablishments[i],
+                       i/6,
+                       i%6,
+                       Qt::AlignTop);
         connect(viewEstablishments[i], SIGNAL(cardClicked(ViewCard*)), this, SLOT(cardClick(ViewCard*)));
         i++;
     }
@@ -52,6 +58,7 @@ ViewSet::ViewSet(QWidget *parent) : QWidget(parent),
     dice->setDice();
     layoutDice->addWidget(diceText);
     layoutDice->addWidget(dice);
+    this->layoutDice->addWidget(chat);
     layoutDice->setAlignment(Qt::AlignTop);
     connect(dice, SIGNAL(diceClicked(ViewDice*)), this, SLOT(diceClick(ViewDice*)));
 
@@ -88,7 +95,7 @@ void ViewSet::setSet()
 void ViewSet::setAllPlayers() {
 
     // clear all layouts & widgets relative to layoutCard
-    clearLayout(this->layoutAllPlayers, {chat});
+    clearLayout(this->layoutAllPlayers);
 
     int i=0;
     for(size_t j = 0; j<Controller::getInstance().getGame()->getNbPlayers(); j++){
@@ -140,7 +147,6 @@ void ViewSet::setAllPlayers() {
         i++;
     }
 
-    this->layoutAllPlayers->addWidget(chat);
 }
 
 void ViewSet::cardClick(ViewCard* vc)
