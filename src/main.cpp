@@ -5,8 +5,8 @@
 #include "interface/cli.h"
 
 // comment to play in cli
-#include <QApplication>
-#include "interface/gui.h"
+//#include <QApplication>
+//#include "interface/gui.h"
 
 namespace MACHI_KORO {
 
@@ -19,7 +19,7 @@ void play(Interface::Option option) {
         break;
     case Interface::Option::gui:
         // comment to play in cli
-        interface = new Gui();
+        //interface = new Gui();
         break;
     case Interface::Option::cliGreenValley:
         interface = new GreenValleyCli();
@@ -66,9 +66,9 @@ void play(Interface::Option option) {
 // to play in GUI
 int main(int argc, char* argv[]) {
 
-    QApplication app(argc, argv);
+    //QApplication app(argc, argv);
 
-    MACHI_KORO::play(Interface::Option::gui);
+    MACHI_KORO::play(Interface::Option::cli);
 
-    return app.exec();
+    //return app.exec();
 }
