@@ -24,13 +24,13 @@ public:
     virtual void purchaseEstablishment(EstablishmentCard* card);
     void removeEstablishment(EstablishmentCard* card);
     virtual void activateRedCards(size_t diceNumber);
-    virtual vector<EstablishmentCard*> activatedRedCards(size_t diceNumber);
+    virtual vector<EstablishmentCard*> redCardsActivated(size_t diceNumber);
     virtual void activateBlueCards(size_t diceNumber);
-    virtual vector<EstablishmentCard*> activatedBlueCards(size_t diceNumber);
+    virtual vector<EstablishmentCard*> blueCardsActivated(size_t diceNumber);
     virtual void activateGreenCards(size_t diceNumber);
-    virtual vector<EstablishmentCard*> activatedGreenCards(size_t diceNumber);
+    virtual vector<EstablishmentCard*> greenCardsActivated(size_t diceNumber);
     virtual void activatePurpleCards(size_t diceNumber);
-    virtual vector<EstablishmentCard*> activatedPurpleCards(size_t diceNumber);
+    virtual vector<EstablishmentCard*> purpleCardsActivated(size_t diceNumber);
     // getters
     bool getMonument(string name) const;
     const map<Monument*, bool>& getMonuments() const {return monuments;};

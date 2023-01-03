@@ -16,7 +16,7 @@ void PlayerGreenValley::activateRedCards(size_t diceNumber){
     }
 }
 
-vector<EstablishmentCard*> PlayerGreenValley::activatedRedCards(size_t diceNumber) {
+vector<EstablishmentCard*> PlayerGreenValley::redCardsActivated(size_t diceNumber) {
     vector<EstablishmentCard*> activatedCards = {};
     for(auto it=cardsCounter.begin();it!=cardsCounter.end();it++){
         if(it->first->getType()==Type::restaurants&& it->first->inActivationNumbers(diceNumber))
@@ -41,7 +41,7 @@ void PlayerGreenValley::activateBlueCards(size_t diceNumber){
 }
 
 //this function is not used but could be in other extensions
-vector<EstablishmentCard*> PlayerGreenValley::activatedBlueCards(size_t diceNumber) {
+vector<EstablishmentCard*> PlayerGreenValley::blueCardsActivated(size_t diceNumber) {
     vector<EstablishmentCard*> activatedCards = {};
     for(auto it=cardsCounter.begin();it!=cardsCounter.end();it++){
         if(it->first->getType()==Type::primaryIndustry&& it->first->inActivationNumbers(diceNumber))
@@ -65,7 +65,7 @@ void PlayerGreenValley::activateGreenCards(size_t diceNumber){
     }
 }
 
-vector<EstablishmentCard*> PlayerGreenValley::activatedGreenCards(size_t diceNumber) {
+vector<EstablishmentCard*> PlayerGreenValley::greenCardsActivated(size_t diceNumber) {
     vector<EstablishmentCard*> activatedCards = {};
     for(auto it=cardsCounter.begin();it!=cardsCounter.end();it++){
         if(it->first->getType()==Type::secondaryIndustry&& it->first->inActivationNumbers(diceNumber))
@@ -90,7 +90,7 @@ void PlayerGreenValley::activatePurpleCards(size_t diceNumber){
 }
 
 //this function is not used but could be in other extensions
-vector<EstablishmentCard*> PlayerGreenValley::activatedPurpleCards(size_t diceNumber) {
+vector<EstablishmentCard*> PlayerGreenValley::purpleCardsActivated(size_t diceNumber) {
     vector<EstablishmentCard*> activatedCards = {};
     for(auto it=cardsCounter.begin();it!=cardsCounter.end();it++){
         if(it->first->getType()==Type::majorEstablishment&& it->first->inActivationNumbers(diceNumber))

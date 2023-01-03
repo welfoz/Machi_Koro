@@ -14,7 +14,7 @@ void Player::activateRedCards(size_t diceNumber){
     }
 }
 
-vector<EstablishmentCard*> Player::activatedRedCards(size_t diceNumber) {
+vector<EstablishmentCard*> Player::redCardsActivated(size_t diceNumber) {
     vector<EstablishmentCard*> activatedCards = {};
     for(auto it=cardsCounter.begin();it!=cardsCounter.end();it++){
         if(it->first->getType()==Type::restaurants&& it->first->inActivationNumbers(diceNumber))
@@ -36,7 +36,7 @@ void Player::activateBlueCards(size_t diceNumber){
 }
 
 //this function is not used but could be in other extensions
-vector<EstablishmentCard*> Player::activatedBlueCards(size_t diceNumber) {
+vector<EstablishmentCard*> Player::blueCardsActivated(size_t diceNumber) {
     vector<EstablishmentCard*> activatedCards = {};
     for(auto it=cardsCounter.begin();it!=cardsCounter.end();it++){
         if(it->first->getType()==Type::primaryIndustry&& it->first->inActivationNumbers(diceNumber))
@@ -57,7 +57,7 @@ void Player::activateGreenCards(size_t diceNumber){
     }
 }
 
-vector<EstablishmentCard*> Player::activatedGreenCards(size_t diceNumber){
+vector<EstablishmentCard*> Player::greenCardsActivated(size_t diceNumber){
     vector<EstablishmentCard*> activatedCards = {};
     for(auto it=cardsCounter.begin();it!=cardsCounter.end();it++){
         if(it->first->getType()==Type::secondaryIndustry&& it->first->inActivationNumbers(diceNumber)){
@@ -79,7 +79,7 @@ void Player::activatePurpleCards(size_t diceNumber){
 }
 
 //this function is not used but could be in other extensions
-vector<EstablishmentCard*> Player::activatedPurpleCards(size_t diceNumber) {
+vector<EstablishmentCard*> Player::purpleCardsActivated(size_t diceNumber) {
     vector<EstablishmentCard*> activatedCards = {};
     for(auto it=cardsCounter.begin();it!=cardsCounter.end();it++){
         if(it->first->getType()==Type::majorEstablishment&& it->first->inActivationNumbers(diceNumber))

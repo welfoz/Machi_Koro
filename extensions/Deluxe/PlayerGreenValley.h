@@ -14,9 +14,9 @@ public :
     void activateBlueCards(size_t diceNumber) override;
     void activateGreenCards(size_t diceNumber) override;
     void activatePurpleCards(size_t diceNumber) override;
-    vector<EstablishmentCard *> activatedGreenCards(size_t diceNumber) override;
-    vector<EstablishmentCard *> activatedRedCards(size_t diceNumber) override;
-    vector<EstablishmentCard *> activatedBlueCards(size_t diceNumber) override;
-    vector<EstablishmentCard *> activatedPurpleCards(size_t diceNumber) override;
+    vector<EstablishmentCard *> greenCardsActivated(size_t diceNumber) override;
+    vector<EstablishmentCard *> redCardsActivated(size_t diceNumber) override;
+    vector<EstablishmentCard *> blueCardsActivated(size_t diceNumber) override;
+    vector<EstablishmentCard *> purpleCardsActivated(size_t diceNumber) override;
     const map<EstablishmentCard*, bool>& getClosedCards() const {return closed;}
 };

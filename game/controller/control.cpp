@@ -125,8 +125,8 @@ void Controller::turn(Player* player){
 
     getGame()->setDiceValue(nb, throws);
 
-    vector<EstablishmentCard*> activatedGreenCards = getGame()->players[player->getId()]->activatedGreenCards(getGame()->diceValue);
-    vector<EstablishmentCard*> activatedRedCards = getGame()->players[player->getId()]->activatedRedCards(getGame()->diceValue);
+    vector<EstablishmentCard*> activatedGreenCards = getGame()->players[player->getId()]->greenCardsActivated(getGame()->diceValue);
+    vector<EstablishmentCard*> activatedRedCards = getGame()->players[player->getId()]->redCardsActivated(getGame()->diceValue);
 
     getGame()->activation(player, game->diceValue);
 
