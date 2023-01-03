@@ -10,9 +10,13 @@ public :
     bool isClosed(EstablishmentCard* card);
     void close(EstablishmentCard* card);
     void open(EstablishmentCard* card);
+    void activateRedCards(size_t diceNumber) override;
     void activateBlueCards(size_t diceNumber) override;
-    vector<EstablishmentCard *> activateGreenCards(size_t diceNumber) override;
-    vector<EstablishmentCard *> activateRedCards(size_t diceNumber) override;
+    void activateGreenCards(size_t diceNumber) override;
     void activatePurpleCards(size_t diceNumber) override;
+    vector<EstablishmentCard *> activatedGreenCards(size_t diceNumber) override;
+    vector<EstablishmentCard *> activatedRedCards(size_t diceNumber) override;
+    vector<EstablishmentCard *> activatedBlueCards(size_t diceNumber) override;
+    vector<EstablishmentCard *> activatedPurpleCards(size_t diceNumber) override;
     const map<EstablishmentCard*, bool>& getClosedCards() const {return closed;}
 };

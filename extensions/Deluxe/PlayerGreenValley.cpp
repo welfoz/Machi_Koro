@@ -2,21 +2,27 @@
 // Created by jules on 10/12/2022.
 //
 #include "PlayerGreenValley.h"
-vector<EstablishmentCard*> PlayerGreenValley::activateRedCards(size_t diceNumber) {
-    vector<EstablishmentCard*> activatedCards = {};
+
+void PlayerGreenValley::activateRedCards(size_t diceNumber){
     for(auto it=cardsCounter.begin();it!=cardsCounter.end();it++){
-        if(it->first->getType()==Type::restaurants&& it->first->inActivationNumbers(diceNumber))
+        if(it->first->getType()==Type::restaurants&& it->first->inActivationNumbers(diceNumber)){
             if (!isClosed(it->first)){
-                for (size_t j = 0; j < it->second; j++)
-                {
-                    it->first->activation(*this);
-                    activatedCards.push_back(it->first);
-                }
+                for (size_t j = 0; j < it->second; j++) it->first->activation(*this);
             }
             else if (isClosed(it->first)) {
                 open(it->first);
             }
+        }
+    }
+}
 
+vector<EstablishmentCard*> PlayerGreenValley::activatedRedCards(size_t diceNumber) {
+    vector<EstablishmentCard*> activatedCards = {};
+    for(auto it=cardsCounter.begin();it!=cardsCounter.end();it++){
+        if(it->first->getType()==Type::restaurants&& it->first->inActivationNumbers(diceNumber))
+            if (!isClosed(it->first)){
+                for (size_t j = 0; j < it->second; j++) activatedCards.push_back(it->first);
+            }
     }
     return activatedCards;
 }
@@ -24,7 +30,7 @@ vector<EstablishmentCard*> PlayerGreenValley::activateRedCards(size_t diceNumber
 void PlayerGreenValley::activateBlueCards(size_t diceNumber){
     for(auto it=cardsCounter.begin();it!=cardsCounter.end();it++){
         if(it->first->getType()==Type::primaryIndustry&& it->first->inActivationNumbers(diceNumber)){
-            if (!isClosed(it->first)) {
+            if (!isClosed(it->first)){
                 for (size_t j = 0; j < it->second; j++) it->first->activation(*this);
             }
             else if (isClosed(it->first)) {
@@ -33,27 +39,23 @@ void PlayerGreenValley::activateBlueCards(size_t diceNumber){
         }
     }
 }
-vector<EstablishmentCard*> PlayerGreenValley::activateGreenCards(size_t diceNumber){
+
+//this function is not used but could be in other extensions
+vector<EstablishmentCard*> PlayerGreenValley::activatedBlueCards(size_t diceNumber) {
     vector<EstablishmentCard*> activatedCards = {};
     for(auto it=cardsCounter.begin();it!=cardsCounter.end();it++){
-        if(it->first->getType()==Type::secondaryIndustry&& it->first->inActivationNumbers(diceNumber)){
-            if (!isClosed(it->first)) {
-                for (size_t j = 0; j < it->second; j++) {
-                    it->first->activation(*this);
-                    activatedCards.push_back(it->first);
-                }
+        if(it->first->getType()==Type::primaryIndustry&& it->first->inActivationNumbers(diceNumber))
+            if (!isClosed(it->first)){
+                for (size_t j = 0; j < it->second; j++) activatedCards.push_back(it->first);
             }
-            else if (isClosed(it->first)) {
-                open(it->first);
-            }
-        }
     }
     return activatedCards;
 }
-void PlayerGreenValley::activatePurpleCards(size_t diceNumber){
+
+void PlayerGreenValley::activateGreenCards(size_t diceNumber){
     for(auto it=cardsCounter.begin();it!=cardsCounter.end();it++){
-        if(it->first->getType()==Type::majorEstablishment&& it->first->inActivationNumbers(diceNumber)){
-            if (!isClosed(it->first)) {
+        if(it->first->getType()==Type::secondaryIndustry&& it->first->inActivationNumbers(diceNumber)){
+            if (!isClosed(it->first)){
                 for (size_t j = 0; j < it->second; j++) it->first->activation(*this);
             }
             else if (isClosed(it->first)) {
@@ -61,6 +63,42 @@ void PlayerGreenValley::activatePurpleCards(size_t diceNumber){
             }
         }
     }
+}
+
+vector<EstablishmentCard*> PlayerGreenValley::activatedGreenCards(size_t diceNumber) {
+    vector<EstablishmentCard*> activatedCards = {};
+    for(auto it=cardsCounter.begin();it!=cardsCounter.end();it++){
+        if(it->first->getType()==Type::secondaryIndustry&& it->first->inActivationNumbers(diceNumber))
+            if (!isClosed(it->first)){
+                for (size_t j = 0; j < it->second; j++) activatedCards.push_back(it->first);
+            }
+    }
+    return activatedCards;
+}
+
+void PlayerGreenValley::activatePurpleCards(size_t diceNumber){
+    for(auto it=cardsCounter.begin();it!=cardsCounter.end();it++){
+        if(it->first->getType()==Type::majorEstablishment&& it->first->inActivationNumbers(diceNumber)){
+            if (!isClosed(it->first)){
+                for (size_t j = 0; j < it->second; j++) it->first->activation(*this);
+            }
+            else if (isClosed(it->first)) {
+                open(it->first);
+            }
+        }
+    }
+}
+
+//this function is not used but could be in other extensions
+vector<EstablishmentCard*> PlayerGreenValley::activatedPurpleCards(size_t diceNumber) {
+    vector<EstablishmentCard*> activatedCards = {};
+    for(auto it=cardsCounter.begin();it!=cardsCounter.end();it++){
+        if(it->first->getType()==Type::majorEstablishment&& it->first->inActivationNumbers(diceNumber))
+            if (!isClosed(it->first)){
+                for (size_t j = 0; j < it->second; j++) activatedCards.push_back(it->first);
+            }
+    }
+    return activatedCards;
 }
 
 bool PlayerGreenValley::isClosed(EstablishmentCard *card) {

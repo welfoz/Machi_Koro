@@ -125,7 +125,13 @@ void Controller::turn(Player* player){
 
     getGame()->setDiceValue(nb, throws);
 
+    vector<EstablishmentCard*> activatedGreenCards = getGame()->players[player->getId()]->activatedGreenCards(getGame()->diceValue);
+    vector<EstablishmentCard*> activatedRedCards = getGame()->players[player->getId()]->activatedRedCards(getGame()->diceValue);
+
     getGame()->activation(player, game->diceValue);
+
+    activateShoppingMall(player, activatedGreenCards);
+    activateShoppingMall(player, activatedRedCards);
 
     proxy->getInterface()->printBalances(getGame()->players);
 
@@ -144,6 +150,28 @@ size_t* Controller::activateRadioTower(Player* player, size_t nb, size_t* throws
         }
     }
     return throws;
+}
+
+void Controller::activateShoppingMall(Player* p, vector<EstablishmentCard*> cards) {
+    if (!p->getMonument("Shopping Mall")) {
+        return;
+    }
+    for (auto it : cards) {
+        if (it->getIcon()->getName() == "bread" || it->getIcon()->getName() == "cup") {
+            // no need to handle the case when Type::majorEstablishment and Type::primaryIndustry
+            // because they never have bread or cup icon
+            switch (it->getType()) {
+            case (Type::restaurants):
+                this->getGame()->getBank()->trade(p->getId(), p->getId(), 1);
+                break;
+            case(Type::secondaryIndustry):
+                this->getGame()->getBank()->credit(p->getId(), 1);
+                break;
+            default:
+                break;
+            }
+        }
+    }
 }
 
 void Controller::activateAmusementPark(Player* player, size_t nb, size_t* throws) {

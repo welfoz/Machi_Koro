@@ -49,7 +49,6 @@ protected:
     virtual void activationRedCards(Player* p, size_t n);
     virtual void activationGreenAndBlueCards(Player* p, size_t n);
     virtual void activationPurpleCards(Player* p, size_t n);
-    void activateShoppingMall(Player* p, vector<EstablishmentCard*> cards);
 
     size_t* throwDices(size_t nb) const;
     bool isWinner(Player* player) const;

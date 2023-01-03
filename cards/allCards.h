@@ -70,7 +70,7 @@ public:
 
 class Bakery : public Green {
 public:
-    Bakery(size_t quantity) : Green(nullptr, 2, "Bakery", 1, "The player with the card gets one coin from the bank.", quantity) {
+    Bakery(size_t quantity) : Green(nullptr, 2, "Bakery", 1, "The player with the card gets one coin from the bank, on your turn only.", quantity) {
         BaseCard::setIcon(getIconByName("bread"));
         size_t* actNumber = new size_t[2];
         actNumber[0] = 2;
@@ -83,7 +83,7 @@ public:
 
 class ConvenienceStore : public Green {
 public:
-    ConvenienceStore(size_t quantity) : Green(nullptr, 1, "Convenience Store", 2, "The player with the card gets 3 coins from the bank.", quantity) {
+    ConvenienceStore(size_t quantity) : Green(nullptr, 1, "Convenience Store", 2, "The player with the card gets 3 coins from the bank, on your turn only.", quantity) {
         BaseCard::setIcon(getIconByName("bread"));
         size_t* actNumber = new size_t[1];
         actNumber[0] = 4;

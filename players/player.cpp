@@ -5,18 +5,26 @@
 void Player::purchaseMonument(Monument* card) {
     if (!monuments[card]) monuments[card]=true;
 }
-vector<EstablishmentCard*> Player::activateRedCards(size_t diceNumber) {
-	vector<EstablishmentCard*> activatedCards = {};
+
+void Player::activateRedCards(size_t diceNumber){
+    for(auto it=cardsCounter.begin();it!=cardsCounter.end();it++){
+        if(it->first->getType()==Type::restaurants&& it->first->inActivationNumbers(diceNumber)){
+                for (size_t j = 0; j < it->second; j++) it->first->activation(*this);
+        }
+    }
+}
+
+vector<EstablishmentCard*> Player::activatedRedCards(size_t diceNumber) {
+    vector<EstablishmentCard*> activatedCards = {};
     for(auto it=cardsCounter.begin();it!=cardsCounter.end();it++){
         if(it->first->getType()==Type::restaurants&& it->first->inActivationNumbers(diceNumber))
                 for (size_t j = 0; j < it->second; j++)
                 {
-                    it->first->activation(*this);
                     activatedCards.push_back(it->first);
                 }
 
     }
-	return activatedCards;
+    return activatedCards;
 }
 
 void Player::activateBlueCards(size_t diceNumber){
@@ -26,24 +34,62 @@ void Player::activateBlueCards(size_t diceNumber){
         }
     }
 }
-vector<EstablishmentCard*> Player::activateGreenCards(size_t diceNumber){
-	vector<EstablishmentCard*> activatedCards = {};
+
+//this function is not used but could be in other extensions
+vector<EstablishmentCard*> Player::activatedBlueCards(size_t diceNumber) {
+    vector<EstablishmentCard*> activatedCards = {};
+    for(auto it=cardsCounter.begin();it!=cardsCounter.end();it++){
+        if(it->first->getType()==Type::primaryIndustry&& it->first->inActivationNumbers(diceNumber))
+                for (size_t j = 0; j < it->second; j++)
+                {
+                    activatedCards.push_back(it->first);
+                }
+
+    }
+    return activatedCards;
+}
+
+void Player::activateGreenCards(size_t diceNumber){
+    for(auto it=cardsCounter.begin();it!=cardsCounter.end();it++){
+        if(it->first->getType()==Type::secondaryIndustry&& it->first->inActivationNumbers(diceNumber)){
+                for (size_t j = 0; j < it->second; j++) it->first->activation(*this);
+        }
+    }
+}
+
+vector<EstablishmentCard*> Player::activatedGreenCards(size_t diceNumber){
+    vector<EstablishmentCard*> activatedCards = {};
     for(auto it=cardsCounter.begin();it!=cardsCounter.end();it++){
         if(it->first->getType()==Type::secondaryIndustry&& it->first->inActivationNumbers(diceNumber)){
                 for (size_t j = 0; j < it->second; j++) {
-                    it->first->activation(*this);
+//                    it->first->activation(*this);
                     activatedCards.push_back(it->first);
                 }
         }
     }
-	return activatedCards;
+    return activatedCards;
 }
+
 void Player::activatePurpleCards(size_t diceNumber){
     for(auto it=cardsCounter.begin();it!=cardsCounter.end();it++){
         if(it->first->getType()==Type::majorEstablishment&& it->first->inActivationNumbers(diceNumber)){
                 for (size_t j = 0; j < it->second; j++) it->first->activation(*this);
         }
     }
+}
+
+//this function is not used but could be in other extensions
+vector<EstablishmentCard*> Player::activatedPurpleCards(size_t diceNumber) {
+    vector<EstablishmentCard*> activatedCards = {};
+    for(auto it=cardsCounter.begin();it!=cardsCounter.end();it++){
+        if(it->first->getType()==Type::majorEstablishment&& it->first->inActivationNumbers(diceNumber))
+                for (size_t j = 0; j < it->second; j++)
+                {
+                    activatedCards.push_back(it->first);
+                }
+
+    }
+    return activatedCards;
 }
 
 bool Player::getMonument(std::string name) const {
