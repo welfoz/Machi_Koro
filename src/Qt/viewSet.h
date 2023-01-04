@@ -8,6 +8,7 @@
 #include <QGridLayout>
 #include <QVBoxLayout>
 #include <QMessageBox>
+#include <QCloseEvent>
 
 #include "viewCard.h"
 #include "viewMonument.h"
@@ -53,6 +54,8 @@ private:
     ViewDice* dice;
     void clearLayout(QLayout* layout);
     void setAllPlayers();
+    void closeEvent(QCloseEvent *event) override;
+
 private slots:
     void cardClick(ViewCard* vc);
     void monumentClick(ViewMonument* vm);

@@ -24,7 +24,7 @@ public:
     void printMonuments(Player* player) const override {};
     void printCards(Player* player) const override {};
     void printDices(size_t* throws, size_t nb) const override {};
-    void printBalances(Player** players) override;
+    void printBalances(Player** players) override {};
     void printBoard() const override {};
     string selectOneCard() const override { return ""; };
     Player* selectOnePlayerDifferentFromTheCurrentOne(Player* player) const override { return player; };

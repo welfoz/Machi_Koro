@@ -19,6 +19,8 @@ void MarinaController::turn(Player* player) {
     proxy->getInterface()->printMonuments(player);
     proxy->getInterface()->printCards(player);
 
+    Controller::updateGui();
+
     activateCityHall(player);
 
     const size_t nb = getNbDiceChosen(*player);
@@ -28,17 +30,21 @@ void MarinaController::turn(Player* player) {
 
     throws = activateRadioTower(player, nb, throws);
 
+
     getGame()->setDiceValue(nb,throws);
     getGame()->diceValue= this->activateHarbor(getGame()->diceValue,player);
 
     getGame()->activation(player, game->diceValue);
 
     proxy->getInterface()->printBalances(game->players);
+    Controller::updateGui();
 
     map<Monument*,bool> playerMonuments = player->getMonuments();
     map<EstablishmentCard*,size_t> playerCards = player->getCards();
 
     action(player);
+
+    Controller::updateGui();
 
     dynamic_cast<MarinaBoard*>(getGame()->board)->checkNumberOfDecks();
 

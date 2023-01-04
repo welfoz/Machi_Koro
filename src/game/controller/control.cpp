@@ -1,4 +1,5 @@
 #include "control.h"
+#include "../../interface/gui.h"
 
 Controller& Controller::getInstance(Interface* interface)
 {
@@ -112,17 +113,23 @@ void Controller::turn(Player* player){
     proxy->getInterface()->printMonuments(player);
     proxy->getInterface()->printCards(player);
 
+    this->updateGui();
+
     const size_t nb = getNbDiceChosen(*player);
 
     size_t* throws = getGame()->throwDices(nb);
+
     proxy->getInterface()->printDices(throws, nb);
 
     throws = activateRadioTower(player, nb, throws);
 
+
     getGame()->setDiceValue(nb, throws);
+
 
     vector<EstablishmentCard*> activatedGreenCards = getGame()->players[player->getId()]->greenCardsActivated(getGame()->diceValue);
     vector<EstablishmentCard*> activatedRedCards = getGame()->players[player->getId()]->redCardsActivated(getGame()->diceValue);
+
 
     getGame()->activation(player, game->diceValue);
 
@@ -130,9 +137,11 @@ void Controller::turn(Player* player){
     activateShoppingMall(player, activatedRedCards);
 
     proxy->getInterface()->printBalances(getGame()->players);
+    this->updateGui();
 
     action(player);
 
+    this->updateGui();
 
     activateAmusementPark(player, nb, throws);
 };
@@ -327,3 +336,9 @@ void Controller::tradeTwoEstablishmentCards(Player* p1, Player* p2, Establishmen
 Interface* Controller::getInterface(bool gameCreation) {
     return proxy->getInterface(gameCreation);
 }
+
+
+void Controller::updateGui() const {
+    if (dynamic_cast<Gui*>(Controller::getInstance().getInterface(true)) != nullptr)
+        dynamic_cast<Gui*>(Controller::getInstance().getInterface(true))->update();
+};
