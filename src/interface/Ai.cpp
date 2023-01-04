@@ -9,20 +9,18 @@ size_t Ai::getInputNumber(size_t min, size_t max)const {
     size_t number;
     number= getAiChoice(options);
     printBasicMessage(to_string(number));
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     return number;
 }
 
 template<typename t>
 t Ai::getAiChoice(std::vector<t> options, std::vector<t> exceptions) const {
-    size_t n=options.size();
     if (exceptions.size() > 0)
         for (auto it: exceptions)
             if (count(options.begin(), options.end(), it)) std::remove(options.begin(), options.end(), it);
     std::random_device dev;
     std::mt19937 rng(dev());
     std::uniform_int_distribution<std::mt19937::result_type> dist(0, options.size() - 1);
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    delay();
     return options[dist(rng)]; // renvoie un élément situé à un index aléatoire entre le début et la fin du vector
 }
 
@@ -31,7 +29,6 @@ bool Ai::confirmationDialog(string message, string firstOption, string secondOpt
     string stopAnswer="";
     stopAnswer=getAiChoice(vector<string>({firstOption,secondOption}));
     printBasicMessage(stopAnswer);
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     if (Formatter::toLower(stopAnswer) == Formatter::toLower(secondOption)) {
         return false;
     }
@@ -42,7 +39,6 @@ string Ai::getInputText(vector<string> context) const{
     string text="";
     text=getAiChoice(context);
     printBasicMessage(text);
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     return text;
 }
 
@@ -56,7 +52,6 @@ EstablishmentCard *Ai::selectOneCardOwnedByAnyPlayer(string message) const {
     }
     chosenCardPtr= getAiChoice(options);
     printBasicMessage(chosenCardPtr->getName());
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     return chosenCardPtr;
 }
 
@@ -66,7 +61,6 @@ Player *Ai::selectOnePlayerDifferentFromTheCurrentOne(Player *player) const {
     Game* game = Controller::getInstance().getGame();
     p2= getAiChoice(game->getPlayers(),vector<Player*> ({player}));
     printBasicMessage(p2->getUsername());
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     return p2;
 }
 
@@ -77,7 +71,6 @@ EstablishmentCard *Ai::selectOneEstablishmentCardFromPlayer(Player *target, stri
     for (auto it : target->getCards()) if (it.first->getType()!=Type::majorEstablishment && it.second) options.push_back(it.first);
     takenCardPtr= getAiChoice(options);
     printBasicMessage(takenCardPtr->getName());
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     return takenCardPtr;
 }
 
@@ -89,6 +82,5 @@ Monument *Ai::selectMonumentCardFromCurrentPlayer(Player *player, string message
     for (auto it : player->getMonuments()) if (it.second) options.push_back(it.first);
     monumentPtr= getAiChoice(options);
     printBasicMessage(monumentPtr->getName());
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     return monumentPtr;
 }

@@ -34,6 +34,7 @@ public:
     void printBoard() const override {return humanInterface->printBoard();};
     string selectOneCard() const override {return humanInterface->selectOneCard();};
     enum Extension chooseExtension() const override {return humanInterface->chooseExtension();};
+    void delay() const override{ return humanInterface->delay();}
 //    void update() const override { return humanInterface->update(); };
 };
 
