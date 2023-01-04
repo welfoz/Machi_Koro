@@ -22,7 +22,6 @@ protected:
     Player* players[10];
     Bank* bank;
     Dice dice;
-    Player* winner;
     vector<const Icon*> icons;
     size_t nbPlayers;
     size_t idCurrentPlayer;
@@ -49,10 +48,8 @@ protected:
     virtual void activationRedCards(Player* p, size_t n);
     virtual void activationGreenAndBlueCards(Player* p, size_t n);
     virtual void activationPurpleCards(Player* p, size_t n);
-    void activateShoppingMall(Player* p, vector<EstablishmentCard*> cards);
 
     size_t* throwDices(size_t nb) const;
-    bool isWinner(Player* player) const;
 
     bool isPlayerAbleToPayEstablishmentCard(Player* p);
     bool isPlayerAbleToPayMonument(Player* p);
@@ -87,7 +84,6 @@ public:
     Player* getPlayerByName(string name) const;
     vector<const Icon*> getIcons() const {return this->icons;};
     const Board* const getBoard() const {return board;}
-    const Player* getWinner() const {return winner;}
     const vector<Player*> getPlayers() const {return vector<Player*> (players,+players+nbPlayers);}
 
     void tradeCards(Player* p1, Player* p2,EstablishmentCard* cardP1, EstablishmentCard* cardP2);

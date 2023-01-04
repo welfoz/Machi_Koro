@@ -13,7 +13,7 @@ MarinaController& MarinaController::getInstance(Interface* interface)
 }
 
 void MarinaController::turn(Player* player) {
-    if (getGame()->getWinner()!= nullptr) return;
+    if (winner!= nullptr) return;
 
     proxy->getInterface()->printPlayerInformation(player);
     proxy->getInterface()->printMonuments(player);

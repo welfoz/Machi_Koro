@@ -94,7 +94,7 @@ void Controller::match(){
 
     size_t turnCounter = 1;
     getGame()->idCurrentPlayer = 0;
-    while (getGame()->winner==nullptr) {
+    while (winner==nullptr) {
         proxy->getInterface()->printTurnCounter(turnCounter);
         turn(getGame()->players[getGame()->idCurrentPlayer]);
 
@@ -102,12 +102,12 @@ void Controller::match(){
         if (getGame()->idCurrentPlayer==0) turnCounter++;
 	};
 
-    proxy->getInterface()->printBasicMessage("\n\n\n\n\n\nIT'S OVER!!!\n\nThe winner is...\n" + getGame()->winner->getUsername() + " 🎉🎉🎉\n\n\nThank you for playing Machi Koro!\n\n");
+    proxy->getInterface()->printBasicMessage("\n\n\n\n\n\nIT'S OVER!!!\n\nThe winner is...\n" + winner->getUsername() + " 🎉🎉🎉\n\n\nThank you for playing Machi Koro!\n\n");
 };
 
 // we ll not print cards in gui neither player information
 void Controller::turn(Player* player){
-    if (getGame()->winner!= nullptr) return;
+    if (winner!= nullptr) return;
 
     proxy->getInterface()->printPlayerInformation(player);
     proxy->getInterface()->printMonuments(player);
@@ -127,7 +127,14 @@ void Controller::turn(Player* player){
     getGame()->setDiceValue(nb, throws);
 
 
+    vector<EstablishmentCard*> activatedGreenCards = getGame()->players[player->getId()]->greenCardsActivated(getGame()->diceValue);
+    vector<EstablishmentCard*> activatedRedCards = getGame()->players[player->getId()]->redCardsActivated(getGame()->diceValue);
+
+
     getGame()->activation(player, game->diceValue);
+
+    activateShoppingMall(player, activatedGreenCards);
+    activateShoppingMall(player, activatedRedCards);
 
     proxy->getInterface()->printBalances(getGame()->players);
     this->updateGui();
@@ -151,12 +158,41 @@ size_t* Controller::activateRadioTower(Player* player, size_t nb, size_t* throws
     return throws;
 }
 
+void Controller::activateShoppingMall(Player* p, vector<EstablishmentCard*> cards) {
+    if (!p->getMonument("Shopping Mall")) {
+        return;
+    }
+    for (auto it : cards) {
+        if (it->getIcon()->getName() == "bread" || it->getIcon()->getName() == "cup") {
+            // no need to handle the case when Type::majorEstablishment and Type::primaryIndustry
+            // because they never have bread or cup icon
+            switch (it->getType()) {
+            case (Type::restaurants):
+                this->getGame()->getBank()->trade(p->getId(), p->getId(), 1);
+                break;
+            case(Type::secondaryIndustry):
+                this->getGame()->getBank()->credit(p->getId(), 1);
+                break;
+            default:
+                break;
+            }
+        }
+    }
+}
+
 void Controller::activateAmusementPark(Player* player, size_t nb, size_t* throws) {
     if (nb==2 && throws[0]==throws[1] && player->getMonument("Amusement Park") && !player->isPlaying) {
         player->isPlaying=true;
         turn(player);
         player->isPlaying=false;
     }
+}
+
+bool Controller::isWinner(Player *player) const {
+    for (auto it = player->getMonuments().begin(); it != player->getMonuments().end(); it++) {
+        if (!it->second) return false;
+    }
+    return true;
 }
 
 void Controller::action(Player* player){
@@ -284,7 +320,7 @@ void Controller::action(Player* player){
                 break;
             }
         }
-        if (getGame()->isWinner(player)) getGame()->winner=player;
+        if (isWinner(player)) winner = player;
         break;
     }
     default:
