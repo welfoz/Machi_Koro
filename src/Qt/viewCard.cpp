@@ -8,55 +8,28 @@
 #include <QFont>
 #include "../game/game.h"
 
-ViewCard::ViewCard(const EstablishmentCard* card, QWidget *parent): QPushButton(parent), card(card)
+ViewCard::ViewCard(EstablishmentCard* card, QWidget *parent): QPushButton(parent), card(card), layoutCard(nullptr)
 {
     setBackgroundRole(QPalette::Base);
     setAutoFillBackground(true);
     setFixedSize(113,150);
     connect(this,SIGNAL(clicked()),this,SLOT(clickedEvent()));
     setCheckable(false);
+
 }
 
+void ViewCard::setCard(){
 
-ViewCard::ViewCard(QWidget *parent): QPushButton(parent)
-{
-    setBackgroundRole(QPalette::Base);
-    setAutoFillBackground(true);
-    setFixedSize(113,150);
-    connect(this,SIGNAL(clicked()),this,SLOT(clickedEvent()));
-    setCheckable(false);
-}
+    // clear all layouts & widgets relative to layoutCard
+    clearLayout(this->layoutCard);
 
-void ViewCard::setCardOnlyName(EstablishmentCard* card){
-    setStyleSheet("background-color:white; color:black; font-size: 5pt");
-    setFixedSize(113,40);
+    delete layoutCard;
+    this->layoutCard = new QVBoxLayout(this);
 
-    QLabel *cardName = new QLabel(this);
-    cardName->setWordWrap(true);
-    cardName->setText(QString::fromStdString(card->getName()));
-
-    switch (card->getType()) {
-    case Type::primaryIndustry:
-        cardName->setStyleSheet("font-weight: bold; color: blue; font-size: 8pt");
-        break;
-    case Type::secondaryIndustry:
-        cardName->setStyleSheet("font-weight: bold; color: green; font-size: 8pt");
-        break;
-    case Type::restaurants:
-        cardName->setStyleSheet("font-weight: bold; color: red; font-size: 8pt");
-        break;
-    case Type::majorEstablishment:
-        cardName->setStyleSheet("font-weight: bold; color: purple; font-size: 8pt");
-        break;
-    }
-    QVBoxLayout *layoutCard = new QVBoxLayout(this);
-    layoutCard->addWidget(cardName, 0, Qt::AlignHCenter);
-}
-
-void ViewCard::setCard(EstablishmentCard* card){
+    //recreate card
     setStyleSheet("background-color:white; color:black; font-size: 5pt");
 
-    QLabel* cardname= new QLabel(this);
+    QLabel* cardname = new QLabel(this);
     cardname->setWordWrap(true);
     cardname->setText(QString::fromStdString(card->getName()));
 
@@ -78,7 +51,8 @@ void ViewCard::setCard(EstablishmentCard* card){
     QLabel *cardRemainingText = new QLabel(this);
     cardRemainingText->setText("Cards remaining : ");
     QLabel *cardRemainingValue = new QLabel(this);
-    cardRemainingValue->setNum(static_cast<int>(card->getQuantity()));
+    cardRemainingValue->setNum(static_cast<int>(Controller::getInstance().getGame()->getBoard()->getCard(card)));
+
 
     QLabel *activationNumberText = new QLabel(this);
     activationNumberText->setText("Activation number : ");
@@ -107,25 +81,26 @@ void ViewCard::setCard(EstablishmentCard* card){
     effectValue->setWordWrap(true);
     effectValue->setText(QString::fromStdString(card->getEffetDescription()));
 
-    QVBoxLayout *layoutCard = new QVBoxLayout(this);
 
-    QHBoxLayout *layoutCardRemaining = new QHBoxLayout(this);
+    // attention à ne pas faire new Layout(this)
+    // sinon erreur: QLayout: Attempting to add QLayout "" to ViewCard "", which already has a layout
+    QHBoxLayout *layoutCardRemaining = new QHBoxLayout();
     layoutCardRemaining->addWidget(cardRemainingText);
     layoutCardRemaining->addWidget(cardRemainingValue);
 
-    QHBoxLayout *layoutActivationNumber = new QHBoxLayout(this);
+    QHBoxLayout *layoutActivationNumber = new QHBoxLayout();
     layoutActivationNumber->addWidget(activationNumberText);
     layoutActivationNumber->addWidget(activationNumberValue);
 
-    QHBoxLayout *layoutPrice = new QHBoxLayout(this);
+    QHBoxLayout *layoutPrice = new QHBoxLayout();
     layoutPrice->addWidget(priceText, 0, Qt::AlignLeft);
     layoutPrice->addWidget(priceValue, 0, Qt::AlignLeft);
 
-    QHBoxLayout *layoutIcon = new QHBoxLayout(this);
+    QHBoxLayout *layoutIcon = new QHBoxLayout();
     layoutIcon->addWidget(iconText);
     layoutIcon->addWidget(iconValue);
 
-    QVBoxLayout *layoutEffect = new QVBoxLayout(this);
+    QVBoxLayout *layoutEffect = new QVBoxLayout();
     layoutEffect->addWidget(effectText);
     layoutEffect->addWidget(effectValue);
     layoutEffect->setAlignment(Qt::AlignTop);
@@ -136,4 +111,52 @@ void ViewCard::setCard(EstablishmentCard* card){
     layoutCard->addLayout(layoutPrice);
     layoutCard->addLayout(layoutIcon);
     layoutCard->addLayout(layoutEffect);
+}
+
+void ViewCard::setCardOnlyName(){
+    clearLayout(this->layoutCard);
+    delete layoutCard;
+    this->layoutCard = new QVBoxLayout(this);
+
+    setStyleSheet("background-color:white; color:black; font-size: 5pt");
+    setFixedSize(113,40);
+
+    QLabel *cardName = new QLabel(this);
+    cardName->setWordWrap(true);
+    cardName->setText(QString::fromStdString(card->getName()));
+
+    switch (card->getType()) {
+    case Type::primaryIndustry:
+        cardName->setStyleSheet("font-weight: bold; color: blue; font-size: 8pt");
+        break;
+    case Type::secondaryIndustry:
+        cardName->setStyleSheet("font-weight: bold; color: green; font-size: 8pt");
+        break;
+    case Type::restaurants:
+        cardName->setStyleSheet("font-weight: bold; color: red; font-size: 8pt");
+        break;
+    case Type::majorEstablishment:
+        cardName->setStyleSheet("font-weight: bold; color: purple; font-size: 8pt");
+        break;
+    }
+
+    layoutCard->addWidget(cardName, 0, Qt::AlignHCenter);
+}
+
+void ViewCard::clearLayout(QLayout* layout)
+{
+    if (layout == nullptr) {
+        return;
+    }
+    QLayoutItem *vpItem;
+       while ((vpItem = layout->takeAt(0)) != 0)  {
+           if (vpItem->layout()) {
+               clearLayout(vpItem->layout());
+               vpItem->layout()->deleteLater();
+           }
+           if (vpItem->widget()) {
+               vpItem->widget()->deleteLater();
+           }
+           delete vpItem;
+       }
 }

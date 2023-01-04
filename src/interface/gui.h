@@ -1,11 +1,16 @@
 #pragma once
 #include "./interface.h"
+#include "../Qt/viewSet.h"
+#include "../Qt/chatwindow.h"
 
 class Gui : public Interface {
 public:
-    Gui() : Interface() {};
-    ~Gui() {};
-    void init() const override;
+    Gui() : Interface(), board(nullptr) {};
+    ~Gui() {
+        delete board;
+    };
+    ViewSet* board;
+    void init() override;
     void printWelcomingMessage()const override;
     string getInputText(vector<string> constext={}) const override;
     bool confirmationDialog(string message, string firstOption, string secondOption)const override;
@@ -17,8 +22,8 @@ public:
     void printMonuments(Player* player) const override {};
     void printCards(Player* player) const override {};
     void printDices(size_t* throws, size_t nb) const override {};
-    void printBalances(Player** players) const override;
-    void printBoard() const override;
+    void printBalances(Player** players) override;
+    void printBoard() const override {};
     string selectOneCard() const override { return ""; };
     Player* selectOnePlayerDifferentFromTheCurrentOne(Player* player) const override { return player; };
 
@@ -36,4 +41,5 @@ public:
 
     EstablishmentCard* selectOneCardOwnedByAnyPlayer(string message) const override;
     enum Extension chooseExtension() const override;
+    void update() const;
 };

@@ -4,7 +4,6 @@
 #include "game/controller/control.h"
 #include "interface/cli.h"
 
-// comment to play in cli
 #include <QApplication>
 #include "interface/gui.h"
 
@@ -18,7 +17,6 @@ void play(Interface::Option option) {
         interface = new Cli();
         break;
     case Interface::Option::gui:
-        // comment to play in cli
         interface = new Gui();
         break;
     case Interface::Option::cliGreenValley:
@@ -55,20 +53,20 @@ void play(Interface::Option option) {
 
 }
 
-// to play in CLI
 int main(int argc, char* argv[]) {
 
-    MACHI_KORO::play(Interface::Option::cli);
+    // to play in gui mode
+    QApplication app(argc, argv);
 
-    return 0;
+    MACHI_KORO::play(Interface::Option::gui);
+
+    return app.exec();
+
+
+    // to play in cli mode, decomment the following lines and comment the gui mode lines
+    /*
+     MACHI_KORO::play(Interface::Option::cli);
+
+     return 0;
+     */
 }
-
-// to play in GUI
-//int main(int argc, char* argv[]) {
-
-//    QApplication app(argc, argv);
-
-//    MACHI_KORO::play(Interface::Option::gui);
-
-//    return app.exec();
-//}

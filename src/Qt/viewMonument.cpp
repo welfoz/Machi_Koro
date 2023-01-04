@@ -26,9 +26,14 @@ ViewMonument::ViewMonument(QWidget *parent): QPushButton(parent)
     setCheckable(false);
 }
 
-void ViewMonument::setMonument(Monument* monument)
+void ViewMonument::setMonument(Monument* monument, bool isOwnedByPlayer)
 {
-    setStyleSheet("background-color:grey; color:black; font-size: 5pt");
+    if (isOwnedByPlayer) {
+        setStyleSheet("background-color:yellow; color:black; font-size: 5pt");
+    } else {
+        setStyleSheet("background-color:grey; color:black; font-size: 5pt");
+    }
+
     QLabel *cardName = new QLabel(this);
     cardName->setWordWrap(true);
     cardName->setText(QString::fromStdString(monument->getName()));
@@ -45,7 +50,7 @@ void ViewMonument::setMonument(Monument* monument)
 
     QVBoxLayout *layoutCard = new QVBoxLayout(this);
 
-    QHBoxLayout *layoutPrice = new QHBoxLayout(this);
+    QHBoxLayout *layoutPrice = new QHBoxLayout();
     layoutPrice->addWidget(priceText, 0, Qt::AlignLeft);
     layoutPrice->addWidget(priceValue, 0, Qt::AlignLeft);
 

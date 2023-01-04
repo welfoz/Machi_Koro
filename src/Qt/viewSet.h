@@ -13,6 +13,7 @@
 #include "viewMonument.h"
 #include "viewDice.h"
 #include "viewOnePlayer.h"
+#include "chatwindow.h"
 
 class QLabel;
 class QLineEdit;
@@ -30,6 +31,7 @@ class ViewSet : public QWidget
 public:
     explicit ViewSet(QWidget *parent = nullptr);
     void setSet();
+    void sendMessageToChat(string message);
 private:
     QHBoxLayout* couche;
     QGridLayout* layoutCards;
@@ -40,16 +42,19 @@ private:
     QVBoxLayout* layoutDice;
     QHBoxLayout* layoutPlayerMoney;
 
+    ChatWindow* chat;
     ViewCard* cards;
-    std::vector<ViewCard*> viewcards;
+    std::vector<ViewCard*> viewEstablishments;
+    std::vector<ViewCard*> cardsOnlyName;
     ViewMonument* monuments;
     std::vector<ViewMonument*> viewmonuments;
     ViewOnePlayer* player;
     std::vector<ViewOnePlayer*> viewPlayers;
     ViewDice* dice;
+    void clearLayout(QLayout* layout, vector<QWidget*> exceptions = {});
+    void setAllPlayers();
 private slots:
     void cardClick(ViewCard* vc);
     void monumentClick(ViewMonument* vm);
     void diceClick(ViewDice* vd);
-
 };

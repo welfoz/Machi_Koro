@@ -113,7 +113,7 @@ void Cli::printDices(size_t* throws, size_t nb) const {
     }
 }
 
-void Cli::printBalances(Player** players) const {
+void Cli::printBalances(Player** players){
     cout << "\nPlayer's balance after activation: \n";
     for (size_t i = 0; i < Controller::getInstance().getGame()->getNbPlayers(); i++) {
         cout << "   " << players[i]->getUsername() << " : " << Controller::getInstance().getGame()->getBank()->getAccount(players[i]->getId())->getSolde() << "\n";

@@ -7,20 +7,23 @@
 #include "../Qt/viewSetting.h"
 #include "../Qt/viewSet.h"
 
-void Gui::init() const {
-    ViewSet* viewSet = new ViewSet;
-    viewSet->setSet();
-    viewSet->show();
+void Gui::init() {
+    this->board = new ViewSet;
+    this->board->show();
 }
 
 void Gui::printWelcomingMessage()const {
-    ViewMessage* viewMessage = new ViewMessage;
+    ViewMessage* viewMessage = new ViewMessage();
     viewMessage->viewWelcomingMessage();
 }
 
 void Gui::printBasicMessage(string message)const {
-    ViewMessage* viewMessage = new ViewMessage;
-    viewMessage->viewBasicMessage(QString::fromStdString(message));
+    if (board != nullptr) {
+        board->sendMessageToChat(message);
+    } else {
+        ViewMessage* viewMessage = new ViewMessage();
+        viewMessage->viewBasicMessage(QString::fromStdString(message));
+    }
 }
 
 string Gui::getInputText(vector<string> context) const {
@@ -46,26 +49,22 @@ bool Gui::confirmationDialog(string message, string firstOption, string secondOp
     return true;
 }
 
-void Gui::printBoard() const {
-    ViewSet* viewSet = new ViewSet;
-    viewSet->setSet();
-    viewSet->show();
-}
-
-void Gui::printBalances(Player** players) const {
-    ViewSet* viewSet = new ViewSet;
-    viewSet->setSet();
-    viewSet->show();
+void Gui::printBalances(Player** players){
+    // ???
+    // print in the chat
 }
 
 void Gui::printTurnCounter(size_t turnCounter) const{
-    ViewMessage* viewMessage = new ViewMessage;
-    QString message = "Turn count : " + QString::number(static_cast<int>(turnCounter));
-    viewMessage->viewBasicMessage(message);
+    board->sendMessageToChat("Turn count : " + std::to_string(turnCounter));
+    // ancien code
+    //    ViewMessage* viewMessage = new ViewMessage;
+    //    QString message = "Turn count : " + QString::number(static_cast<int>(turnCounter));
+    //    viewMessage->viewBasicMessage(message);
 }
 
 void Gui::printError(const exception &message) const {
     ViewMessage* viewMessage = new ViewMessage;
+    // TO DO: handle the error message
     viewMessage->viewBasicMessage(message.what());
 }
 
@@ -99,4 +98,10 @@ Interface::Extension Gui::chooseExtension() const {
         }
     }
     throw "error";
+}
+
+void Gui::update() const {
+    if (board != nullptr) {
+        this->board->setSet();
+    }
 }
