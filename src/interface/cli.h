@@ -27,6 +27,7 @@ public:
     Monument* selectMonumentCardFromCurrentPlayer(Player* player, string message) const override;
     EstablishmentCard* selectOneCardOwnedByAnyPlayer(string message) const override;
     enum Extension chooseExtension() const override;
+    void delay() const;
 };
 
 class GreenValleyCli : public Cli {

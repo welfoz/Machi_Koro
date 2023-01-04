@@ -311,5 +311,9 @@ Interface::Extension Cli::chooseExtension() const {
         throw "Error extension not reconized";
         break;
     }
+}
+
+void Cli::delay() const {
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 };
 

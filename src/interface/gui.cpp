@@ -105,3 +105,11 @@ void Gui::update() const {
         this->board->setSet();
     }
 }
+
+void Gui::delay() const {
+    QTime dieTime = QTime::currentTime().addMSecs( 1500 );
+    while( QTime::currentTime() < dieTime )
+    {
+        QCoreApplication::processEvents( QEventLoop::AllEvents, 100 );
+    }
+}

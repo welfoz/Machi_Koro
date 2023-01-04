@@ -2,7 +2,9 @@
 #include "./interface.h"
 #include "../Qt/viewSet.h"
 #include "../Qt/chatwindow.h"
-
+#include <QCoreApplication>
+#include <QTime>
+#include <QEventLoop>
 class Gui : public Interface {
 public:
     Gui() : Interface(), board(nullptr) {};
@@ -26,6 +28,7 @@ public:
     void printBoard() const override {};
     string selectOneCard() const override { return ""; };
     Player* selectOnePlayerDifferentFromTheCurrentOne(Player* player) const override { return player; };
+    void delay() const;
 
     // WRONG IMPLEMENTATION
     // NEED TO RETURN SOMETHING TO COMPILE

@@ -35,4 +35,5 @@ public:
     virtual EstablishmentCard* selectOneEstablishmentCardFromPlayer(Player* target, string message) const = 0;
     virtual Monument* selectMonumentCardFromCurrentPlayer(Player* player, string message) const = 0;
     virtual enum Extension chooseExtension() const = 0;
+    virtual void delay() const =0;
 };

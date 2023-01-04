@@ -14,13 +14,13 @@ size_t Ai::getInputNumber(size_t min, size_t max)const {
 
 template<typename t>
 t Ai::getAiChoice(std::vector<t> options, std::vector<t> exceptions) const {
-    size_t n=options.size();
     if (exceptions.size() > 0)
         for (auto it: exceptions)
             if (count(options.begin(), options.end(), it)) std::remove(options.begin(), options.end(), it);
     std::random_device dev;
     std::mt19937 rng(dev());
     std::uniform_int_distribution<std::mt19937::result_type> dist(0, options.size() - 1);
+    delay();
     return options[dist(rng)]; // renvoie un élément situé à un index aléatoire entre le début et la fin du vector
 }
 
