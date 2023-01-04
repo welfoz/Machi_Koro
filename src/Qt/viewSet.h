@@ -51,7 +51,7 @@ private:
     ViewOnePlayer* player;
     std::vector<ViewOnePlayer*> viewPlayers;
     ViewDice* dice;
-    void clearLayout(QLayout* layout, vector<QWidget*> exceptions = {});
+    void clearLayout(QLayout* layout);
     void setAllPlayers();
 private slots:
     void cardClick(ViewCard* vc);

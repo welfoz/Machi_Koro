@@ -70,25 +70,26 @@ ViewSet::ViewSet(QWidget *parent) : QWidget(parent),
 
 void ViewSet::setSet()
 {
-    // update Establishment Cards
-    for (auto cards: viewEstablishments) {
-        if (cards != nullptr) {
-            cards->setCard();
-        }
+    // reset viewEstablishments
+    viewEstablishments.erase(viewEstablishments.begin(), viewEstablishments.end());
+    int i=0;
+    for(auto it=Controller::getInstance().getGame()->getBoard()->getCards().begin(); it != Controller::getInstance().getGame()->getBoard()->getCards().end(); it++){
+        viewEstablishments[i] = new ViewCard(it->first);
+        viewEstablishments[i]->setCard();
+        layoutCards->addWidget(viewEstablishments[i],
+                       i/6,
+                       i%6,
+                       Qt::AlignTop);
+        connect(viewEstablishments[i], SIGNAL(cardClicked(ViewCard*)), this, SLOT(cardClick(ViewCard*)));
+        i++;
     }
 
     //update Dice
     dice->setDice();
 
-    // update money
-    // update monuments
-    // update player cards
-    // update player
+    // update players
     this->setAllPlayers();
 
-    layoutDice->update();
-    layoutAllPlayers->update();
-    couche->update();
     update();
 }
 
@@ -170,7 +171,7 @@ void ViewSet::monumentClick(ViewMonument *vm)
     qmsgbox.exec();
 }
 
-void ViewSet::clearLayout(QLayout* layout, vector<QWidget*> exceptions)
+void ViewSet::clearLayout(QLayout* layout)
 {
     if (layout == nullptr) {
         return;
@@ -182,10 +183,7 @@ void ViewSet::clearLayout(QLayout* layout, vector<QWidget*> exceptions)
                vpItem->layout()->deleteLater();
        }
        if (vpItem->widget()) {
-           auto it = std::find(exceptions.begin(), exceptions.end(), vpItem->widget());
-           if (it == exceptions.end()) {
-               vpItem->widget()->deleteLater();
-           }
+           vpItem->widget()->deleteLater();
        }
        delete vpItem;
        }
