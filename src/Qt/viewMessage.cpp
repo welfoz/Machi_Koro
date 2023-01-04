@@ -15,3 +15,11 @@ void ViewMessage::viewBasicMessage(QString message){
     setText(message);
     exec();
 }
+
+void ViewMessage::closeEvent(QCloseEvent *event) {
+    if (event->spontaneous()) {
+        event->ignore();
+    } else {
+        event->accept();
+    }
+}

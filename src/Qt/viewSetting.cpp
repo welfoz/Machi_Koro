@@ -9,6 +9,7 @@
 
 ViewSetting::ViewSetting(QWidget *parent) : QDialog(parent){
     setWindowTitle("Machi Koro Settings");
+    setWindowModality(Qt::WindowModal);
 }
 
 void ViewSetting::viewInputText(){
@@ -93,3 +94,12 @@ void ViewSetting::clickSecondOption(){
     close();
 }
 
+
+void ViewSetting::closeEvent(QCloseEvent *event) {
+
+    if (event->spontaneous()) {
+        event->ignore();
+    } else {
+        event->accept();
+    }
+}

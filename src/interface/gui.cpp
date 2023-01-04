@@ -49,11 +49,6 @@ bool Gui::confirmationDialog(string message, string firstOption, string secondOp
     return true;
 }
 
-void Gui::printBalances(Player** players){
-    // ???
-    // print in the chat
-}
-
 void Gui::printTurnCounter(size_t turnCounter) const{
     board->sendMessageToChat("Turn count : " + std::to_string(turnCounter));
     // ancien code

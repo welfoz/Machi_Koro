@@ -11,10 +11,6 @@
 #include "../game/game.h"
 #include "../game/controller/control.h"
 
-
-
-// à quoi servent cardsOnlyName -> de setCardOnlyName
-// attention les cartes des joueurs ne s'affichent plus
 ViewSet::ViewSet(QWidget *parent) : QWidget(parent),
     viewEstablishments(Controller::getInstance().getGame()->getBoard()->getCards().size(), nullptr),
     viewmonuments(Controller::getInstance().getGame()->getPlayer(0).getMonuments().size(), nullptr),
@@ -28,6 +24,7 @@ ViewSet::ViewSet(QWidget *parent) : QWidget(parent),
     this->setWindowState(Qt::WindowMaximized);
 
     setWindowTitle("Machi Koro");
+
 
     couche = new QHBoxLayout;
 
@@ -199,4 +196,8 @@ void ViewSet::clearLayout(QLayout* layout)
 
 void ViewSet::sendMessageToChat(string message) {
     chat->messageReceived(QString::fromStdString(message));
+}
+
+void ViewSet::closeEvent(QCloseEvent *event) {
+    event->accept();
 }

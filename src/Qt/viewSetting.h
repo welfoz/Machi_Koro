@@ -9,8 +9,7 @@
 #include <QLineEdit>
 #include <QDialog>
 #include <QSpinBox>
-#include "../game/game.h"
-#include "../game/controller/control.h"
+#include <QCloseEvent>
 
 class ViewSetting : public QDialog
 {
@@ -41,6 +40,7 @@ private:
     QString text;
     int number;
     QString message;
+    void closeEvent(QCloseEvent *event) override;
 public slots:
     void clickValidateText();
     void clickValidateNumber();
