@@ -17,6 +17,7 @@ protected:
     virtual void action(Player* player);
 	size_t* activateRadioTower(Player* player, size_t nb, size_t* throws) const;
 	void activateAmusementPark(Player* p, size_t nb, size_t* throws);
+    void updateGui() const ;
 
 public:
     virtual ~Controller();

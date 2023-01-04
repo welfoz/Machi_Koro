@@ -101,11 +101,19 @@ void ViewSet::setAllPlayers() {
     int i=0;
     for(size_t j = 0; j<Controller::getInstance().getGame()->getNbPlayers(); j++){
         Player player = Controller::getInstance().getGame()->getPlayer(j);
+
         viewPlayers[i] = new ViewOnePlayer;
         layoutPlayer = new QVBoxLayout;
 
         QLabel *playerName = new QLabel(this);
-        playerName->setText(QString::fromStdString(player.getUsername()));
+        QString name = QString::fromStdString(player.getUsername());
+
+        if (player.getId() == Controller::getInstance().getGame()->getIdCurrentPlayer()) {
+            playerName->setStyleSheet("font-weight: bold;");
+            name.append(" (playing)");
+        }
+
+        playerName->setText(name);
 
         QLabel *playerMoneyText = new QLabel(this);
         playerMoneyText->setText("Money : ");
