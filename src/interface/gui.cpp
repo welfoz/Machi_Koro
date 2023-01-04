@@ -6,6 +6,7 @@
 #include "../Qt/viewMessage.h"
 #include "../Qt/viewSetting.h"
 #include "../Qt/viewSet.h"
+#include <QTimer>
 
 void Gui::init() {
     this->board = new ViewSet;
@@ -102,9 +103,9 @@ void Gui::update() const {
 }
 
 void Gui::delay() const {
-    QTime dieTime = QTime::currentTime().addMSecs( 1500 );
-    while( QTime::currentTime() < dieTime )
-    {
-        QCoreApplication::processEvents( QEventLoop::AllEvents, 100 );
-    }
+    QEventLoop loop;
+    QTimer t;
+    t.connect(&t, &QTimer::timeout, &loop, &QEventLoop::quit);
+    t.start(100);
+    loop.exec();
 }
