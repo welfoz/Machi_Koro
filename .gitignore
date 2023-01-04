@@ -5,6 +5,6 @@ x64/
 .vscode/
 .DS_Store
 output/
-build-Machi_Koro_Qt-Qt_6_4_0_for_macOS-Debug/
-build-Machi_Koro_Qt-Qt_6_4_0_for_macOS-Profile/
+src/build-Machi_Koro_Qt-Qt_6_4_0_for_macOS-Debug/
+src/build-Machi_Koro_Qt-Qt_6_4_0_for_macOS-Profile/
 .VSCodeCounter/
