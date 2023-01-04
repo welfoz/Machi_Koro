@@ -3,7 +3,8 @@
 #include "./interface.h"
 #include "random"
 #include "../game/controller/control.h"
-
+#include <chrono>
+#include <thread>
 class Ai : public Interface{
     Interface* humanInterface; //pointeur vers l'interface humaine référente
 public:
@@ -19,7 +20,7 @@ public:
     EstablishmentCard* selectOneEstablishmentCardFromPlayer(Player* target, string message) const override;
     Monument* selectMonumentCardFromCurrentPlayer(Player* player, string message) const override;
 
-    // redirecting to corresponding human interface methods -> usefull when the current player is AI, but the controller needs to use ny of these methods
+    // redirecting to corresponding human interface methods -> usefull when the current player is AI, but the controller needs to use any of these methods
     void init() override {return humanInterface->init();};
     void printWelcomingMessage() const override{return humanInterface->printWelcomingMessage();};
     void printBasicMessage(string message) const override{return humanInterface->printBasicMessage(message);};
