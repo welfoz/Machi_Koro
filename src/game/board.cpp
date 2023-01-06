@@ -1,5 +1,4 @@
 #include "board.h"
-#include "../formatter/formatter.h"
 
 Board::Board(vector<EstablishmentCard*> cards) {
     for (auto it = cards.begin(); it != cards.end(); it++) {
