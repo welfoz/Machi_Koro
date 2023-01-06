@@ -35,4 +35,5 @@ public:
     virtual Monument* selectMonumentCardFromCurrentPlayer(Player* player, string message) const = 0;
     virtual enum Extension chooseExtension() const = 0;
     virtual void delay() const =0;
+    virtual void update() const = 0;
 };

@@ -32,6 +32,7 @@ public:
     EstablishmentCard* selectOneCardOwnedByAnyPlayer(string message) const override;
     enum Extension chooseExtension() const override;
     void delay() const;
+    void update() const override {};
 };
 
 class GreenValleyCli : public Cli {

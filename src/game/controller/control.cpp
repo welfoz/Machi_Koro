@@ -112,7 +112,7 @@ void Controller::turn(Player* player){
     proxy->getInterface()->printPlayerInformation(player);
     proxy->getInterface()->printMonuments(player);
     proxy->getInterface()->printCards(player);
-    this->updateGui();
+    proxy->getInterface()->update();
 
     const size_t nb = getNbDiceChosen(*player);
 
@@ -133,10 +133,10 @@ void Controller::turn(Player* player){
     activateShoppingMall(player, activatedRedCards);
 
     proxy->getInterface()->printBalances(getGame()->players);
-    this->updateGui();
+    proxy->getInterface()->update();
 
     action(player);
-    this->updateGui();
+    proxy->getInterface()->update();
 
     activateAmusementPark(player, nb, throws);
 };
@@ -332,8 +332,3 @@ Interface* Controller::getInterface(bool gameCreation) {
     return proxy->getInterface(gameCreation);
 }
 
-
-void Controller::updateGui() const {
-    if (dynamic_cast<Gui*>(Controller::getInstance().getInterface(true)) != nullptr)
-        dynamic_cast<Gui*>(Controller::getInstance().getInterface(true))->update();
-};
