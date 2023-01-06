@@ -112,7 +112,6 @@ void Controller::turn(Player* player){
     proxy->getInterface()->printPlayerInformation(player);
     proxy->getInterface()->printMonuments(player);
     proxy->getInterface()->printCards(player);
-
     this->updateGui();
 
     const size_t nb = getNbDiceChosen(*player);
@@ -123,13 +122,10 @@ void Controller::turn(Player* player){
 
     throws = activateRadioTower(player, nb, throws);
 
-
     getGame()->setDiceValue(nb, throws);
-
 
     vector<EstablishmentCard*> activatedGreenCards = getGame()->players[player->getId()]->greenCardsActivated(getGame()->diceValue);
     vector<EstablishmentCard*> activatedRedCards = getGame()->players[player->getId()]->redCardsActivated(getGame()->diceValue);
-
 
     getGame()->activation(player, game->diceValue);
 
@@ -140,7 +136,6 @@ void Controller::turn(Player* player){
     this->updateGui();
 
     action(player);
-
     this->updateGui();
 
     activateAmusementPark(player, nb, throws);

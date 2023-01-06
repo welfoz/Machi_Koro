@@ -1,7 +1,6 @@
 #pragma once
 #include <string>
 #include <iostream>
-#include "../formatter/formatter.h"
 #include "../players/player.h"
 #include "../extensions/Deluxe/PlayerGreenValley.h"
 

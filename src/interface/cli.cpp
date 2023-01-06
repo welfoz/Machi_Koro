@@ -1,5 +1,34 @@
 #include "./cli.h"
 
+string Cli::format(string text, unsigned int maxLenght) const {
+    string spaces(maxLenght - text.length(), ' ');
+    string separator = " | ";
+	return text + spaces + separator;
+};
+
+string Cli::formatHeader(vector<pair<string, unsigned int>> texts) const {
+    string header;
+    string separator = " | ";
+    string lineSeparator;
+    for (auto it = texts.begin(); it != texts.end(); it++) {
+        if (it->second == 0) {
+            header += it->first;
+            lineSeparator += string(20, '-');
+        }
+        else {
+			header += it->first + string(it->second - it->first.length(), ' ') + separator;
+            lineSeparator += string(it->second + separator.length(), '-');
+        }
+    }
+    return header + "\n" + lineSeparator + "\n";
+}
+
+string Cli::toLower(string text) const {
+    std::transform(text.begin(), text.end(), text.begin(),
+        [](unsigned char c) { return std::tolower(c); });
+    return text;
+}
+
 void Cli::printWelcomingMessage() const{
     cout<< "\n\n";
     cout << "███    ███  █████   ██████ ██   ██ ██     ██   ██  ██████  ██████   ██████  \n";
@@ -24,12 +53,12 @@ string Cli::getInputText(vector<string> context) const {
 // be careful! firstOption and secondOption HAS to be UTF-8. No accent.
 bool Cli::confirmationDialog(string message, string firstOption, string secondOption)const {
     string stopAnswer = "";
-    while (Formatter::toLower(stopAnswer) != Formatter::toLower(firstOption) && Formatter::toLower(stopAnswer) != Formatter::toLower(secondOption)) {
+    while (toLower(stopAnswer) != toLower(firstOption) && toLower(stopAnswer) != toLower(secondOption)) {
         cout << message << " (" << firstOption << " | " << secondOption << ") : ";
         cin >> stopAnswer;
         cin.ignore();
     }
-    if (Formatter::toLower(stopAnswer) == Formatter::toLower(secondOption)) {
+    if (toLower(stopAnswer) == toLower(secondOption)) {
         return false;
     }
     return true;
@@ -66,11 +95,11 @@ void Cli::printMonuments(Player* player) const {
         {"Icon", 8},
         {"Effect", 50}
     };
-    cout << Formatter::formatHeader(headerNames);
+    cout << formatHeader(headerNames);
     for (auto it = player->getMonuments().begin(); it != player->getMonuments().end(); it++) {
-        cout << " " << Formatter::format(it->first->getName(), headerNames[0].second - 1) << Formatter::format(std::to_string(it->second), headerNames[1].second) << Formatter::format(std::to_string(it->first->getPrice()), headerNames[2].second);
-        cout << Formatter::format(BaseCard::typeToString(it->first->getType()), headerNames[3].second);
-        cout << Formatter::format(it->first->getIcon()->getName(), headerNames[4].second);
+        cout << " " << format(it->first->getName(), headerNames[0].second - 1) << format(std::to_string(it->second), headerNames[1].second) << format(std::to_string(it->first->getPrice()), headerNames[2].second);
+        cout << format(BaseCard::typeToString(it->first->getType()), headerNames[3].second);
+        cout << format(it->first->getIcon()->getName(), headerNames[4].second);
         cout << it->first->getEffetDescription() << "\n";
     }
 }
@@ -87,7 +116,7 @@ void Cli::printCards(Player* player) const {
         {"Icon", 8},
         {"Effect", 60}
     };
-    cout << Formatter::formatHeader(headerNames);
+    cout << formatHeader(headerNames);
     for (auto it = player->getCards().begin(); it != player->getCards().end(); it++) {
         if (it->second>0){
             // get all activation numbers
@@ -98,8 +127,8 @@ void Cli::printCards(Player* player) const {
                 actNumbers++;
             }
 
-            cout << " " << Formatter::format(it->first->getName(), headerNames[0].second - 1) << Formatter::format(std::to_string(it->first->getPrice()), headerNames[1].second) << Formatter::format(activationNumbers, headerNames[2].second);
-            cout << Formatter::format(std::to_string(it->second), headerNames[3].second) << Formatter::format(BaseCard::typeToString(it->first->getType()), headerNames[4].second) << Formatter::format(it->first->getIcon()->getName(), headerNames[5].second) << it->first->getEffetDescription() << "\n";
+            cout << " " << format(it->first->getName(), headerNames[0].second - 1) << format(std::to_string(it->first->getPrice()), headerNames[1].second) << format(activationNumbers, headerNames[2].second);
+            cout << format(std::to_string(it->second), headerNames[3].second) << format(BaseCard::typeToString(it->first->getType()), headerNames[4].second) << format(it->first->getIcon()->getName(), headerNames[5].second) << it->first->getEffetDescription() << "\n";
         }
 
     }
@@ -133,7 +162,7 @@ void Cli::printBoard() const {
         {"Icon", 8},
         {"Effect", 60}
     };
-    cout << Formatter::formatHeader(headerNames);
+    cout << formatHeader(headerNames);
     for (auto it = Controller::getInstance().getGame()->getBoard()->getCards().begin(); it != Controller::getInstance().getGame()->getBoard()->getCards().end(); it++) {
         // get all activation numbers
         string activationNumbers;
@@ -143,8 +172,8 @@ void Cli::printBoard() const {
             actNumbers++;
         }
 
-        cout << " " << Formatter::format(it->first->getName(), headerNames[0].second - 1) << Formatter::format(std::to_string(it->first->getPrice()), headerNames[1].second) << Formatter::format(activationNumbers, headerNames[2].second);
-        cout << Formatter::format(std::to_string(it->second), headerNames[3].second) << Formatter::format(BaseCard::typeToString(it->first->getType()), headerNames[4].second) << Formatter::format(it->first->getIcon()->getName(), headerNames[5].second) << it->first->getEffetDescription() << "\n";
+        cout << " " << format(it->first->getName(), headerNames[0].second - 1) << format(std::to_string(it->first->getPrice()), headerNames[1].second) << format(activationNumbers, headerNames[2].second);
+        cout << format(std::to_string(it->second), headerNames[3].second) << format(BaseCard::typeToString(it->first->getType()), headerNames[4].second) << format(it->first->getIcon()->getName(), headerNames[5].second) << it->first->getEffetDescription() << "\n";
 
     }
 };
@@ -262,7 +291,7 @@ void GreenValleyCli::printCards(Player* player) const {
                 {"Icon", 8},
                 {"Effect", 60}
         };
-        cout << Formatter::formatHeader(headerNames);
+        cout << formatHeader(headerNames);
         for (auto it = player->getCards().begin(); it != player->getCards().end(); it++) {
             if (it->second > 0) {
                 // get all activation numbers
@@ -273,8 +302,8 @@ void GreenValleyCli::printCards(Player* player) const {
                     actNumbers++;
                 }
 
-                cout << " " << Formatter::format(it->first->getName(), headerNames[0].second - 1) << Formatter::format(std::to_string(playerGreenValley->getClosedCards().count(it->first)), headerNames[1].second) << Formatter::format(std::to_string(it->first->getPrice()), headerNames[2].second) << Formatter::format(activationNumbers, headerNames[3].second);
-                cout << Formatter::format(std::to_string(it->second), headerNames[4].second) << Formatter::format(BaseCard::typeToString(it->first->getType()), headerNames[5].second) << Formatter::format(it->first->getIcon()->getName(), headerNames[6].second) << it->first->getEffetDescription() << "\n";
+                cout << " " << format(it->first->getName(), headerNames[0].second - 1) << format(std::to_string(playerGreenValley->getClosedCards().count(it->first)), headerNames[1].second) << format(std::to_string(it->first->getPrice()), headerNames[2].second) << format(activationNumbers, headerNames[3].second);
+                cout << format(std::to_string(it->second), headerNames[4].second) << format(BaseCard::typeToString(it->first->getType()), headerNames[5].second) << format(it->first->getIcon()->getName(), headerNames[6].second) << it->first->getEffetDescription() << "\n";
             }
 
         }

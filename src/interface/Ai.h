@@ -7,6 +7,7 @@
 #include <thread>
 class Ai : public Interface{
     Interface* humanInterface; //pointeur vers l'interface humaine référente
+    string toLower(string text) const;
 public:
     Ai(Interface* anInterface) : humanInterface(anInterface){};
     ~Ai() = default;

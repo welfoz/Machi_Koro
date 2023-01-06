@@ -1,6 +1,5 @@
 #pragma once
 #include "../../players/player.h"
-#include "../../formatter/formatter.h"
 
 class PlayerGreenValley : public Player {
 private:
