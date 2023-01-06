@@ -102,6 +102,11 @@ void Gui::update() const {
     }
 }
 
+void Controller::updateGui() const {
+    if (dynamic_cast<Gui*>(Controller::getInstance().getInterface(true)) != nullptr)
+        dynamic_cast<Gui*>(Controller::getInstance().getInterface(true))->update();
+};
+
 void Gui::delay() const {
     QEventLoop loop;
     QTimer t;

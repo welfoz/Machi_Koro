@@ -1,5 +1,4 @@
 #include "control.h"
-#include "../../interface/gui.h"
 
 Controller& Controller::getInstance(Interface* interface)
 {
@@ -333,7 +332,3 @@ Interface* Controller::getInterface(bool gameCreation) {
 }
 
 
-void Controller::updateGui() const {
-    if (dynamic_cast<Gui*>(Controller::getInstance().getInterface(true)) != nullptr)
-        dynamic_cast<Gui*>(Controller::getInstance().getInterface(true))->update();
-};
