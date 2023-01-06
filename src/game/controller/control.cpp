@@ -1,5 +1,4 @@
 #include "control.h"
-#include "../../interface/gui.h"
 
 Controller& Controller::getInstance(Interface* interface)
 {
