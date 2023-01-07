@@ -1,7 +1,6 @@
 #pragma once
 #include <string>
 #include <iostream>
-#include "../formatter/formatter.h"
 #include "../players/player.h"
 #include "../extensions/Deluxe/PlayerGreenValley.h"
 
@@ -36,4 +35,5 @@ public:
     virtual Monument* selectMonumentCardFromCurrentPlayer(Player* player, string message) const = 0;
     virtual enum Extension chooseExtension() const = 0;
     virtual void delay() const =0;
+    virtual void update() const = 0;
 };

@@ -24,3 +24,4 @@ Proxy::~Proxy() {
     delete aiInterface;
     delete interface;
 };
+

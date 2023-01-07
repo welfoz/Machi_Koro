@@ -4,6 +4,10 @@
 #include "../game/controller/control.h"
 
 class Cli : public Interface {
+protected:
+	string format(string text, unsigned int maxLenght) const ;
+	string formatHeader(vector<pair<string, unsigned int>> texts) const;
+	string toLower(string text) const;
 public:
     Cli() : Interface() {};
     ~Cli() {};
@@ -28,6 +32,7 @@ public:
     EstablishmentCard* selectOneCardOwnedByAnyPlayer(string message) const override;
     enum Extension chooseExtension() const override;
     void delay() const;
+    void update() const override {};
 };
 
 class GreenValleyCli : public Cli {

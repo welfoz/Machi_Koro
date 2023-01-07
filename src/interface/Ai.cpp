@@ -3,6 +3,12 @@
 //
 #include "Ai.h"
 
+string Ai::toLower(string text) const {
+    std::transform(text.begin(), text.end(), text.begin(),
+        [](unsigned char c) { return std::tolower(c); });
+    return text;
+}
+
 size_t Ai::getInputNumber(size_t min, size_t max)const {
     vector<size_t> options;
     for (size_t i=min; i<= max;i++) options.push_back(i);
@@ -29,7 +35,7 @@ bool Ai::confirmationDialog(string message, string firstOption, string secondOpt
     string stopAnswer="";
     stopAnswer=getAiChoice(vector<string>({firstOption,secondOption}));
     printBasicMessage(stopAnswer);
-    if (Formatter::toLower(stopAnswer) == Formatter::toLower(secondOption)) {
+    if (toLower(stopAnswer) == toLower(secondOption)) {
         return false;
     }
     return true;

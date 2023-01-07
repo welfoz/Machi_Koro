@@ -19,7 +19,7 @@ void MarinaController::turn(Player* player) {
     proxy->getInterface()->printMonuments(player);
     proxy->getInterface()->printCards(player);
 
-    Controller::updateGui();
+    this->proxy->getInterface()->update();
 
     activateCityHall(player);
 
@@ -37,14 +37,14 @@ void MarinaController::turn(Player* player) {
     getGame()->activation(player, game->diceValue);
 
     proxy->getInterface()->printBalances(game->players);
-    Controller::updateGui();
+    this->proxy->getInterface()->update();
 
     map<Monument*,bool> playerMonuments = player->getMonuments();
     map<EstablishmentCard*,size_t> playerCards = player->getCards();
 
     action(player);
 
-    Controller::updateGui();
+    this->proxy->getInterface()->update();
 
     dynamic_cast<MarinaBoard*>(getGame()->board)->checkNumberOfDecks();
 
