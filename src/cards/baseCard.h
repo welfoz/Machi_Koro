@@ -5,6 +5,9 @@ using namespace std;
 
 
 class BaseCard {
+private:
+    BaseCard(const BaseCard& b)=delete;
+    BaseCard& operator=(const BaseCard& n)=delete;
 protected:
     Type type;
 	BaseCard(string name, Type type, size_t price, const Icon* icon, string desc): name(name), type(type), price(price), icon(icon), effectDescription(desc) {};

@@ -5,6 +5,9 @@
 class Proxy;
 
 class Controller {
+private :
+    Controller& operator=(const Controller& c) = delete;
+    Controller(const Controller& c) = delete;
 protected:
     Game* game;
     static Controller* instance;

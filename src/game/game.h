@@ -13,6 +13,9 @@
 using namespace std;
 
 class Game{
+private :
+    Game& operator=(const Game& g) = delete;
+    Game(const Game& g) = delete;
     friend class Controller;
     friend class MarinaController;
 protected:
@@ -30,8 +33,6 @@ protected:
     size_t numberOfPlayersMin;
 
     Game();
-    Game(const Game&) = delete;
-    Game& operator=(const Game& g) = delete;
 
     // initialisation : toutes ces méthodes sont appellés dans le constructeur Game()
     void createBank(size_t nbOfPlayers);

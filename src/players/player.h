@@ -11,6 +11,8 @@ using namespace std;
 
 class Player{
 private:
+    Player(const Player& p)=delete;
+    Player& operator=(const Player& p) =delete;
     size_t id;
     map<Monument*,bool>monuments;
     bool aI;

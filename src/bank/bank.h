@@ -5,6 +5,8 @@
 
 class Bank {
 private :
+    Bank(const Bank& b)=delete;
+    Bank& operator=(const Bank& b)= delete;
     vector<Account*> accounts;
     size_t nbPlayers;
 public :
